@@ -357,7 +357,7 @@ body.drawer-open { overflow: hidden; }
 .calendar-toolbar { margin-bottom: 18px; }
 .month-navigation { gap: 14px; }
 .month-navigation h3 { min-width: 140px; font-size: 22px; }
-.month-navigation button { width: 44px; height: 44px; background: #f0f1f4; border: 0; }
+.month-navigation button { width: 44px; height: 44px; flex-shrink: 0; background: #fff; border: 1px solid #cbd0d7; border-radius: 50%; }
 .doctor-legend { display: flex; gap: 10px; margin: 0 0 12px; padding: 0; border: 0; }
 .doctor-blue { --doctor-color: #3e7bc6; --doctor-tint: #ecf3fc; }
 .doctor-amber { --doctor-color: #b8791f; --doctor-tint: #fcf4e8; }
@@ -628,3 +628,11 @@ button, input, select, textarea { font-family: var(--font); }
 h1, h2, h3, h4 { font-weight: 700; }
 .brand-mark { background: transparent; border-radius: 0; }
 .brand-mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+/* 섹션 박스의 곡률을 줄이고 내부 목록은 구분선으로 정리합니다. */
+.home-section, .category-card, .patient-summary, .patient-section,
+.info-card, .auth-card, .day-panel, .schedule-hours { border-radius: 16px; }
+@media (max-width: 600px) {
+  .home-section, .category-card, .patient-summary, .patient-section,
+  .info-card, .auth-card, .day-panel, .schedule-hours { border-radius: 12px; }
+}

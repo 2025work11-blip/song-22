@@ -80,7 +80,6 @@ html[data-theme='dark'] .language-options a:hover,
 html[data-theme='dark'] .language-options a[aria-current='true'],
 html[data-theme='dark'] .drawer-nav a:hover,
 html[data-theme='dark'] .menu-trigger:hover { background: #29425f; }
-html[data-theme='dark'] .month-navigation button,
 html[data-theme='dark'] .theme-toggle,
 html[data-theme='dark'] .header-auth-control,
 html[data-theme='dark'] .quick-action,
@@ -102,6 +101,9 @@ html[data-theme='dark'] .auth-inline-link,
 html[data-theme='dark'] .auth-eyebrow,
 html[data-theme='dark'] .next-visit > p:not(.next-visit-note) { color: #8ab8ee; }
 html[data-theme='dark'] .drawer-number { color: #aabdd2; }
+html[data-theme='dark'] .month-navigation button { background: #fff; border-color: #cbd0d7; color: #253b52; }
+html[data-theme='dark'] .month-navigation button:hover { background: #eef3f8; border-color: #8fa4b8; }
+html[data-theme='dark'] .notice-list { border-color: #425368; }
 @media (max-width: 600px) {
   .home-page .category-card { min-height: 164px; }
 }
