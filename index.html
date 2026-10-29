@@ -14,6 +14,7 @@
   <script defer src="js/mypage.js"></script>
   <script defer src="js/holidays.js"></script>
   <script defer src="js/home.js"></script>
+  <script defer src="js/language.js"></script>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main">본문으로 바로가기</a>
@@ -24,6 +25,7 @@
   <button class="language-toggle" type="button" data-language-toggle aria-label="언어 선택" aria-expanded="false" aria-controls="language-panel"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 7h14M5 17h14"/></svg></button>
   <div class="language-panel" id="language-panel" data-language-panel hidden>
     <div class="language-options"><a data-language="en" role="link" tabindex="0" aria-label="영어로 번역"><img src="assets/flags/us.svg" width="32" height="22" alt=""><span lang="en">ENG</span></a><a data-language="zh-CN" role="link" tabindex="0" aria-label="중국어 간체로 번역"><img src="assets/flags/cn.svg" width="32" height="22" alt=""><span lang="zh-CN">中文</span></a></div>
+    <button class="language-reset" type="button" data-language-reset hidden>한국어</button>
     <p class="language-notice" data-language-notice>번역은 웹사이트 배포 후 이용할 수 있습니다.</p>
   </div>
 </div><button class="menu-trigger" type="button" data-menu-open aria-label="카테고리 메뉴 열기" aria-controls="category-drawer" aria-expanded="false" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div>
@@ -43,11 +45,11 @@
   <p class="drawer-caption">눈에 관련한 평생 주치의 AA안과</p>
 </dialog>
 <main id="main" class="container home-main" tabindex="-1">
-  <section class="patient-summary home-patient-summary notranslate" data-home-patient-summary translate="no" aria-label="환자 요약 (샘플)">
+  <a href="mypage.html" class="patient-summary home-patient-summary notranslate" data-home-patient-summary translate="no" aria-label="마이페이지로 이동 · 환자 요약 (샘플)">
     <span class="patient-summary-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="16" cy="11" r="5"/><path d="M6 28v-3a10 10 0 0 1 20 0v3"/></svg></span>
     <div><p class="patient-summary-name"><span data-patient-field="name">000</span>님</p><p>최근 진료일 : <span data-patient-field="latestVisitDate">2026년 10월 10일</span></p><p>증상 : <span data-patient-field="symptom">백내장</span></p></div>
     <span class="sample-label">샘플 정보</span>
-  </section>
+  </a>
   <section class="home-intro" aria-labelledby="home-title">
     <div><p class="eyebrow">AA EYE CARE GUIDE</p><h1 id="home-title">눈에 관련한 평생 주치의<br><strong>AA안과</strong></h1><p class="intro-description">진료 전후에 필요한 눈 건강 정보를 확인하세요.</p></div>
     <img class="hero-eyeball" src="assets/eyeball.svg" width="320" height="260" alt="">

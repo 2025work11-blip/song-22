@@ -506,9 +506,9 @@ body.drawer-open { overflow: hidden; }
 
 /* 홈 요약과 Drawer의 요청 범위만 조정합니다. */
 .home-patient-summary { background: #fff; }
-.home-page .drawer-header .drawer-category-label { margin: 0; padding-top: 10px; color: var(--blue); font-size: 12px; font-weight: 750; letter-spacing: .15em; }
-.home-page .drawer-nav { gap: 0; }
-.home-page .drawer-nav a { border-bottom: 1px solid #d0d4d9; border-radius: 0; }
+.drawer-header .drawer-category-label { margin: 0; padding-top: 10px; color: var(--blue); font-size: 12px; font-weight: 750; letter-spacing: .15em; }
+.drawer-nav { gap: 0; }
+.drawer-nav a { border-bottom: 1px solid #d0d4d9; border-radius: 0; }
 .schedule-entry .schedule-doctor-name { margin: 0 0 12px; color: var(--ink); font-size: 22px; font-weight: 750; letter-spacing: -.035em; }
 
 /* 약 이름을 누르면 복용방법과 약 설명을 펼칩니다. */
@@ -523,3 +523,10 @@ body.drawer-open { overflow: hidden; }
 .medication-content p { margin: 0 0 18px; color: #667382; font-size: 14px; }
 .medication-content p:last-child { margin-bottom: 0; }
 .next-visit .next-visit-note { margin-top: 12px; color: #667382; font-size: 12px; font-weight: 400; letter-spacing: 0; }
+
+.home-patient-summary:hover { border-color: #6d89a5; }
+
+/* Drawer 색상을 페이지별 변수와 무관하게 통일합니다. */
+.menu-drawer { --ink: #353d42; --blue: #436d99; --muted: #626a70; --line: #d9d9d2; }
+.language-reset { display: block; margin: 2px 0 0 auto; padding: 5px 0; min-height: 32px; border: 0; background: transparent; color: #436d99; font: inherit; font-size: 11px; cursor: pointer; }
+.language-reset:hover { text-decoration: underline; }

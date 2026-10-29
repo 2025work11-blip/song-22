@@ -1,0 +1,231 @@
+// 공개 사이트는 common.js에서 Google 웹사이트 번역에 연결합니다.
+// 로컬 파일·마이페이지에서는 아래 내장 문구로 화면을 전환합니다. 외부 요청은 없습니다.
+// 저장하는 값은 언어 코드뿐이며 환자 정보는 저장하거나 전송하지 않습니다.
+(function () {
+  'use strict';
+  var dictionary = {};
+  function add(ko, en, zh) { dictionary[ko] = { en: en, 'zh-CN': zh }; }
+  [
+    ['AA안과', 'AA Eye Clinic', 'AA眼科'],
+    ['본문으로 바로가기', 'Skip to content', '跳转到正文'],
+    ['홈으로', 'Back to home', '返回首页'], ['홈', 'Home', '首页'],
+    ['마이페이지', 'My page', '个人中心'], ['시력교정', 'Vision correction', '视力矫正'],
+    ['백내장', 'Cataract', '白内障'], ['녹내장', 'Glaucoma', '青光眼'],
+    ['망막', 'Retina', '视网膜'], ['소아근시', 'Childhood myopia', '儿童近视'],
+    ['병원소개', 'About the clinic', '医院介绍'], ['CATEGORY', 'CATEGORY', 'CATEGORY'],
+    ['눈에 관련한 평생 주치의', 'Lifelong care for your eyes', '守护您一生的眼健康'],
+    ['눈에 관련한 평생 주치의 AA안과', 'AA Eye Clinic · Lifelong eye care', 'AA眼科 · 一生的眼健康伙伴'],
+    ['눈에 관련한 평생 주치의 · 진료 전후 정보 안내', 'Lifelong eye care · Before and after your visit', '一生的眼健康伙伴 · 就诊前后指南'],
+    ['진료 전후에 필요한 눈 건강 정보를 확인하세요.', 'Eye care information, before and after your visit.', '了解就诊前后所需的眼健康信息。'],
+    ['어떤 눈 건강 정보가 필요하세요?', 'What would you like to know?', '您想了解哪些眼健康信息？'],
+    ['궁금한 분야를 선택해 주세요.', 'Choose a topic to explore.', '请选择您关心的领域。'],
+    ['선명한 일상을 위한 안내', 'A guide to clearer vision', '清晰视力指南'],
+    ['자세히', 'View details', '查看详情'], ['진료부터 수술 전후까지', 'From your visit to surgery care', '从就诊到手术前后'],
+    ['차근차근 이해하는 눈 건강', 'Understand your eye health', '逐步了解眼健康'],
+    ['궁금했던 망막 분야 안내', 'Your guide to retina care', '视网膜领域指南'],
+    ['우리 아이 눈 건강 안내', 'Eye care for your child', '儿童眼健康指南'],
+    ['진료시간 · 원장 · 장비 안내', 'Hours · Doctors · Equipment', '门诊时间 · 医生 · 设备'],
+    ['질환의 기본 정보부터 외래 안내, 수술 전후 정보까지 확인할 수 있습니다.', 'Explore condition information, outpatient guidance, and care before and after surgery.', '了解疾病基础知识、门诊指南以及手术前后信息。'],
+    ['원장별 일정표', 'Doctor schedule', '医生排班'], ['샘플 일정', 'Sample schedule', '示例排班'],
+    ['날짜 아래의 색상 점으로 원장별 진료 일정을 확인하세요. 원장명과 근무 일정은 화면 확인용 예시입니다.', 'Colored dots show each doctor’s schedule. Doctor names and schedules are examples for this preview.', '日期下方的彩色圆点表示各位医生的排班。医生姓名和排班均为预览示例。'],
+    ['일정 달력', 'Schedule calendar', '排班日历'], ['원장 선택', 'Select doctor', '选择医生'],
+    ['전체 원장', 'All doctors', '全部医生'], ['종일 진료', 'Full day', '全天门诊'],
+    ['오전 진료만', 'Morning only', '仅上午门诊'], ['오전', 'Morning', '上午'], ['종일', 'Full day', '全天'],
+    ['일', 'Sun', '日'], ['월', 'Mon', '一'], ['화', 'Tue', '二'], ['수', 'Wed', '三'],
+    ['목', 'Thu', '四'], ['금', 'Fri', '五'], ['토', 'Sat', '六'],
+    ['선택한 날짜의 일정', 'Schedule for the selected day', '所选日期的排班'],
+    ['날짜를 선택해 주세요.', 'Select a date.', '请选择日期。'], ['일정을 준비 중입니다.', 'Schedule coming soon.', '排班准备中。'],
+    ['원장 정보 확인 중', 'Doctor details pending', '医生信息待确认'],
+    ['등록된 일정이 없습니다. 일정 미등록은 휴진을 의미하지 않습니다.', 'No schedule is listed. This does not necessarily mean the clinic is closed.', '暂无排班记录，不代表停诊。'],
+    ['※ 공휴일은 2026~2027년 확인 자료 기준입니다. 원장 근무는 예시이며 실제 휴진 여부는 별도 확인이 필요합니다.', '※ Holidays use the checked 2026–2027 data. Doctor schedules are examples; actual closures must be confirmed.', '※ 节假日依据已核对的2026至2027年资料。医生排班为示例，实际停诊情况需另行确认。'],
+    ['※ 해당 연도의 공휴일 정보는 준비 중입니다. 원장 근무는 예시입니다.', '※ Holiday information for this year is not yet available. Doctor schedules are examples.', '※ 该年份的节假日信息准备中。医生排班为示例。'],
+    ['공지사항', 'Notices', '公告'], ['샘플 공지', 'Sample notices', '示例公告'],
+    ['AA안과의 새로운 안내를 날짜별로 확인하세요. 제목을 누르면 내용을 볼 수 있습니다.', 'Read the latest dated updates from AA Eye Clinic. Select a title to read more.', '按日期查看AA眼科的最新公告，点击标题查看内容。'],
+    ['공지사항을 준비 중입니다.', 'Notices coming soon.', '公告准备中。'],
+    ['등록된 공지사항이 없습니다.', 'No notices yet.', '暂无公告。'],
+    ['기본 정보', 'Overview', '基本信息'], ['외래 안내', 'Outpatient guide', '门诊指南'],
+    ['수술 전', 'Before surgery', '术前'], ['수술 후', 'After surgery', '术后'],
+    ['해당 안내는 준비 중입니다.', 'This information is coming soon.', '相关指南准备中。'],
+    ['해당 분야의 수술 안내는 준비 중입니다.', 'Surgery information for this topic is coming soon.', '该领域的手术指南准备中。'],
+    ['안내 정보를 불러올 수 없습니다.', 'Unable to load this information.', '无法加载相关信息。'],
+    ['홈에서 원하시는 분야를 다시 선택해 주세요.', 'Please choose a topic again from the home page.', '请返回首页重新选择相关领域。'],
+    ['화면 확인용 샘플 안내입니다. 실제 안내는 AA안과 검토 후 반영됩니다.', 'Preview content only. Actual guidance will be added after AA Eye Clinic review.', '本内容仅供界面预览，实际指南经AA眼科审核后发布。'],
+    ['카카오상담', 'Kakao consultation', 'Kakao咨询'], ['네이버예약', 'Naver booking', 'Naver预约'],
+    ['연결 준비 중', 'Link coming soon', '链接准备中'], ['새 탭으로 연결', 'Opens in a new tab', '在新标签页打开'],
+    ['카카오톡 채널 연결 준비 중', 'Kakao channel coming soon', 'Kakao频道准备中'],
+    ['영어·중국어로 화면을 전환할 수 있습니다.', 'Choose English or Chinese.', '可切换为英文或中文。'],
+    ['환자 정보는 외부로 보내지 않고 화면 문구를 번역합니다.', 'Interface labels are translated locally. Patient data is not sent externally.', '界面文字在本地翻译，不向外部发送患者信息。'],
+    ['Google Translate로 전체 페이지를 번역합니다.', 'Translate this page with Google Translate.', '使用Google翻译此页面。'],
+    ['진료시간', 'Clinic hours', '门诊时间'], ['원장소개', 'Our doctors', '医生介绍'],
+    ['장비소개', 'Our equipment', '设备介绍'], ['평일', 'Weekdays', '工作日'],
+    ['토요일', 'Saturday', '周六'], ['점심시간', 'Lunch break', '午休时间'],
+    ['일요일 · 공휴일', 'Sundays and holidays', '周日及节假日'], ['확인 후 안내', 'To be confirmed', '确认后公布'],
+    ['진료 여부 확인 후 안내', 'Opening status to be confirmed', '确认是否接诊后公布'],
+    ['AA안과의 진료시간과 의료진, 진료 장비를 안내합니다.', 'Learn about our clinic hours, doctors, and equipment.', '了解AA眼科的门诊时间、医生和设备。'],
+    ['화면 확인용 샘플 안내입니다. 실제 진료시간, 원장 및 장비 정보는 AA안과 확인 후 반영됩니다.', 'Preview only. Actual hours, doctor profiles, and equipment information will be added after clinic confirmation.', '仅供界面预览。实际门诊时间、医生和设备信息经医院确认后发布。'],
+    ['원장 인사말', 'A message from the doctor', '医生寄语'],
+    ['주요 약력 및 진료 분야', 'Profile and areas of care', '主要履历与诊疗领域'],
+    ['진료 장비 안내 준비 중', 'Equipment information coming soon', '诊疗设备信息准备中'],
+    ['원장 이름과 인사말을 소개할 영역입니다. AA안과에서 확인한 내용을 반영할 예정입니다.', 'This area will introduce the doctor and a welcome message after clinic confirmation.', '此处将介绍医生姓名及寄语，内容经医院确认后发布。'],
+    ['원장의 주요 약력과 진료 분야를 안내할 영역입니다. 실제 경력과 자격 정보는 확인 후 등록합니다.', 'This area will show the doctor’s background and areas of care. Credentials will be added after verification.', '此处将介绍医生的主要履历与诊疗领域，实际经历和资质经确认后发布。'],
+    ['장비명과 용도를 소개할 영역입니다. AA안과의 실제 보유 장비를 확인한 뒤 설명을 반영합니다.', 'This area will introduce equipment names and purposes after confirming the clinic’s equipment.', '此处将介绍设备名称及用途，确认医院实际设备后补充说明。'],
+    ['화면 확인용 샘플', 'Preview only', '界面预览'], ['샘플 정보', 'Sample data', '示例信息'],
+    ['로그인·EMR 연동 전 미리보기입니다. 모든 환자 정보와 약 정보는 가상 예시입니다.', 'Preview before login and EMR integration. All patient and medication data are fictional.', '此为登录和EMR对接前的预览。患者及药物信息均为虚构示例。'],
+    ['확인 예정', 'To be confirmed', '待确认'], ['환자 정보', 'Patient information', '患者信息'],
+    ['환자명', 'Patient name', '患者姓名'], ['차트번호', 'Chart number', '病历号'],
+    ['생년월일', 'Date of birth', '出生日期'], ['주소 (시·군·구)', 'Address (city / district)', '地址（市区县）'],
+    ['전화번호 뒷자리', 'Last four phone digits', '电话号码后四位'], ['증상', 'Condition / symptoms', '症状'],
+    ['최근 진료일', 'Most recent visit', '最近就诊日期'], ['담당의', 'Doctor', '主治医生'],
+    ['이전 진료 내역', 'Previous visits', '既往就诊记录'],
+    ['이전 진료일과 담당의를 확인하세요.', 'Review previous visit dates and doctors.', '查看以往就诊日期和主治医生。'],
+    ['이전 진료 내역이 없습니다.', 'No previous visits.', '暂无既往就诊记录。'],
+    ['최근 처방된 약', 'Recent prescriptions', '最近处方药'], ['복약순서 예시', 'Example order', '用药顺序示例'],
+    ['아래 약명과 순서는 화면 확인용입니다. 실제 약명과 복약순서는 병원이 확인한 처방에 따라 표시할 예정입니다.', 'The names and order below are examples. Actual prescriptions will be shown after clinic confirmation.', '以下药名及顺序仅供预览，实际内容将依据医院确认的处方显示。'],
+    ['복용방법', 'How to use', '用法'], ['약 설명', 'About this medication', '药物简介'],
+    ['복용방법 안내를 준비 중입니다.', 'Instructions are not yet available.', '用法说明准备中。'],
+    ['약 설명을 준비 중입니다.', 'Medication information is coming soon.', '药物简介准备中。'],
+    ['최근 처방된 약 정보가 없습니다.', 'No recent prescription information.', '暂无最近处方药信息。'],
+    ['다음 진료예정일', 'Next suggested visit', '下次建议就诊时间'],
+    ['확정된 진료일이 아닙니다. 예약하거나 해당일에 당일 접수 바랍니다.', 'This is not a confirmed appointment. Please book a visit or register on the day.', '此时间并非已确认预约，请提前预约或于当天挂号。'],
+    ['환자 정보를 불러올 수 없습니다.', 'Unable to load patient information.', '无法加载患者信息。'],
+    ['카테고리 메뉴 열기', 'Open category menu', '打开分类菜单'], ['메뉴 닫기', 'Close menu', '关闭菜单'],
+    ['언어 선택', 'Choose language', '选择语言'], ['이전 달', 'Previous month', '上个月'],
+    ['다음 달', 'Next month', '下个月'], ['상담 및 예약 메뉴 열기', 'Open consultation and booking', '打开咨询与预约'],
+    ['상담 및 예약 메뉴 닫기', 'Close consultation and booking', '关闭咨询与预约'],
+    ['신정', 'New Year’s Day', '元旦'], ['설날', 'Lunar New Year', '春节'], ['설날 연휴', 'Lunar New Year holiday', '春节假期'],
+    ['삼일절', 'Independence Movement Day', '三一节'], ['노동절', 'Labor Day', '劳动节'],
+    ['어린이날', 'Children’s Day', '儿童节'], ['부처님오신날', 'Buddha’s Birthday', '佛诞日'],
+    ['현충일', 'Memorial Day', '显忠日'], ['제헌절', 'Constitution Day', '制宪节'],
+    ['광복절', 'Liberation Day', '光复节'], ['추석', 'Chuseok', '中秋节'], ['추석 연휴', 'Chuseok holiday', '中秋假期'],
+    ['개천절', 'National Foundation Day', '开天节'], ['한글날', 'Hangeul Day', '韩文日'],
+    ['성탄절', 'Christmas', '圣诞节'], ['대체공휴일', 'Substitute holiday', '补休日'], ['지방선거', 'Local elections', '地方选举']
+  ].forEach(function (row) { add(row[0], row[1], row[2]); });
+
+  // Mock Data의 안내 문구를 각 화면의 같은 위치에 맞춰 현지화합니다.
+  var topics = {
+    vision: ['Vision correction', '视力矫正'], cataract: ['Cataract', '白内障'],
+    glaucoma: ['Glaucoma', '青光眼'], retina: ['Retina', '视网膜'], myopia: ['Childhood myopia', '儿童近视']
+  };
+  var sections = {
+    overview: ['Overview and symptoms', '基本信息与症状'], outpatient: ['Outpatient guidance', '门诊指南'],
+    beforeSurgery: ['Preparation before surgery', '术前准备'], afterSurgery: ['Care after surgery', '术后护理']
+  };
+  Object.keys(topics).forEach(function (key) {
+    var data = (window.diseaseData || {})[key];
+    if (!data) return;
+    var topic = topics[key];
+    add(data.summary, 'Find ' + topic[0].toLowerCase() + ' information and guidance before and after your visit.', '了解' + topic[1] + '相关信息及就诊前后指南。');
+    Object.keys(sections).forEach(function (section) {
+      (data[section] || []).forEach(function (item, index) {
+        var enTitle = section === 'overview' ? (index === 0 ? 'About ' + topic[0].toLowerCase() : 'Understanding related symptoms') :
+          section === 'outpatient' ? (index === 0 ? 'Before your visit' : 'After your visit') : sections[section][0];
+        var zhTitle = section === 'overview' ? (index === 0 ? '了解' + topic[1] : '相关症状说明') :
+          section === 'outpatient' ? (index === 0 ? '就诊前指南' : '就诊后指南') : sections[section][1];
+        add(item.title, enTitle, zhTitle);
+        add(item.text, 'Preview area for ' + topic[0].toLowerCase() + ': ' + enTitle.toLowerCase() + '. Actual information will be added after AA Eye Clinic review.',
+          topic[1] + '的' + zhTitle + '预览区域。实际信息将在AA眼科审核后发布。');
+      });
+    });
+  });
+  var notices = (window.homeData || {}).notices || [];
+  var noticeTexts = [
+    ['Clinic information coming soon (sample)', '医院信息准备中（示例）', 'This is a sample notice for preview. Actual clinic notices will be posted after confirmation.', '此为公告区域的预览示例，实际医院公告将在确认后发布。'],
+    ['How to use the doctor schedule (sample)', '医生排班使用指南（示例）', 'Choose a date in the calendar to view schedules. All displayed doctor names and schedules are examples.', '选择日历中的日期查看排班。当前显示的医生姓名和排班均为示例。'],
+    ['Before and after your visit (sample)', '就诊前后指南（示例）', 'Each category contains an information page. Actual patient guidance will be added after clinic review.', '各分类提供相关信息页面，实际患者指南将在医院审核后发布。']
+  ];
+  notices.forEach(function (notice, index) {
+    if (!noticeTexts[index]) return;
+    add(notice.title, noticeTexts[index][0], noticeTexts[index][1]);
+    add(notice.content, noticeTexts[index][2], noticeTexts[index][3]);
+  });
+  ((window.patientMockData || {}).medications || []).forEach(function (med, index) {
+    add(med.name, 'Sample prescription ' + (index + 1), '处方药示例 ' + (index + 1));
+    add(med.usage, 'This preview area will contain instructions verified by the clinic. No dosage or timing is provided in this sample.', '此预览区域将显示医院确认的用法。本示例不提供剂量或用药间隔。');
+    add(med.description, 'This preview area will provide a brief explanation after clinic review.', '此预览区域将在医院审核后提供简要药物说明。');
+  });
+
+  var originals = new WeakMap();
+  var attributes = new WeakMap();
+  var current = 'ko';
+  var originalTitle = document.title;
+  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function translate(text) {
+    if (current === 'ko') return text;
+    var trimmed = text.trim().replace(/\s+/g, ' ');
+    var entry = dictionary[trimmed];
+    var value = entry && entry[current];
+    if (!value) {
+      value = trimmed.replace(/(\d+)번 원장/g, current === 'en' ? 'Doctor $1' : '$1号医生')
+        .replace(/(\d+)년\s*(\d+)월\s*(\d+)일/g, current === 'en' ? '$1-$2-$3' : '$1年$2月$3日')
+        .replace(/(\d+)년\s*(\d+)월/g, function (_, y, m) { return current === 'en' ? monthNames[Number(m) - 1] + ' ' + y : y + '年' + m + '月'; })
+        .replace(/(\d+)월\s*(\d+)일\s*\(([일월화수목금토])\)/g, function (_, m, d, weekday) { return current === 'en' ? monthNames[Number(m) - 1] + ' ' + d + ' (' + dictionary[weekday].en + ')' : m + '月' + d + '日（周' + dictionary[weekday]['zh-CN'] + '）'; });
+      // 탭 제목과 동적으로 생성되는 짧은 안내에 쓰이는 공통 항목입니다.
+      ['마이페이지', '병원소개', '시력교정', '백내장', '녹내장', '소아근시', '망막', '담당의', 'AA안과'].forEach(function (key) {
+        value = value.split(key).join(dictionary[key][current]);
+      });
+      value = value.replace(/안내/g, current === 'en' ? 'Guide' : '指南');
+      ['오전 진료만', '종일 진료', '대체공휴일'].forEach(function (key) {
+        value = value.split(key).join(dictionary[key][current]);
+      });
+    }
+    return text.replace(text.trim(), value);
+  }
+  function protectedNode(element) {
+    return element.closest('script, style, noscript, svg, [translate="no"], .notranslate, [data-patient-field]');
+  }
+  function refresh() {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (!node.textContent.trim() || protectedNode(node.parentElement)) continue;
+      if (!originals.has(node)) originals.set(node, node.textContent);
+      var translated = translate(originals.get(node));
+      if (node.textContent !== translated) node.textContent = translated;
+    }
+    document.querySelectorAll('[aria-label], [title], [placeholder]').forEach(function (element) {
+      if (protectedNode(element)) return;
+      if (!attributes.has(element)) attributes.set(element, {});
+      var saved = attributes.get(element);
+      ['aria-label', 'title', 'placeholder'].forEach(function (key) {
+        if (!element.hasAttribute(key)) return;
+        var actual = element.getAttribute(key);
+        if (!saved[key] || (actual !== saved[key].translated && actual !== saved[key].original)) saved[key] = { original: actual };
+        var translated = translate(saved[key].original);
+        saved[key].translated = translated;
+        if (actual !== translated) element.setAttribute(key, translated);
+      });
+    });
+    var title = translate(originalTitle);
+    if (document.title !== title) document.title = title;
+    document.documentElement.lang = current === 'ko' ? 'ko' : current;
+    var reset = document.querySelector('[data-language-reset]');
+    if (reset) reset.hidden = current === 'ko';
+  }
+  function retainLanguageInLinks() {
+    document.querySelectorAll('a[href]').forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (link.hasAttribute('data-language') || !href || href.startsWith('#')) return;
+      if (!/^[a-z-]+\.html(?:[?#]|$)/.test(href)) return;
+      var url = new URL(href, window.location.href);
+      url.searchParams.set('lang', current);
+      link.setAttribute('href', url.pathname.split('/').pop() + url.search + url.hash);
+    });
+  }
+  window.applyUILanguage = function (language) {
+    current = ['en', 'zh-CN'].includes(language) ? language : 'ko';
+    try { localStorage.setItem('aa-ui-language', current); } catch (error) { /* 파일 모드의 저장 차단 시에도 현재 화면은 전환합니다. */ }
+    refresh();
+    retainLanguageInLinks();
+  };
+  var selected = 'ko';
+  try { selected = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('aa-ui-language') || 'ko'; } catch (error) { /* 저장소 미지원 */ }
+  if (!window.location.hostname.endsWith('.translate.goog')) window.applyUILanguage(selected);
+  var pending = false;
+  new MutationObserver(function () {
+    if (pending || current === 'ko') return;
+    pending = true;
+    queueMicrotask(function () { pending = false; refresh(); });
+  }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['aria-label', 'title'] });
+  var reset = document.querySelector('[data-language-reset]');
+  if (reset) reset.addEventListener('click', function () { window.applyUILanguage('ko'); });
+}());

@@ -105,13 +105,19 @@
       if (!isPublicUrl(pageUrl)) pageUrl = null;
     } catch (error) { pageUrl = null; }
 
-    // 개인 진료기록 화면은 Google 번역 프록시로 전송하지 않습니다.
+    // 개인 진료기록과 로컬 파일은 내장 화면 번역으로 처리합니다.
     var privatePage = document.body.hasAttribute('data-private-page');
     if (privatePage) pageUrl = null;
 
     links.forEach(function (link) {
       if (!pageUrl) {
-        link.setAttribute('aria-disabled', 'true');
+        link.removeAttribute('aria-disabled');
+        link.href = '?lang=' + link.getAttribute('data-language');
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          if (window.applyUILanguage) window.applyUILanguage(link.getAttribute('data-language'));
+          setOpen(false, true);
+        });
         return;
       }
       var translated = new URL('https://translate.google.com/translate');
@@ -121,10 +127,10 @@
       link.href = translated.href;
     });
     notice.textContent = privatePage
-      ? '마이페이지는 개인정보 보호를 위해 외부 자동번역을 사용하지 않습니다.'
+      ? '환자 정보는 외부로 보내지 않고 화면 문구를 번역합니다.'
       : pageUrl
       ? 'Google Translate로 전체 페이지를 번역합니다.'
-      : '번역은 웹사이트 배포 후 이용할 수 있습니다.';
+      : '영어·중국어로 화면을 전환할 수 있습니다.';
 
     function setOpen(open, restoreFocus) {
       panel.hidden = !open;
