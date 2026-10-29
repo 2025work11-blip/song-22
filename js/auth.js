@@ -16,7 +16,9 @@
     if (navigating) return;
     navigating = true;
     var target = new URL(file, window.location.href);
-    var language = new URLSearchParams(window.location.search).get('lang');
+    // 주소 갱신이 제한되는 로컬 파일에서도 실제 화면의 선택 언어를 우선합니다.
+    var language = window.aaUILanguage || (document.documentElement || {}).lang ||
+      new URLSearchParams(window.location.search).get('lang');
     if (language && ['ko', 'en', 'zh-CN'].includes(language)) target.searchParams.set('lang', language);
     window.location.replace(target.href);
   }

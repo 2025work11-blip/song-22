@@ -68,7 +68,8 @@
     });
   }
 
-  // Google의 웹사이트 번역 화면으로 연결합니다. API 키나 비공식 번역 위젯은 사용하지 않습니다.
+  // 지구본은 모든 화면에서 동일한 내장 언어 전환을 사용합니다.
+  // Google 번역 프록시로 이동하면 로그인 세션의 출처가 바뀌므로 자동 이동하지 않습니다.
   function initializeLanguages() {
     var picker = document.querySelector('[data-language-picker]');
     if (!picker) return;
@@ -76,75 +77,34 @@
     var panel = picker.querySelector('[data-language-panel]');
     var notice = picker.querySelector('[data-language-notice]');
     var links = picker.querySelectorAll('[data-language]');
-
-    function isPublicUrl(url) {
-      var host = url.hostname;
-      return /^https?:$/.test(url.protocol) && host.includes('.') &&
-        !/^(localhost|127\.|0\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host) &&
-        !/\.(local|localhost|test|invalid)$/.test(host);
+    var sourceUrl = new URL(window.location.href);
+    var translatedProxy = sourceUrl.hostname.endsWith('.translate.goog');
+    if (translatedProxy) {
+      // 이전 번역 링크로 열린 화면은 원래 서비스 주소로 복귀합니다.
+      sourceUrl.hostname = sourceUrl.hostname.replace(/\.translate\.goog$/, '')
+        .replace(/--/g, '\u0000').replace(/-/g, '.').replace(/\u0000/g, '-');
+      sourceUrl.protocol = 'https:';
+      Array.from(sourceUrl.searchParams.keys()).forEach(function (key) {
+        if (key.startsWith('_x_tr_')) sourceUrl.searchParams.delete(key);
+      });
     }
-    var pageUrl = null;
-    try {
-      var configured = (window.siteConfig || {}).publicSiteUrl;
-      if (configured) {
-        var base = new URL(configured);
-        base.pathname = base.pathname.replace(/\/index\.html$/, '/').replace(/\/?$/, '/');
-        pageUrl = new URL(window.location.pathname.split('/').pop() || 'index.html', base);
-      } else {
-        pageUrl = new URL(window.location.href);
-        // Google의 번역 프록시 안에서 언어를 다시 선택할 때 원래 주소를 복원합니다.
-        if (pageUrl.hostname.endsWith('.translate.goog')) {
-          pageUrl.hostname = pageUrl.hostname.replace(/\.translate\.goog$/, '')
-            .replace(/--/g, '\u0000').replace(/-/g, '.').replace(/\u0000/g, '-');
-          pageUrl.protocol = 'https:';
-          Array.from(pageUrl.searchParams.keys()).forEach(function (key) {
-            if (key.startsWith('_x_tr_')) pageUrl.searchParams.delete(key);
-          });
-        }
-      }
-      if (!isPublicUrl(pageUrl)) pageUrl = null;
-    } catch (error) { pageUrl = null; }
-
-    // 개인 진료기록과 로컬 파일은 내장 화면 번역으로 처리합니다.
-    var privatePage = document.body.hasAttribute('data-private-page');
-    if (privatePage) pageUrl = null;
-
+    sourceUrl.hash = '';
     links.forEach(function (link) {
       var language = link.getAttribute('data-language');
-      if (language === 'ko' && window.location.hostname.endsWith('.translate.goog') && pageUrl) {
-        var originalPage = new URL(pageUrl.href);
-        originalPage.searchParams.set('lang', 'ko');
-        link.href = originalPage.href;
-        return;
-      }
-      if (!pageUrl || language === 'ko') {
-        link.removeAttribute('aria-disabled');
-        link.href = '?lang=' + link.getAttribute('data-language');
-        link.addEventListener('click', function (event) {
-          event.preventDefault();
-          if (window.applyUILanguage) window.applyUILanguage(link.getAttribute('data-language'));
-          setOpen(false, true);
-        });
-        return;
-      }
-      var translated = new URL('https://translate.google.com/translate');
-      translated.searchParams.set('sl', 'ko');
-      translated.searchParams.set('tl', link.getAttribute('data-language'));
-      translated.searchParams.set('u', pageUrl.href);
-      link.href = translated.href;
+      var target = new URL(sourceUrl.href);
+      target.searchParams.set('lang', language);
+      link.href = target.href;
+      link.removeAttribute('aria-disabled');
+      link.addEventListener('click', function (event) {
+        if (translatedProxy || typeof window.applyUILanguage !== 'function') return;
+        event.preventDefault();
+        window.applyUILanguage(language);
+        setOpen(false, true);
+      });
     });
-    var selectedLanguage = new URLSearchParams(window.location.search).get('_x_tr_tl') ||
-      new URLSearchParams(window.location.search).get('lang') || 'ko';
-    links.forEach(function (link) {
-      if (link.getAttribute('data-language') === selectedLanguage) link.setAttribute('aria-current', 'true');
-      else link.removeAttribute('aria-current');
-    });
-    notice.textContent = privatePage
+    notice.textContent = document.body.hasAttribute('data-private-page')
       ? '환자 정보는 외부로 보내지 않고 화면 문구를 번역합니다.'
-      : pageUrl
-      ? 'Google Translate로 전체 페이지를 번역합니다.'
-      : '영어·중국어로 화면을 전환할 수 있습니다.';
-
+      : '언어를 선택하면 현재 화면이 바뀝니다.';
     function setOpen(open, restoreFocus) {
       panel.hidden = !open;
       trigger.setAttribute('aria-expanded', String(open));

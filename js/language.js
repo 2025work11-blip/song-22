@@ -1,5 +1,5 @@
-// 공개 사이트는 common.js에서 Google 웹사이트 번역에 연결합니다.
-// 로컬 파일·마이페이지에서는 아래 내장 문구로 화면을 전환합니다. 외부 요청은 없습니다.
+// 로그인 세션과 함께 모든 페이지에서 내장 문구로 화면을 전환합니다.
+// 외부 번역 프록시로 이동하거나 환자 정보를 외부로 보내지 않습니다.
 // 저장하는 값은 언어 코드뿐이며 환자 정보는 저장하거나 전송하지 않습니다.
 (function () {
   'use strict';
@@ -56,6 +56,7 @@
     ['영어·중국어로 화면을 전환할 수 있습니다.', 'Choose English or Chinese.', '可切换为英文或中文。'],
     ['환자 정보는 외부로 보내지 않고 화면 문구를 번역합니다.', 'Interface labels are translated locally. Patient data is not sent externally.', '界面文字在本地翻译，不向外部发送患者信息。'],
     ['Google Translate로 전체 페이지를 번역합니다.', 'Translate this page with Google Translate.', '使用Google翻译此页面。'],
+    ['언어를 선택하면 현재 화면이 바뀝니다.', 'Choose a language to update this page.', '选择语言即可切换当前页面。'],
     ['진료시간', 'Clinic hours', '门诊时间'], ['원장소개', 'Our doctors', '医生介绍'],
     ['장비소개', 'Our equipment', '设备介绍'], ['평일', 'Weekdays', '工作日'],
     ['토요일', 'Saturday', '周六'], ['점심시간', 'Lunch break', '午休时间'],
@@ -240,12 +241,22 @@
   }
   window.applyUILanguage = function (language) {
     current = ['en', 'zh-CN'].includes(language) ? language : 'ko';
+    window.aaUILanguage = current;
     try { localStorage.setItem('aa-ui-language', current); } catch (error) { /* 파일 모드의 저장 차단 시에도 현재 화면은 전환합니다. */ }
+    try {
+      var currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set('lang', current);
+      window.history.replaceState(null, '', currentUrl.href);
+    } catch (error) { /* file://에서 주소 변경이 제한되어도 전환과 저장은 유지합니다. */ }
     refresh();
     retainLanguageInLinks();
   };
   var selected = 'ko';
-  try { selected = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('aa-ui-language') || 'ko'; } catch (error) { /* 저장소 미지원 */ }
+  var queryLanguage = new URLSearchParams(window.location.search).get('lang');
+  if (['ko', 'en', 'zh-CN'].includes(queryLanguage)) selected = queryLanguage;
+  else {
+    try { selected = localStorage.getItem('aa-ui-language') || 'ko'; } catch (error) { /* 저장소 미지원 */ }
+  }
   if (!window.location.hostname.endsWith('.translate.goog')) window.applyUILanguage(selected);
   var pending = false;
   new MutationObserver(function () {
