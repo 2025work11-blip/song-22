@@ -7,6 +7,11 @@ window.patientMockData = {
   district: '서울특별시 강남구',
   phoneLastFour: '0000',
   symptom: '백내장',
+  // 병원이 확인한 언어별 표기를 넣습니다. 환자 이름·식별번호는 자동 번역하지 않습니다.
+  localized: {
+    en: { district: 'Gangnam-gu, Seoul', symptom: 'Cataract' },
+    'zh-CN': { district: '首尔特别市江南区', symptom: '白内障' }
+  },
   latestVisit: { date: '2026-10-10', doctor: '1번 원장' },
   previousVisits: [
     { date: '2026-09-18', doctor: '1번 원장' },

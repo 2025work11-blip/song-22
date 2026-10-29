@@ -588,3 +588,5 @@ body.drawer-open { overflow: hidden; }
 @media (max-width: 420px) {
   .header-actions .home-link { display: none; }
 }
+
+.selected-language-icon { display: block; width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }

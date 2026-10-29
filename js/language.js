@@ -197,9 +197,11 @@
     return text.replace(text.trim(), value);
   }
   function protectedNode(element) {
-    return element.closest('script, style, noscript, svg, [translate="no"], .notranslate, [data-patient-field]');
+    return element.closest('script, style, noscript, svg, [translate="no"], .notranslate, [data-patient-field], [data-patient-label]');
   }
   function refresh() {
+    // 환자 정보는 외부 번역 대신 필드별 표시 형식과 확인된 언어별 표기를 사용합니다.
+    if (window.renderPatientLanguage) window.renderPatientLanguage(current);
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     var node;
     while ((node = walker.nextNode())) {
@@ -209,7 +211,7 @@
       if (node.textContent !== translated) node.textContent = translated;
     }
     document.querySelectorAll('[aria-label], [title], [placeholder]').forEach(function (element) {
-      if (protectedNode(element)) return;
+      if (protectedNode(element) || element.hasAttribute('data-language-toggle')) return;
       if (!attributes.has(element)) attributes.set(element, {});
       var saved = attributes.get(element);
       ['aria-label', 'title', 'placeholder'].forEach(function (key) {
@@ -224,6 +226,20 @@
     var title = translate(originalTitle);
     if (document.title !== title) document.title = title;
     document.documentElement.lang = current === 'ko' ? 'ko' : current;
+    var languageButton = document.querySelector('[data-language-toggle]');
+    var languageIcon = document.querySelector('[data-language-icon]');
+    var languageInfo = {
+      ko: ['kr', '언어 선택: 한국어'],
+      en: ['us', 'Choose language: English'],
+      'zh-CN': ['cn', '选择语言：中文']
+    }[current];
+    if (languageIcon) {
+      var iconPath = 'assets/flags/' + languageInfo[0] + '.svg';
+      if (languageIcon.getAttribute('src') !== iconPath) languageIcon.setAttribute('src', iconPath);
+    }
+    if (languageButton && languageButton.getAttribute('aria-label') !== languageInfo[1]) {
+      languageButton.setAttribute('aria-label', languageInfo[1]);
+    }
     document.querySelectorAll('[data-language]').forEach(function (link) {
       if (link.getAttribute('data-language') === current) link.setAttribute('aria-current', 'true');
       else link.removeAttribute('aria-current');
