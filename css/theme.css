@@ -177,7 +177,7 @@ html[data-theme='dark'] .month-navigation button:hover { background: transparent
   .home-page .category-card .card-detail { padding: 8px 6px; font-size: 11px; }
 }
 
-.doctor-legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.doctor-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 button.doctor-legend-item { font-family: var(--font); cursor: pointer; opacity: .72; }
 button.doctor-legend-item[aria-pressed='true'] { opacity: 1; outline: 2px solid var(--doctor-color, #436d99); outline-offset: 2px; font-weight: 700; }
 button.doctor-legend-item:hover { opacity: 1; }
@@ -193,3 +193,6 @@ html[data-theme='dark'] .home-page .category-card .card-detail {
 }
 .schedule-hours,
 html[data-theme='dark'] .schedule-hours { border: 1px solid #929aa4; box-shadow: none; }
+.schedule-period-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; }
+.schedule-work-hours { color: var(--muted); font-size: 12px; }
+.holiday-hours { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; color: var(--muted); font-size: 12px; }

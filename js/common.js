@@ -51,7 +51,8 @@
     } catch (error) { /* 주소가 없으면 준비 중 상태를 유지합니다. */ }
 
     // 처음에는 펼치고, 사용자가 변경한 상태는 모든 페이지에서 공유합니다.
-    var storageKey = 'aa-quick-actions-open';
+    // 이전 버전의 바깥 클릭으로 저장된 닫힘 상태는 가져오지 않습니다.
+    var storageKey = 'aa-quick-actions-explicit-open';
     function setOpen(open, restoreFocus, save) {
       actions.hidden = !open;
       trigger.setAttribute('aria-expanded', String(open));
@@ -65,9 +66,6 @@
     try { initiallyOpen = localStorage.getItem(storageKey) !== 'false'; } catch (error) { /* 기본 펼침 상태를 사용합니다. */ }
     setOpen(initiallyOpen, false, false);
     trigger.addEventListener('click', function () { setOpen(actions.hidden, false, true); });
-    document.addEventListener('click', function (event) {
-      if (!actions.hidden && !widget.contains(event.target)) setOpen(false, false, true);
-    });
     widget.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && !actions.hidden) {
         event.preventDefault();

@@ -74,8 +74,17 @@
     var weekday = weekdays[new Date(parts[0], parts[1] - 1, parts[2]).getDay()];
     dayTitle.textContent = parts[1] + '월 ' + parts[2] + '일 (' + weekday + ')';
     var holidayInfo = document.querySelector('[data-selected-holiday]');
-    holidayInfo.textContent = holidays.dates[selected] || '';
-    holidayInfo.hidden = !holidayInfo.textContent;
+    var holidayName = holidays.dates[selected] || '';
+    holidayInfo.replaceChildren();
+    holidayInfo.hidden = !holidayName;
+    if (holidayName) {
+      holidayInfo.appendChild(make('span', '', holidayName));
+      if (holidayName.includes('대체공휴일')) {
+        var holidayHours = make('span', 'holiday-hours');
+        holidayHours.append(make('span', '', '오전진료'), make('span', '', '오전 8:30 ~ 오후 1:00'));
+        holidayInfo.appendChild(holidayHours);
+      }
+    }
     dayList.replaceChildren();
     var list = entries(selected);
     if (!list.length) {
@@ -87,8 +96,14 @@
       var card = make('article', 'schedule-entry');
       card.appendChild(make('h4', 'schedule-doctor-name ' + colorClass(doctor), doctor ? doctor.name : '원장 정보 확인 중'));
       // 동작이 없는 상태 표시이므로 실제 버튼 대신 버튼 모양의 라벨로 표시합니다.
-      card.appendChild(make('span', 'work-period ' + (entry.period === 'morning' ? 'work-morning' : 'work-full'),
-        entry.period === 'morning' ? '오전' : '종일'));
+      var morning = entry.period === 'morning' || Boolean(holidayName);
+      var hours = morning ? '오전 8:30 ~ 오후 1:00'
+        : parts.length && new Date(parts[0], parts[1] - 1, parts[2]).getDay() === 6
+          ? '오전 8:30 ~ 오후 5:00' : '오전 8:30 ~ 오후 7:00';
+      var period = make('div', 'schedule-period-row');
+      period.append(make('span', 'work-period ' + (morning ? 'work-morning' : 'work-full'), morning ? '오전' : '종일'),
+        make('span', 'schedule-work-hours', hours));
+      card.appendChild(period);
       dayList.appendChild(card);
     });
   }
