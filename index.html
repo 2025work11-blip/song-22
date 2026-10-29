@@ -21,7 +21,7 @@
   <title>AA안과 | 내눈 평생 주치의</title>
   <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261029-layout2">
-  <link rel="stylesheet" href="css/theme.css?v=20261029-share1">
+  <link rel="stylesheet" href="css/theme.css?v=20261029-compact1">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261029-icon1">
   <script defer src="js/layout.js?v=20261029-share1"></script>
   <script defer src="js/config.js"></script>
@@ -29,13 +29,13 @@
   <script defer src="js/data.js?v=20261029-doctors1"></script>
   <script defer src="js/common.js?v=20261029-quickstate1"></script>
   <script defer src="js/patient-data.js?v=20261029-doctors1"></script>
-  <script defer src="js/mypage.js?v=20261029-doctors1"></script>
+  <script defer src="js/mypage.js?v=20261029-summary1"></script>
   <script defer src="js/holidays.js"></script>
   <script defer src="js/home.js?v=20261029-today1"></script>
-  <script defer src="js/language.js?v=20261029-share1"></script>
+  <script defer src="js/language.js?v=20261029-summary1"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/supabase-client.js"></script>
-  <script defer src="js/auth.js?v=20261029-locale2"></script>
+  <script defer src="js/auth.js?v=20261029-summary1"></script>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main">본문으로 바로가기</a>
@@ -43,10 +43,10 @@
 <p class="container auth-global-message" data-auth-global-message role="alert" hidden></p>
 <div data-site-drawer></div>
 <main id="main" class="container home-main" tabindex="-1">
-  <a href="mypage.html" class="patient-summary home-patient-summary notranslate" data-home-patient-summary data-auth-only hidden translate="no" aria-label="마이페이지로 이동 · 환자 요약 (샘플)">
+  <a href="login.html" class="patient-summary home-patient-summary" data-home-patient-summary aria-label="로그인하고 내정보 확인">
     <span class="patient-summary-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="16" cy="11" r="5"/><path d="M6 28v-3a10 10 0 0 1 20 0v3"/></svg></span>
-    <div><p class="patient-summary-name"><span data-patient-field="name">000</span><span data-patient-label="suffix">님</span></p><p><span data-patient-label="recent">최근 진료일 : </span><span data-patient-field="latestVisitDate">2026년 10월 10일</span></p><p><span data-patient-label="symptom">증상 : </span><span data-patient-field="symptom">백내장</span></p></div>
-    <span class="sample-label">샘플 정보</span>
+    <div data-auth-signed-out><p class="patient-summary-name">내정보</p><p>로그인하면 최근 진료일과 증상을 확인할 수 있습니다.</p><span class="patient-login-hint">로그인하고 확인하기</span></div>
+    <div class="notranslate" translate="no" data-home-patient-details data-auth-only hidden><p class="patient-summary-name"><span data-patient-field="name">000</span><span data-patient-label="suffix">님</span></p><p><span data-patient-label="recent">최근 진료일 : </span><span data-patient-field="latestVisitDate">2026년 10월 10일</span></p><p><span data-patient-label="symptom">증상 : </span><span data-patient-field="symptom">백내장</span></p><span class="sample-label">샘플 정보</span></div>
   </a>
   <section class="home-intro" aria-labelledby="home-title">
     <div><p class="eyebrow">AA EYE CARE GUIDE</p><h1 id="home-title">최선의 시력으로 만나는 더 선명한 세상<br><strong>AA안과</strong></h1><p class="intro-description">진료 전후에 필요한 눈 건강 정보를 확인하세요.</p></div>
@@ -54,12 +54,12 @@
   <section aria-labelledby="category-title">
     <div class="category-heading"><h2 id="category-title">어떤 눈 건강 정보가 필요하세요?</h2><p>궁금한 분야를 선택해 주세요.</p></div>
     <div class="category-grid">
-        <a class="category-card" href="vision.html"><h3>시력교정</h3><p>선명한 일상을 위한 안내</p><span class="card-detail">자세히</span></a>
-        <a class="category-card" href="cataract.html"><h3>백내장</h3><p>진료부터 수술 전후까지</p><span class="card-detail">자세히</span></a>
-        <a class="category-card" href="glaucoma.html"><h3>녹내장</h3><p>차근차근 이해하는 눈 건강</p><span class="card-detail">자세히</span></a>
-        <a class="category-card" href="retina.html"><h3>망막</h3><p>궁금했던 망막 분야 안내</p><span class="card-detail">자세히</span></a>
-        <a class="category-card" href="myopia.html"><h3>소아근시</h3><p>우리 아이 눈 건강 안내</p><span class="card-detail">자세히</span></a>
-        <a class="category-card category-card-dark" href="about.html"><h3>병원소개</h3><p>진료시간 · 원장 · 장비 안내</p><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="vision.html"><h3>시력교정</h3><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="cataract.html"><h3>백내장</h3><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="glaucoma.html"><h3>녹내장</h3><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="retina.html"><h3>망막</h3><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="myopia.html"><h3>소아근시</h3><span class="card-detail">자세히</span></a>
+        <a class="category-card category-card-dark" href="about.html"><h3>병원소개</h3><span class="card-detail">자세히</span></a>
     </div>
     <p class="guide-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><span>질환의 기본 정보부터 외래 안내, 수술 전후 정보까지 확인할 수 있습니다.</span></p>
   </section>

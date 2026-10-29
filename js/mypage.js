@@ -48,7 +48,6 @@
     lastLanguage = language;
     lastPatient = patient;
     if (!patient) {
-      if (homeSummary) homeSummary.hidden = true;
       if (page) {
         document.querySelector('[data-patient-content]').hidden = true;
         document.querySelector('[data-patient-error]').hidden = false;

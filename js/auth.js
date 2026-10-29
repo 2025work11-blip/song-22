@@ -60,10 +60,17 @@
     document.querySelectorAll('[data-auth-signed-out]').forEach(function (node) { node.hidden = signedIn; });
     // 샘플 환자 정보는 로그인 후에만 표시합니다. 실제 EMR 본인 매칭은 후속 작업입니다.
     document.querySelectorAll('[data-auth-only]').forEach(function (node) {
-      var patientView = node.hasAttribute('data-home-patient-summary') || node.hasAttribute('data-patient-content');
+      var patientView = node.hasAttribute('data-home-patient-details') || node.hasAttribute('data-patient-content');
       node.hidden = !signedIn || (patientView && !window.patientMockData);
     });
     document.querySelectorAll('[data-auth-required]').forEach(function (node) { node.hidden = signedIn; });
+    var homeSummary = document.querySelector('[data-home-patient-summary]');
+    if (homeSummary) {
+      var target = new URL(signedIn ? 'mypage.html' : 'login.html', window.location.href);
+      if (window.aaUILanguage && window.aaUILanguage !== 'ko') target.searchParams.set('lang', window.aaUILanguage);
+      homeSummary.href = target.href;
+      homeSummary.setAttribute('aria-label', signedIn ? '마이페이지로 이동 · 환자 요약 (샘플)' : '로그인하고 내정보 확인');
+    }
     if (signedIn && mode) navigate('index.html');
   }
   function setFormBusy(busy) {
