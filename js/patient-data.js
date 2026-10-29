@@ -12,11 +12,11 @@ window.patientMockData = {
     en: { district: 'Gangnam-gu, Seoul', symptom: 'Cataract' },
     'zh-CN': { district: '首尔特别市江南区', symptom: '白内障' }
   },
-  latestVisit: { date: '2026-10-10', doctor: '1번 원장' },
+  latestVisit: { date: '2026-10-10', doctor: 'AAA원장' },
   previousVisits: [
-    { date: '2026-09-18', doctor: '1번 원장' },
-    { date: '2026-08-21', doctor: '2번 원장' },
-    { date: '2026-07-24', doctor: '1번 원장' }
+    { date: '2026-09-18', doctor: 'AAA원장' },
+    { date: '2026-08-21', doctor: 'BBB원장' },
+    { date: '2026-07-24', doctor: 'AAA원장' }
   ],
   // 약명과 순서는 형식 예시입니다. 실제 약명·용법·순서는 처방 원문을 확인해 표시해야 합니다.
   medications: [

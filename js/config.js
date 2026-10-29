@@ -3,5 +3,5 @@
 window.siteConfig = {
   kakaoChannelUrl: 'https://www.naver.com/',
   naverBookingUrl: 'https://www.naver.com/',
-  publicSiteUrl: ''
+  publicSiteUrl: 'https://jeileyepersonal0.vercel.app/'
 };

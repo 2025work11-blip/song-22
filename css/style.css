@@ -1,4 +1,4 @@
-/* 색상과 글꼴은 이 영역에서 변경하세요. 외부 리소스를 사용하지 않습니다. */
+/* 공통 색상과 글꼴. Pretendard 웹폰트는 각 HTML의 공식 CDN 스타일에서 불러옵니다. */
 :root {
   --blue: #1556c9;
   --blue-dark: #123974;
@@ -8,11 +8,11 @@
   --line: #dce6f0;
   --background: #f6f9fd;
   --white: #fff;
-  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--background); color: var(--ink); font: 16px/1.7 var(--font); word-break: keep-all; overflow-wrap: anywhere; }
+body { margin: 0; background: var(--background); color: var(--ink); font: 400 16px/1.7 var(--font); word-break: keep-all; overflow-wrap: anywhere; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 svg { display: block; flex-shrink: 0; }
@@ -22,7 +22,7 @@ svg { display: block; flex-shrink: 0; }
 .skip-link:focus { transform: translateY(0); }
 .site-header { background: var(--white); border-bottom: 1px solid var(--line); }
 .header-inner { min-height: 88px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-.brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 25px; font-weight: 800; letter-spacing: -1px; white-space: nowrap; }
+.brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 25px; font-weight: 700; letter-spacing: -1px; white-space: nowrap; }
 .brand-mark { width: 40px; height: 40px; border-radius: 13px; background: var(--blue); color: white; display: grid; place-items: center; }
 .brand-mark svg { width: 26px; height: 26px; }
 .header-caption { color: var(--muted); font-size: 14px; letter-spacing: .03em; }
@@ -30,11 +30,11 @@ svg { display: block; flex-shrink: 0; }
 .home-link:hover { color: var(--blue); }
 .home-main { padding-bottom: 58px; }
 .home-intro { display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; gap: 40px; padding-block: 62px 46px; }
-.eyebrow { margin: 0 0 18px; color: var(--blue); font-size: 12px; font-weight: 750; letter-spacing: .17em; }
+.eyebrow { margin: 0 0 18px; color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .17em; }
 .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 2px; margin-right: 10px; background: currentColor; vertical-align: middle; }
 h1, h2, h3, p { margin-top: 0; }
-.home-intro h1 { font-size: clamp(32px, 3.5vw, 44px); line-height: 1.45; font-weight: 650; letter-spacing: -.055em; margin-bottom: 20px; }
-.home-intro h1 strong { color: var(--blue); font-weight: 800; }
+.home-intro h1 { font-size: clamp(32px, 3.5vw, 44px); line-height: 1.45; font-weight: 600; letter-spacing: -.055em; margin-bottom: 20px; }
+.home-intro h1 strong { color: var(--blue); font-weight: 700; }
 .intro-description { color: var(--muted); margin: 0; font-size: 17px; }
 .eye-art { width: 100%; max-width: 400px; justify-self: end; }
 .category-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
@@ -53,10 +53,10 @@ h1, h2, h3, p { margin-top: 0; }
 .guide-note svg { width: 18px; height: 18px; }
 .site-footer { border-top: 1px solid var(--line); padding: 26px 0 calc(150px + env(safe-area-inset-bottom, 0px)); color: var(--muted); font-size: 13px; }
 .footer-inner { display: flex; align-items: center; gap: 20px; justify-content: space-between; }
-.footer-brand { color: var(--ink); font-size: 17px; font-weight: 750; }
+.footer-brand { color: var(--ink); font-size: 17px; font-weight: 700; }
 .footer-inner p { margin: 0; }
 .contact-widget { position: fixed; z-index: 10; right: max(24px, env(safe-area-inset-right, 0px)); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; align-items: end; gap: 7px; max-width: calc(100% - 32px); }
-.contact-link { min-height: 52px; padding: 12px 19px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 18px; background: #fee500; color: #352b13; font-size: 15px; font-weight: 750; box-shadow: 0 6px 24px #172c4918; }
+.contact-link { min-height: 52px; padding: 12px 19px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 18px; background: #fee500; color: #352b13; font-size: 15px; font-weight: 700; box-shadow: 0 6px 24px #172c4918; }
 .contact-link[aria-disabled='true'] { background: #eef1f5; color: #596373; box-shadow: 0 4px 16px #172c4910; cursor: not-allowed; }
 .contact-link:not([aria-disabled='true']):hover { background: #f5d900; }
 .contact-link svg { width: 22px; height: 22px; }
@@ -73,12 +73,12 @@ h1, h2, h3, p { margin-top: 0; }
 [hidden] { display: none !important; }
 .section-nav { position: sticky; top: 0; background: #f6f9fdf5; z-index: 5; border-bottom: 1px solid var(--line); padding: 12px 0; }
 .section-nav-inner { display: flex; gap: 8px; }
-.section-nav a { min-height: 44px; padding: 9px 20px; border-radius: 10px; color: var(--muted); font-size: 15px; font-weight: 650; text-align: center; }
+.section-nav a { min-height: 44px; padding: 9px 20px; border-radius: 10px; color: var(--muted); font-size: 15px; font-weight: 600; text-align: center; }
 .section-nav a:hover, .section-nav a[aria-current='location'] { background: var(--blue); color: white; }
 .detail-content { padding-top: 8px; padding-bottom: 46px; }
 .information-section { padding-top: 38px; scroll-margin-top: 88px; }
 .section-heading { display: flex; gap: 14px; align-items: center; margin-bottom: 18px; }
-.section-number { color: var(--blue); font-size: 12px; letter-spacing: .08em; font-weight: 750; }
+.section-number { color: var(--blue); font-size: 12px; letter-spacing: .08em; font-weight: 700; }
 .section-heading h2 { margin: 0; font-size: 23px; letter-spacing: -.04em; }
 .info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .info-card { padding: 25px 28px; border-radius: 16px; background: white; border: 1px solid var(--line); }
@@ -90,7 +90,7 @@ h1, h2, h3, p { margin-top: 0; }
 .hours-list { margin: 0; }
 .hours-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .hours-row:last-child { border-bottom: 0; }
-.hours-row dt { font-weight: 650; }
+.hours-row dt { font-weight: 600; }
 .hours-row dd { margin: 0; color: var(--muted); }
 .about-placeholder { width: 72px; height: 72px; padding: 16px; border-radius: 18px; background: var(--sky); color: var(--blue); margin-bottom: 20px; }
 .about-placeholder svg { width: 100%; height: 100%; }
@@ -199,7 +199,7 @@ body.drawer-open { overflow: hidden; }
 .drawer-header h2 { margin: 0; font-size: 28px; letter-spacing: -.04em; }
 .drawer-close { min-width: 44px; font-size: 30px; line-height: 1; }
 .drawer-nav { display: grid; gap: 8px; padding-block: 22px; }
-.drawer-nav a { display: flex; gap: 16px; align-items: center; min-height: 60px; padding: 12px; border-radius: 12px; font-weight: 650; }
+.drawer-nav a { display: flex; gap: 16px; align-items: center; min-height: 60px; padding: 12px; border-radius: 12px; font-weight: 600; }
 .drawer-nav a:hover { background: #dfedff; color: var(--blue); }
 .drawer-number { color: #607c9e; font-size: 12px; font-weight: 500; letter-spacing: .06em; }
 .drawer-arrow { margin-left: auto; color: #607c9e; }
@@ -228,7 +228,7 @@ body.drawer-open { overflow: hidden; }
 .language-toggle:hover, .language-toggle[aria-expanded='true'] { background: #edf0f2; border-color: #d6dde3; }
 .language-panel { position: absolute; right: 0; top: calc(100% + 12px); z-index: 30; width: 240px; max-width: calc(100vw - 40px); padding: 16px; border: 1px solid #d5dadb; border-radius: 16px; background: #fffefb; color: #353d42; }
 .language-title { margin: 0 8px 10px; font-size: 13px; font-weight: 700; color: #656d72; }
-.language-panel a { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px; border-radius: 9px; font-size: 15px; font-weight: 650; cursor: pointer; }
+.language-panel a { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px; border-radius: 9px; font-size: 15px; font-weight: 600; cursor: pointer; }
 .language-panel a:hover { background: #e9eff4; }
 .language-panel a span { color: #687580; font-size: 13px; font-weight: 400; }
 .language-panel a[aria-disabled='true'] { color: #7b8184; cursor: not-allowed; }
@@ -270,7 +270,7 @@ body.drawer-open { overflow: hidden; }
 .language-options { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
 .language-options a { min-height: 44px; padding: 4px 0; gap: 6px; border-radius: 0; }
 .language-options a:hover { background: transparent; }
-.language-options a span { font-size: 10px; font-weight: 650; color: #455461; }
+.language-options a span { font-size: 10px; font-weight: 600; color: #455461; }
 .language-options img { display: block; width: 32px; height: 22px; object-fit: cover; }
 .language-notice { margin: 4px 0 0; padding: 0; border: 0; text-align: right; font-size: 11px; }
 
@@ -297,7 +297,7 @@ body.drawer-open { overflow: hidden; }
 .schedule-calendar td { padding: 3px; height: 62px; text-align: center; vertical-align: middle; }
 .calendar-day { display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; width: 100%; min-height: 54px; padding: 5px 0; border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--ink); cursor: pointer; font-size: 14px; }
 .calendar-day:hover { background: #f0f1ec; }
-.calendar-day[aria-current='date'] { border-color: #b7c7d7; font-weight: 800; }
+.calendar-day[aria-current='date'] { border-color: #b7c7d7; font-weight: 700; }
 .calendar-day[aria-pressed='true'], .schedule-calendar td:first-child .calendar-day[aria-pressed='true'] { background: #466f99; border-color: #466f99; color: white; }
 .calendar-markers { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 6px; }
 .calendar-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
@@ -320,7 +320,7 @@ body.drawer-open { overflow: hidden; }
 .notice-item { border-bottom: 1px solid #d8dedb; }
 .notice-item summary { list-style: none; cursor: pointer; min-height: 72px; display: flex; align-items: center; gap: 24px; padding: 19px 4px; }
 .notice-item summary::-webkit-details-marker { display: none; }
-.notice-item-title { flex: 1; font-size: 16px; font-weight: 550; }
+.notice-item-title { flex: 1; font-size: 16px; font-weight: 500; }
 .notice-item summary time { color: var(--muted); font-size: 12px; white-space: nowrap; }
 .notice-expand { font-size: 20px; color: #6c7f89; }
 .notice-item[open] .notice-expand { transform: rotate(45deg); }
@@ -365,17 +365,17 @@ body.drawer-open { overflow: hidden; }
 .doctor-purple { --doctor-color: #8968b0; --doctor-tint: #f2edf8; }
 .calendar-dot { width: 9px; height: 9px; border: 1px solid var(--doctor-color, #667586); background: var(--doctor-color, #667586); }
 .calendar-dot.dot-morning { background: linear-gradient(90deg, var(--doctor-color, #667586) 50%, transparent 50%); }
-.doctor-legend-item { display: inline-flex; gap: 8px; min-height: 38px; padding: 7px 14px; border: 1px solid var(--doctor-color); border-radius: 24px; background: var(--doctor-tint); color: #354352; font-size: 13px; font-weight: 650; }
+.doctor-legend-item { display: inline-flex; gap: 8px; min-height: 38px; padding: 7px 14px; border: 1px solid var(--doctor-color); border-radius: 24px; background: var(--doctor-tint); color: #354352; font-size: 13px; font-weight: 600; }
 .calendar-key { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin: 0 0 16px; color: #727b86; font-size: 12px; }
 .calendar-key > span { display: inline-flex; align-items: center; gap: 6px; }
 .key-dot { --doctor-color: #687480; }
 .schedule-calendar { border-collapse: separate; border-spacing: 7px; }
-.schedule-calendar th { height: 40px; font-size: 14px; font-weight: 650; }
+.schedule-calendar th { height: 40px; font-size: 14px; font-weight: 600; }
 .schedule-calendar th:first-child, .schedule-calendar td:first-child button { color: #cc5b63; }
 .schedule-calendar th:last-child, .schedule-calendar td:last-child button { color: #3e7bc6; }
 .schedule-calendar td { height: 94px; padding: 0; }
-.calendar-day { min-height: 94px; gap: 14px; padding: 12px 0; border-radius: 16px; background: #f5f6f8; font-size: 18px; font-weight: 550; }
-.calendar-day:hover { background: #eaeef3; }
+.calendar-day { min-height: 94px; gap: 14px; padding: 12px 0; border: 1px solid #dce9f4; border-radius: 16px; background: #fff; font-size: 18px; font-weight: 500; }
+.calendar-day:hover { background: #f2f8fd; border-color: #88acd0; }
 .calendar-number { display: grid; place-items: center; min-width: 30px; height: 30px; border-radius: 9px; }
 .calendar-day[aria-current='date'] { border-color: #8b98a8; }
 .calendar-day[aria-pressed='true'], .schedule-calendar td:first-child .calendar-day[aria-pressed='true'] { background: #fff; border: 2px solid #414d5b; color: var(--ink); }
@@ -384,21 +384,21 @@ body.drawer-open { overflow: hidden; }
 .calendar-markers { min-height: 10px; gap: 6px; }
 .calendar-outside { background: transparent; color: #b3b8c0; font-weight: 400; justify-content: flex-start; padding-top: 16px; }
 .calendar-footnote { margin: 14px 0 0; color: #737c86; font-size: 12px; }
-.day-panel { margin-top: 24px; padding: 22px; border-radius: 18px; background: #f6f7f9; border: 1px solid #cbd0d7; }
+.day-panel { margin-top: 24px; padding: 22px; border-radius: 18px; background: #fff; border: 1px solid #cbd0d7; }
 .day-panel h3 { margin-bottom: 16px; font-size: 22px; }
 [data-day-schedules] { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
 [data-day-schedules] > .schedule-empty { grid-column: 1 / -1; }
 .schedule-entry { padding: 0; border: 0; }
 .doctor-badge { color: var(--doctor-color); background: var(--doctor-tint); }
 .morning-badge { display: inline-block; padding: 1px 6px; margin-bottom: 6px; background: #fff0d8; color: #8b651f; border-radius: 5px; font-size: 11px; }
-.notice-list { display: grid; gap: 12px; border: 0; }
-.notice-item { border: 1px solid var(--section-border); border-radius: 16px; overflow: hidden; background: #fafbfc; }
+.notice-list { display: grid; gap: 0; border-top: 1px solid var(--section-border); }
+.notice-item { border: 0; border-bottom: 1px solid var(--section-border); border-radius: 0; overflow: hidden; background: #fff; }
 .notice-item:hover { border-color: #788694; }
 .notice-item[open] { border-color: #8398ad; background: #fff; }
-.notice-item summary { min-height: 76px; padding: 20px 22px; background: #f0f1f3; }
-.notice-item summary:hover { background: #f1f4f7; }
-.notice-item-title { font-weight: 650; }
-.notice-content { padding: 22px; border-top: 1px solid #dce1e7; background: #fff; }
+.notice-item summary { min-height: 76px; padding: 20px 22px; background: #fff; }
+.notice-item summary:hover { background: #fff; }
+.notice-item-title { font-weight: 600; }
+.notice-content { padding: 22px; border-top: 1px solid #dce1e7; background: #f3f4f6; }
 @media (max-width: 600px) {
   .home-section { margin-top: 24px; padding: 20px 14px; border-radius: 22px; }
   .home-section-heading h2 { font-size: 22px; }
@@ -432,7 +432,7 @@ body.drawer-open { overflow: hidden; }
 .calendar-day.has-holiday[aria-pressed='true'] .calendar-number { background: #b94f5a; color: #fff; }
 .calendar-holiday-label { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; max-width: 100%; padding-inline: 2px; font-size: 10px; line-height: 1.1; font-weight: 500; }
 .selected-holiday { margin: -8px 0 18px; color: #b94f5a; font-size: 13px; }
-.work-period { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; min-height: 32px; padding: 5px 12px; border: 1px solid #c4cdd5; border-radius: 9px; color: #4a5e70; background: #edf1f5; font-size: 12px; font-weight: 650; }
+.work-period { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; min-height: 32px; padding: 5px 12px; border: 1px solid #c4cdd5; border-radius: 9px; color: #4a5e70; background: #edf1f5; font-size: 12px; font-weight: 600; }
 .work-period.work-morning { border-color: #dec79b; color: #8b651f; background: #fcf4e7; }
 @media (max-width: 600px) {
   .calendar-day.has-holiday { gap: 3px; padding-block: 4px; }
@@ -461,19 +461,19 @@ body.drawer-open { overflow: hidden; }
 .patient-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0; }
 .patient-info-grid > div { padding: 16px 0; border-top: 1px solid #e1e4e8; }
 .patient-info-grid dt { margin-bottom: 6px; color: #667382; font-size: 12px; }
-.patient-info-grid dd { margin: 0; font-size: 16px; font-weight: 650; }
+.patient-info-grid dd { margin: 0; font-size: 16px; font-weight: 600; }
 .patient-section-description { margin: -7px 0 20px; font-size: 13px; color: #667382; }
 .visit-history { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .visit-card { border: 1px solid #cbd0d7; border-radius: 14px; background: #f6f7f9; padding: 18px; }
-.visit-card time { font-size: 15px; font-weight: 650; }
+.visit-card time { font-size: 15px; font-weight: 600; }
 .visit-card p { margin: 9px 0 0; color: #657384; font-size: 13px; }
 .patient-section-heading { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 .patient-small-label { font-size: 11px; padding: 3px 8px; color: #667382; border-radius: 6px; background: #f0f2f5; }
 .medication-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .medication-item { display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid #d6dbe1; border-radius: 14px; background: #fafbfc; }
-.medication-order { width: 30px; height: 30px; display: grid; place-items: center; flex-shrink: 0; border-radius: 50%; background: #e4edf8; color: #436d99; font-size: 14px; font-weight: 750; }
-.medication-name { font-size: 15px; font-weight: 650; }
-.next-visit p { margin: 0; color: #436d99; font-size: 26px; font-weight: 750; letter-spacing: -.035em; }
+.medication-order { width: 30px; height: 30px; display: grid; place-items: center; flex-shrink: 0; border-radius: 50%; background: #e4edf8; color: #436d99; font-size: 14px; font-weight: 700; }
+.medication-name { font-size: 15px; font-weight: 600; }
+.next-visit p { margin: 0; color: #436d99; font-size: 26px; font-weight: 700; letter-spacing: -.035em; }
 .patient-empty { margin: 0; padding: 12px 0; color: #667382; font-size: 14px; grid-column: 1 / -1; }
 @media (max-width: 600px) {
   .section-nav { top: 74px; }
@@ -496,7 +496,7 @@ body.drawer-open { overflow: hidden; }
 /* 배경만 60% 불투명하게 설정해 로고와 아이콘은 선명하게 유지합니다. */
 .site-header, .home-page .site-header { background: rgba(255, 255, 255, .6); }
 .home-patient-summary { position: relative; margin-top: 24px; }
-.home-patient-summary .patient-summary-name { margin: 0 0 16px; color: var(--ink); font-size: 27px; font-weight: 750; letter-spacing: -.04em; }
+.home-patient-summary .patient-summary-name { margin: 0 0 16px; color: var(--ink); font-size: 27px; font-weight: 700; letter-spacing: -.04em; }
 .home-patient-summary .sample-label { position: absolute; top: 16px; right: 18px; }
 @media (max-width: 600px) {
   .home-patient-summary { margin-top: 20px; }
@@ -506,10 +506,10 @@ body.drawer-open { overflow: hidden; }
 
 /* 홈 요약과 Drawer의 요청 범위만 조정합니다. */
 .home-patient-summary { background: #fff; }
-.drawer-header .drawer-category-label { margin: 0; padding-top: 10px; color: var(--blue); font-size: 12px; font-weight: 750; letter-spacing: .15em; }
+.drawer-header .drawer-category-label { margin: 0; padding-top: 10px; color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .15em; }
 .drawer-nav { gap: 0; }
 .drawer-nav a { border-bottom: 1px solid #d0d4d9; border-radius: 0; }
-.schedule-entry .schedule-doctor-name { margin: 0 0 12px; color: var(--ink); font-size: 22px; font-weight: 750; letter-spacing: -.035em; }
+.schedule-entry .schedule-doctor-name { margin: 0 0 12px; color: var(--ink); font-size: 22px; font-weight: 700; letter-spacing: -.035em; }
 
 /* 약 이름을 누르면 복용방법과 약 설명을 펼칩니다. */
 .medication-item { display: block; padding: 0; overflow: hidden; }
@@ -540,7 +540,7 @@ body.drawer-open { overflow: hidden; }
 .language-options a span { color: #171c22; font-size: 12px; font-weight: 500; }
 .language-options img { width: 25px; height: 25px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .language-options a:hover, .language-options a[aria-current='true'] { background: #d3e7fa; }
-.language-options a[aria-current='true'] span { font-weight: 650; }
+.language-options a[aria-current='true'] span { font-weight: 600; }
 @media (max-width: 600px) {
   .language-panel { right: -44px; width: 138px; padding: 7px; border-radius: 13px; }
   .language-options a { min-height: 44px; padding: 6px 8px; gap: 8px; }
@@ -556,16 +556,16 @@ body.drawer-open { overflow: hidden; }
 }
 
 /* Supabase 이메일 인증 화면과 공통 로그인 상태 표시 */
-.header-auth-control { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 7px 10px; border: 1px solid #c6d0db; border-radius: 10px; color: #3c5d80; background: #ffffffb3; font: inherit; font-size: 12px; font-weight: 650; white-space: nowrap; cursor: pointer; }
+.header-auth-control { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 7px 10px; border: 1px solid #c6d0db; border-radius: 10px; color: #3c5d80; background: #ffffffb3; font: inherit; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; }
 .header-auth-control:hover { background: #e7eff8; }
 .header-auth-control:disabled { cursor: wait; opacity: .65; }
 .auth-page { background: #f2f3f5; }
 .auth-main { max-width: 500px; padding: 48px 0 56px; }
 .auth-card { padding: 32px; border: 1px solid #b7bdc5; border-radius: 24px; background: #fff; }
-.auth-eyebrow { margin: 0 0 12px; color: #436d99; font-size: 13px; font-weight: 750; }
+.auth-eyebrow { margin: 0 0 12px; color: #436d99; font-size: 13px; font-weight: 700; }
 .auth-card h1 { font-size: 30px; margin: 0 0 12px; letter-spacing: -.04em; }
 .auth-description { font-size: 14px; color: #667382; margin-bottom: 26px; }
-.auth-card label { display: block; font-size: 14px; font-weight: 650; margin: 18px 0 8px; }
+.auth-card label { display: block; font-size: 14px; font-weight: 600; margin: 18px 0 8px; }
 .auth-card input { display: block; width: 100%; min-height: 48px; padding: 12px; border: 1px solid #bdc8d3; border-radius: 10px; background: #fff; color: var(--ink); font: inherit; font-size: 16px; }
 .auth-field-help { color: #667382; font-size: 12px; margin: 8px 0 0; }
 .auth-submit { width: 100%; min-height: 48px; margin-top: 24px; padding: 12px; border: 1px solid #345c87; border-radius: 11px; background: #436d99; color: white; font: inherit; font-weight: 700; cursor: pointer; }
@@ -590,3 +590,41 @@ body.drawer-open { overflow: hidden; }
 }
 
 .selected-language-icon { display: block; width: 26px; height: 26px; border-radius: 50%; object-fit: cover; }
+
+.schedule-hours { margin: 0 0 26px; padding: 22px; border: 1px solid #c0c7d0; border-radius: 18px; background: #f7f8fa; }
+.schedule-hours h3 { margin: 0 0 14px; color: var(--ink); font-size: 18px; letter-spacing: -.03em; }
+.schedule-hours-list { margin: 0; }
+.schedule-hours-list > div { display: grid; grid-template-columns: minmax(145px, .6fr) minmax(0, 1fr); align-items: center; gap: 10px 24px; padding: 11px 0; border-top: 1px solid #e0e4e9; }
+.schedule-hours-list dt { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; }
+.schedule-hours-list dd { margin: 0; color: #445367; font-size: 16px; font-variant-numeric: tabular-nums; }
+.hours-morning-badge { display: inline-block; padding: 2px 7px; border-radius: 6px; color: #fff; background: #4c535a; font-size: 11px; font-weight: 600; }
+@media (max-width: 600px) {
+  .schedule-hours { padding: 16px; border-radius: 14px; }
+  .schedule-hours-list > div { grid-template-columns: 1fr; gap: 4px; }
+  .schedule-hours-list dt { font-size: 13px; }
+  .schedule-hours-list dd { font-size: 14px; }
+}
+
+.schedule-hours { margin: 24px 0 0; }
+.calendar-day[aria-current='date'] { gap: 2px; padding-block: 4px; border: 2px solid #436d99; background: #edf4fc; }
+.calendar-today-label { display: inline-block; padding: 1px 5px; border-radius: 5px; background: #436d99; color: #fff; font-size: 10px; font-weight: 700; line-height: 1.3; }
+.calendar-day[aria-current='date'][aria-pressed='true'] { border-color: #436d99; background: #edf4fc; }
+@media (max-width: 600px) {
+  .calendar-day[aria-current='date'] { padding-block: 2px; }
+  .calendar-day[aria-current='date'] .calendar-number { height: 22px; }
+  .calendar-today-label { padding: 0 3px; font-size: 8px; line-height: 1.25; }
+}
+.doctor-initial { display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 19px; flex-shrink: 0; border: 1px solid var(--doctor-color, #687480); border-radius: 5px; color: var(--doctor-color, #687480); background: var(--doctor-tint, #edf0f4); font-size: 11px; font-weight: 700; font-style: normal; line-height: 1; }
+.doctor-initial.initial-morning { border-style: dashed; background: #fff; }
+.calendar-markers { gap: 4px; }
+@media (max-width: 600px) {
+  .calendar-markers { gap: 2px; }
+  .calendar-markers .doctor-initial { width: 10px; height: 14px; border-radius: 3px; font-size: 9px; }
+}
+
+button, input, select, textarea { font-family: var(--font); }
+
+/* 로고 심볼과 읽기 쉬운 Pretendard 굵기 체계 */
+h1, h2, h3, h4 { font-weight: 700; }
+.brand-mark { background: transparent; border-radius: 0; }
+.brand-mark img { display: block; width: 100%; height: 100%; object-fit: contain; }

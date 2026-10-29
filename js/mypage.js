@@ -27,7 +27,8 @@
   }
   function doctorText(value, language) {
     if (!value || language === 'ko') return value;
-    return value.replace(/(\d+)번 원장/g, language === 'en' ? 'Doctor $1' : '$1号医生');
+    return value.replace(/([A-Z]{3})원장/g, language === 'en' ? 'Doctor $1' : '$1医生')
+      .replace(/(\d+)번 원장/g, language === 'en' ? 'Doctor $1' : '$1号医生');
   }
   function relativeText(value, language) {
     if (!value || language === 'ko') return value;

@@ -93,10 +93,10 @@ window.diseaseData = {
 window.homeData = {
   doctors: [
     // weekdays: 일요일 0 ~ 토요일 6 / morningOnly: 해당 요일은 오전만 진료
-    { id: 'doctor-1', name: '1번 원장', color: 'blue', weekdays: [1, 2, 3, 4, 5], morningOnly: [3] },
-    { id: 'doctor-2', name: '2번 원장', color: 'amber', weekdays: [1, 2, 4, 5], morningOnly: [4] },
-    { id: 'doctor-3', name: '3번 원장', color: 'teal', weekdays: [1, 2, 3, 5], morningOnly: [] },
-    { id: 'doctor-4', name: '4번 원장', color: 'purple', weekdays: [6], morningOnly: [] }
+    { id: 'doctor-1', name: 'AAA원장', initial: 'A', color: 'blue', weekdays: [1, 2, 3, 4, 5], morningOnly: [3] },
+    { id: 'doctor-2', name: 'BBB원장', initial: 'B', color: 'amber', weekdays: [1, 2, 4, 5], morningOnly: [4] },
+    { id: 'doctor-3', name: 'CCC원장', initial: 'C', color: 'teal', weekdays: [1, 2, 3, 5], morningOnly: [] },
+    { id: 'doctor-4', name: 'DDD원장', initial: 'D', color: 'purple', weekdays: [6], morningOnly: [] }
   ],
   schedules: [
     // 특정 날짜 일정이 필요하면 아래 형식으로 추가합니다. 같은 원장의 해당 날짜 주간 예시를 대체합니다.

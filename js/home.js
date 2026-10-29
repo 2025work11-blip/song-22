@@ -58,7 +58,7 @@
     option.value = doctor.id;
     doctorSelect.appendChild(option);
     var legend = make('span', 'doctor-legend-item ' + colorClass(doctor));
-    var dot = make('span', 'calendar-dot ' + colorClass(doctor));
+    var dot = make('span', 'doctor-initial ' + colorClass(doctor), doctor.initial || '');
     dot.setAttribute('aria-hidden', 'true');
     legend.append(dot, make('span', '', doctor.name));
     document.querySelector('[data-doctor-legend]').appendChild(legend);
@@ -119,14 +119,18 @@
         return (doctor ? doctor.name : '원장') + ' ' + entry.time;
       }).join(', ');
       button.setAttribute('aria-label', key + ', ' + (holidayName ? holidayName + ', ' : '') + (count ? description : '등록된 일정 없음'));
-      if (key === todayKey) button.setAttribute('aria-current', 'date');
+      if (key === todayKey) {
+        button.setAttribute('aria-current', 'date');
+        button.setAttribute('aria-label', '오늘, ' + button.getAttribute('aria-label'));
+        button.appendChild(make('span', 'calendar-today-label', '오늘'));
+      }
       button.appendChild(make('span', 'calendar-number', String(day)));
       var markers = make('span', 'calendar-markers');
       markers.setAttribute('aria-hidden', 'true');
       doctors.forEach(function (doctor) {
         var entry = entries(key).find(function (item) { return item.doctorId === doctor.id; });
         if (entry) {
-          var dot = make('span', 'calendar-dot ' + colorClass(doctor) + (entry.period === 'morning' ? ' dot-morning' : ''));
+          var dot = make('span', 'doctor-initial ' + colorClass(doctor) + (entry.period === 'morning' ? ' initial-morning' : ''), doctor.initial || '');
           dot.title = doctor.name + ' · ' + entry.time;
           markers.appendChild(dot);
         }

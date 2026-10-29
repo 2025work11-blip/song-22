@@ -7,6 +7,8 @@
   function add(ko, en, zh) { dictionary[ko] = { en: en, 'zh-CN': zh }; }
   [
     ['AA안과', 'AA Eye Clinic', 'AA眼科'],
+    ['다크모드로 변경', 'Switch to dark mode', '切换深色模式'],
+    ['라이트모드로 변경', 'Switch to light mode', '切换浅色模式'],
     ['본문으로 바로가기', 'Skip to content', '跳转到正文'],
     ['홈으로', 'Back to home', '返回首页'], ['홈', 'Home', '首页'],
     ['마이페이지', 'My page', '个人中心'], ['시력교정', 'Vision correction', '视力矫正'],
@@ -27,8 +29,9 @@
     ['진료시간 · 원장 · 장비 안내', 'Hours · Doctors · Equipment', '门诊时间 · 医生 · 设备'],
     ['질환의 기본 정보부터 외래 안내, 수술 전후 정보까지 확인할 수 있습니다.', 'Explore condition information, outpatient guidance, and care before and after surgery.', '了解疾病基础知识、门诊指南以及手术前后信息。'],
     ['원장별 일정표', 'Doctor schedule', '医生排班'], ['샘플 일정', 'Sample schedule', '示例排班'],
-    ['날짜 아래의 색상 점으로 원장별 진료 일정을 확인하세요. 원장명과 근무 일정은 화면 확인용 예시입니다.', 'Colored dots show each doctor’s schedule. Doctor names and schedules are examples for this preview.', '日期下方的彩色圆点表示各位医生的排班。医生姓名和排班均为预览示例。'],
+    ['날짜 아래의 A·B·C·D로 원장별 진료 일정을 확인하세요. 원장명과 근무 일정은 화면 확인용 예시입니다.', 'Letters A–D show each doctor’s schedule. Doctor names and schedules are examples for this preview.', '日期下方的A、B、C、D表示各位医生的排班。医生姓名和排班均为预览示例。'],
     ['일정 달력', 'Schedule calendar', '排班日历'], ['원장 선택', 'Select doctor', '选择医生'],
+    ['오늘', 'Today', '今天'],
     ['전체 원장', 'All doctors', '全部医生'], ['종일 진료', 'Full day', '全天门诊'],
     ['오전 진료만', 'Morning only', '仅上午门诊'], ['오전', 'Morning', '上午'], ['종일', 'Full day', '全天'],
     ['일', 'Sun', '日'], ['월', 'Mon', '一'], ['화', 'Tue', '二'], ['수', 'Wed', '三'],
@@ -58,12 +61,19 @@
     ['Google Translate로 전체 페이지를 번역합니다.', 'Translate this page with Google Translate.', '使用Google翻译此页面。'],
     ['언어를 선택하면 현재 화면이 바뀝니다.', 'Choose a language to update this page.', '选择语言即可切换当前页面。'],
     ['진료시간', 'Clinic hours', '门诊时间'], ['원장소개', 'Our doctors', '医生介绍'],
+    ['월 ~ 금요일', 'Monday–Friday', '周一至周五'], ['공휴일', 'Public holidays', '节假日'],
+    ['오전진료', 'Morning hours', '上午门诊'],
+    ['오전 8:30 ~ 오후 7:00', '8:30 AM–7:00 PM', '上午8:30至下午7:00'],
+    ['오전 8:30 ~ 오후 5:00', '8:30 AM–5:00 PM', '上午8:30至下午5:00'],
+    ['오전 8:30 ~ 오후 1:00', '8:30 AM–1:00 PM', '上午8:30至下午1:00'],
+    ['오후 12:30 ~ 오후 2:00', '12:30 PM–2:00 PM', '中午12:30至下午2:00'],
     ['장비소개', 'Our equipment', '设备介绍'], ['평일', 'Weekdays', '工作日'],
     ['토요일', 'Saturday', '周六'], ['점심시간', 'Lunch break', '午休时间'],
     ['일요일 · 공휴일', 'Sundays and holidays', '周日及节假日'], ['확인 후 안내', 'To be confirmed', '确认后公布'],
     ['진료 여부 확인 후 안내', 'Opening status to be confirmed', '确认是否接诊后公布'],
     ['AA안과의 진료시간과 의료진, 진료 장비를 안내합니다.', 'Learn about our clinic hours, doctors, and equipment.', '了解AA眼科的门诊时间、医生和设备。'],
     ['화면 확인용 샘플 안내입니다. 실제 진료시간, 원장 및 장비 정보는 AA안과 확인 후 반영됩니다.', 'Preview only. Actual hours, doctor profiles, and equipment information will be added after clinic confirmation.', '仅供界面预览。实际门诊时间、医生和设备信息经医院确认后发布。'],
+    ['진료시간은 병원에서 제공한 안내를 반영했습니다. 원장 및 장비 소개는 화면 확인용 샘플입니다.', 'Clinic hours follow the information provided by the clinic. Doctor and equipment profiles are preview samples.', '门诊时间依据医院提供的信息。医生及设备介绍为界面预览示例。'],
     ['원장 인사말', 'A message from the doctor', '医生寄语'],
     ['주요 약력 및 진료 분야', 'Profile and areas of care', '主要履历与诊疗领域'],
     ['진료 장비 안내 준비 중', 'Equipment information coming soon', '诊疗设备信息准备中'],
@@ -181,7 +191,8 @@
     var entry = dictionary[trimmed];
     var value = entry && entry[current];
     if (!value) {
-      value = trimmed.replace(/(\d+)번 원장/g, current === 'en' ? 'Doctor $1' : '$1号医生')
+      value = trimmed.replace(/([A-Z]{3})원장/g, current === 'en' ? 'Doctor $1' : '$1医生')
+        .replace(/(\d+)번 원장/g, current === 'en' ? 'Doctor $1' : '$1号医生')
         .replace(/(\d+)년\s*(\d+)월\s*(\d+)일/g, current === 'en' ? '$1-$2-$3' : '$1年$2月$3日')
         .replace(/(\d+)년\s*(\d+)월/g, function (_, y, m) { return current === 'en' ? monthNames[Number(m) - 1] + ' ' + y : y + '年' + m + '月'; })
         .replace(/(\d+)월\s*(\d+)일\s*\(([일월화수목금토])\)/g, function (_, m, d, weekday) { return current === 'en' ? monthNames[Number(m) - 1] + ' ' + d + ' (' + dictionary[weekday].en + ')' : m + '月' + d + '日（周' + dictionary[weekday]['zh-CN'] + '）'; });
@@ -190,7 +201,7 @@
         value = value.split(key).join(dictionary[key][current]);
       });
       value = value.replace(/안내/g, current === 'en' ? 'Guide' : '指南');
-      ['오전 진료만', '종일 진료', '대체공휴일'].forEach(function (key) {
+      ['오늘', '오전 진료만', '종일 진료', '대체공휴일'].forEach(function (key) {
         value = value.split(key).join(dictionary[key][current]);
       });
     }
