@@ -50,20 +50,33 @@
       }
     } catch (error) { /* 주소가 없으면 준비 중 상태를 유지합니다. */ }
 
-    function setOpen(open, restoreFocus) {
+    // 처음에는 펼치고, 사용자가 변경한 상태는 모든 페이지에서 공유합니다.
+    var storageKey = 'aa-quick-actions-open';
+    function setOpen(open, restoreFocus, save) {
       actions.hidden = !open;
       trigger.setAttribute('aria-expanded', String(open));
       trigger.setAttribute('aria-label', open ? '상담 및 예약 메뉴 닫기' : '상담 및 예약 메뉴 열기');
+      if (save) {
+        try { localStorage.setItem(storageKey, String(open)); } catch (error) { /* 저장이 차단되어도 현재 화면에서는 동작합니다. */ }
+      }
       if (restoreFocus) trigger.focus();
     }
-    trigger.addEventListener('click', function () { setOpen(actions.hidden, false); });
+    var initiallyOpen = true;
+    try { initiallyOpen = localStorage.getItem(storageKey) !== 'false'; } catch (error) { /* 기본 펼침 상태를 사용합니다. */ }
+    setOpen(initiallyOpen, false, false);
+    trigger.addEventListener('click', function () { setOpen(actions.hidden, false, true); });
     document.addEventListener('click', function (event) {
-      if (!widget.contains(event.target)) setOpen(false, false);
+      if (!actions.hidden && !widget.contains(event.target)) setOpen(false, false, true);
     });
     widget.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && !actions.hidden) {
         event.preventDefault();
-        setOpen(false, true);
+        setOpen(false, true, true);
+      }
+    });
+    window.addEventListener('storage', function (event) {
+      if (event.key === storageKey || event.key === null) {
+        setOpen(event.key === null || event.newValue !== 'false', false, false);
       }
     });
   }

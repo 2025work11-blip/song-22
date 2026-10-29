@@ -17,12 +17,8 @@ try {
     $graphics.FillRectangle((New-ShareBrush '#436d99'), 0, 0, 12, 630)
     $graphics.FillEllipse((New-ShareBrush '#eef5fb'), 725, 110, 410, 410)
     $titleFont = New-Object System.Drawing.Font 'Malgun Gothic', 72, ([System.Drawing.FontStyle]::Bold), ([System.Drawing.GraphicsUnit]::Pixel)
-    $bodyFont = New-Object System.Drawing.Font 'Malgun Gothic', 30, ([System.Drawing.FontStyle]::Regular), ([System.Drawing.GraphicsUnit]::Pixel)
     $resources.Add($titleFont)
-    $resources.Add($bodyFont)
-    $graphics.DrawString('AA안과', $titleFont, (New-ShareBrush '#172c49'), [single]84, [single]198)
-    $graphics.DrawString('눈에 관련한 평생 주치의', $bodyFont, (New-ShareBrush '#536780'), [single]88, [single]310)
-    $graphics.FillRectangle((New-ShareBrush '#436d99'), 90, 385, 72, 4)
+    $graphics.DrawString('AA안과', $titleFont, (New-ShareBrush '#172c49'), [single]84, [single]260)
 
     $state = $graphics.Save()
     $graphics.TranslateTransform(735, 125)
