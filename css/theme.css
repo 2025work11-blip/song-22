@@ -161,8 +161,9 @@ html[data-theme='dark'] .month-navigation button:hover { background: transparent
 }
 
 .schedule-hours-list dt, .schedule-hours-list dd { font-size: 16px; }
-.patient-login-hint { display: inline-block; margin-top: 12px; color: var(--blue); font-size: 14px; font-weight: 600; }
-.home-page .category-card { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; min-height: 96px; padding: 20px 24px; }
+.home-patient-summary [data-auth-signed-out] .patient-summary-name { margin-bottom: 0; }
+.patient-login-hint { display: inline-block; margin-top: 4px; color: var(--blue); font-size: 14px; font-weight: 600; }
+.home-page .category-card { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; min-height: 96px; padding: 20px 24px 20px 32px; }
 .home-page .category-card h3 { margin: 0; }
 .home-page .category-card .card-detail { margin: 0; flex-shrink: 0; }
 @media (max-width: 600px) {
@@ -171,7 +172,24 @@ html[data-theme='dark'] .month-navigation button:hover { background: transparent
   .schedule-hours-list > div { grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr); }
   .schedule-hours-list dd { font-size: clamp(12px, 3.65vw, 14px); }
   .schedule-hours-list dt { font-size: clamp(12px, 3.65vw, 14px); }
-  .home-page .category-card { min-height: 80px; padding: 14px 10px; gap: 6px; }
-  .home-page .category-card h3 { font-size: clamp(14px, 3.7vw, 20px); }
+  .home-page .category-card { min-height: 80px; padding: 14px 10px 14px 18px; gap: 6px; }
+  .home-page .category-card h3 { font-size: 20px; }
   .home-page .category-card .card-detail { padding: 8px 6px; font-size: 11px; }
 }
+
+.doctor-legend { display: flex; flex-wrap: wrap; gap: 8px; }
+button.doctor-legend-item { font-family: var(--font); cursor: pointer; opacity: .72; }
+button.doctor-legend-item[aria-pressed='true'] { opacity: 1; outline: 2px solid var(--doctor-color, #436d99); outline-offset: 2px; font-weight: 700; }
+button.doctor-legend-item:hover { opacity: 1; }
+.doctor-filter-all { --doctor-color: #436d99; --doctor-tint: #eef4fb; }
+@media (max-width: 380px) {
+  .home-page .category-grid { grid-template-columns: 1fr; }
+}
+
+.home-page .category-card .card-detail,
+.home-page .category-card:hover .card-detail,
+html[data-theme='dark'] .home-page .category-card .card-detail {
+  background: #fff; color: #42474d; border: 1px solid #aeb5bd;
+}
+.schedule-hours,
+html[data-theme='dark'] .schedule-hours { border: 1px solid #929aa4; box-shadow: none; }

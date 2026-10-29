@@ -16,7 +16,8 @@
   var year = Number(todayPart('year'));
   var month = Number(todayPart('month')) - 1;
   var todayKey = selected;
-  var doctorSelect = document.querySelector('[data-doctor-filter]');
+  var selectedDoctor = '';
+  var doctorFilters = document.querySelector('[data-doctor-legend]');
   var monthTitle = document.querySelector('[data-calendar-month]');
   var body = document.querySelector('[data-calendar-body]');
   var dayTitle = document.querySelector('[data-selected-date]');
@@ -50,18 +51,23 @@
       };
     });
     return weekly.concat(specific).filter(function (entry) {
-      return !doctorSelect.value || entry.doctorId === doctorSelect.value;
+      return !selectedDoctor || entry.doctorId === selectedDoctor;
     });
   }
+  var allDoctorsButton = make('button', 'doctor-legend-item doctor-filter-all', '전체원장');
+  allDoctorsButton.type = 'button';
+  allDoctorsButton.setAttribute('data-doctor-id', '');
+  allDoctorsButton.setAttribute('aria-pressed', 'true');
+  doctorFilters.appendChild(allDoctorsButton);
   doctors.forEach(function (doctor) {
-    var option = make('option', '', doctor.name);
-    option.value = doctor.id;
-    doctorSelect.appendChild(option);
-    var legend = make('span', 'doctor-legend-item ' + colorClass(doctor));
+    var legend = make('button', 'doctor-legend-item ' + colorClass(doctor));
+    legend.type = 'button';
+    legend.setAttribute('data-doctor-id', doctor.id);
+    legend.setAttribute('aria-pressed', 'false');
     var dot = make('span', 'doctor-initial ' + colorClass(doctor), doctor.initial || '');
     dot.setAttribute('aria-hidden', 'true');
     legend.append(dot, make('span', '', doctor.name));
-    document.querySelector('[data-doctor-legend]').appendChild(legend);
+    doctorFilters.appendChild(legend);
   });
   function renderDay() {
     var parts = selected.split('-').map(Number);
@@ -163,7 +169,15 @@
       renderCalendar();
     });
   });
-  doctorSelect.addEventListener('change', renderCalendar);
+  doctorFilters.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-doctor-id]');
+    if (!button || !doctorFilters.contains(button)) return;
+    selectedDoctor = button.getAttribute('data-doctor-id');
+    doctorFilters.querySelectorAll('[data-doctor-id]').forEach(function (item) {
+      item.setAttribute('aria-pressed', String(item === button));
+    });
+    renderCalendar();
+  });
   renderCalendar();
 
   var noticeList = document.querySelector('[data-notice-list]');
