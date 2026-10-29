@@ -10,51 +10,92 @@
   <script defer src="js/config.js"></script>
   <script defer src="js/data.js"></script>
   <script defer src="js/common.js"></script>
+  <script defer src="js/patient-data.js"></script>
+  <script defer src="js/mypage.js"></script>
+  <script defer src="js/holidays.js"></script>
+  <script defer src="js/home.js"></script>
 </head>
-<body>
+<body class="home-page">
 <a class="skip-link" href="#main">본문으로 바로가기</a>
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="index.html" aria-label="AA안과 홈"><span class="brand-mark"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 16s5-8 13-8 13 8 13 8-5 8-13 8S3 16 3 16Z"/><circle cx="16" cy="16" r="4.5"/></svg></span><span>AA안과</span></a>
-    <span class="header-caption">눈 건강 안내</span>
+    <div class="header-actions"><div class="language-picker" data-language-picker>
+  <button class="language-toggle" type="button" data-language-toggle aria-label="언어 선택" aria-expanded="false" aria-controls="language-panel"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 7h14M5 17h14"/></svg></button>
+  <div class="language-panel" id="language-panel" data-language-panel hidden>
+    <div class="language-options"><a data-language="en" role="link" tabindex="0" aria-label="영어로 번역"><img src="assets/flags/us.svg" width="32" height="22" alt=""><span lang="en">ENG</span></a><a data-language="zh-CN" role="link" tabindex="0" aria-label="중국어 간체로 번역"><img src="assets/flags/cn.svg" width="32" height="22" alt=""><span lang="zh-CN">中文</span></a></div>
+    <p class="language-notice" data-language-notice>번역은 웹사이트 배포 후 이용할 수 있습니다.</p>
+  </div>
+</div><button class="menu-trigger" type="button" data-menu-open aria-label="카테고리 메뉴 열기" aria-controls="category-drawer" aria-expanded="false" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div>
   </div>
 </header>
+<dialog class="menu-drawer" id="category-drawer" data-menu-drawer aria-labelledby="drawer-title">
+  <div class="drawer-header"><div><p class="eyebrow">AA EYE CARE GUIDE</p><h2 id="drawer-title">카테고리</h2></div><button class="drawer-close" type="button" data-menu-close aria-label="메뉴 닫기" autofocus>×</button></div>
+  <nav class="drawer-nav" aria-label="전체 카테고리">
+    <a href="vision.html"><span class="drawer-number">01</span><span>시력교정</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="cataract.html"><span class="drawer-number">02</span><span>백내장</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="glaucoma.html"><span class="drawer-number">03</span><span>녹내장</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="retina.html"><span class="drawer-number">04</span><span>망막</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="myopia.html"><span class="drawer-number">05</span><span>소아근시</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="about.html"><span class="drawer-number">06</span><span>병원소개</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="mypage.html"><span class="drawer-number">07</span><span>마이페이지</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="drawer-caption">눈에 관련한 평생 주치의 AA안과</p>
+</dialog>
 <main id="main" class="container home-main" tabindex="-1">
+  <section class="patient-summary home-patient-summary notranslate" data-home-patient-summary translate="no" aria-label="환자 요약 (샘플)">
+    <span class="patient-summary-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="16" cy="11" r="5"/><path d="M6 28v-3a10 10 0 0 1 20 0v3"/></svg></span>
+    <div><p class="patient-summary-name"><span data-patient-field="name">000</span>님</p><p>최근 진료일 : <span data-patient-field="latestVisitDate">2026년 10월 10일</span></p><p>증상 : <span data-patient-field="symptom">백내장</span></p></div>
+    <span class="sample-label">샘플 정보</span>
+  </section>
   <section class="home-intro" aria-labelledby="home-title">
     <div><p class="eyebrow">AA EYE CARE GUIDE</p><h1 id="home-title">눈에 관련한 평생 주치의<br><strong>AA안과</strong></h1><p class="intro-description">진료 전후에 필요한 눈 건강 정보를 확인하세요.</p></div>
-    <svg class="eye-art" viewBox="0 0 400 260" fill="none" aria-hidden="true">
-  <defs><linearGradient id="eye-bg" x1="50" y1="0" x2="350" y2="260" gradientUnits="userSpaceOnUse"><stop stop-color="#edf6ff"/><stop offset="1" stop-color="#dceeff"/></linearGradient><linearGradient id="iris" x1="170" y1="95" x2="240" y2="170" gradientUnits="userSpaceOnUse"><stop stop-color="#7ac5f5"/><stop offset="1" stop-color="#1556c9"/></linearGradient></defs>
-  <circle cx="209" cy="130" r="113" fill="url(#eye-bg)"/>
-  <circle cx="209" cy="130" r="91" stroke="#bdd9f5" stroke-dasharray="3 7"/>
-  <path d="M53 130c35-42 87-64 156-64s119 22 154 64c-35 42-85 64-154 64S88 172 53 130Z" fill="white" stroke="#a5c9ef" stroke-width="1.5"/>
-  <circle cx="209" cy="130" r="47" fill="url(#iris)"/>
-  <circle cx="209" cy="130" r="32" stroke="#ffffff88" stroke-width="1.5"/>
-  <circle cx="209" cy="130" r="20" fill="#16488d"/>
-  <circle cx="222" cy="114" r="9" fill="white" fill-opacity=".9"/>
-  <path d="M209 8v22m0 200v22M85 130H63m292 0h-22" stroke="#8db5e2" stroke-width="1.5"/>
-  <path d="M67 55v-8h8m270 8v-8h-8M67 205v8h8m270-8v8h-8" stroke="#1556c9" stroke-width="2"/>
-  <circle cx="85" cy="72" r="5" fill="#66afe8"/><circle cx="333" cy="191" r="7" fill="#98c8f2"/>
-</svg>
+    <img class="hero-eyeball" src="assets/eyeball.svg" width="320" height="260" alt="">
   </section>
   <section aria-labelledby="category-title">
     <div class="category-heading"><h2 id="category-title">어떤 눈 건강 정보가 필요하세요?</h2><p>궁금한 분야를 선택해 주세요.</p></div>
     <div class="category-grid">
-        <a class="category-card" href="vision.html"><span class="card-arrow" aria-hidden="true">↗</span><span class="category-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12V5h7m8 0h7v7M5 20v7h7m8 0h7v-7"/><circle cx="16" cy="16" r="5"/><path d="M16 8v3m0 10v3M8 16h3m10 0h3"/></svg></span><h3>시력교정</h3><p>선명한 일상을 위한 안내</p></a>
-        <a class="category-card" href="cataract.html"><span class="card-arrow" aria-hidden="true">↗</span><span class="category-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16s5-8 13-8 13 8 13 8-5 8-13 8S3 16 3 16Z"/><circle cx="16" cy="16" r="5"/><path d="m13 13 6 6m-7-3 4 4m0-8 4 4"/></svg></span><h3>백내장</h3><p>진료부터 수술 전후까지</p></a>
-        <a class="category-card" href="glaucoma.html"><span class="card-arrow" aria-hidden="true">↗</span><span class="category-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="4"/><path d="M16 2v3m0 22v3M2 16h3m22 0h3M9 9l3 3m8 8 3 3"/></svg></span><h3>녹내장</h3><p>차근차근 이해하는 눈 건강</p></a>
-        <a class="category-card" href="retina.html"><span class="card-arrow" aria-hidden="true">↗</span><span class="category-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7a12 12 0 1 0 0 18M23 7c-5 3-5 15 0 18"/><path d="m7 10 6 6-6 6m6-6 6-3m-6 3 6 4m-6-4v-5"/></svg></span><h3>망막</h3><p>궁금했던 망막 분야 안내</p></a>
-        <a class="category-card" href="myopia.html"><span class="card-arrow" aria-hidden="true">↗</span><span class="category-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="17" r="6"/><circle cx="23" cy="17" r="6"/><path d="M15 17h2M3 17 5 7m24 10L27 7M13 5h6m-3-3v6"/></svg></span><h3>소아근시</h3><p>우리 아이 눈 건강 안내</p></a>
-        <a class="category-card" href="about.html"><span class="card-arrow" aria-hidden="true">↗</span><span class="category-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 28V6h18v22M4 28h24M13 28v-7h6v7M12 11h8m-4-4v8M11 18h2m6 0h2"/></svg></span><h3>병원소개</h3><p>진료시간 · 원장 · 장비 안내</p></a>
+        <a class="category-card" href="vision.html"><span class="category-icon"><img src="assets/icons/vision.svg" width="96" height="96" alt=""></span><h3>시력교정</h3><p>선명한 일상을 위한 안내</p><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="cataract.html"><span class="category-icon"><img src="assets/icons/cataract.svg" width="96" height="96" alt=""></span><h3>백내장</h3><p>진료부터 수술 전후까지</p><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="glaucoma.html"><span class="category-icon"><img src="assets/icons/glaucoma.svg" width="96" height="96" alt=""></span><h3>녹내장</h3><p>차근차근 이해하는 눈 건강</p><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="retina.html"><span class="category-icon"><img src="assets/icons/retina.svg" width="96" height="96" alt=""></span><h3>망막</h3><p>궁금했던 망막 분야 안내</p><span class="card-detail">자세히</span></a>
+        <a class="category-card" href="myopia.html"><span class="category-icon"><img src="assets/icons/myopia.svg" width="96" height="96" alt=""></span><h3>소아근시</h3><p>우리 아이 눈 건강 안내</p><span class="card-detail">자세히</span></a>
+        <a class="category-card category-card-dark" href="about.html"><span class="category-icon"><img src="assets/icons/about.svg" width="96" height="96" alt=""></span><h3>병원소개</h3><p>진료시간 · 원장 · 장비 안내</p><span class="card-detail">자세히</span></a>
     </div>
     <p class="guide-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><span>질환의 기본 정보부터 외래 안내, 수술 전후 정보까지 확인할 수 있습니다.</span></p>
+  </section>
+  <section class="home-section" aria-labelledby="schedule-title" data-calendar>
+    <div class="home-section-heading"><div><h2 id="schedule-title">원장별 일정표</h2></div><span class="sample-label">샘플 일정</span></div>
+    <p class="section-description">날짜 아래의 색상 점으로 원장별 진료 일정을 확인하세요. 원장명과 근무 일정은 화면 확인용 예시입니다.</p>
+    <div class="schedule-layout">
+      <div class="calendar-panel">
+        <div class="calendar-toolbar"><div class="month-navigation"><button type="button" data-month-step="-1" aria-label="이전 달">‹</button><h3 id="calendar-month" data-calendar-month aria-live="polite">일정 달력</h3><button type="button" data-month-step="1" aria-label="다음 달">›</button></div><label class="doctor-filter">원장 선택<select data-doctor-filter><option value="">전체 원장</option></select></label></div>
+        <div class="doctor-legend" data-doctor-legend aria-label="원장별 색상 구분"></div>
+        <p class="calendar-key"><span><i class="calendar-dot key-dot" aria-hidden="true"></i> 종일 진료</span><span><i class="calendar-dot key-dot dot-morning" aria-hidden="true"></i> 오전 진료만</span></p>
+        <table class="schedule-calendar"><caption class="visually-hidden">원장별 월간 일정. 날짜를 선택하면 아래에서 일정을 확인할 수 있습니다.</caption><thead><tr><th scope="col">일</th><th scope="col">월</th><th scope="col">화</th><th scope="col">수</th><th scope="col">목</th><th scope="col">금</th><th scope="col">토</th></tr></thead><tbody data-calendar-body></tbody></table>
+        <p class="calendar-footnote" data-calendar-footnote>※ 원장 근무는 예시이며 실제 휴진 일정은 별도 확인이 필요합니다.</p>
+      </div>
+      <aside class="day-panel" aria-labelledby="selected-date"><p class="day-panel-label">선택한 날짜의 일정</p><h3 id="selected-date" data-selected-date>날짜를 선택해 주세요.</h3><p class="selected-holiday" data-selected-holiday hidden></p><div data-day-schedules aria-live="polite"><p class="schedule-empty">일정을 준비 중입니다.</p></div></aside>
+    </div>
+  </section>
+  <section class="home-section notice-section" aria-labelledby="notice-title">
+    <div class="home-section-heading"><div><h2 id="notice-title">공지사항</h2></div><span class="sample-label">샘플 공지</span></div>
+    <p class="section-description">AA안과의 새로운 안내를 날짜별로 확인하세요. 제목을 누르면 내용을 볼 수 있습니다.</p>
+    <div class="notice-list" data-notice-list><p class="schedule-empty">공지사항을 준비 중입니다.</p></div>
   </section>
 </main>
 <footer class="site-footer">
   <div class="container footer-inner"><span class="footer-brand">AA안과</span><p>눈에 관련한 평생 주치의 · 진료 전후 정보 안내</p></div>
 </footer>
-<aside class="contact-widget" aria-label="카카오톡 문의">
-  <a class="contact-link" data-kakao-link role="link" tabindex="0" aria-disabled="true" aria-describedby="kakao-status"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.5 3 2 6.5 2 10.8c0 2.7 1.8 5.1 4.5 6.5l-.9 3.5 4-2.4c.8.2 1.6.3 2.4.3 5.5 0 10-3.5 10-7.9S17.5 3 12 3Z"/></svg><span>카카오톡 문의</span></a>
-  <p class="contact-status" id="kakao-status" data-kakao-status>카카오톡 채널 연결 준비 중</p>
+<aside class="quick-widget" data-quick-widget aria-label="상담 및 예약">
+  <div class="quick-actions" id="quick-actions" data-quick-actions hidden>
+    <a class="quick-action" data-kakao-link role="link" tabindex="0" aria-disabled="true" aria-describedby="kakao-status"><img src="assets/icons/kakao.svg" width="36" height="36" alt=""><span>카카오상담</span><span class="visually-hidden" id="kakao-status" data-kakao-status>연결 준비 중</span></a>
+    <a class="quick-action" data-booking-link role="link" tabindex="0" aria-disabled="true" aria-describedby="booking-status"><img src="assets/icons/naver.svg" width="36" height="36" alt=""><span>네이버예약</span><span class="visually-hidden" id="booking-status" data-booking-status>연결 준비 중</span></a>
+  </div>
+  <button class="quick-toggle" type="button" data-quick-toggle aria-label="상담 및 예약 메뉴 열기" aria-expanded="false" aria-controls="quick-actions">
+    <svg class="quick-eye" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path class="quick-eye-outline" d="M4 20S10 10 20 10s16 10 16 10-6 10-16 10S4 20 4 20Z" stroke="currentColor" stroke-width="2"/><g class="quick-eye-pupil"><circle cx="20" cy="20" r="6" fill="currentColor"/><circle cx="22" cy="18" r="2" fill="#3672c3"/></g></svg>
+    <svg class="quick-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+  </button>
 </aside>
 </body>
 </html>

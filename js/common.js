@@ -22,12 +22,125 @@
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
       link.removeAttribute('aria-disabled');
-      status.textContent = 'AA안과 카카오톡 채널 · 새 탭으로 연결';
+      status.textContent = parsed.hostname === 'pf.kakao.com'
+        ? 'AA안과 카카오톡 채널 · 새 탭으로 연결'
+        : '새 탭으로 연결';
     } else {
       link.removeAttribute('href');
       link.setAttribute('aria-disabled', 'true');
       status.textContent = '카카오톡 채널 연결 준비 중';
     }
+  }
+
+  function initializeQuickActions() {
+    var widget = document.querySelector('[data-quick-widget]');
+    if (!widget) return;
+    var trigger = widget.querySelector('[data-quick-toggle]');
+    var actions = widget.querySelector('[data-quick-actions]');
+    var booking = widget.querySelector('[data-booking-link]');
+    var bookingStatus = widget.querySelector('[data-booking-status]');
+    try {
+      var url = new URL((window.siteConfig || {}).naverBookingUrl);
+      if (url.protocol === 'https:') {
+        booking.href = url.href;
+        booking.target = '_blank';
+        booking.rel = 'noopener noreferrer';
+        booking.removeAttribute('aria-disabled');
+        bookingStatus.textContent = '새 탭으로 연결';
+      }
+    } catch (error) { /* 주소가 없으면 준비 중 상태를 유지합니다. */ }
+
+    function setOpen(open, restoreFocus) {
+      actions.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+      trigger.setAttribute('aria-label', open ? '상담 및 예약 메뉴 닫기' : '상담 및 예약 메뉴 열기');
+      if (restoreFocus) trigger.focus();
+    }
+    trigger.addEventListener('click', function () { setOpen(actions.hidden, false); });
+    document.addEventListener('click', function (event) {
+      if (!widget.contains(event.target)) setOpen(false, false);
+    });
+    widget.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !actions.hidden) {
+        event.preventDefault();
+        setOpen(false, true);
+      }
+    });
+  }
+
+  // Google의 웹사이트 번역 화면으로 연결합니다. API 키나 비공식 번역 위젯은 사용하지 않습니다.
+  function initializeLanguages() {
+    var picker = document.querySelector('[data-language-picker]');
+    if (!picker) return;
+    var trigger = picker.querySelector('[data-language-toggle]');
+    var panel = picker.querySelector('[data-language-panel]');
+    var notice = picker.querySelector('[data-language-notice]');
+    var links = picker.querySelectorAll('[data-language]');
+
+    function isPublicUrl(url) {
+      var host = url.hostname;
+      return /^https?:$/.test(url.protocol) && host.includes('.') &&
+        !/^(localhost|127\.|0\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host) &&
+        !/\.(local|localhost|test|invalid)$/.test(host);
+    }
+    var pageUrl = null;
+    try {
+      var configured = (window.siteConfig || {}).publicSiteUrl;
+      if (configured) {
+        var base = new URL(configured);
+        base.pathname = base.pathname.replace(/\/index\.html$/, '/').replace(/\/?$/, '/');
+        pageUrl = new URL(window.location.pathname.split('/').pop() || 'index.html', base);
+      } else {
+        pageUrl = new URL(window.location.href);
+        // Google의 번역 프록시 안에서 언어를 다시 선택할 때 원래 주소를 복원합니다.
+        if (pageUrl.hostname.endsWith('.translate.goog')) {
+          pageUrl.hostname = pageUrl.hostname.replace(/\.translate\.goog$/, '')
+            .replace(/--/g, '\u0000').replace(/-/g, '.').replace(/\u0000/g, '-');
+          pageUrl.protocol = 'https:';
+          Array.from(pageUrl.searchParams.keys()).forEach(function (key) {
+            if (key.startsWith('_x_tr_')) pageUrl.searchParams.delete(key);
+          });
+        }
+      }
+      if (!isPublicUrl(pageUrl)) pageUrl = null;
+    } catch (error) { pageUrl = null; }
+
+    // 개인 진료기록 화면은 Google 번역 프록시로 전송하지 않습니다.
+    var privatePage = document.body.hasAttribute('data-private-page');
+    if (privatePage) pageUrl = null;
+
+    links.forEach(function (link) {
+      if (!pageUrl) {
+        link.setAttribute('aria-disabled', 'true');
+        return;
+      }
+      var translated = new URL('https://translate.google.com/translate');
+      translated.searchParams.set('sl', 'ko');
+      translated.searchParams.set('tl', link.getAttribute('data-language'));
+      translated.searchParams.set('u', pageUrl.href);
+      link.href = translated.href;
+    });
+    notice.textContent = privatePage
+      ? '마이페이지는 개인정보 보호를 위해 외부 자동번역을 사용하지 않습니다.'
+      : pageUrl
+      ? 'Google Translate로 전체 페이지를 번역합니다.'
+      : '번역은 웹사이트 배포 후 이용할 수 있습니다.';
+
+    function setOpen(open, restoreFocus) {
+      panel.hidden = !open;
+      trigger.setAttribute('aria-expanded', String(open));
+      if (restoreFocus) trigger.focus();
+    }
+    trigger.addEventListener('click', function () { setOpen(panel.hidden, false); });
+    document.addEventListener('click', function (event) {
+      if (!picker.contains(event.target)) setOpen(false, false);
+    });
+    picker.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !panel.hidden) {
+        event.preventDefault();
+        setOpen(false, true);
+      }
+    });
   }
 
   function renderItems(container, items, emptyText) {
@@ -91,7 +204,34 @@
     window.addEventListener('hashchange', updateSection);
   }
 
+  function initializeDrawer() {
+    var trigger = document.querySelector('[data-menu-open]');
+    var drawer = document.querySelector('[data-menu-drawer]');
+    if (!trigger || !drawer) return;
+
+    trigger.addEventListener('click', function () {
+      drawer.showModal();
+      trigger.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('drawer-open');
+    });
+    drawer.addEventListener('click', function (event) {
+      var bounds = drawer.getBoundingClientRect();
+      var outside = event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom;
+      if (outside || event.target.closest('[data-menu-close], a[href]')) drawer.close();
+    });
+    // 기본 dialog가 Escape 처리와 모달 내부의 키보드 포커스 이동을 담당합니다.
+    drawer.addEventListener('close', function () {
+      trigger.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('drawer-open');
+      trigger.focus();
+    });
+  }
+
   configureContact();
+  initializeQuickActions();
+  initializeLanguages();
   renderDetail();
   initializeSectionNavigation();
+  initializeDrawer();
 }());

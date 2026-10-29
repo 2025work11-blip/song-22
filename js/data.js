@@ -86,3 +86,25 @@ window.diseaseData = {
     afterSurgery: []
   }
 };
+
+// 홈의 샘플 일정·공지사항. 실제 원장명과 날짜별 내용으로 교체하세요.
+// 같은 날짜에 원장별 일정을 여러 개 등록할 수 있습니다.
+// 관리자 페이지와 DB는 아직 연결하지 않으며, 향후 이 데이터 구조에 연동합니다.
+window.homeData = {
+  doctors: [
+    // weekdays: 일요일 0 ~ 토요일 6 / morningOnly: 해당 요일은 오전만 진료
+    { id: 'doctor-1', name: '1번 원장', color: 'blue', weekdays: [1, 2, 3, 4, 5], morningOnly: [3] },
+    { id: 'doctor-2', name: '2번 원장', color: 'amber', weekdays: [1, 2, 4, 5], morningOnly: [4] },
+    { id: 'doctor-3', name: '3번 원장', color: 'teal', weekdays: [1, 2, 3, 5], morningOnly: [] },
+    { id: 'doctor-4', name: '4번 원장', color: 'purple', weekdays: [6], morningOnly: [] }
+  ],
+  schedules: [
+    // 특정 날짜 일정이 필요하면 아래 형식으로 추가합니다. 같은 원장의 해당 날짜 주간 예시를 대체합니다.
+    // { id: 'schedule-1', doctorId: 'doctor-1', date: '2026-10-29', title: '진료 일정 (샘플)', time: '오전 진료', period: 'morning' }
+  ],
+  notices: [
+    { id: 'notice-1', date: '2026-10-29', title: 'AA안과 홈페이지 안내 준비 중 (샘플)', content: '홈페이지의 공지사항 영역을 확인하기 위한 샘플 게시글입니다. 실제 병원 공지는 확인 후 이곳에 게시됩니다.' },
+    { id: 'notice-2', date: '2026-10-27', title: '원장별 일정표 이용 안내 (샘플)', content: '달력에서 날짜를 선택하면 원장별 일정을 확인할 수 있습니다. 현재 표시된 원장명과 일정은 모두 화면 확인용 샘플입니다.' },
+    { id: 'notice-3', date: '2026-10-23', title: '진료 전후 정보 안내 (샘플)', content: '각 카테고리에서 안내 화면을 확인할 수 있습니다. 실제 환자 안내 내용은 AA안과 검토 후 반영됩니다.' }
+  ]
+};

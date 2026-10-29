@@ -16,9 +16,28 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="index.html" aria-label="AA안과 홈"><span class="brand-mark"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 16s5-8 13-8 13 8 13 8-5 8-13 8S3 16 3 16Z"/><circle cx="16" cy="16" r="4.5"/></svg></span><span>AA안과</span></a>
-    <a class="home-link" href="index.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h13"/></svg>홈으로</a>
+    <div class="header-actions"><a class="home-link" href="index.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h13"/></svg>홈으로</a><div class="language-picker" data-language-picker>
+  <button class="language-toggle" type="button" data-language-toggle aria-label="언어 선택" aria-expanded="false" aria-controls="language-panel"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 7h14M5 17h14"/></svg></button>
+  <div class="language-panel" id="language-panel" data-language-panel hidden>
+    <div class="language-options"><a data-language="en" role="link" tabindex="0" aria-label="영어로 번역"><img src="assets/flags/us.svg" width="32" height="22" alt=""><span lang="en">ENG</span></a><a data-language="zh-CN" role="link" tabindex="0" aria-label="중국어 간체로 번역"><img src="assets/flags/cn.svg" width="32" height="22" alt=""><span lang="zh-CN">中文</span></a></div>
+    <p class="language-notice" data-language-notice>번역은 웹사이트 배포 후 이용할 수 있습니다.</p>
+  </div>
+</div><button class="menu-trigger" type="button" data-menu-open aria-label="카테고리 메뉴 열기" aria-controls="category-drawer" aria-expanded="false" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div>
   </div>
 </header>
+<dialog class="menu-drawer" id="category-drawer" data-menu-drawer aria-labelledby="drawer-title">
+  <div class="drawer-header"><div><p class="eyebrow">AA EYE CARE GUIDE</p><h2 id="drawer-title">카테고리</h2></div><button class="drawer-close" type="button" data-menu-close aria-label="메뉴 닫기" autofocus>×</button></div>
+  <nav class="drawer-nav" aria-label="전체 카테고리">
+    <a href="vision.html"><span class="drawer-number">01</span><span>시력교정</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="cataract.html"><span class="drawer-number">02</span><span>백내장</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="glaucoma.html"><span class="drawer-number">03</span><span>녹내장</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="retina.html"><span class="drawer-number">04</span><span>망막</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="myopia.html"><span class="drawer-number">05</span><span>소아근시</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="about.html"><span class="drawer-number">06</span><span>병원소개</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+    <a href="mypage.html"><span class="drawer-number">07</span><span>마이페이지</span><span class="drawer-arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="drawer-caption">눈에 관련한 평생 주치의 AA안과</p>
+</dialog>
 <main id="main" tabindex="-1">
   <div data-detail>
     <div class="container detail-intro">
@@ -47,9 +66,15 @@
 <footer class="site-footer">
   <div class="container footer-inner"><span class="footer-brand">AA안과</span><p>눈에 관련한 평생 주치의 · 진료 전후 정보 안내</p></div>
 </footer>
-<aside class="contact-widget" aria-label="카카오톡 문의">
-  <a class="contact-link" data-kakao-link role="link" tabindex="0" aria-disabled="true" aria-describedby="kakao-status"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.5 3 2 6.5 2 10.8c0 2.7 1.8 5.1 4.5 6.5l-.9 3.5 4-2.4c.8.2 1.6.3 2.4.3 5.5 0 10-3.5 10-7.9S17.5 3 12 3Z"/></svg><span>카카오톡 문의</span></a>
-  <p class="contact-status" id="kakao-status" data-kakao-status>카카오톡 채널 연결 준비 중</p>
+<aside class="quick-widget" data-quick-widget aria-label="상담 및 예약">
+  <div class="quick-actions" id="quick-actions" data-quick-actions hidden>
+    <a class="quick-action" data-kakao-link role="link" tabindex="0" aria-disabled="true" aria-describedby="kakao-status"><img src="assets/icons/kakao.svg" width="36" height="36" alt=""><span>카카오상담</span><span class="visually-hidden" id="kakao-status" data-kakao-status>연결 준비 중</span></a>
+    <a class="quick-action" data-booking-link role="link" tabindex="0" aria-disabled="true" aria-describedby="booking-status"><img src="assets/icons/naver.svg" width="36" height="36" alt=""><span>네이버예약</span><span class="visually-hidden" id="booking-status" data-booking-status>연결 준비 중</span></a>
+  </div>
+  <button class="quick-toggle" type="button" data-quick-toggle aria-label="상담 및 예약 메뉴 열기" aria-expanded="false" aria-controls="quick-actions">
+    <svg class="quick-eye" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path class="quick-eye-outline" d="M4 20S10 10 20 10s16 10 16 10-6 10-16 10S4 20 4 20Z" stroke="currentColor" stroke-width="2"/><g class="quick-eye-pupil"><circle cx="20" cy="20" r="6" fill="currentColor"/><circle cx="22" cy="18" r="2" fill="#3672c3"/></g></svg>
+    <svg class="quick-cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+  </button>
 </aside>
 </body>
 </html>

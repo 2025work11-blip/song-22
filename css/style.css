@@ -146,3 +146,360 @@ h1, h2, h3, p { margin-top: 0; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 }
+
+/* 홈 리디자인: 상세 안내 화면의 기존 배치는 유지합니다. */
+.home-page {
+  --blue: #436d99;
+  --ink: #353d42;
+  --muted: #626a70;
+  --line: #d9d9d2;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 0% 15%, #e9e5db 0%, transparent 48%),
+    radial-gradient(ellipse at 100% 76%, #e0e7e4 0%, transparent 50%),
+    linear-gradient(155deg, #f7f5ef 0%, #ffffff 44%, #f1f2ee 75%, #e4eaf0 100%);
+}
+.home-page .site-header { background: #ffffffb8; border-color: #ffffffc4; }
+.home-page .header-inner { justify-content: space-between; gap: 22px; }
+.menu-trigger, .drawer-close { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 12px; color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 12px; cursor: pointer; }
+.menu-trigger { margin-left: auto; min-width: 44px; }
+.menu-trigger:hover, .drawer-close:hover { background: #e4efff; border-color: #c9ddf5; }
+.home-page .home-intro { display: flex; flex-direction: column; text-align: center; gap: 16px; padding: 42px 0 32px; }
+.home-page .home-intro h1 { font-size: clamp(32px, 4vw, 48px); line-height: 1.4; margin-bottom: 15px; }
+.home-page .home-intro .eyebrow { margin-bottom: 14px; }
+.home-page .home-intro .eyebrow::before { display: none; }
+.hero-eyeball { display: block; width: 240px; height: auto; max-width: 100%; filter: saturate(.55); }
+.home-page .category-grid { gap: 18px; }
+.home-page .category-card { display: flex; flex-direction: column; align-items: flex-start; min-height: 280px; padding: 24px 26px; background: linear-gradient(145deg, #fffefbed, #ffffffc9); border: 1px solid #d4d5cf; box-shadow: none; }
+.home-page .category-card:hover { border-color: #7893ad; box-shadow: none; }
+.home-page .category-icon { width: 86px; height: 86px; background: transparent; margin-bottom: 14px; }
+.home-page .category-icon img { display: block; width: 100%; height: 100%; transition: transform .2s; }
+.home-page .category-card:hover .category-icon img { transform: translateY(-3px) rotate(-4deg); }
+.home-page .category-card h3 { font-size: 23px; }
+.home-page .category-card p { margin-bottom: 20px; }
+.card-detail { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: auto; padding: 9px 18px; border-radius: 12px; background: #edf0f2; color: #436585; font-size: 14px; font-weight: 700; }
+.category-card:hover .card-detail { background: var(--blue); color: white; }
+.home-page .category-card-dark { background: linear-gradient(135deg, #424c51, #293237); border-color: #5c666b; color: white; }
+.home-page .category-card-dark:hover { border-color: #82baff; }
+.home-page .category-card-dark p { color: #d0d7d8; }
+.category-card-dark .card-detail { color: #e2efff; background: #ffffff14; border: 1px solid #ffffff28; }
+.category-card-dark:focus-visible { outline-color: #659eff; }
+.home-page .site-footer { border-color: #98b5d54d; }
+body.drawer-open { overflow: hidden; }
+.menu-drawer { position: fixed; inset: 0 0 0 auto; margin: 0; width: min(370px, 90vw); height: 100%; height: 100dvh; max-height: none; max-width: none; padding: 30px 26px; border: 0; border-radius: 24px 0 0 24px; background: linear-gradient(165deg, #fffefb, #eeefea); color: var(--ink); box-shadow: -20px 0 70px #12397426; overflow-y: auto; }
+.menu-drawer::backdrop { background: #112d5266; backdrop-filter: blur(4px); }
+.menu-drawer[open] { animation: drawer-enter .24s ease-out; }
+@keyframes drawer-enter {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.drawer-header { display: flex; justify-content: space-between; align-items: start; gap: 12px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.drawer-header .eyebrow { font-size: 10px; margin-bottom: 10px; }
+.drawer-header .eyebrow::before { display: none; }
+.drawer-header h2 { margin: 0; font-size: 28px; letter-spacing: -.04em; }
+.drawer-close { min-width: 44px; font-size: 30px; line-height: 1; }
+.drawer-nav { display: grid; gap: 8px; padding-block: 22px; }
+.drawer-nav a { display: flex; gap: 16px; align-items: center; min-height: 60px; padding: 12px; border-radius: 12px; font-weight: 650; }
+.drawer-nav a:hover { background: #dfedff; color: var(--blue); }
+.drawer-number { color: #607c9e; font-size: 12px; font-weight: 500; letter-spacing: .06em; }
+.drawer-arrow { margin-left: auto; color: #607c9e; }
+.drawer-caption { margin: 10px 0; color: var(--muted); font-size: 13px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.home-page .contact-link { width: 56px; height: 56px; min-height: 56px; padding: 0; border-radius: 50%; background: #fee500; color: #352b13; box-shadow: none; }
+.home-page .contact-link svg { width: 30px; height: 30px; }
+.home-page .contact-link[aria-disabled='true'] { background: #e7e7e2; color: #686b69; }
+@media (max-width: 600px) {
+  .home-page .header-inner { gap: 14px; }
+  .home-page .home-intro { padding: 30px 0 28px; gap: 12px; }
+  .home-page .home-intro h1 { font-size: 32px; }
+  .hero-eyeball { width: 185px; }
+  .home-page .category-grid { gap: 12px; }
+  .home-page .category-card { padding: 18px 16px; min-height: 258px; }
+  .home-page .category-icon { width: 72px; height: 72px; margin-bottom: 12px; }
+  .home-page .category-card h3 { font-size: 20px; }
+  .card-detail { gap: 14px; padding: 8px 13px; font-size: 13px; }
+}
+
+/* 모든 화면에 공통으로 표시하는 언어 선택과 상담·예약 메뉴 */
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.header-actions .menu-trigger { margin-left: 0; }
+.language-picker { position: relative; }
+.language-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 8px; color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 12px; cursor: pointer; }
+.language-toggle:hover, .language-toggle[aria-expanded='true'] { background: #edf0f2; border-color: #d6dde3; }
+.language-panel { position: absolute; right: 0; top: calc(100% + 12px); z-index: 30; width: 240px; max-width: calc(100vw - 40px); padding: 16px; border: 1px solid #d5dadb; border-radius: 16px; background: #fffefb; color: #353d42; }
+.language-title { margin: 0 8px 10px; font-size: 13px; font-weight: 700; color: #656d72; }
+.language-panel a { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px; border-radius: 9px; font-size: 15px; font-weight: 650; cursor: pointer; }
+.language-panel a:hover { background: #e9eff4; }
+.language-panel a span { color: #687580; font-size: 13px; font-weight: 400; }
+.language-panel a[aria-disabled='true'] { color: #7b8184; cursor: not-allowed; }
+.language-notice { margin: 12px 8px 0; padding-top: 12px; border-top: 1px solid #e5e6e2; color: #697177; font-size: 12px; line-height: 1.7; }
+.quick-widget { position: fixed; z-index: 10; right: max(24px, env(safe-area-inset-right, 0px)); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; align-items: flex-end; gap: 14px; max-width: calc(100vw - 32px); }
+.quick-actions { display: flex; flex-direction: column; gap: 10px; }
+.quick-action { min-height: 56px; display: flex; gap: 12px; align-items: center; padding: 10px 18px 10px 10px; border: 1px solid #d4dadf; border-radius: 16px; background: #fff; color: #303b45; font-size: 15px; font-weight: 700; }
+.quick-action:hover { border-color: #799ab9; background: #f7fafc; }
+.quick-action[aria-disabled='true'] { cursor: not-allowed; color: #7b8184; }
+.quick-action img { display: block; border-radius: 10px; }
+.quick-toggle { display: grid; place-items: center; width: 60px; height: 60px; padding: 0; border: 1px solid #2d5fa7; border-radius: 50%; background: #356db8; color: #fff; cursor: pointer; }
+.quick-toggle:hover { background: #285b9e; }
+.quick-eye { width: 36px; height: 36px; animation: eye-blink 6s infinite; }
+.quick-eye-pupil { transform: none; }
+.quick-cross { display: none; width: 26px; height: 26px; }
+.quick-toggle[aria-expanded='true'] .quick-eye { display: none; }
+.quick-toggle[aria-expanded='true'] .quick-cross { display: block; }
+@keyframes eye-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(.12); }
+}
+@media (max-width: 600px) {
+  .header-actions { gap: 2px; }
+  .header-actions .home-link { font-size: 13px; gap: 3px; }
+  .header-actions .home-link svg { display: none; }
+  .language-panel { right: -45px; }
+  .quick-widget { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .quick-eye, .quick-eye-pupil, .menu-drawer[open] { animation: none; }
+}
+
+/* 언어 선택은 박스 없이 국기와 작은 언어명으로 표시합니다. */
+.header-actions .language-toggle,
+.header-actions .language-toggle:hover,
+.header-actions .language-toggle[aria-expanded='true'] { border: 0; border-radius: 0; background: transparent; }
+.header-actions .language-toggle:hover { color: var(--blue); }
+.language-panel { width: 190px; padding: 10px 0; border: 0; border-radius: 0; background: transparent; }
+.language-options { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
+.language-options a { min-height: 44px; padding: 4px 0; gap: 6px; border-radius: 0; }
+.language-options a:hover { background: transparent; }
+.language-options a span { font-size: 10px; font-weight: 650; color: #455461; }
+.language-options img { display: block; width: 32px; height: 22px; object-fit: cover; }
+.language-notice { margin: 4px 0 0; padding: 0; border: 0; text-align: right; font-size: 11px; }
+
+/* 홈 일정표 및 공지사항 */
+.home-section { margin-top: 64px; }
+.home-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.home-section-heading .eyebrow { font-size: 10px; margin-bottom: 7px; }
+.home-section-heading h2 { margin: 0; font-size: 26px; letter-spacing: -.045em; }
+.sample-label { display: inline-block; border: 1px solid #d8d8cc; border-radius: 20px; padding: 3px 10px; font-size: 11px; color: #716f60; background: #f4f1e9; white-space: nowrap; }
+.section-description { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+.schedule-layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 20px; align-items: stretch; }
+.calendar-panel, .day-panel { padding: 24px; border: 1px solid #d4d5cf; border-radius: 20px; background: #fffefbdc; }
+.calendar-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
+.month-navigation { display: flex; align-items: center; gap: 8px; }
+.month-navigation h3 { margin: 0; min-width: 130px; text-align: center; font-size: 20px; letter-spacing: -.035em; }
+.month-navigation button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #e0e2db; background: white; border-radius: 12px; color: var(--ink); cursor: pointer; font-size: 26px; line-height: 1; }
+.month-navigation button:hover { background: #edf0f2; border-color: #8fa4b8; }
+.doctor-filter { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+.doctor-filter select { max-width: 100%; min-height: 44px; border: 1px solid #d5d9d6; border-radius: 10px; background: white; padding: 8px; color: var(--ink); font: inherit; font-size: 14px; }
+.schedule-calendar { border-collapse: collapse; table-layout: fixed; width: 100%; }
+.schedule-calendar th { height: 38px; font-size: 12px; color: #687478; font-weight: 500; }
+.schedule-calendar th:first-child, .schedule-calendar td:first-child button { color: #a75d56; }
+.schedule-calendar th:last-child { color: #5c7d9d; }
+.schedule-calendar td { padding: 3px; height: 62px; text-align: center; vertical-align: middle; }
+.calendar-day { display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; width: 100%; min-height: 54px; padding: 5px 0; border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--ink); cursor: pointer; font-size: 14px; }
+.calendar-day:hover { background: #f0f1ec; }
+.calendar-day[aria-current='date'] { border-color: #b7c7d7; font-weight: 800; }
+.calendar-day[aria-pressed='true'], .schedule-calendar td:first-child .calendar-day[aria-pressed='true'] { background: #466f99; border-color: #466f99; color: white; }
+.calendar-markers { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 6px; }
+.calendar-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.calendar-dot.doctor-sage { background: #769e8a; }
+.calendar-dot.doctor-sand { background: #c49b6b; }
+.calendar-day[aria-pressed='true'] .calendar-dot { outline: 1px solid #ffffffa6; }
+.doctor-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #e3e4dd; }
+.doctor-legend-item { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px; }
+.day-panel { background: #f0f2ed; }
+.day-panel-label { font-size: 12px; color: var(--muted); margin-bottom: 7px; }
+.day-panel h3 { font-size: 23px; letter-spacing: -.04em; margin-bottom: 22px; }
+.schedule-entry { padding: 18px 0; border-top: 1px solid #d8ded5; }
+.doctor-badge { display: inline-block; border-radius: 6px; padding: 2px 7px; font-size: 11px; margin-bottom: 9px; }
+.doctor-badge.doctor-sage { background: #dbe7de; color: #3e6652; }
+.doctor-badge.doctor-sand { background: #eee1ce; color: #7c603b; }
+.schedule-entry h4 { margin: 0 0 6px; font-size: 16px; }
+.schedule-entry p, .schedule-empty { color: var(--muted); font-size: 13px; margin: 0; line-height: 1.8; }
+.notice-list { border-top: 1px solid #bfc7c8; }
+.notice-list > .schedule-empty { padding: 24px 0; }
+.notice-item { border-bottom: 1px solid #d8dedb; }
+.notice-item summary { list-style: none; cursor: pointer; min-height: 72px; display: flex; align-items: center; gap: 24px; padding: 19px 4px; }
+.notice-item summary::-webkit-details-marker { display: none; }
+.notice-item-title { flex: 1; font-size: 16px; font-weight: 550; }
+.notice-item summary time { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.notice-expand { font-size: 20px; color: #6c7f89; }
+.notice-item[open] .notice-expand { transform: rotate(45deg); }
+.notice-content { margin: 0; border-top: 1px solid #e4e8e1; background: #fffefb80; padding: 22px; color: var(--muted); font-size: 14px; white-space: pre-line; }
+@media (max-width: 800px) {
+  .schedule-layout { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 600px) {
+  .home-section { margin-top: 42px; }
+  .home-section-heading h2 { font-size: 23px; }
+  .calendar-panel, .day-panel { padding: 16px; border-radius: 16px; }
+  .calendar-toolbar { gap: 10px; }
+  .month-navigation { gap: 4px; }
+  .month-navigation h3 { min-width: 115px; font-size: 18px; }
+  .doctor-filter { width: 100%; justify-content: flex-end; }
+  .schedule-calendar td { padding: 1px; height: 54px; }
+  .calendar-day { min-height: 48px; border-radius: 9px; font-size: 13px; }
+  .notice-item summary { flex-wrap: wrap; gap: 4px 12px; padding: 18px 2px; }
+  .notice-item-title { flex-basis: calc(100% - 35px); font-size: 14px; }
+  .notice-item summary time { order: 3; width: 100%; font-size: 11px; }
+  .notice-expand { margin-left: auto; }
+  .notice-content { padding: 18px 12px; }
+}
+
+/* 일정표 레퍼런스 반영: 밝은 회색 배경과 회색 1px 테두리의 섹션 카드 */
+.home-page { background: #f2f3f5; --section-border: #b7bdc5; }
+.home-page .site-header { background: #fff; border-color: #d5d9df; }
+.home-page .category-card { background: #fff; border: 1px solid var(--section-border); }
+.home-page .category-card-dark { background: linear-gradient(135deg, #424c51, #293237); border-color: #78818b; }
+.home-section { margin-top: 32px; padding: 32px; background: #fff; border: 1px solid var(--section-border); border-radius: 28px; }
+.home-section-heading h2 { font-size: 27px; }
+.schedule-layout { display: block; }
+.calendar-panel { padding: 0; background: transparent; border: 0; border-radius: 0; }
+.calendar-toolbar { margin-bottom: 18px; }
+.month-navigation { gap: 14px; }
+.month-navigation h3 { min-width: 140px; font-size: 22px; }
+.month-navigation button { width: 44px; height: 44px; background: #f0f1f4; border: 0; }
+.doctor-legend { display: flex; gap: 10px; margin: 0 0 12px; padding: 0; border: 0; }
+.doctor-blue { --doctor-color: #3e7bc6; --doctor-tint: #ecf3fc; }
+.doctor-amber { --doctor-color: #b8791f; --doctor-tint: #fcf4e8; }
+.doctor-teal { --doctor-color: #238879; --doctor-tint: #e9f5f1; }
+.doctor-purple { --doctor-color: #8968b0; --doctor-tint: #f2edf8; }
+.calendar-dot { width: 9px; height: 9px; border: 1px solid var(--doctor-color, #667586); background: var(--doctor-color, #667586); }
+.calendar-dot.dot-morning { background: linear-gradient(90deg, var(--doctor-color, #667586) 50%, transparent 50%); }
+.doctor-legend-item { display: inline-flex; gap: 8px; min-height: 38px; padding: 7px 14px; border: 1px solid var(--doctor-color); border-radius: 24px; background: var(--doctor-tint); color: #354352; font-size: 13px; font-weight: 650; }
+.calendar-key { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin: 0 0 16px; color: #727b86; font-size: 12px; }
+.calendar-key > span { display: inline-flex; align-items: center; gap: 6px; }
+.key-dot { --doctor-color: #687480; }
+.schedule-calendar { border-collapse: separate; border-spacing: 7px; }
+.schedule-calendar th { height: 40px; font-size: 14px; font-weight: 650; }
+.schedule-calendar th:first-child, .schedule-calendar td:first-child button { color: #cc5b63; }
+.schedule-calendar th:last-child, .schedule-calendar td:last-child button { color: #3e7bc6; }
+.schedule-calendar td { height: 94px; padding: 0; }
+.calendar-day { min-height: 94px; gap: 14px; padding: 12px 0; border-radius: 16px; background: #f5f6f8; font-size: 18px; font-weight: 550; }
+.calendar-day:hover { background: #eaeef3; }
+.calendar-number { display: grid; place-items: center; min-width: 30px; height: 30px; border-radius: 9px; }
+.calendar-day[aria-current='date'] { border-color: #8b98a8; }
+.calendar-day[aria-pressed='true'], .schedule-calendar td:first-child .calendar-day[aria-pressed='true'] { background: #fff; border: 2px solid #414d5b; color: var(--ink); }
+.calendar-day[aria-pressed='true'] .calendar-number { background: #303b47; color: white; }
+.calendar-day[aria-pressed='true'] .calendar-dot { outline: 0; }
+.calendar-markers { min-height: 10px; gap: 6px; }
+.calendar-outside { background: transparent; color: #b3b8c0; font-weight: 400; justify-content: flex-start; padding-top: 16px; }
+.calendar-footnote { margin: 14px 0 0; color: #737c86; font-size: 12px; }
+.day-panel { margin-top: 24px; padding: 22px; border-radius: 18px; background: #f6f7f9; border: 1px solid #cbd0d7; }
+.day-panel h3 { margin-bottom: 16px; font-size: 22px; }
+[data-day-schedules] { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+[data-day-schedules] > .schedule-empty { grid-column: 1 / -1; }
+.schedule-entry { padding: 0; border: 0; }
+.doctor-badge { color: var(--doctor-color); background: var(--doctor-tint); }
+.morning-badge { display: inline-block; padding: 1px 6px; margin-bottom: 6px; background: #fff0d8; color: #8b651f; border-radius: 5px; font-size: 11px; }
+.notice-list { display: grid; gap: 12px; border: 0; }
+.notice-item { border: 1px solid var(--section-border); border-radius: 16px; overflow: hidden; background: #fafbfc; }
+.notice-item:hover { border-color: #788694; }
+.notice-item[open] { border-color: #8398ad; background: #fff; }
+.notice-item summary { min-height: 76px; padding: 20px 22px; background: #f0f1f3; }
+.notice-item summary:hover { background: #f1f4f7; }
+.notice-item-title { font-weight: 650; }
+.notice-content { padding: 22px; border-top: 1px solid #dce1e7; background: #fff; }
+@media (max-width: 600px) {
+  .home-section { margin-top: 24px; padding: 20px 14px; border-radius: 22px; }
+  .home-section-heading h2 { font-size: 22px; }
+  .section-description { font-size: 13px; }
+  .month-navigation { gap: 8px; }
+  .month-navigation h3 { min-width: 125px; font-size: 20px; }
+  .doctor-filter { width: auto; }
+  .doctor-legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .doctor-legend-item { justify-content: center; padding: 6px 8px; min-height: 36px; font-size: 12px; }
+  .calendar-key { font-size: 11px; gap: 12px; }
+  .schedule-calendar { border-spacing: 3px 5px; }
+  .schedule-calendar th { font-size: 12px; }
+  .schedule-calendar td { height: 72px; }
+  .calendar-day { min-height: 72px; gap: 8px; padding: 9px 0; border-radius: 10px; font-size: 14px; }
+  .calendar-number { min-width: 24px; height: 26px; border-radius: 7px; }
+  .calendar-markers { gap: 3px; }
+  .calendar-markers .calendar-dot { width: 6px; height: 6px; }
+  .calendar-outside { padding-top: 10px; }
+  .calendar-footnote { font-size: 11px; }
+  .day-panel { padding: 16px; }
+  .day-panel h3 { font-size: 20px; }
+  [data-day-schedules] { grid-template-columns: 1fr; gap: 14px; }
+  .schedule-entry + .schedule-entry { padding-top: 14px; border-top: 1px solid #dce1e7; }
+  .notice-item summary { padding: 16px; }
+  .notice-content { padding: 16px; }
+}
+
+/* 기존 달력 크기를 유지하면서 공휴일 명칭과 근무 구분만 추가합니다. */
+.calendar-day.has-holiday { gap: 4px; padding-block: 6px; }
+.calendar-day.has-holiday .calendar-number, .calendar-holiday-label { color: #c35460; }
+.calendar-day.has-holiday[aria-pressed='true'] .calendar-number { background: #b94f5a; color: #fff; }
+.calendar-holiday-label { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; max-width: 100%; padding-inline: 2px; font-size: 10px; line-height: 1.1; font-weight: 500; }
+.selected-holiday { margin: -8px 0 18px; color: #b94f5a; font-size: 13px; }
+.work-period { display: inline-flex; align-items: center; justify-content: center; min-width: 58px; min-height: 32px; padding: 5px 12px; border: 1px solid #c4cdd5; border-radius: 9px; color: #4a5e70; background: #edf1f5; font-size: 12px; font-weight: 650; }
+.work-period.work-morning { border-color: #dec79b; color: #8b651f; background: #fcf4e7; }
+@media (max-width: 600px) {
+  .calendar-day.has-holiday { gap: 3px; padding-block: 4px; }
+  .calendar-holiday-label { font-size: 8.5px; }
+}
+
+/* 상단 배너 고정. 상세 페이지의 섹션 메뉴와 본문 이동 위치도 함께 보정합니다. */
+.site-header { position: sticky; top: 0; z-index: 40; }
+.section-nav { top: 88px; }
+.information-section { scroll-margin-top: 172px; }
+.skip-link { z-index: 100; }
+
+/* 마이페이지: 환자 샘플 정보와 진료 내역을 읽기 전용으로 표시합니다. */
+.patient-page { background: #f2f3f5; }
+.patient-main { max-width: 960px; padding-top: 24px; padding-bottom: 48px; }
+.patient-page-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; }
+.patient-page-heading h1 { font-size: 32px; letter-spacing: -.05em; margin: 0; }
+.patient-demo-note { color: #66717d; font-size: 13px; margin-bottom: 24px; }
+.patient-summary { display: flex; align-items: flex-start; gap: 20px; padding: 28px; border: 1px solid #b7bdc5; border-radius: 24px; background: linear-gradient(120deg, #edf3fa, #fff); }
+.patient-summary h2 { margin: 0 0 10px; font-size: 27px; letter-spacing: -.04em; }
+.patient-summary p { margin: 3px 0; color: #536377; font-size: 15px; }
+.patient-summary-icon { display: grid; place-items: center; width: 52px; height: 52px; flex-shrink: 0; border-radius: 17px; color: #436d99; background: #dae6f4; }
+.patient-summary-icon svg { width: 32px; height: 32px; }
+.patient-section { padding: 28px; margin-top: 24px; border: 1px solid #b7bdc5; border-radius: 24px; background: white; }
+.patient-section h2 { margin: 0 0 20px; font-size: 22px; letter-spacing: -.04em; }
+.patient-info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0; }
+.patient-info-grid > div { padding: 16px 0; border-top: 1px solid #e1e4e8; }
+.patient-info-grid dt { margin-bottom: 6px; color: #667382; font-size: 12px; }
+.patient-info-grid dd { margin: 0; font-size: 16px; font-weight: 650; }
+.patient-section-description { margin: -7px 0 20px; font-size: 13px; color: #667382; }
+.visit-history { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.visit-card { border: 1px solid #cbd0d7; border-radius: 14px; background: #f6f7f9; padding: 18px; }
+.visit-card time { font-size: 15px; font-weight: 650; }
+.visit-card p { margin: 9px 0 0; color: #657384; font-size: 13px; }
+.patient-section-heading { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.patient-small-label { font-size: 11px; padding: 3px 8px; color: #667382; border-radius: 6px; background: #f0f2f5; }
+.medication-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.medication-item { display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid #d6dbe1; border-radius: 14px; background: #fafbfc; }
+.medication-order { width: 30px; height: 30px; display: grid; place-items: center; flex-shrink: 0; border-radius: 50%; background: #e4edf8; color: #436d99; font-size: 14px; font-weight: 750; }
+.medication-name { font-size: 15px; font-weight: 650; }
+.next-visit p { margin: 0; color: #436d99; font-size: 26px; font-weight: 750; letter-spacing: -.035em; }
+.patient-empty { margin: 0; padding: 12px 0; color: #667382; font-size: 14px; grid-column: 1 / -1; }
+@media (max-width: 600px) {
+  .section-nav { top: 74px; }
+  .information-section { scroll-margin-top: 158px; }
+  .patient-main { padding-top: 16px; }
+  .patient-page-heading h1 { font-size: 28px; }
+  .patient-summary, .patient-section { padding: 20px; border-radius: 20px; }
+  .patient-summary { gap: 14px; }
+  .patient-summary h2 { font-size: 24px; }
+  .patient-summary p { font-size: 13px; }
+  .patient-summary-icon { width: 42px; height: 42px; border-radius: 13px; }
+  .patient-summary-icon svg { width: 27px; height: 27px; }
+  .patient-info-grid { grid-template-columns: 1fr; }
+  .visit-history { grid-template-columns: 1fr; }
+  .visit-card { display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+  .visit-card p { margin: 0; }
+  .next-visit p { font-size: 23px; }
+}
+
+/* 배경만 60% 불투명하게 설정해 로고와 아이콘은 선명하게 유지합니다. */
+.site-header, .home-page .site-header { background: rgba(255, 255, 255, .6); }
+.home-patient-summary { position: relative; margin-top: 24px; }
+.home-patient-summary .patient-summary-name { margin: 0 0 16px; color: var(--ink); font-size: 27px; font-weight: 750; letter-spacing: -.04em; }
+.home-patient-summary .sample-label { position: absolute; top: 16px; right: 18px; }
+@media (max-width: 600px) {
+  .home-patient-summary { margin-top: 20px; }
+  .home-patient-summary .patient-summary-name { font-size: 24px; }
+  .home-patient-summary .sample-label { top: 12px; right: 12px; font-size: 10px; }
+}
