@@ -503,3 +503,23 @@ body.drawer-open { overflow: hidden; }
   .home-patient-summary .patient-summary-name { font-size: 24px; }
   .home-patient-summary .sample-label { top: 12px; right: 12px; font-size: 10px; }
 }
+
+/* 홈 요약과 Drawer의 요청 범위만 조정합니다. */
+.home-patient-summary { background: #fff; }
+.home-page .drawer-header .drawer-category-label { margin: 0; padding-top: 10px; color: var(--blue); font-size: 12px; font-weight: 750; letter-spacing: .15em; }
+.home-page .drawer-nav { gap: 0; }
+.home-page .drawer-nav a { border-bottom: 1px solid #d0d4d9; border-radius: 0; }
+.schedule-entry .schedule-doctor-name { margin: 0 0 12px; color: var(--ink); font-size: 22px; font-weight: 750; letter-spacing: -.035em; }
+
+/* 약 이름을 누르면 복용방법과 약 설명을 펼칩니다. */
+.medication-item { display: block; padding: 0; overflow: hidden; }
+.medication-trigger { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 16px; list-style: none; background: #f5f7f9; cursor: pointer; }
+.medication-trigger::-webkit-details-marker { display: none; }
+.medication-trigger:hover { background: #eaf0f5; }
+.medication-expand { margin-left: auto; color: #64778a; font-size: 20px; }
+.medication-accordion[open] .medication-expand { transform: rotate(45deg); }
+.medication-content { padding: 20px; border-top: 1px solid #d6dbe1; background: #fff; }
+.medication-content h3 { margin: 0 0 8px; font-size: 14px; }
+.medication-content p { margin: 0 0 18px; color: #667382; font-size: 14px; }
+.medication-content p:last-child { margin-bottom: 0; }
+.next-visit .next-visit-note { margin-top: 12px; color: #667382; font-size: 12px; font-weight: 400; letter-spacing: 0; }

@@ -34,7 +34,7 @@
     symptom: patient.symptom,
     latestVisitDate: dateText(latest.date),
     doctor: latest.doctor,
-    nextVisitDate: dateText((patient.nextVisit || {}).date)
+    nextVisitTiming: (patient.nextVisit || {}).relativeText
   };
   document.querySelectorAll('[data-patient-field]').forEach(function (element) {
     var key = element.getAttribute('data-patient-field');
@@ -62,8 +62,19 @@
   if (!medications.length) list.appendChild(make('li', 'patient-empty', '최근 처방된 약 정보가 없습니다.'));
   medications.forEach(function (medication) {
     var row = make('li', 'medication-item');
-    row.append(make('span', 'medication-order', String(medication.order)),
-      make('span', 'medication-name', medication.name));
+    var details = make('details', 'medication-accordion');
+    var summary = make('summary', 'medication-trigger');
+    var indicator = make('span', 'medication-expand', '+');
+    indicator.setAttribute('aria-hidden', 'true');
+    summary.append(make('span', 'medication-order', String(medication.order)),
+      make('span', 'medication-name', medication.name), indicator);
+    var content = make('div', 'medication-content');
+    content.append(make('h3', '', '복용방법'),
+      make('p', '', medication.usage || '복용방법 안내를 준비 중입니다.'),
+      make('h3', '', '약 설명'),
+      make('p', '', medication.description || '약 설명을 준비 중입니다.'));
+    details.append(summary, content);
+    row.appendChild(details);
     list.appendChild(row);
   });
 }());

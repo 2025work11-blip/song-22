@@ -79,8 +79,7 @@
     list.forEach(function (entry) {
       var doctor = doctorById(entry.doctorId);
       var card = make('article', 'schedule-entry');
-      card.appendChild(make('span', 'doctor-badge ' + colorClass(doctor), doctor ? doctor.name : '원장 정보 확인 중'));
-      card.appendChild(make('h4', '', entry.title));
+      card.appendChild(make('h4', 'schedule-doctor-name ' + colorClass(doctor), doctor ? doctor.name : '원장 정보 확인 중'));
       // 동작이 없는 상태 표시이므로 실제 버튼 대신 버튼 모양의 라벨로 표시합니다.
       card.appendChild(make('span', 'work-period ' + (entry.period === 'morning' ? 'work-morning' : 'work-full'),
         entry.period === 'morning' ? '오전' : '종일'));
