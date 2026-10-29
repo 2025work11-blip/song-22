@@ -101,6 +101,31 @@
     ['성탄절', 'Christmas', '圣诞节'], ['대체공휴일', 'Substitute holiday', '补休日'], ['지방선거', 'Local elections', '地方选举']
   ].forEach(function (row) { add(row[0], row[1], row[2]); });
 
+  [
+    ['로그인', 'Log in', '登录'], ['로그아웃', 'Log out', '退出登录'], ['회원가입', 'Sign up', '注册'],
+    ['이메일', 'Email', '电子邮箱'], ['비밀번호', 'Password', '密码'],
+    ['이메일과 비밀번호로 계정을 만들어 주세요.', 'Create an account with your email and password.', '使用电子邮箱和密码创建账号。'],
+    ['이메일과 비밀번호로 로그인해 주세요.', 'Log in with your email and password.', '使用电子邮箱和密码登录。'],
+    ['비밀번호는 6자 이상 입력해 주세요.', 'Enter a password with at least 6 characters.', '密码至少需要6个字符。'],
+    ['가입할 때 설정한 비밀번호를 입력해 주세요.', 'Enter the password you used to sign up.', '请输入注册时设置的密码。'],
+    ['이미 계정이 있으신가요?', 'Already have an account?', '已有账号？'],
+    ['아직 계정이 없으신가요?', 'New here?', '还没有账号？'],
+    ['계정 가입만으로 EMR 환자 기록이 연결되지는 않습니다.', 'Creating an account does not link your EMR patient record.', '创建账号不会自动关联EMR患者记录。'],
+    ['로그인이 필요합니다.', 'Please log in.', '请先登录。'],
+    ['로그인 후 마이페이지를 확인할 수 있습니다.', 'Log in to view your page.', '登录后可查看个人中心。'],
+    ['로그인하기', 'Log in', '前往登录'],
+    ['이메일 또는 비밀번호를 확인해 주세요.', 'Please check your email and password.', '请检查邮箱和密码。'],
+    ['올바른 이메일 주소를 입력해 주세요.', 'Enter a valid email address.', '请输入有效的电子邮箱。'],
+    ['비밀번호를 입력해 주세요.', 'Enter your password.', '请输入密码。'],
+    ['이메일 인증이 필요합니다. 가입할 때 받은 인증메일을 확인한 후 로그인해 주세요.', 'Please confirm your email using the signup email before logging in.', '请先通过注册邮件验证邮箱，再登录。'],
+    ['이미 가입된 이메일입니다. 로그인 화면을 이용해 주세요.', 'This email is already registered. Please log in.', '该邮箱已注册，请登录。'],
+    ['가입 요청을 접수했습니다. 인증메일이 도착하면 이메일 인증 후 로그인해 주세요. 이미 가입한 이메일이라면 로그인해 주세요.', 'Your signup request was received. If a confirmation email arrives, verify your email before logging in. If you already have an account, please log in.', '注册申请已收到。如收到验证邮件，请先验证邮箱再登录；已有账号请直接登录。'],
+    ['로그인 서비스를 불러오지 못했습니다. 인터넷 연결을 확인한 후 새로고침해 주세요.', 'Unable to load the login service. Check your connection and refresh.', '无法加载登录服务，请检查网络并刷新。'],
+    ['로그인 서버에 연결하지 못했습니다. 인터넷 연결을 확인한 후 다시 시도해 주세요.', 'Unable to connect to the login server. Check your connection and try again.', '无法连接登录服务器，请检查网络后重试。'],
+    ['로그아웃하지 못했습니다. 인터넷 연결을 확인한 후 다시 시도해 주세요.', 'Unable to log out. Check your connection and try again.', '无法退出登录，请检查网络后重试。'],
+    ['로그인 상태를 확인하지 못했습니다. 다시 로그인해 주세요.', 'Unable to check your session. Please log in again.', '无法确认登录状态，请重新登录。']
+  ].forEach(function (row) { add(row[0], row[1], row[2]); });
+
   // Mock Data의 안내 문구를 각 화면의 같은 위치에 맞춰 현지화합니다.
   var topics = {
     vision: ['Vision correction', '视力矫正'], cataract: ['Cataract', '白内障'],
@@ -198,8 +223,10 @@
     var title = translate(originalTitle);
     if (document.title !== title) document.title = title;
     document.documentElement.lang = current === 'ko' ? 'ko' : current;
-    var reset = document.querySelector('[data-language-reset]');
-    if (reset) reset.hidden = current === 'ko';
+    document.querySelectorAll('[data-language]').forEach(function (link) {
+      if (link.getAttribute('data-language') === current) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
   }
   function retainLanguageInLinks() {
     document.querySelectorAll('a[href]').forEach(function (link) {
@@ -226,6 +253,4 @@
     pending = true;
     queueMicrotask(function () { pending = false; refresh(); });
   }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['aria-label', 'title'] });
-  var reset = document.querySelector('[data-language-reset]');
-  if (reset) reset.addEventListener('click', function () { window.applyUILanguage('ko'); });
 }());

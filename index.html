@@ -15,22 +15,29 @@
   <script defer src="js/holidays.js"></script>
   <script defer src="js/home.js"></script>
   <script defer src="js/language.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="js/supabase-client.js"></script>
+  <script defer src="js/auth.js"></script>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main">본문으로 바로가기</a>
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="index.html" aria-label="AA안과 홈"><span class="brand-mark"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 16s5-8 13-8 13 8 13 8-5 8-13 8S3 16 3 16Z"/><circle cx="16" cy="16" r="4.5"/></svg></span><span>AA안과</span></a>
-    <div class="header-actions"><div class="language-picker" data-language-picker>
+    <div class="header-actions"><a class="header-auth-control" href="login.html" data-auth-signed-out hidden>로그인</a><button class="header-auth-control" type="button" data-auth-signed-in data-auth-logout hidden>로그아웃</button><div class="language-picker" data-language-picker>
   <button class="language-toggle" type="button" data-language-toggle aria-label="언어 선택" aria-expanded="false" aria-controls="language-panel"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 7h14M5 17h14"/></svg></button>
   <div class="language-panel" id="language-panel" data-language-panel hidden>
-    <div class="language-options"><a data-language="en" role="link" tabindex="0" aria-label="영어로 번역"><img src="assets/flags/us.svg" width="32" height="22" alt=""><span lang="en">ENG</span></a><a data-language="zh-CN" role="link" tabindex="0" aria-label="중국어 간체로 번역"><img src="assets/flags/cn.svg" width="32" height="22" alt=""><span lang="zh-CN">中文</span></a></div>
-    <button class="language-reset" type="button" data-language-reset hidden>한국어</button>
-    <p class="language-notice" data-language-notice>번역은 웹사이트 배포 후 이용할 수 있습니다.</p>
+    <div class="language-options notranslate" translate="no">
+      <a data-language="ko" role="link" tabindex="0" aria-label="한국어로 보기"><img src="assets/flags/kr.svg" width="48" height="48" alt=""><span lang="ko">한국어</span></a>
+      <a data-language="zh-CN" role="link" tabindex="0" aria-label="중국어로 번역"><img src="assets/flags/cn.svg" width="48" height="48" alt=""><span lang="zh-CN">中文</span></a>
+      <a data-language="en" role="link" tabindex="0" aria-label="영어로 번역"><img src="assets/flags/us.svg" width="48" height="48" alt=""><span lang="en">English</span></a>
+    </div>
+    <p class="language-notice visually-hidden" data-language-notice>번역은 웹사이트 배포 후 이용할 수 있습니다.</p>
   </div>
 </div><button class="menu-trigger" type="button" data-menu-open aria-label="카테고리 메뉴 열기" aria-controls="category-drawer" aria-expanded="false" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div>
   </div>
 </header>
+<p class="container auth-global-message" data-auth-global-message role="alert" hidden></p>
 <dialog class="menu-drawer" id="category-drawer" data-menu-drawer aria-labelledby="drawer-title">
   <div class="drawer-header"><h2 class="drawer-category-label" id="drawer-title">CATEGORY</h2><button class="drawer-close" type="button" data-menu-close aria-label="메뉴 닫기" autofocus>×</button></div>
   <nav class="drawer-nav" aria-label="전체 카테고리">
@@ -45,7 +52,7 @@
   <p class="drawer-caption">눈에 관련한 평생 주치의 AA안과</p>
 </dialog>
 <main id="main" class="container home-main" tabindex="-1">
-  <a href="mypage.html" class="patient-summary home-patient-summary notranslate" data-home-patient-summary translate="no" aria-label="마이페이지로 이동 · 환자 요약 (샘플)">
+  <a href="mypage.html" class="patient-summary home-patient-summary notranslate" data-home-patient-summary data-auth-only hidden translate="no" aria-label="마이페이지로 이동 · 환자 요약 (샘플)">
     <span class="patient-summary-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="16" cy="11" r="5"/><path d="M6 28v-3a10 10 0 0 1 20 0v3"/></svg></span>
     <div><p class="patient-summary-name"><span data-patient-field="name">000</span>님</p><p>최근 진료일 : <span data-patient-field="latestVisitDate">2026년 10월 10일</span></p><p>증상 : <span data-patient-field="symptom">백내장</span></p></div>
     <span class="sample-label">샘플 정보</span>

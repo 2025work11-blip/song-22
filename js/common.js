@@ -110,7 +110,14 @@
     if (privatePage) pageUrl = null;
 
     links.forEach(function (link) {
-      if (!pageUrl) {
+      var language = link.getAttribute('data-language');
+      if (language === 'ko' && window.location.hostname.endsWith('.translate.goog') && pageUrl) {
+        var originalPage = new URL(pageUrl.href);
+        originalPage.searchParams.set('lang', 'ko');
+        link.href = originalPage.href;
+        return;
+      }
+      if (!pageUrl || language === 'ko') {
         link.removeAttribute('aria-disabled');
         link.href = '?lang=' + link.getAttribute('data-language');
         link.addEventListener('click', function (event) {
@@ -125,6 +132,12 @@
       translated.searchParams.set('tl', link.getAttribute('data-language'));
       translated.searchParams.set('u', pageUrl.href);
       link.href = translated.href;
+    });
+    var selectedLanguage = new URLSearchParams(window.location.search).get('_x_tr_tl') ||
+      new URLSearchParams(window.location.search).get('lang') || 'ko';
+    links.forEach(function (link) {
+      if (link.getAttribute('data-language') === selectedLanguage) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
     });
     notice.textContent = privatePage
       ? '환자 정보는 외부로 보내지 않고 화면 문구를 번역합니다.'
