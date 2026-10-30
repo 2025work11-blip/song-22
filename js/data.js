@@ -87,10 +87,15 @@ window.diseaseData = {
   }
 };
 
-// 홈의 샘플 일정·공지사항. 실제 원장명과 날짜별 내용으로 교체하세요.
-// 같은 날짜에 원장별 일정을 여러 개 등록할 수 있습니다.
-// 관리자 페이지와 DB는 아직 연결하지 않으며, 향후 이 데이터 구조에 연동합니다.
+// 원장·일정·공지 예시는 초기 데이터 참고용으로 보존합니다.
+// 실제 달력과 공지사항은 Supabase에서 조회하며 실패 시 아래 예시로 대체하지 않습니다.
+// 관리자 화면은 아직 미구현입니다.
 window.homeData = {
+  // 요청받은 휴진 기간 예시입니다. 기존 DB에는 휴진 기간 컬럼이 없어 별도로 보관합니다.
+  closures: [
+    { doctorName: 'AAA원장', startDate: '2026-11-10', endDate: '2026-11-20' },
+    { doctorName: 'BBB원장', startDate: '2026-11-25', endDate: '2026-11-30' }
+  ],
   doctors: [
     // weekdays: 일요일 0 ~ 토요일 6 / morningOnly: 해당 요일은 오전만 진료
     { id: 'doctor-1', name: 'AAA원장', initial: 'A', color: 'blue', weekdays: [1, 2, 3, 4, 5], morningOnly: [3] },

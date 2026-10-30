@@ -196,3 +196,6 @@ html[data-theme='dark'] .schedule-hours { border: 1px solid #929aa4; box-shadow:
 .schedule-period-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; }
 .schedule-work-hours { color: var(--muted); font-size: 12px; }
 .holiday-hours { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; color: var(--muted); font-size: 12px; }
+.notice-body-text { margin: 0; white-space: pre-line; }
+.notice-image { display: block; max-width: 100%; height: auto; margin-top: 16px; border-radius: 8px; }
+.notice-image-error { margin: 12px 0 0; color: var(--muted); font-size: 12px; }

@@ -21,7 +21,7 @@
   <title>AA안과 | 내눈 평생 주치의</title>
   <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261029-layout2">
-  <link rel="stylesheet" href="css/theme.css?v=20261029-hours1">
+  <link rel="stylesheet" href="css/theme.css?v=20261030-notices1">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261029-icon1">
   <script defer src="js/layout.js?v=20261029-share1"></script>
   <script defer src="js/config.js"></script>
@@ -31,10 +31,12 @@
   <script defer src="js/patient-data.js?v=20261029-doctors1"></script>
   <script defer src="js/mypage.js?v=20261029-summary1"></script>
   <script defer src="js/holidays.js"></script>
-  <script defer src="js/home.js?v=20261029-hours1"></script>
-  <script defer src="js/language.js?v=20261029-cardpolish1"></script>
+  <script defer src="js/language.js?v=20261030-noticecopy1"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/supabase-client.js"></script>
+  <script defer src="js/schedule-data.js?v=20261030-db1"></script>
+  <script defer src="js/home.js?v=20261030-notices1"></script>
+  <script defer src="js/notices.js?v=20261030-noticeempty1"></script>
   <script defer src="js/auth.js?v=20261029-summary1"></script>
 </head>
 <body class="home-page">
@@ -87,8 +89,8 @@
     </div>
   </section>
   <section class="home-section notice-section" aria-labelledby="notice-title">
-    <div class="home-section-heading"><div><h2 id="notice-title">공지사항</h2></div><span class="sample-label">샘플 공지</span></div>
-    <p class="section-description">AA안과의 새로운 안내를 날짜별로 확인하세요. 제목을 누르면 내용을 볼 수 있습니다.</p>
+    <div class="home-section-heading"><div><h2 id="notice-title">공지사항</h2></div></div>
+    <p class="section-description">최근 3개월의 공지사항입니다. 공지사항이 없으면 표시되지 않습니다.</p>
     <div class="notice-list" data-notice-list><p class="schedule-empty">공지사항을 준비 중입니다.</p></div>
   </section>
 </main>
