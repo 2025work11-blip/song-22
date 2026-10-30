@@ -234,7 +234,7 @@
         if (offset) { var before = make('td'); before.colSpan = offset; bandRow.appendChild(before); }
         var bandCell = make('td');
         bandCell.colSpan = end - start + 1;
-        var band = make('button', 'closure-range', doctor.initial + ' 휴진 · ' + start + '~' + end);
+        var band = make('button', 'closure-range', doctor.name + ' 휴진 · ' + start + '~' + end);
         band.type = 'button';
         band.dataset.date = dateKey(start);
         band.title = closure.doctorName + ' 휴진 · ' + closure.startDate + ' ~ ' + closure.endDate;
