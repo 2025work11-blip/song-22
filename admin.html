@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1556c9">
+  <script src="js/theme.js?v=20261029-theme1"></script>
+  <title>관리자 화면 · AA안과</title>
+  <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css?v=20261029-layout2">
+  <link rel="stylesheet" href="css/theme.css?v=20261030-closures1">
+  <link rel="stylesheet" href="css/admin.css?v=20261030-admin1">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261029-icon1">
+  <script defer src="js/layout.js?v=20261029-share1"></script>
+  <script defer src="js/config.js"></script>
+  <script defer src="js/share.js?v=20261029-share1"></script>
+  <script defer src="js/data.js?v=20261030-closures1"></script>
+  <script defer src="js/common.js?v=20261029-explicit1"></script>
+  <script defer src="js/language.js?v=20261030-closures1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="js/supabase-client.js"></script>
+  <script defer src="js/auth.js?v=20261029-summary1"></script>
+  <script defer src="js/admin.js?v=20261030-admin1"></script>
+</head>
+<body class="admin-page">
+<a class="skip-link" href="#main">본문으로 바로가기</a>
+<div data-site-header></div>
+<p class="container auth-global-message" data-auth-global-message role="alert" hidden></p>
+<div data-site-drawer></div>
+<main id="main" class="container admin-main" tabindex="-1">
+  <div class="admin-heading"><div><p class="admin-eyebrow">AA EYE CLINIC</p><h1>홈페이지 관리</h1><p>병원 안내와 운영 일정을 한곳에서 확인하세요.</p></div><a class="admin-button" href="index.html">홈페이지 보기</a></div>
+  <div class="admin-preview-note"><strong>관리 화면 미리보기</strong><p>변경 내용은 현재 화면에만 적용되며 새로고침하면 사라집니다. DB 저장·삭제와 관리자 권한은 아직 연결하지 않았습니다.</p></div>
+  <p class="admin-status" data-admin-status role="status" aria-live="polite">공용 데이터를 확인하고 있습니다.</p>
+  <div class="admin-layout">
+    <nav class="admin-nav" aria-label="관리자 메뉴">
+      <a href="#schedule" data-admin-menu="schedule" aria-current="page">원장별 일정 관리</a>
+      <a href="#notices" data-admin-menu="notices">공지사항 관리</a>
+      <a href="#hospital" data-admin-menu="hospital">병원소개 관리</a>
+      <a href="#diseases" data-admin-menu="diseases">질환 안내 관리</a>
+      <a href="#settings" data-admin-menu="settings">홈페이지 설정</a>
+    </nav>
+    <div class="admin-content">
+      <section data-admin-panel="schedule" aria-labelledby="admin-schedule-title"><h2 id="admin-schedule-title">원장별 일정 관리</h2><p class="admin-description">정기 일정, 특정 날짜의 변경 일정, 휴진 기간을 구분해 확인합니다.</p><div data-admin-group="schedule"></div></section>
+      <section data-admin-panel="notices" aria-labelledby="admin-notices-title" hidden><h2 id="admin-notices-title">공지사항 관리</h2><p class="admin-description">홈에는 최근 3개월 공지만 표시됩니다. 여기에서는 지난 공지도 함께 확인합니다. 이미지는 공개 HTTPS 주소로 입력합니다.</p><div data-admin-group="notices"></div></section>
+      <section data-admin-panel="hospital" aria-labelledby="admin-hospital-title" hidden><h2 id="admin-hospital-title">병원소개 관리</h2><p class="admin-description">진료시간과 원장·장비 소개를 확인합니다. 현재 홈페이지 안내를 바탕으로 구성한 미리보기입니다.</p><div data-admin-group="hospital"></div></section>
+      <section data-admin-panel="diseases" aria-labelledby="admin-diseases-title" hidden><h2 id="admin-diseases-title">질환 안내 관리</h2><p class="admin-description">병원이 확인한 안내 내용으로 교체할 영역입니다. 현재 내용은 기존 홈페이지의 샘플입니다.</p><label class="admin-topic-label">분야 선택<select data-admin-disease-filter></select></label><div data-admin-group="diseases"></div></section>
+      <section data-admin-panel="settings" aria-labelledby="admin-settings-title" hidden><h2 id="admin-settings-title">홈페이지 설정</h2><p class="admin-description">현재 사용 중인 병원명·로고·상담 및 예약 주소·공유 이미지를 확인합니다.</p><div data-admin-group="settings"></div></section>
+    </div>
+  </div>
+</main>
+<div data-site-footer></div>
+<dialog class="admin-editor" data-admin-editor aria-labelledby="admin-editor-title">
+  <form data-admin-form>
+    <div class="admin-editor-heading"><h2 id="admin-editor-title">내용 편집</h2><button class="admin-icon-button" type="button" data-admin-close aria-label="편집 닫기">×</button></div>
+    <p class="admin-description">현재 화면에서 확인하는 미리보기입니다. DB에는 저장되지 않습니다.</p>
+    <div class="admin-fields" data-admin-fields></div>
+    <p class="admin-error" data-admin-error role="alert" hidden></p>
+    <div class="admin-editor-actions"><button class="admin-button admin-danger" type="button" data-admin-delete>목록에서 제거</button><button class="admin-button" type="button" data-admin-close>취소</button><button class="admin-button admin-primary" type="submit">미리보기 적용</button></div>
+  </form>
+</dialog>
+</body>
+</html>
