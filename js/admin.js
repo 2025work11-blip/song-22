@@ -1,7 +1,8 @@
 // 관리 화면 미리보기 전용입니다. DB 쓰기·인증 권한·RLS는 변경하지 않습니다.
 // 새로고침하면 편집 내용은 사라지며 사용자 화면에는 반영되지 않습니다.
-(function () {
+(async function () {
   'use strict';
+  if (!window.roleAccess || !await window.roleAccess.requireAdmin()) return;
   var main = document.querySelector('.admin-main');
   if (!main) return;
   var state = {}, sources = {}, activeEditor = null, draftNumber = 0;
@@ -89,9 +90,11 @@
     });
   }
   async function readTable(table) {
+    if (!window.roleAccess.isAdmin()) throw new Error('관리자 권한 확인 필요');
     if (!window.supabaseClient) throw new Error('DB 연결 없음');
     var rows = [];
     while (true) {
+      if (!window.roleAccess.isAdmin()) throw new Error('관리자 권한 확인 필요');
       var result = await window.supabaseClient.from(table).select('*').order('id').range(rows.length, rows.length + 999);
       if (result.error) throw result.error;
       if (!Array.isArray(result.data)) throw new Error('조회 결과 없음');
@@ -124,6 +127,7 @@
     document.querySelectorAll('[data-admin-menu]').forEach(function (link) { if (link.dataset.adminMenu === menu) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
   }
   function openEditor(key, id) {
+    if (!window.roleAccess.isAdmin()) return;
     var def = definitions[key], row = state[key].find(function (item) { return String(item.id) === id; });
     activeEditor = { key: key, id: row ? String(row.id) : null };
     document.querySelector('#admin-editor-title').textContent = def.title + (row ? ' 편집' : ' 추가');
@@ -146,7 +150,7 @@
   document.querySelectorAll('[data-admin-close]').forEach(function (button) { button.addEventListener('click', function () { dialog.close(); }); });
   form.addEventListener('submit', function (event) {
     event.preventDefault();
-    if (!activeEditor || !form.reportValidity()) return;
+    if (!window.roleAccess.isAdmin() || !activeEditor || !form.reportValidity()) return;
     var key = activeEditor.key, def = definitions[key], values = {};
     var error = document.querySelector('[data-admin-error]');
     def.fields.forEach(function (f) { values[f.key] = form.elements.namedItem(f.key).value.trim(); });
@@ -161,7 +165,7 @@
     dialog.close(); render(); status.textContent = '변경 내용을 미리보기에 적용했습니다. 사용자 홈페이지와 DB는 변경되지 않았습니다.';
   });
   document.querySelector('[data-admin-delete]').addEventListener('click', function () {
-    if (!activeEditor || definitions[activeEditor.key].fixed) return;
+    if (!window.roleAccess.isAdmin() || !activeEditor || definitions[activeEditor.key].fixed) return;
     if (!window.confirm('현재 미리보기 목록에서만 제거할까요? DB와 사용자 화면은 변경되지 않습니다.')) return;
     var key = activeEditor.key;
     if (key === 'doctors' && ['weekly', 'dates', 'closures'].some(function (kind) { return state[kind].some(function (row) { return String(row.doctor_id) === activeEditor.id; }); })) { var error = document.querySelector('[data-admin-error]'); error.textContent = '이 원장의 일정이 있습니다. 연결된 일정을 먼저 제거해 주세요.'; error.hidden = false; return; }

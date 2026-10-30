@@ -199,6 +199,11 @@ html[data-theme='dark'] .schedule-hours { border: 1px solid #929aa4; box-shadow:
 .notice-body-text { margin: 0; white-space: pre-line; }
 .notice-image { display: block; max-width: 100%; height: auto; margin-top: 16px; border-radius: 8px; }
 .notice-image-error { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+.drawer-account-row { display: flex; align-items: center; border-bottom: 1px solid #d0d4d9; }
+.drawer-account-row > a:first-child { flex: 1; min-width: 0; border-bottom: 0; }
+.drawer-nav .drawer-admin-button { display: inline-flex; justify-content: center; min-height: 32px; margin-right: 12px; padding: 4px 12px; border: 1px solid #9eafc2; border-radius: 8px; color: #436d99; background: #fff; font-size: 12px; font-weight: 600; }
+html[data-theme='dark'] .drawer-account-row { border-color: #425368; }
+html[data-theme='dark'] .drawer-nav .drawer-admin-button { background: #23364b; color: #cde1fb; border-color: #61758d; }
 .doctor-filter-closed { --doctor-color: #c34450; --doctor-tint: #fff0f1; color: #b93240; background: #fff0f1; border-color: #d97c85; }
 .schedule-calendar { table-layout: fixed; }
 .schedule-calendar .calendar-closure-row td { height: auto; padding: 0 0 3px; }
