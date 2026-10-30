@@ -21,7 +21,8 @@
     var result = await Promise.all([
       readRows('doctors', 'id,name,initial,color'),
       readRows('doctor_weekly_schedules', 'id,doctor_id,weekday,period'),
-      readRows('doctor_date_schedules', 'id,doctor_id,schedule_date,period')
+      readRows('doctor_date_schedules', 'id,doctor_id,schedule_date,period'),
+      readRows('doctor_closures', 'id,doctor_id,start_date,end_date')
     ]);
     // 기존 달력의 표시 형태로 변환하여 디자인과 근무 구분을 유지합니다.
     var doctors = result[0].map(function (doctor) {
@@ -41,6 +42,10 @@
         time: row.period === 'morning' ? '오전 진료만' : '종일 진료'
       };
     });
-    return { doctors: doctors, schedules: schedules };
+    var closures = result[3].map(function (row) {
+      var doctor = doctors.find(function (item) { return item.id === String(row.doctor_id); });
+      return doctor ? { doctorId: doctor.id, doctorName: doctor.name, startDate: row.start_date, endDate: row.end_date } : null;
+    }).filter(Boolean);
+    return { doctors: doctors, schedules: schedules, closures: closures };
   };
 }());

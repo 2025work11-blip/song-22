@@ -17,7 +17,7 @@
   var todayKey = selected;
   var selectedDoctor = '';
   var closureOnly = false;
-  var closures = (window.homeData || {}).closures || [];
+  var closures = [];
   var doctorFilters = document.querySelector('[data-doctor-legend]');
   var monthTitle = document.querySelector('[data-calendar-month]');
   var body = document.querySelector('[data-calendar-body]');
@@ -40,12 +40,12 @@
   function monthClosures() {
     return closures.filter(function (closure) {
       return closure.startDate <= dateKey(new Date(year, month + 1, 0).getDate()) &&
-        closure.endDate >= dateKey(1) && doctors.some(function (doctor) { return doctor.name === closure.doctorName; });
+        closure.endDate >= dateKey(1) && Boolean(doctorById(closure.doctorId));
     });
   }
   function closuresOn(date) {
     return closures.filter(function (closure) {
-      var doctor = doctors.find(function (item) { return item.name === closure.doctorName; });
+      var doctor = doctorById(closure.doctorId);
       return doctor && (!selectedDoctor || doctor.id === selectedDoctor) && closure.startDate <= date && closure.endDate >= date;
     });
   }
@@ -67,7 +67,7 @@
     return weekly.concat(specific).filter(function (entry) {
       var doctor = doctorById(entry.doctorId);
       var closed = doctor && closures.some(function (closure) {
-        return closure.doctorName === doctor.name && closure.startDate <= date && closure.endDate >= date;
+        return closure.doctorId === doctor.id && closure.startDate <= date && closure.endDate >= date;
       });
       return !closed && (!selectedDoctor || entry.doctorId === selectedDoctor);
     });
@@ -224,7 +224,7 @@
       body.appendChild(dateRow);
       var weekStart = week * 7 - firstDay + 1;
       monthClosures().forEach(function (closure) {
-        var doctor = doctors.find(function (item) { return item.name === closure.doctorName; });
+        var doctor = doctorById(closure.doctorId);
         if (selectedDoctor && doctor.id !== selectedDoctor) return;
         var start = Math.max(weekStart, 1, Math.round((new Date(closure.startDate + 'T00:00:00Z') - new Date(Date.UTC(year, month, 1))) / 86400000) + 1);
         var end = Math.min(weekStart + 6, days, Math.round((new Date(closure.endDate + 'T00:00:00Z') - new Date(Date.UTC(year, month, 1))) / 86400000) + 1);
@@ -281,6 +281,7 @@
       var result = await window.loadDoctorScheduleData();
       doctors = result.doctors;
       schedules = result.schedules;
+      closures = result.closures || [];
       scheduleState = 'ready';
     } catch (error) {
       // 연결 실패를 예시 진료 일정으로 대체하지 않습니다.

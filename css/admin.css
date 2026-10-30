@@ -19,6 +19,7 @@
 .admin-source { margin: 3px 0 0; color: var(--muted); font-size: 11px; }
 .admin-button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 12px; border: 1px solid #b7c3cf; border-radius: 9px; background: #fff; color: #42586f; font: inherit; font-size: 12px; cursor: pointer; }
 .admin-button:hover { background: #edf4fb; }
+.admin-button:disabled { cursor: not-allowed; opacity: .5; }
 .admin-primary { background: #436d99; color: #fff; border-color: #436d99; }
 .admin-primary:hover { background: #365c84; }
 .admin-danger { color: #b34351; }

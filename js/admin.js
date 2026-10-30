@@ -1,11 +1,10 @@
-// 관리 화면 미리보기 전용입니다. DB 쓰기·인증 권한·RLS는 변경하지 않습니다.
-// 새로고침하면 편집 내용은 사라지며 사용자 화면에는 반영되지 않습니다.
+// 기존 공용 테이블의 관리자 저장·삭제. 저장 구조가 없는 메뉴는 읽기 전용입니다.
 (async function () {
   'use strict';
   if (!window.roleAccess || !await window.roleAccess.requireAdmin()) return;
   var main = document.querySelector('.admin-main');
   if (!main) return;
-  var state = {}, sources = {}, activeEditor = null, draftNumber = 0;
+  var state = {}, sources = {}, loaded = {}, activeEditor = null, saving = false;
   var dialog = document.querySelector('[data-admin-editor]');
   var form = document.querySelector('[data-admin-form]');
   var fieldsRoot = document.querySelector('[data-admin-fields]');
@@ -58,7 +57,11 @@
       var option = make('option', '', topics[key].title); option.value = key; topicFilter.appendChild(option);
     });
     state.settings = [{ id: 'site', name: 'AA안과', logo: 'assets/logo.svg', kakao: config.kakaoChannelUrl, booking: config.naverBookingUrl, shareImage: 'assets/share-preview.png' }];
-    Object.keys(definitions).forEach(function (key) { sources[key] = definitions[key].table ? '기존 예시 · DB 확인 중' : '현재 홈페이지 자료 · 저장 연결 전'; });
+    Object.keys(definitions).forEach(function (key) {
+      if (definitions[key].table) state[key] = [];
+      loaded[key] = false;
+      sources[key] = definitions[key].table ? 'DB 확인 중' : '현재 홈페이지 자료 · 읽기 전용 · 저장 연결 전';
+    });
   }
   function render() {
     document.querySelectorAll('[data-admin-group]').forEach(function (root) { root.replaceChildren(); });
@@ -68,7 +71,7 @@
       var card = make('article', 'admin-card');
       var heading = make('div', 'admin-card-heading');
       var title = make('div'); title.append(make('h3', '', def.title), make('p', 'admin-source', sources[key])); heading.appendChild(title);
-      if (!def.fixed) { var add = make('button', 'admin-button', '새 항목'); add.type = 'button'; add.dataset.adminEdit = key; heading.appendChild(add); }
+      if (def.table && !def.fixed) { var add = make('button', 'admin-button', '새 항목'); add.type = 'button'; add.dataset.adminEdit = key; add.disabled = !loaded[key] || (key !== 'doctors' && key !== 'notices' && !state.doctors.length); heading.appendChild(add); }
       card.appendChild(heading);
       var rows = state[key].filter(function (row) { return def.group !== 'diseases' || row.category === topicFilter.value; });
       if (!rows.length) card.appendChild(make('p', 'admin-empty', '등록된 항목이 없습니다.'));
@@ -82,7 +85,10 @@
         rows.forEach(function (row) {
           var tr = make('tr');
           def.fields.forEach(function (f) { var td = make('td'); td.appendChild(make('span', 'admin-cell-text', valueLabel(f, row))); tr.appendChild(td); });
-          var td = make('td'), edit = make('button', 'admin-button', '편집'); edit.type = 'button'; edit.dataset.adminEdit = key; edit.dataset.rowId = String(row.id); edit.setAttribute('aria-label', def.title + ' ' + (row.name || row.title || row.notice_date || row.id) + ' 편집'); td.appendChild(edit); tr.appendChild(td); body.appendChild(tr);
+          var td = make('td');
+          if (def.table) { var edit = make('button', 'admin-button', '편집'); edit.type = 'button'; edit.dataset.adminEdit = key; edit.dataset.rowId = String(row.id); edit.disabled = !loaded[key]; edit.setAttribute('aria-label', def.title + ' ' + (row.name || row.title || row.notice_date || row.id) + ' 편집'); td.appendChild(edit); }
+          else td.appendChild(make('span', 'admin-source', '읽기 전용'));
+          tr.appendChild(td); body.appendChild(tr);
         });
         table.appendChild(body); scroll.appendChild(table); card.appendChild(scroll);
       }
@@ -109,15 +115,11 @@
     keys.forEach(function (key, i) {
       if (results[i].status === 'fulfilled') {
         state[key] = results[i].value.map(function (row) { return Object.assign({}, row, { id: String(row.id), doctor_id: row.doctor_id === undefined ? undefined : String(row.doctor_id) }); });
-        sources[key] = 'DB 조회 자료 · 편집은 현재 화면에만 적용';
-      } else { failed++; sources[key] = '기존 예시 · DB 조회 불가 · 저장 연결 전'; }
+        loaded[key] = true;
+        sources[key] = 'DB 연결됨 · 저장 시 홈페이지에 반영';
+      } else { failed++; state[key] = []; loaded[key] = false; sources[key] = 'DB 조회 실패 · 새로고침 후 다시 확인'; }
     });
-    // DB 원장 번호가 예시와 다를 때 조회 실패한 일정 예시도 이름을 기준으로 맞춥니다.
-    ['weekly', 'dates', 'closures'].forEach(function (key) {
-      if (!sources[key].startsWith('기존 예시')) return;
-      state[key].forEach(function (row) { var original = (home.doctors || []).find(function (d) { return d.id === row.doctor_id; }); var current = original && state.doctors.find(function (d) { return d.name === original.name; }); if (current) row.doctor_id = current.id; });
-    });
-    status.textContent = failed ? '일부 공용 데이터는 조회되지 않아 기존 예시로 표시했습니다. 각 목록의 출처를 확인하세요.' : '공용 데이터 조회를 완료했습니다. 편집 내용은 DB에 저장되지 않습니다.';
+    status.textContent = failed ? '일부 목록을 조회하지 못했습니다. 해당 항목은 편집할 수 없습니다.' : 'DB 조회를 완료했습니다. 일정·휴진·공지사항의 변경은 저장 버튼을 누르면 반영됩니다.';
     render();
   }
   function showMenu() {
@@ -127,7 +129,7 @@
     document.querySelectorAll('[data-admin-menu]').forEach(function (link) { if (link.dataset.adminMenu === menu) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
   }
   function openEditor(key, id) {
-    if (!window.roleAccess.isAdmin()) return;
+    if (saving || !window.roleAccess.isAdmin() || !definitions[key] || !definitions[key].table || !loaded[key]) return;
     var def = definitions[key], row = state[key].find(function (item) { return String(item.id) === id; });
     activeEditor = { key: key, id: row ? String(row.id) : null };
     document.querySelector('#admin-editor-title').textContent = def.title + (row ? ' 편집' : ' 추가');
@@ -147,10 +149,22 @@
     dialog.showModal();
   }
   main.addEventListener('click', function (event) { var button = event.target.closest('[data-admin-edit]'); if (button) openEditor(button.dataset.adminEdit, button.dataset.rowId); });
-  document.querySelectorAll('[data-admin-close]').forEach(function (button) { button.addEventListener('click', function () { dialog.close(); }); });
-  form.addEventListener('submit', function (event) {
+  document.querySelectorAll('[data-admin-close]').forEach(function (button) { button.addEventListener('click', function () { if (!saving) dialog.close(); }); });
+  dialog.addEventListener('cancel', function (event) { if (saving) event.preventDefault(); });
+  function setSaving(value) {
+    saving = value;
+    form.setAttribute('aria-busy', String(value));
+    form.querySelectorAll('input, select, textarea, button').forEach(function (node) { node.disabled = value; });
+  }
+  function showSaveError(error) {
+    var messages = { '42501': '저장 권한을 확인해 주세요. 변경 내용은 저장되지 않았습니다.', '23505': '동일한 일정이 이미 등록되어 있습니다.', '23503': '연결된 원장이나 일정이 있습니다. 목록을 다시 불러와 확인해 주세요.', '23514': '날짜와 근무 구분을 확인해 주세요.' };
+    var node = document.querySelector('[data-admin-error]');
+    node.textContent = messages[error && error.code] || (error && error.message && !error.code && error.name !== 'TypeError' ? error.message : '저장하거나 삭제하지 못했습니다. 연결 상태와 권한을 확인한 후 다시 시도해 주세요.');
+    node.hidden = false;
+  }
+  form.addEventListener('submit', async function (event) {
     event.preventDefault();
-    if (!window.roleAccess.isAdmin() || !activeEditor || !form.reportValidity()) return;
+    if (saving || !window.roleAccess.isAdmin() || !activeEditor || !form.reportValidity()) return;
     var key = activeEditor.key, def = definitions[key], values = {};
     var error = document.querySelector('[data-admin-error]');
     def.fields.forEach(function (f) { values[f.key] = form.elements.namedItem(f.key).value.trim(); });
@@ -158,19 +172,33 @@
     if (key === 'notices' && values.image_url && !values.image_url.startsWith('https://')) { error.textContent = '이미지 주소는 https://로 시작해야 합니다.'; error.hidden = false; return; }
     var uniqueFields = key === 'weekly' ? ['doctor_id', 'weekday'] : key === 'dates' ? ['doctor_id', 'schedule_date'] : key === 'closures' ? ['doctor_id', 'start_date', 'end_date'] : [];
     if (uniqueFields.length && state[key].some(function (row) { return String(row.id) !== activeEditor.id && uniqueFields.every(function (f) { return String(row[f]) === values[f]; }); })) { error.textContent = '동일한 원장과 일정이 이미 있습니다.'; error.hidden = false; return; }
-    var index = state[key].findIndex(function (row) { return String(row.id) === activeEditor.id; });
-    values.id = activeEditor.id || 'draft-' + (++draftNumber);
-    if (index >= 0) state[key][index] = values; else state[key].push(values);
-    sources[key] = '화면에서 변경됨 · DB에 저장되지 않음';
-    dialog.close(); render(); status.textContent = '변경 내용을 미리보기에 적용했습니다. 사용자 홈페이지와 DB는 변경되지 않았습니다.';
+    var editingId = activeEditor.id;
+    error.hidden = true;
+    setSaving(true);
+    try {
+      var saved = await window.adminStore.save(def.table, values, editingId);
+      saved = Object.assign({}, saved, { id: String(saved.id), doctor_id: saved.doctor_id === undefined ? undefined : String(saved.doctor_id) });
+      var index = state[key].findIndex(function (row) { return String(row.id) === editingId; });
+      if (index >= 0) state[key][index] = saved; else state[key].push(saved);
+      sources[key] = 'DB에 저장됨';
+      dialog.close(); render(); status.textContent = 'DB에 저장했습니다. 홈페이지를 새로고침하면 변경 내용이 반영됩니다.';
+    } catch (error) { showSaveError(error); }
+    finally { setSaving(false); }
   });
-  document.querySelector('[data-admin-delete]').addEventListener('click', function () {
-    if (!window.roleAccess.isAdmin() || !activeEditor || definitions[activeEditor.key].fixed) return;
-    if (!window.confirm('현재 미리보기 목록에서만 제거할까요? DB와 사용자 화면은 변경되지 않습니다.')) return;
+  document.querySelector('[data-admin-delete]').addEventListener('click', async function () {
+    if (saving || !window.roleAccess.isAdmin() || !activeEditor || definitions[activeEditor.key].fixed) return;
+    if (!window.confirm('이 항목을 DB에서 삭제할까요? 홈페이지에서도 제거됩니다.')) return;
     var key = activeEditor.key;
     if (key === 'doctors' && ['weekly', 'dates', 'closures'].some(function (kind) { return state[kind].some(function (row) { return String(row.doctor_id) === activeEditor.id; }); })) { var error = document.querySelector('[data-admin-error]'); error.textContent = '이 원장의 일정이 있습니다. 연결된 일정을 먼저 제거해 주세요.'; error.hidden = false; return; }
-    state[key] = state[key].filter(function (row) { return String(row.id) !== activeEditor.id; });
-    sources[key] = '화면에서 변경됨 · DB에 저장되지 않음'; dialog.close(); render(); status.textContent = '미리보기에서만 제거했습니다. DB에서는 삭제되지 않았습니다.';
+    var deletingId = activeEditor.id;
+    document.querySelector('[data-admin-error]').hidden = true;
+    setSaving(true);
+    try {
+      await window.adminStore.remove(definitions[key].table, deletingId);
+      state[key] = state[key].filter(function (row) { return String(row.id) !== deletingId; });
+      sources[key] = 'DB에서 삭제됨'; dialog.close(); render(); status.textContent = 'DB에서 삭제했습니다. 홈페이지를 새로고침하면 변경 내용이 반영됩니다.';
+    } catch (error) { showSaveError(error); }
+    finally { setSaving(false); }
   });
   topicFilter.addEventListener('change', render);
   window.addEventListener('hashchange', showMenu);
