@@ -45,6 +45,8 @@
     ['원장 일정을 불러오는 중입니다.', 'Loading doctor schedules.', '正在加载医生排班。'],
     ['원장 일정을 불러오지 못했습니다. 잠시 후 새로고침해 주세요.', 'Unable to load doctor schedules. Please refresh shortly.', '无法加载医生排班，请稍后刷新。'],
     ['등록된 원장 정보가 없습니다.', 'No doctors have been registered.', '暂无已登记的医生信息。'],
+    ['휴진', 'Closed', '停诊'],
+    ['선택한 날짜에는 휴진 일정이 없습니다.', 'No closures on the selected date.', '所选日期没有停诊安排。'],
     ['최근 3개월의 공지사항입니다. 공지사항이 없으면 표시되지 않습니다.', 'Notices from the last 3 months. Nothing is displayed if there are no notices.', '显示最近三个月的公告，没有公告时不显示。'],
     ['공지사항을 불러오는 중입니다.', 'Loading notices.', '正在加载公告。'],
     ['최근 3개월 내 등록된 공지사항이 없습니다.', 'No notices have been posted in the last 3 months.', '最近三个月暂无公告。'],
@@ -218,7 +220,7 @@
         value = value.split(key).join(dictionary[key][current]);
       });
       value = value.replace(/안내/g, current === 'en' ? 'Guide' : '指南');
-      ['오늘', '오전 진료만', '종일 진료', '대체공휴일'].forEach(function (key) {
+      ['오늘', '오전 진료만', '종일 진료', '대체공휴일', '휴진'].forEach(function (key) {
         value = value.split(key).join(dictionary[key][current]);
       });
     }

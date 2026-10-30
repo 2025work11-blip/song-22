@@ -199,3 +199,12 @@ html[data-theme='dark'] .schedule-hours { border: 1px solid #929aa4; box-shadow:
 .notice-body-text { margin: 0; white-space: pre-line; }
 .notice-image { display: block; max-width: 100%; height: auto; margin-top: 16px; border-radius: 8px; }
 .notice-image-error { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+.doctor-filter-closed { --doctor-color: #c34450; --doctor-tint: #fff0f1; color: #b93240; background: #fff0f1; border-color: #d97c85; }
+.schedule-calendar { table-layout: fixed; }
+.schedule-calendar .calendar-closure-row td { height: auto; padding: 0 0 3px; }
+.schedule-calendar .calendar-closure-row .closure-range { display: block; width: 100%; min-height: 26px; padding: 4px 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 1px solid #e6a5ac; border-radius: 7px; background: #fff0f1; color: #b93240; font: inherit; font-size: 11px; cursor: pointer; }
+.work-period.work-closed { color: #b93240; border-color: #e6a5ac; background: #fff0f1; }
+.closure-period-text { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+html[data-theme='dark'] .doctor-filter-closed,
+html[data-theme='dark'] .schedule-calendar .calendar-closure-row .closure-range,
+html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #482b34; border-color: #975460; }
