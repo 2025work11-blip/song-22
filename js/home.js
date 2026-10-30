@@ -24,6 +24,38 @@
   var dayTitle = document.querySelector('[data-selected-date]');
   var dayList = document.querySelector('[data-day-schedules]');
   var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+  var labelFrame = null;
+  function fitClosureLabels() {
+    if (!window.requestAnimationFrame || labelFrame !== null) return;
+    labelFrame = window.requestAnimationFrame(function () {
+      labelFrame = null;
+      // 같은 주의 날짜 박스 높이를 맞춘 뒤 실제 날짜 너비와 간격을 포함해 띠를 늘립니다.
+      Array.from(body.children).forEach(function (row) {
+        var buttons = Array.from(row.querySelectorAll('[data-date]'));
+        if (!row.querySelector('[data-closure-band]')) return;
+        buttons.forEach(function (button) { button.style.height = ''; });
+        var height = Math.max.apply(null, buttons.map(function (button) { return button.getBoundingClientRect().height; }));
+        buttons.forEach(function (button) { button.style.height = height + 'px'; });
+      });
+      body.querySelectorAll('[data-closure-band]').forEach(function (band) {
+        var startButton = band.parentElement;
+        var endButton = body.querySelector('[data-date="' + band.getAttribute('data-closure-end') + '"]');
+        if (!endButton) return;
+        var width = endButton.getBoundingClientRect().right - startButton.getBoundingClientRect().left
+          - 6 - startButton.clientLeft - endButton.clientLeft;
+        if (width > 0) band.style.width = width + 'px';
+      });
+      body.querySelectorAll('.closure-label').forEach(function (label) {
+        label.style.fontSize = '11px';
+        if (label.clientWidth > 0 && label.scrollWidth > label.clientWidth) {
+          label.style.fontSize = (11 * label.clientWidth / label.scrollWidth * .96) + 'px';
+        }
+      });
+    });
+  }
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(fitClosureLabels).observe(body);
+  if (typeof MutationObserver !== 'undefined') new MutationObserver(fitClosureLabels)
+    .observe(body, { childList: true, characterData: true, subtree: true });
 
   function make(tag, className, text) {
     var element = document.createElement(tag);
@@ -32,6 +64,17 @@
     return element;
   }
   function dateKey(day) { return year + '-' + String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0'); }
+  function closureLabel(closure, doctor) {
+    var start = closure.startDate.split('-').map(Number);
+    var end = closure.endDate.split('-').map(Number);
+    var duration = Math.round((Date.UTC(end[0], end[1] - 1, end[2]) - Date.UTC(start[0], start[1] - 1, start[2])) / 86400000) + 1;
+    if (duration === 1) return '(휴)' + doctor.name.replace(/원장$/, '');
+    if (duration === 2) return '(휴)' + doctor.name;
+    var from = (start[0] !== end[0] ? start[0] + '.' : '') + start[1] + '.' + start[2];
+    var to = start[0] !== end[0] ? end[0] + '.' + end[1] + '.' + end[2]
+      : start[1] !== end[1] ? end[1] + '.' + end[2] : String(end[2]);
+    return '(휴)' + doctor.name + ' ' + from + '~' + to;
+  }
   function doctorById(id) { return doctors.find(function (doctor) { return doctor.id === id; }); }
   function colorClass(doctor) {
     var color = doctor && ['blue', 'amber', 'teal', 'purple'].includes(doctor.color) ? doctor.color : 'blue';
@@ -217,40 +260,65 @@
       }
       cell.appendChild(button);
     }
-    // 기간은 날짜별 점 대신 주 단위로 이어지는 띠로 표시합니다.
+    // 휴진 띠 조각을 각 날짜 박스 하단 안쪽에 배치합니다.
     var dateRows = Array.from(body.children);
-    body.replaceChildren();
     dateRows.forEach(function (dateRow, week) {
-      body.appendChild(dateRow);
       var weekStart = week * 7 - firstDay + 1;
+      var lanes = [];
       monthClosures().forEach(function (closure) {
         var doctor = doctorById(closure.doctorId);
         if (selectedDoctor && doctor.id !== selectedDoctor) return;
-        var start = Math.max(weekStart, 1, Math.round((new Date(closure.startDate + 'T00:00:00Z') - new Date(Date.UTC(year, month, 1))) / 86400000) + 1);
-        var end = Math.min(weekStart + 6, days, Math.round((new Date(closure.endDate + 'T00:00:00Z') - new Date(Date.UTC(year, month, 1))) / 86400000) + 1);
+        var closureStart = Math.round((new Date(closure.startDate + 'T00:00:00Z') - new Date(Date.UTC(year, month, 1))) / 86400000) + 1;
+        var closureEnd = Math.round((new Date(closure.endDate + 'T00:00:00Z') - new Date(Date.UTC(year, month, 1))) / 86400000) + 1;
+        var start = Math.max(weekStart, 1, closureStart);
+        var end = Math.min(weekStart + 6, days, closureEnd);
         if (start > end) return;
-        var bandRow = make('tr', 'calendar-closure-row');
-        var offset = start - weekStart;
-        if (offset) { var before = make('td'); before.colSpan = offset; bandRow.appendChild(before); }
-        var bandCell = make('td');
-        bandCell.colSpan = end - start + 1;
-        var band = make('button', 'closure-range', doctor.name + ' 휴진 · ' + start + '~' + end);
-        band.type = 'button';
-        band.dataset.date = dateKey(start);
-        band.title = closure.doctorName + ' 휴진 · ' + closure.startDate + ' ~ ' + closure.endDate;
-        band.setAttribute('aria-label', band.title);
-        bandCell.appendChild(band);
-        bandRow.appendChild(bandCell);
-        var remaining = 7 - offset - bandCell.colSpan;
-        if (remaining) { var after = make('td'); after.colSpan = remaining; bandRow.appendChild(after); }
-        body.appendChild(bandRow);
+        // 가장 긴 주간 구간 한 곳에만 이름을 표시합니다. 같은 길이는 앞 구간을 사용합니다.
+        var labelWeek = 0, longest = 0;
+        dateRows.forEach(function (_, candidateWeek) {
+          var candidateStart = candidateWeek * 7 - firstDay + 1;
+          var length = Math.min(candidateStart + 6, days, closureEnd) - Math.max(candidateStart, 1, closureStart) + 1;
+          if (length > longest) { longest = length; labelWeek = candidateWeek; }
+        });
+        var slot = lanes.findIndex(function (lane) {
+          return lane.every(function (segment) { return segment.end < start || segment.start > end; });
+        });
+        if (slot < 0) { slot = lanes.length; lanes.push([]); }
+        lanes[slot].push({ start: start, end: end });
+        for (var bandDay = start; bandDay <= end; bandDay++) {
+          var dateButton = body.querySelector('[data-date="' + dateKey(bandDay) + '"]');
+          var count = Math.max(Number(dateButton.getAttribute('data-closure-lanes') || 0), slot + 1);
+          dateButton.setAttribute('data-closure-lanes', String(count));
+          if (!dateButton.className.includes('has-closure')) dateButton.className += ' has-closure';
+          dateButton.setAttribute('style', 'padding-bottom:' + (30 + (count - 1) * 24) + 'px');
+        }
+        var band = make('span', 'closure-range closure-start closure-end');
+        band.setAttribute('data-closure-band', '');
+        band.setAttribute('data-closure-end', dateKey(end));
+        band.setAttribute('aria-hidden', 'true');
+        band.setAttribute('style', 'bottom:' + (4 + slot * 24) + 'px;--closure-span:' + (end - start + 1));
+        if (week === labelWeek) band.appendChild(make('span', 'closure-label', closureLabel(closure, doctor)));
+        band.title = doctor.name + ' 휴진 · ' + closure.startDate + ' ~ ' + closure.endDate;
+        body.querySelector('[data-date="' + dateKey(start) + '"]').appendChild(band);
       });
     });
+    fitClosureLabels();
     renderDay();
   }
   body.addEventListener('click', function (event) {
     var button = event.target.closest('[data-date]');
     if (!button) return;
+    var band = event.target.closest('[data-closure-band]');
+    if (band && event.clientX) {
+      var end = band.getAttribute('data-closure-end');
+      var start = button.dataset.date;
+      var hit = Array.from(body.querySelectorAll('[data-date]')).find(function (dateButton) {
+        if (dateButton.dataset.date < start || dateButton.dataset.date > end) return false;
+        var bounds = dateButton.getBoundingClientRect();
+        return event.clientX >= bounds.left && event.clientX <= bounds.right;
+      });
+      if (hit) button = hit;
+    }
     selected = button.dataset.date;
     renderCalendar();
     body.querySelector('[data-date="' + selected + '"]').focus({ preventScroll: true });

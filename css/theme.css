@@ -206,11 +206,15 @@ html[data-theme='dark'] .schedule-hours { border: 1px solid #929aa4; box-shadow:
 html[data-theme='dark'] .drawer-account-row { border-color: #425368; }
 html[data-theme='dark'] .drawer-nav .drawer-admin-button { background: #23364b; color: #cde1fb; border-color: #61758d; }
 .doctor-filter-closed { --doctor-color: #c34450; --doctor-tint: #fff0f1; color: #b93240; background: #fff0f1; border-color: #d97c85; }
-.schedule-calendar { table-layout: fixed; }
-.schedule-calendar .calendar-closure-row td { height: auto; padding: 0 0 3px; }
-.schedule-calendar .calendar-closure-row .closure-range { display: block; width: 100%; min-height: 26px; padding: 4px 6px; white-space: normal; overflow-wrap: anywhere; border: 1px solid #e6a5ac; border-radius: 7px; background: #fff0f1; color: #b93240; font: inherit; font-size: 11px; cursor: pointer; }
+.schedule-calendar { table-layout: fixed; --calendar-gap: 7px; }
+.calendar-day.has-closure { position: relative; }
+.schedule-calendar .calendar-day .closure-range { position: absolute; z-index: 2; left: 3px; width: calc(var(--closure-span, 1) * 100% + (var(--closure-span, 1) - 1) * var(--calendar-gap) - 6px); display: block; height: 22px; padding: 1px; overflow: hidden; white-space: nowrap; border: 1px solid #e6a5ac; border-radius: 2px; background: #fff0f1; color: #b93240; font: inherit; font-size: 11px; line-height: 18px; }
+.schedule-calendar .calendar-day .closure-start { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+.schedule-calendar .calendar-day .closure-end { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
+.closure-label { display: block; width: 100%; white-space: nowrap; line-height: 18px; }
+@media (max-width: 600px) { .schedule-calendar { --calendar-gap: 3px; } }
 .work-period.work-closed { color: #b93240; border-color: #e6a5ac; background: #fff0f1; }
 .closure-period-text { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
 html[data-theme='dark'] .doctor-filter-closed,
-html[data-theme='dark'] .schedule-calendar .calendar-closure-row .closure-range,
+html[data-theme='dark'] .schedule-calendar .calendar-day .closure-range,
 html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #482b34; border-color: #975460; }
