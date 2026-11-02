@@ -19,8 +19,8 @@
   function doctorOptions() { return Object.fromEntries((state.doctors || []).map(function (d) { return [d.id, d.name]; })); }
   var definitions = {
     doctors: { group: 'schedule', title: '원장 정보', table: 'doctors', fields: [field('name', '원장 이름'), field('initial', '표시 문자'), field('color', '구분 색상', 'select', { blue: '파랑', amber: '주황', teal: '청록', purple: '보라' })] },
-    weekly: { group: 'schedule', title: '정기 진료 일정', table: 'doctor_weekly_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('weekday', '진료 요일', 'select', Object.fromEntries(weekdays.map(function (d, i) { return [i, d + '요일']; }))), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' })] },
-    dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' })] },
+    weekly: { group: 'schedule', title: '정기 진료 일정', table: 'doctor_weekly_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('weekday', '진료 요일', 'select', Object.fromEntries(weekdays.map(function (d, i) { return [i, d + '요일']; }))), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
+    dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
     hours: { group: 'hospital', title: '병원 진료시간', fixed: true, fields: [field('label', '요일 / 구분'), field('start', '시작 시간', 'time'), field('end', '종료 시간', 'time')] },
@@ -37,7 +37,7 @@
     return node;
   }
   function options(f) { return typeof f.options === 'function' ? f.options() : f.options || {}; }
-  function valueLabel(f, row) { return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
+  function valueLabel(f, row) { if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
   function initialData() {
     state.doctors = (home.doctors || []).map(function (d) { return { id: d.id, name: d.name, initial: d.initial, color: d.color }; });
     state.weekly = (home.doctors || []).flatMap(function (d) { return d.weekdays.map(function (day) { return { id: 'sample-' + d.id + day, doctor_id: d.id, weekday: day, period: d.morningOnly.includes(day) ? 'morning' : 'full' }; }); });
@@ -128,6 +128,16 @@
     document.querySelectorAll('[data-admin-panel]').forEach(function (panel) { panel.hidden = panel.dataset.adminPanel !== menu; });
     document.querySelectorAll('[data-admin-menu]').forEach(function (link) { if (link.dataset.adminMenu === menu) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
   }
+  function legacyEnd(row) {
+    return Number(row.weekday) === 6 || (row.schedule_date && new Date(row.schedule_date + 'T12:00:00').getDay() === 6) ? '17:00' : '19:00';
+  }
+  function syncEndTime() {
+    var period = form.elements.namedItem('period'), end = form.elements.namedItem('end_time');
+    if (!period || !end) return;
+    end.closest('label').hidden = period.value !== 'full';
+    end.required = period.value === 'full';
+  }
+  form.addEventListener('change', syncEndTime);
   function openEditor(key, id) {
     if (saving || !window.roleAccess.isAdmin() || !definitions[key] || !definitions[key].table || !loaded[key]) return;
     var def = definitions[key], row = state[key].find(function (item) { return String(item.id) === id; });
@@ -144,8 +154,10 @@
       else if (f.type !== 'textarea') input.type = f.type;
       if (row) input.value = row[f.key] === undefined ? '' : row[f.key];
       else if (f.key === 'category') input.value = topicFilter.value;
+      if (f.key === 'end_time') input.value = row ? (row.end_time || legacyEnd(row)).slice(0, 5) : '19:00';
       label.appendChild(input); fieldsRoot.appendChild(label);
     });
+    syncEndTime();
     dialog.showModal();
   }
   main.addEventListener('click', function (event) { var button = event.target.closest('[data-admin-edit]'); if (button) openEditor(button.dataset.adminEdit, button.dataset.rowId); });
@@ -157,7 +169,7 @@
     form.querySelectorAll('input, select, textarea, button').forEach(function (node) { node.disabled = value; });
   }
   function showSaveError(error) {
-    var messages = { '42501': '저장 권한을 확인해 주세요. 변경 내용은 저장되지 않았습니다.', '23505': '동일한 일정이 이미 등록되어 있습니다.', '23503': '연결된 원장이나 일정이 있습니다. 목록을 다시 불러와 확인해 주세요.', '23514': '날짜와 근무 구분을 확인해 주세요.' };
+    var messages = { '42501': '저장 권한을 확인해 주세요. 변경 내용은 저장되지 않았습니다.', '23505': '동일한 일정이 이미 등록되어 있습니다.', '23503': '연결된 원장이나 일정이 있습니다. 목록을 다시 불러와 확인해 주세요.', '23514': '날짜와 근무 구분을 확인해 주세요.', '42703': '종료 시간 추가 SQL을 먼저 적용해 주세요.', 'PGRST204': '종료 시간 추가 SQL을 먼저 적용해 주세요.' };
     var node = document.querySelector('[data-admin-error]');
     node.textContent = messages[error && error.code] || (error && error.message && !error.code && error.name !== 'TypeError' ? error.message : '저장하거나 삭제하지 못했습니다. 연결 상태와 권한을 확인한 후 다시 시도해 주세요.');
     node.hidden = false;

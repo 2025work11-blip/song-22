@@ -218,3 +218,28 @@ html[data-theme='dark'] .drawer-nav .drawer-admin-button { background: #23364b; 
 html[data-theme='dark'] .doctor-filter-closed,
 html[data-theme='dark'] .schedule-calendar .calendar-day .closure-range,
 html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #482b34; border-color: #975460; }
+
+/* 원장 색상 점과 선택 날짜 상세 안내 */
+.doctor-initial { width: 12px; height: 12px; border-radius: 50%; background: var(--doctor-color, #687480); }
+.doctor-initial.initial-morning { border-style: solid; background: linear-gradient(90deg, var(--doctor-color, #687480) 50%, transparent 50%); }
+.calendar-markers .doctor-initial { width: 10px; height: 10px; border-radius: 50%; }
+.schedule-work-hours { font-size: 17px; line-height: 1.6; font-weight: 600; }
+.schedule-hours { padding-inline: 34px; }
+.schedule-hours-list .hours-substitute dt,
+.schedule-hours-list .hours-substitute dd { font-size: 13px; font-weight: 400; }
+.day-panel-reveal { animation: schedule-reveal 1s ease-out; }
+@keyframes schedule-reveal {
+  from { box-shadow: 0 0 0 4px #436d9970; }
+  to { box-shadow: 0 0 0 0 transparent; }
+}
+@media (max-width: 600px) {
+  .schedule-hours { padding-inline: 24px; }
+  .schedule-hours-list > div { grid-template-columns: 1fr; gap: 5px; }
+  .schedule-hours-list dd { text-align: left; white-space: normal; }
+  .schedule-hours-list .hours-substitute dt,
+  .schedule-hours-list .hours-substitute dd { font-size: 12px; }
+  .schedule-work-hours { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .day-panel-reveal { animation: none; }
+}

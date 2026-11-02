@@ -101,10 +101,11 @@
       return (doctor.weekdays || []).includes(weekday) &&
         !specific.some(function (entry) { return entry.doctorId === doctor.id; });
     }).map(function (doctor) {
-      var morning = (doctor.morningOnly || []).includes(weekday);
+      var weeklySchedule = (doctor.weeklySchedules || []).find(function (row) { return Number(row.weekday) === weekday; });
+      var morning = weeklySchedule ? weeklySchedule.period === 'morning' : (doctor.morningOnly || []).includes(weekday);
       return {
         doctorId: doctor.id, date: date,
-        time: morning ? '오전 진료만' : '종일 진료', period: morning ? 'morning' : 'full'
+        time: morning ? '오전 진료' : '종일 진료', period: morning ? 'morning' : 'full', endTime: weeklySchedule && weeklySchedule.end_time
       };
     });
     return weekly.concat(specific).filter(function (entry) {
@@ -114,6 +115,15 @@
       });
       return !closed && (!selectedDoctor || entry.doctorId === selectedDoctor);
     });
+  }
+  function workHours(entry, date) {
+    var holiday = holidays.dates[date] || '';
+    var substitute = holiday.includes('대체공휴일');
+    var morning = !substitute && (Boolean(holiday) || entry.period === 'morning');
+    var saturday = new Date(date + 'T12:00:00').getDay() === 6;
+    var end = substitute ? '19:00' : entry.endTime || (saturday ? '17:00' : '19:00');
+    return { morning: morning, hours: morning ? '오전 8:30 ~ 오후 1:00'
+      : end.slice(0, 5) === '17:00' ? '오전 8:30 ~ 오후 5:00' : '오전 8:30 ~ 오후 7:00' };
   }
   function renderDoctorFilters() {
     doctorFilters.replaceChildren();
@@ -127,7 +137,7 @@
       legend.type = 'button';
       legend.setAttribute('data-doctor-id', doctor.id);
       legend.setAttribute('aria-pressed', String(selectedDoctor === doctor.id && !closureOnly));
-      var dot = make('span', 'doctor-initial ' + colorClass(doctor), doctor.initial || '');
+      var dot = make('span', 'doctor-initial ' + colorClass(doctor));
       dot.setAttribute('aria-hidden', 'true');
       legend.append(dot, make('span', '', doctor.name));
       doctorFilters.appendChild(legend);
@@ -152,7 +162,7 @@
       holidayInfo.appendChild(make('span', '', holidayName));
       if (holidayName.includes('대체공휴일')) {
         var holidayHours = make('span', 'holiday-hours');
-        holidayHours.append(make('span', '', '오전진료'), make('span', '', '오전 8:30 ~ 오후 1:00'));
+        holidayHours.append(make('span', '', '정상 진료'), make('span', '', '오전 8:30 ~ 오후 7:00'));
         holidayInfo.appendChild(holidayHours);
       }
     }
@@ -186,10 +196,9 @@
       var card = make('article', 'schedule-entry');
       card.appendChild(make('h4', 'schedule-doctor-name ' + colorClass(doctor), doctor ? doctor.name : '원장 정보 확인 중'));
       // 동작이 없는 상태 표시이므로 실제 버튼 대신 버튼 모양의 라벨로 표시합니다.
-      var morning = entry.period === 'morning' || Boolean(holidayName);
-      var hours = morning ? '오전 8:30 ~ 오후 1:00'
-        : parts.length && new Date(parts[0], parts[1] - 1, parts[2]).getDay() === 6
-          ? '오전 8:30 ~ 오후 5:00' : '오전 8:30 ~ 오후 7:00';
+      var work = workHours(entry, selected);
+      var morning = work.morning;
+      var hours = work.hours;
       var period = make('div', 'schedule-period-row');
       period.append(make('span', 'work-period ' + (morning ? 'work-morning' : 'work-full'), morning ? '오전' : '종일'),
         make('span', 'schedule-work-hours', hours));
@@ -229,7 +238,7 @@
       button.setAttribute('aria-pressed', String(key === selected));
       var description = entries(key).map(function (entry) {
         var doctor = doctorById(entry.doctorId);
-        return (doctor ? doctor.name : '원장') + ' ' + entry.time;
+        return (doctor ? doctor.name : '원장') + ' ' + workHours(entry, key).hours;
       }).join(', ');
       button.setAttribute('aria-label', key + ', ' + (holidayName ? holidayName + ', ' : '') + (count ? description : '등록된 일정 없음'));
       var closedNames = closuresOn(key).map(function (closure) { return closure.doctorName + ' 휴진'; }).join(', ');
@@ -245,8 +254,8 @@
       doctors.forEach(function (doctor) {
         var entry = entries(key).find(function (item) { return item.doctorId === doctor.id; });
         if (entry) {
-          var dot = make('span', 'doctor-initial ' + colorClass(doctor) + (entry.period === 'morning' ? ' initial-morning' : ''), doctor.initial || '');
-          dot.title = doctor.name + ' · ' + entry.time;
+          var dot = make('span', 'doctor-initial ' + colorClass(doctor) + (workHours(entry, key).morning ? ' initial-morning' : ''));
+          dot.title = doctor.name + ' · ' + workHours(entry, key).hours;
           markers.appendChild(dot);
         }
       });
@@ -322,6 +331,18 @@
     selected = button.dataset.date;
     renderCalendar();
     body.querySelector('[data-date="' + selected + '"]').focus({ preventScroll: true });
+    if (window.matchMedia('(max-width: 760px)').matches) {
+      var panel = document.querySelector('.day-panel');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.requestAnimationFrame(function () {
+        var offset = Math.max(96, window.innerHeight * .28);
+        window.scrollTo({ top: Math.max(0, window.scrollY + panel.getBoundingClientRect().top - offset),
+          behavior: reduced ? 'instant' : 'smooth' });
+        panel.classList.remove('day-panel-reveal');
+        void panel.offsetWidth;
+        panel.classList.add('day-panel-reveal');
+      });
+    }
   });
   document.querySelectorAll('[data-month-step]').forEach(function (button) {
     button.addEventListener('click', function () {

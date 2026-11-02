@@ -3,8 +3,8 @@
   'use strict';
   var columns = {
     doctors: ['name', 'initial', 'color'],
-    doctor_weekly_schedules: ['doctor_id', 'weekday', 'period'],
-    doctor_date_schedules: ['doctor_id', 'schedule_date', 'period'],
+    doctor_weekly_schedules: ['doctor_id', 'weekday', 'period', 'end_time'],
+    doctor_date_schedules: ['doctor_id', 'schedule_date', 'period', 'end_time'],
     doctor_closures: ['doctor_id', 'start_date', 'end_date'],
     notices: ['notice_date', 'title', 'content', 'image_url']
   };
@@ -28,6 +28,11 @@
       var client = await clientForWrite(table);
       var payload = {};
       columns[table].forEach(function (key) { payload[key] = values[key]; });
+      if (table === 'doctor_weekly_schedules' || table === 'doctor_date_schedules') {
+        if (!['morning', 'full'].includes(payload.period)) throw new Error('근무 구분을 확인해 주세요.');
+        if (payload.period === 'full' && !['17:00', '19:00'].includes(payload.end_time)) throw new Error('종일 종료 시간을 선택해 주세요.');
+        payload.end_time = payload.period === 'full' ? payload.end_time : null;
+      }
       if (table === 'doctor_weekly_schedules') payload.weekday = Number(payload.weekday);
       if (table === 'notices') payload.image_url = payload.image_url || null;
       var query;

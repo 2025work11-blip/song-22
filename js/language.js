@@ -38,7 +38,7 @@
     ['진료시간 · 원장 · 장비 안내', 'Hours · Doctors · Equipment', '门诊时间 · 医生 · 设备'],
     ['질환의 기본 정보부터 외래 안내, 수술 전후 정보까지 확인할 수 있습니다.', 'Explore condition information, outpatient guidance, and care before and after surgery.', '了解疾病基础知识、门诊指南以及手术前后信息。'],
     ['원장별 일정표', 'Doctor schedule', '医生排班'], ['샘플 일정', 'Sample schedule', '示例排班'],
-    ['날짜 아래의 A·B·C·D로 원장별 진료 일정을 확인하세요. 원장명과 근무 일정은 화면 확인용 예시입니다.', 'Letters A–D show each doctor’s schedule. Doctor names and schedules are examples for this preview.', '日期下方的A、B、C、D表示各位医生的排班。医生姓名和排班均为预览示例。'],
+    ['날짜 아래의 색상 점으로 원장별 진료 일정을 확인하세요. 원장명과 근무 일정은 화면 확인용 예시입니다.', 'Colored dots show each doctor’s schedule. Doctor names and schedules are examples for this preview.', '日期下方的彩色圆点表示各位医生的排班。医生姓名和排班均为预览示例。'],
     ['일정 달력', 'Schedule calendar', '排班日历'], ['원장 선택', 'Select doctor', '选择医生'],
     ['오늘', 'Today', '今天'],
     ['전체 원장', 'All doctors', '全部医生'], ['전체', 'All doctors', '全部医生'], ['원장별 일정 필터', 'Filter by doctor', '按医生筛选'], ['종일 진료', 'Full day', '全天门诊'],
@@ -56,7 +56,7 @@
     ['최근 3개월 내 등록된 공지사항이 없습니다.', 'No notices have been posted in the last 3 months.', '最近三个月暂无公告。'],
     ['공지사항을 불러오지 못했습니다. 잠시 후 새로고침해 주세요.', 'Unable to load notices. Please refresh shortly.', '无法加载公告，请稍后刷新。'],
     ['이미지를 불러올 수 없습니다.', 'Unable to load the image.', '无法加载图片。'],
-    ['오전 진료만', 'Morning only', '仅上午门诊'], ['오전', 'Morning', '上午'], ['종일', 'Full day', '全天'],
+    ['정상 진료', 'Regular hours', '正常门诊'], ['종일 진료(5시/7시)', 'Full day (5 PM / 7 PM)', '全天门诊（下午5点/7点）'], ['오전 진료', 'Morning only', '仅上午门诊'], ['오전', 'Morning', '上午'], ['종일', 'Full day', '全天'],
     ['일', 'Sun', '日'], ['월', 'Mon', '一'], ['화', 'Tue', '二'], ['수', 'Wed', '三'],
     ['목', 'Thu', '四'], ['금', 'Fri', '五'], ['토', 'Sat', '六'],
     ['선택한 날짜의 일정', 'Schedule for the selected day', '所选日期的排班'],
@@ -224,7 +224,7 @@
         value = value.split(key).join(dictionary[key][current]);
       });
       value = value.replace(/안내/g, current === 'en' ? 'Guide' : '指南');
-      ['오늘', '오전 진료만', '종일 진료', '대체공휴일', '휴진'].forEach(function (key) {
+      ['오늘', '오전 진료', '종일 진료', '대체공휴일', '휴진'].forEach(function (key) {
         value = value.split(key).join(dictionary[key][current]);
       });
     }

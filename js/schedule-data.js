@@ -12,6 +12,11 @@
       while (true) {
         var result = await client.from(table).select(columns).order('id')
           .range(rows.length, rows.length + size - 1);
+        // 종료 시간 SQL 적용 전에도 기존 일정은 계속 표시합니다.
+        if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes(',end_time')) {
+          columns = columns.replace(',end_time', '');
+          continue;
+        }
         if (result.error) throw result.error;
         if (!Array.isArray(result.data)) throw new Error('일정 조회 결과를 확인할 수 없습니다.');
         rows = rows.concat(result.data);
@@ -20,8 +25,8 @@
     }
     var result = await Promise.all([
       readRows('doctors', 'id,name,initial,color'),
-      readRows('doctor_weekly_schedules', 'id,doctor_id,weekday,period'),
-      readRows('doctor_date_schedules', 'id,doctor_id,schedule_date,period'),
+      readRows('doctor_weekly_schedules', 'id,doctor_id,weekday,period,end_time'),
+      readRows('doctor_date_schedules', 'id,doctor_id,schedule_date,period,end_time'),
       readRows('doctor_closures', 'id,doctor_id,start_date,end_date')
     ]);
     // 기존 달력의 표시 형태로 변환하여 디자인과 근무 구분을 유지합니다.
@@ -29,7 +34,7 @@
       var weekly = result[1].filter(function (row) { return String(row.doctor_id) === String(doctor.id); });
       return {
         id: String(doctor.id), name: doctor.name, initial: doctor.initial, color: doctor.color,
-        weekdays: weekly.map(function (row) { return Number(row.weekday); }),
+        weeklySchedules: weekly, weekdays: weekly.map(function (row) { return Number(row.weekday); }),
         morningOnly: weekly.filter(function (row) { return row.period === 'morning'; })
           .map(function (row) { return Number(row.weekday); })
       };
@@ -38,8 +43,8 @@
       return doctors.some(function (doctor) { return doctor.id === String(row.doctor_id); });
     }).map(function (row) {
       return {
-        doctorId: String(row.doctor_id), date: row.schedule_date, period: row.period,
-        time: row.period === 'morning' ? '오전 진료만' : '종일 진료'
+        doctorId: String(row.doctor_id), date: row.schedule_date, period: row.period, endTime: row.end_time,
+        time: row.period === 'morning' ? '오전 진료' : '종일 진료'
       };
     });
     var closures = result[3].map(function (row) {
