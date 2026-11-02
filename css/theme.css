@@ -255,3 +255,12 @@ html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #
   .site-header .header-actions { gap: 8px; }
   .brand-logo { width: clamp(128px, 40vw, 200px); }
 }
+/* 상단 배너 높이를 20% 줄이고 조작 버튼을 오른쪽에 모읍니다. */
+.site-header .header-inner { min-height: 70.4px; }
+.site-header .header-actions { gap: 2px; margin-right: -10px; flex-shrink: 0; }
+.selected-language-icon[src*="flags/kr.svg"] { width: 30px; height: 20px; border-radius: 2px; object-fit: contain; }
+.language-options img[src*="flags/kr.svg"] { border-radius: 2px; object-fit: contain; }
+@media (max-width: 600px) {
+  .site-header .header-inner { min-height: 59.2px; }
+  .site-header .header-actions { gap: 0; margin-right: -8px; }
+}

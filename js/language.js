@@ -37,7 +37,7 @@
     ['우리 아이 눈 건강 안내', 'Eye care for your child', '儿童眼健康指南'],
     ['진료시간 · 원장 · 장비 안내', 'Hours · Doctors · Equipment', '门诊时间 · 医生 · 设备'],
     ['질환의 기본 정보부터 외래 안내, 수술 전후 정보까지 확인할 수 있습니다.', 'Explore condition information, outpatient guidance, and care before and after surgery.', '了解疾病基础知识、门诊指南以及手术前后信息。'],
-    ['원장별 일정표', 'Doctor schedule', '医生排班'], ['샘플 일정', 'Sample schedule', '示例排班'],
+    ['진료일정(원장별)', 'Doctor schedule', '医生排班'], ['샘플 일정', 'Sample schedule', '示例排班'],
     ['날짜 아래의 색상 점으로 원장별 진료 일정을 확인하세요. 원장명과 근무 일정은 화면 확인용 예시입니다.', 'Colored dots show each doctor’s schedule. Doctor names and schedules are examples for this preview.', '日期下方的彩色圆点表示各位医生的排班。医生姓名和排班均为预览示例。'],
     ['일정 달력', 'Schedule calendar', '排班日历'], ['원장 선택', 'Select doctor', '选择医生'],
     ['오늘', 'Today', '今天'],
@@ -268,7 +268,7 @@
       'zh-CN': ['cn', '选择语言：中文']
     }[current];
     if (languageIcon) {
-      var iconPath = 'assets/flags/' + languageInfo[0] + '.svg';
+      var iconPath = 'assets/flags/' + languageInfo[0] + '.svg' + (languageInfo[0] === 'kr' ? '?v=20261102-taegeuk1' : '');
       if (languageIcon.getAttribute('src') !== iconPath) languageIcon.setAttribute('src', iconPath);
     }
     if (languageButton && languageButton.getAttribute('aria-label') !== languageInfo[1]) {

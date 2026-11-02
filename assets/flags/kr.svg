@@ -1,1 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="white" stroke="#e0e2e5"/><g transform="rotate(32 32 32)"><circle cx="32" cy="32" r="12" fill="#245498"/><path d="M20 32a12 12 0 0 1 24 0 6 6 0 0 1-12 0 6 6 0 0 0-12 0" fill="#cb3e4b"/></g><g fill="#20252b"><g transform="translate(13 18) rotate(32)"><path d="M0 0h2v10H0zm4 0h2v10H4zm4 0h2v10H8z"/></g><g transform="translate(44 12) rotate(-32)"><path d="M0 0h2v4H0zm0 6h2v4H0zm4-6h2v10H4zm4 0h2v4H8zm0 6h2v4H8z"/></g><g transform="translate(9 43) rotate(-32)"><path d="M0 0h2v10H0zm4 0h2v4H4zm0 6h2v4H4zm4-6h2v10H8z"/></g><g transform="translate(45 39) rotate(32)"><path d="M0 0h2v4H0zm0 6h2v4H0zm4-6h2v4H4zm0 6h2v4H4zm4-6h2v4H8zm0 6h2v4H8z"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <title>대한민국 태극기</title>
+  <rect width="900" height="600" fill="#fff"/>
+  <g transform="translate(450 300) rotate(33.690068)">
+    <circle r="150" fill="#0047a0"/>
+    <path d="M-150 0a150 150 0 0 1 300 0a75 75 0 0 1-150 0a75 75 0 0 0-150 0" fill="#cd2e3a"/>
+  </g>
+  <!-- 건: 왼쪽 위, 세 개의 이어진 효 -->
+  <g transform="translate(252.4 168.3) rotate(-56.309932)" fill="#000">
+    <path d="M-75-50H75v25H-75zM-75-12.5H75v25H-75zM-75 25H75v25H-75z"/>
+  </g>
+  <!-- 감: 오른쪽 위, 끊김/이어짐/끊김 -->
+  <g transform="translate(647.6 168.3) rotate(56.309932)" fill="#000">
+    <path d="M-75-50h68.75v25H-75zM6.25-50H75v25H6.25zM-75-12.5H75v25H-75zM-75 25h68.75v25H-75zM6.25 25H75v25H6.25z"/>
+  </g>
+  <!-- 이: 왼쪽 아래, 이어짐/끊김/이어짐 -->
+  <g transform="translate(252.4 431.7) rotate(56.309932)" fill="#000">
+    <path d="M-75-50H75v25H-75zM-75-12.5h68.75v25H-75zM6.25-12.5H75v25H6.25zM-75 25H75v25H-75z"/>
+  </g>
+  <!-- 곤: 오른쪽 아래, 세 개의 끊어진 효 -->
+  <g transform="translate(647.6 431.7) rotate(-56.309932)" fill="#000">
+    <path d="M-75-50h68.75v25H-75zM6.25-50H75v25H6.25zM-75-12.5h68.75v25H-75zM6.25-12.5H75v25H6.25zM-75 25h68.75v25H-75zM6.25 25H75v25H6.25z"/>
+  </g>
+</svg>
