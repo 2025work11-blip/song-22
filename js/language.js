@@ -76,7 +76,7 @@
     ['안내 정보를 불러올 수 없습니다.', 'Unable to load this information.', '无法加载相关信息。'],
     ['홈에서 원하시는 분야를 다시 선택해 주세요.', 'Please choose a topic again from the home page.', '请返回首页重新选择相关领域。'],
     ['화면 확인용 샘플 안내입니다. 실제 안내는 AA안과 검토 후 반영됩니다.', 'Preview content only. Actual guidance will be added after AA Eye Clinic review.', '本内容仅供界面预览，实际指南经AA眼科审核后发布。'],
-    ['카카오상담', 'Kakao consultation', 'Kakao咨询'], ['네이버예약', 'Naver booking', 'Naver预约'],
+    ['전화 상담', 'Call the clinic', '电话咨询'], ['카카오상담', 'Kakao consultation', 'Kakao咨询'], ['네이버예약', 'Naver booking', 'Naver预约'],
     ['연결 준비 중', 'Link coming soon', '链接准备中'], ['새 탭으로 연결', 'Opens in a new tab', '在新标签页打开'],
     ['카카오톡 채널 연결 준비 중', 'Kakao channel coming soon', 'Kakao频道准备中'],
     ['영어·중국어로 화면을 전환할 수 있습니다.', 'Choose English or Chinese.', '可切换为英文或中文。'],

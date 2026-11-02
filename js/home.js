@@ -183,8 +183,11 @@
     var closed = closuresOn(selected);
     closed.forEach(function (closure) {
       var card = make('article', 'schedule-entry');
-      card.append(make('h4', 'schedule-doctor-name', closure.doctorName), make('span', 'work-period work-closed', '휴진'),
-        make('p', 'closure-period-text', closure.startDate + ' ~ ' + closure.endDate));
+      card.appendChild(make('h4', 'schedule-doctor-name', closure.doctorName));
+      var period = make('div', 'schedule-period-row schedule-closure-row');
+      period.append(make('span', 'work-period work-closed', '휴진'),
+        make('span', 'schedule-work-hours', closure.startDate + ' ~ ' + closure.endDate));
+      card.appendChild(period);
       dayList.appendChild(card);
     });
     if (!list.length && !closed.length) {

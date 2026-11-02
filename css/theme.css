@@ -214,7 +214,8 @@ html[data-theme='dark'] .drawer-nav .drawer-admin-button { background: #23364b; 
 .closure-label { display: block; width: 100%; white-space: nowrap; line-height: 18px; }
 @media (max-width: 600px) { .schedule-calendar { --calendar-gap: 3px; } }
 .work-period.work-closed { color: #b93240; border-color: #e6a5ac; background: #fff0f1; }
-.closure-period-text { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.schedule-closure-row { display: grid; grid-template-columns: max-content minmax(0, 1fr); }
+.schedule-closure-row .schedule-work-hours { min-width: 0; overflow-wrap: anywhere; }
 html[data-theme='dark'] .doctor-filter-closed,
 html[data-theme='dark'] .schedule-calendar .calendar-day .closure-range,
 html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #482b34; border-color: #975460; }
@@ -225,6 +226,7 @@ html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #
 .calendar-markers .doctor-initial { width: 10px; height: 10px; border-radius: 50%; }
 .schedule-work-hours { font-size: 17px; line-height: 1.6; font-weight: 600; }
 .schedule-hours { padding-inline: 34px; }
+.schedule-hours-list .hours-substitute { border-top: 0; padding-top: 0; }
 .schedule-hours-list .hours-substitute dt,
 .schedule-hours-list .hours-substitute dd { font-size: 13px; font-weight: 400; }
 .day-panel-reveal { animation: schedule-reveal 1s ease-out; }
@@ -234,9 +236,10 @@ html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #
 }
 @media (max-width: 600px) {
   .schedule-hours { padding-inline: 24px; }
-  .schedule-hours-list > div { grid-template-columns: 1fr; gap: 5px; }
-  .schedule-hours-list dd { text-align: left; white-space: normal; }
-  .schedule-hours-list .hours-substitute dt,
+  .schedule-hours-list > div { grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr); gap: 6px; }
+  .schedule-hours-list dd { text-align: right; white-space: nowrap; font-size: clamp(11px, 3.2vw, 14px); }
+  .schedule-hours-list .hours-substitute { border-top: 0; padding-top: 0; }
+.schedule-hours-list .hours-substitute dt,
   .schedule-hours-list .hours-substitute dd { font-size: 12px; }
   .schedule-work-hours { font-size: 16px; }
 }
