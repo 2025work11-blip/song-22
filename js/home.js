@@ -150,6 +150,25 @@
       doctorFilters.appendChild(closureButton);
     }
   }
+  function doctorHeading(doctor, fallbackName) {
+    var heading = make('h4', 'schedule-doctor-name ' + colorClass(doctor));
+    var portrait = make('span', 'schedule-doctor-portrait');
+    portrait.setAttribute('aria-hidden', 'true');
+    var image = make('img');
+    var photos = (window.siteConfig || {}).doctorPhotoUrls || {};
+    image.src = doctor && photos[doctor.id] || 'assets/icons/doctor-placeholder.svg';
+    image.alt = '';
+    image.width = 32;
+    image.height = 32;
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    image.addEventListener('error', function () {
+      image.src = 'assets/icons/doctor-placeholder.svg';
+    }, { once: true });
+    portrait.appendChild(image);
+    heading.append(portrait, make('span', '', doctor ? doctor.name : fallbackName || '원장 정보 확인 중'));
+    return heading;
+  }
   function renderDay() {
     var parts = selected.split('-').map(Number);
     var weekday = weekdays[new Date(parts[0], parts[1] - 1, parts[2]).getDay()];
@@ -183,7 +202,7 @@
     var closed = closuresOn(selected);
     closed.forEach(function (closure) {
       var card = make('article', 'schedule-entry');
-      card.appendChild(make('h4', 'schedule-doctor-name', closure.doctorName));
+      card.appendChild(doctorHeading(doctorById(closure.doctorId), closure.doctorName));
       var period = make('div', 'schedule-period-row schedule-closure-row');
       period.append(make('span', 'work-period work-closed', '휴진'),
         make('span', 'schedule-work-hours', closure.startDate + ' ~ ' + closure.endDate));
@@ -197,7 +216,7 @@
     list.forEach(function (entry) {
       var doctor = doctorById(entry.doctorId);
       var card = make('article', 'schedule-entry');
-      card.appendChild(make('h4', 'schedule-doctor-name ' + colorClass(doctor), doctor ? doctor.name : '원장 정보 확인 중'));
+      card.appendChild(doctorHeading(doctor));
       // 동작이 없는 상태 표시이므로 실제 버튼 대신 버튼 모양의 라벨로 표시합니다.
       var work = workHours(entry, selected);
       var morning = work.morning;

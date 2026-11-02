@@ -264,3 +264,7 @@ html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #
   .site-header .header-inner { min-height: 59.2px; }
   .site-header .header-actions { gap: 0; margin-right: -8px; }
 }
+/* 선택한 날짜의 원장 사진: 이름(22px)보다 조금 큰 원형입니다. */
+.schedule-entry .schedule-doctor-name { display: flex; align-items: center; gap: 9px; }
+.schedule-doctor-portrait { display: inline-flex; width: 32px; height: 32px; flex: 0 0 32px; overflow: hidden; border: 1px solid var(--doctor-color, #a3b3c4); border-radius: 50%; background: var(--doctor-tint, #edf3f9); }
+.schedule-doctor-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
