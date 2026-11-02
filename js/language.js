@@ -65,7 +65,7 @@
     ['등록된 일정이 없습니다. 일정 미등록은 휴진을 의미하지 않습니다.', 'No schedule is listed. This does not necessarily mean the clinic is closed.', '暂无排班记录，不代表停诊。'],
     ['※ 공휴일은 2026~2027년 확인 자료 기준입니다. 원장 근무는 예시이며 실제 휴진 여부는 별도 확인이 필요합니다.', '※ Holidays use the checked 2026–2027 data. Doctor schedules are examples; actual closures must be confirmed.', '※ 节假日依据已核对的2026至2027年资料。医生排班为示例，实际停诊情况需另行确认。'],
     ['※ 해당 연도의 공휴일 정보는 준비 중입니다. 원장 근무는 예시입니다.', '※ Holiday information for this year is not yet available. Doctor schedules are examples.', '※ 该年份的节假日信息准备中。医生排班为示例。'],
-    ['공지사항', 'Notices', '公告'], ['샘플 공지', 'Sample notices', '示例公告'],
+    ['주차 안내', 'Parking information', '停车指南'], ['공지사항', 'Notices', '公告'], ['샘플 공지', 'Sample notices', '示例公告'],
     ['연세제일안과의 새로운 안내를 날짜별로 확인하세요. 제목을 누르면 내용을 볼 수 있습니다.', 'Read the latest dated updates from Yonsei Jeil Eye Clinic. Select a title to read more.', '按日期查看延世第一眼科的最新公告，点击标题查看内容。'],
     ['공지사항을 준비 중입니다.', 'Notices coming soon.', '公告准备中。'],
     ['등록된 공지사항이 없습니다.', 'No notices yet.', '暂无公告。'],
