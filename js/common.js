@@ -82,57 +82,20 @@
   // 지구본은 모든 화면에서 동일한 내장 언어 전환을 사용합니다.
   // Google 번역 프록시로 이동하면 로그인 세션의 출처가 바뀌므로 자동 이동하지 않습니다.
   function initializeLanguages() {
-    var picker = document.querySelector('[data-language-picker]');
-    if (!picker) return;
-    var trigger = picker.querySelector('[data-language-toggle]');
-    var panel = picker.querySelector('[data-language-panel]');
-    var notice = picker.querySelector('[data-language-notice]');
-    var links = picker.querySelectorAll('[data-language]');
     var sourceUrl = new URL(window.location.href);
-    var translatedProxy = sourceUrl.hostname.endsWith('.translate.goog');
-    if (translatedProxy) {
-      // 이전 번역 링크로 열린 화면은 원래 서비스 주소로 복귀합니다.
-      sourceUrl.hostname = sourceUrl.hostname.replace(/\.translate\.goog$/, '')
-        .replace(/--/g, '\u0000').replace(/-/g, '.').replace(/\u0000/g, '-');
-      sourceUrl.protocol = 'https:';
-      Array.from(sourceUrl.searchParams.keys()).forEach(function (key) {
-        if (key.startsWith('_x_tr_')) sourceUrl.searchParams.delete(key);
-      });
-    }
     sourceUrl.hash = '';
-    links.forEach(function (link) {
+    document.querySelectorAll('[data-language]').forEach(function (link) {
       var language = link.getAttribute('data-language');
       var target = new URL(sourceUrl.href);
       target.searchParams.set('lang', language);
       link.href = target.href;
-      link.removeAttribute('aria-disabled');
       link.addEventListener('click', function (event) {
-        if (translatedProxy || typeof window.applyUILanguage !== 'function') return;
+        if (typeof window.applyUILanguage !== 'function') return;
         event.preventDefault();
         window.applyUILanguage(language);
-        setOpen(false, true);
       });
     });
-    notice.textContent = document.body.hasAttribute('data-private-page')
-      ? '환자 정보는 외부로 보내지 않고 화면 문구를 번역합니다.'
-      : '언어를 선택하면 현재 화면이 바뀝니다.';
-    function setOpen(open, restoreFocus) {
-      panel.hidden = !open;
-      trigger.setAttribute('aria-expanded', String(open));
-      if (restoreFocus) trigger.focus();
-    }
-    trigger.addEventListener('click', function () { setOpen(panel.hidden, false); });
-    document.addEventListener('click', function (event) {
-      if (!picker.contains(event.target)) setOpen(false, false);
-    });
-    picker.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && !panel.hidden) {
-        event.preventDefault();
-        setOpen(false, true);
-      }
-    });
   }
-
   function renderItems(container, items, emptyText) {
     container.replaceChildren();
     if (!Array.isArray(items) || items.length === 0) {
@@ -208,7 +171,7 @@
       var bounds = drawer.getBoundingClientRect();
       var outside = event.clientX < bounds.left || event.clientX > bounds.right ||
         event.clientY < bounds.top || event.clientY > bounds.bottom;
-      if (outside || event.target.closest('[data-menu-close], a[href]')) drawer.close();
+      if (outside || event.target.closest('[data-menu-close], a[href]:not([data-language])')) drawer.close();
     });
     // 기본 dialog가 Escape 처리와 모달 내부의 키보드 포커스 이동을 담당합니다.
     drawer.addEventListener('close', function () {
