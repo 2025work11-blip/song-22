@@ -246,3 +246,12 @@ html[data-theme='dark'] .work-period.work-closed { color: #ffbbc1; background: #
 @media (prefers-reduced-motion: reduce) {
   .day-panel-reveal { animation: none; }
 }
+
+/* 첨부한 병원 가로형 로고의 비율을 유지합니다. */
+.site-header .brand { min-width: 0; gap: 0; flex-shrink: 1; }
+.brand-logo { display: block; width: 236px; max-width: 100%; height: auto; }
+@media (max-width: 600px) {
+  .site-header .header-inner { gap: 8px; }
+  .site-header .header-actions { gap: 8px; }
+  .brand-logo { width: clamp(128px, 40vw, 200px); }
+}

@@ -23,7 +23,7 @@
       link.rel = 'noopener noreferrer';
       link.removeAttribute('aria-disabled');
       status.textContent = parsed.hostname === 'pf.kakao.com'
-        ? 'AA안과 카카오톡 채널 · 새 탭으로 연결'
+        ? '연세제일안과 카카오톡 채널 · 새 탭으로 연결'
         : '새 탭으로 연결';
     } else {
       link.removeAttribute('href');
@@ -162,10 +162,10 @@
     if (!disease) {
       document.querySelector('[data-detail]').hidden = true;
       document.querySelector('[data-error]').hidden = false;
-      document.title = '안내 정보를 불러올 수 없습니다 | AA안과';
+      document.title = '안내 정보를 불러올 수 없습니다 | 연세제일안과';
       return;
     }
-    document.title = disease.title + ' 안내 | AA안과';
+    document.title = disease.title + ' 안내 | 연세제일안과';
     document.querySelector('[data-title]').textContent = disease.title;
     document.querySelector('[data-breadcrumb]').textContent = disease.title;
     document.querySelector('[data-summary]').textContent = disease.summary;

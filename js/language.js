@@ -6,7 +6,7 @@
   var dictionary = {};
   function add(ko, en, zh) { dictionary[ko] = { en: en, 'zh-CN': zh }; }
   [
-    ['AA안과', 'AA Eye Clinic', 'AA眼科'],
+    ['연세제일안과', 'Yonsei Jeil Eye Clinic', '延世第一眼科'],
     ['다크모드로 변경', 'Switch to dark mode', '切换深色模式'],
     ['라이트모드로 변경', 'Switch to light mode', '切换浅色模式'],
     ['링크 공유', 'Share link', '分享链接'],
@@ -25,7 +25,7 @@
     ['망막', 'Retina', '视网膜'], ['소아근시', 'Childhood myopia', '儿童近视'],
     ['병원소개', 'About the clinic', '医院介绍'], ['CATEGORY', 'CATEGORY', 'CATEGORY'],
     ['최선의 시력으로 만나는 더 선명한 세상', 'Lifelong care for your eyes', '守护您一生的眼健康'],
-    ['최선의 시력으로 만나는 더 선명한 세상 AA안과', 'AA Eye Clinic · Lifelong eye care', 'AA眼科 · 一生的眼健康伙伴'],
+    ['최선의 시력으로 만나는 더 선명한 세상 연세제일안과', 'Yonsei Jeil Eye Clinic · Lifelong eye care', '延世第一眼科 · 一生的眼健康伙伴'],
     ['최선의 시력으로 만나는 더 선명한 세상 · 진료 전후 정보 안내', 'Lifelong eye care · Before and after your visit', '一生的眼健康伙伴 · 就诊前后指南'],
     ['진료 전후에 필요한 눈 건강 정보를 확인하세요.', 'Eye care information, before and after your visit.', '了解就诊前后所需的眼健康信息。'],
     ['어떤 눈 건강 정보가 필요하세요?', 'What would you like to know?', '您想了解哪些眼健康信息？'],
@@ -66,7 +66,7 @@
     ['※ 공휴일은 2026~2027년 확인 자료 기준입니다. 원장 근무는 예시이며 실제 휴진 여부는 별도 확인이 필요합니다.', '※ Holidays use the checked 2026–2027 data. Doctor schedules are examples; actual closures must be confirmed.', '※ 节假日依据已核对的2026至2027年资料。医生排班为示例，实际停诊情况需另行确认。'],
     ['※ 해당 연도의 공휴일 정보는 준비 중입니다. 원장 근무는 예시입니다.', '※ Holiday information for this year is not yet available. Doctor schedules are examples.', '※ 该年份的节假日信息准备中。医生排班为示例。'],
     ['공지사항', 'Notices', '公告'], ['샘플 공지', 'Sample notices', '示例公告'],
-    ['AA안과의 새로운 안내를 날짜별로 확인하세요. 제목을 누르면 내용을 볼 수 있습니다.', 'Read the latest dated updates from AA Eye Clinic. Select a title to read more.', '按日期查看AA眼科的最新公告，点击标题查看内容。'],
+    ['연세제일안과의 새로운 안내를 날짜별로 확인하세요. 제목을 누르면 내용을 볼 수 있습니다.', 'Read the latest dated updates from Yonsei Jeil Eye Clinic. Select a title to read more.', '按日期查看延世第一眼科的最新公告，点击标题查看内容。'],
     ['공지사항을 준비 중입니다.', 'Notices coming soon.', '公告准备中。'],
     ['등록된 공지사항이 없습니다.', 'No notices yet.', '暂无公告。'],
     ['기본 정보', 'Overview', '基本信息'], ['외래 안내', 'Outpatient guide', '门诊指南'],
@@ -75,7 +75,7 @@
     ['해당 분야의 수술 안내는 준비 중입니다.', 'Surgery information for this topic is coming soon.', '该领域的手术指南准备中。'],
     ['안내 정보를 불러올 수 없습니다.', 'Unable to load this information.', '无法加载相关信息。'],
     ['홈에서 원하시는 분야를 다시 선택해 주세요.', 'Please choose a topic again from the home page.', '请返回首页重新选择相关领域。'],
-    ['화면 확인용 샘플 안내입니다. 실제 안내는 AA안과 검토 후 반영됩니다.', 'Preview content only. Actual guidance will be added after AA Eye Clinic review.', '本内容仅供界面预览，实际指南经AA眼科审核后发布。'],
+    ['화면 확인용 샘플 안내입니다. 실제 안내는 연세제일안과 검토 후 반영됩니다.', 'Preview content only. Actual guidance will be added after Yonsei Jeil Eye Clinic review.', '本内容仅供界面预览，实际指南经延世第一眼科审核后发布。'],
     ['전화 상담', 'Call the clinic', '电话咨询'], ['카카오상담', 'Kakao consultation', 'Kakao咨询'], ['네이버예약', 'Naver booking', 'Naver预约'],
     ['연결 준비 중', 'Link coming soon', '链接准备中'], ['새 탭으로 연결', 'Opens in a new tab', '在新标签页打开'],
     ['카카오톡 채널 연결 준비 중', 'Kakao channel coming soon', 'Kakao频道准备中'],
@@ -94,15 +94,15 @@
     ['토요일', 'Saturday', '周六'], ['점심시간', 'Lunch break', '午休时间'],
     ['일요일 · 공휴일', 'Sundays and holidays', '周日及节假日'], ['확인 후 안내', 'To be confirmed', '确认后公布'],
     ['진료 여부 확인 후 안내', 'Opening status to be confirmed', '确认是否接诊后公布'],
-    ['AA안과의 진료시간과 의료진, 진료 장비를 안내합니다.', 'Learn about our clinic hours, doctors, and equipment.', '了解AA眼科的门诊时间、医生和设备。'],
-    ['화면 확인용 샘플 안내입니다. 실제 진료시간, 원장 및 장비 정보는 AA안과 확인 후 반영됩니다.', 'Preview only. Actual hours, doctor profiles, and equipment information will be added after clinic confirmation.', '仅供界面预览。实际门诊时间、医生和设备信息经医院确认后发布。'],
+    ['연세제일안과의 진료시간과 의료진, 진료 장비를 안내합니다.', 'Learn about our clinic hours, doctors, and equipment.', '了解延世第一眼科的门诊时间、医生和设备。'],
+    ['화면 확인용 샘플 안내입니다. 실제 진료시간, 원장 및 장비 정보는 연세제일안과 확인 후 반영됩니다.', 'Preview only. Actual hours, doctor profiles, and equipment information will be added after clinic confirmation.', '仅供界面预览。实际门诊时间、医生和设备信息经医院确认后发布。'],
     ['진료시간은 병원에서 제공한 안내를 반영했습니다. 원장 및 장비 소개는 화면 확인용 샘플입니다.', 'Clinic hours follow the information provided by the clinic. Doctor and equipment profiles are preview samples.', '门诊时间依据医院提供的信息。医生及设备介绍为界面预览示例。'],
     ['원장 인사말', 'A message from the doctor', '医生寄语'],
     ['주요 약력 및 진료 분야', 'Profile and areas of care', '主要履历与诊疗领域'],
     ['진료 장비 안내 준비 중', 'Equipment information coming soon', '诊疗设备信息准备中'],
-    ['원장 이름과 인사말을 소개할 영역입니다. AA안과에서 확인한 내용을 반영할 예정입니다.', 'This area will introduce the doctor and a welcome message after clinic confirmation.', '此处将介绍医生姓名及寄语，内容经医院确认后发布。'],
+    ['원장 이름과 인사말을 소개할 영역입니다. 연세제일안과에서 확인한 내용을 반영할 예정입니다.', 'This area will introduce the doctor and a welcome message after clinic confirmation.', '此处将介绍医生姓名及寄语，内容经医院确认后发布。'],
     ['원장의 주요 약력과 진료 분야를 안내할 영역입니다. 실제 경력과 자격 정보는 확인 후 등록합니다.', 'This area will show the doctor’s background and areas of care. Credentials will be added after verification.', '此处将介绍医生的主要履历与诊疗领域，实际经历和资质经确认后发布。'],
-    ['장비명과 용도를 소개할 영역입니다. AA안과의 실제 보유 장비를 확인한 뒤 설명을 반영합니다.', 'This area will introduce equipment names and purposes after confirming the clinic’s equipment.', '此处将介绍设备名称及用途，确认医院实际设备后补充说明。'],
+    ['장비명과 용도를 소개할 영역입니다. 연세제일안과의 실제 보유 장비를 확인한 뒤 설명을 반영합니다.', 'This area will introduce equipment names and purposes after confirming the clinic’s equipment.', '此处将介绍设备名称及用途，确认医院实际设备后补充说明。'],
     ['화면 확인용 샘플', 'Preview only', '界面预览'], ['샘플 정보', 'Sample data', '示例信息'],
     ['로그인·EMR 연동 전 미리보기입니다. 모든 환자 정보와 약 정보는 가상 예시입니다.', 'Preview before login and EMR integration. All patient and medication data are fictional.', '此为登录和EMR对接前的预览。患者及药物信息均为虚构示例。'],
     ['확인 예정', 'To be confirmed', '待确认'], ['환자 정보', 'Patient information', '患者信息'],
@@ -181,8 +181,8 @@
         var zhTitle = section === 'overview' ? (index === 0 ? '了解' + topic[1] : '相关症状说明') :
           section === 'outpatient' ? (index === 0 ? '就诊前指南' : '就诊后指南') : sections[section][1];
         add(item.title, enTitle, zhTitle);
-        add(item.text, 'Preview area for ' + topic[0].toLowerCase() + ': ' + enTitle.toLowerCase() + '. Actual information will be added after AA Eye Clinic review.',
-          topic[1] + '的' + zhTitle + '预览区域。实际信息将在AA眼科审核后发布。');
+        add(item.text, 'Preview area for ' + topic[0].toLowerCase() + ': ' + enTitle.toLowerCase() + '. Actual information will be added after Yonsei Jeil Eye Clinic review.',
+          topic[1] + '的' + zhTitle + '预览区域。实际信息将在延世第一眼科审核后发布。');
       });
     });
   });
@@ -220,7 +220,7 @@
         .replace(/(\d+)년\s*(\d+)월/g, function (_, y, m) { return current === 'en' ? monthNames[Number(m) - 1] + ' ' + y : y + '年' + m + '月'; })
         .replace(/(\d+)월\s*(\d+)일\s*\(([일월화수목금토])\)/g, function (_, m, d, weekday) { return current === 'en' ? monthNames[Number(m) - 1] + ' ' + d + ' (' + dictionary[weekday].en + ')' : m + '月' + d + '日（周' + dictionary[weekday]['zh-CN'] + '）'; });
       // 탭 제목과 동적으로 생성되는 짧은 안내에 쓰이는 공통 항목입니다.
-      ['마이페이지', '병원소개', '시력교정', '백내장', '녹내장', '소아근시', '망막', '담당의', 'AA안과'].forEach(function (key) {
+      ['마이페이지', '병원소개', '시력교정', '백내장', '녹내장', '소아근시', '망막', '담당의', '연세제일안과'].forEach(function (key) {
         value = value.split(key).join(dictionary[key][current]);
       });
       value = value.replace(/안내/g, current === 'en' ? 'Guide' : '指南');

@@ -18,7 +18,7 @@
       if (!url.startsWith('https://')) throw new Error('Invalid public URL');
       if (typeof navigator.share === 'function') {
         try {
-          await navigator.share({ title: 'AA안과', url: url });
+          await navigator.share({ title: '연세제일안과', url: url });
           return;
         } catch (error) {
           if (error.name === 'AbortError') return;

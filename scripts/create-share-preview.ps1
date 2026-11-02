@@ -18,7 +18,7 @@ try {
     $graphics.FillEllipse((New-ShareBrush '#eef5fb'), 725, 110, 410, 410)
     $titleFont = New-Object System.Drawing.Font 'Malgun Gothic', 72, ([System.Drawing.FontStyle]::Bold), ([System.Drawing.GraphicsUnit]::Pixel)
     $resources.Add($titleFont)
-    $graphics.DrawString('AA안과', $titleFont, (New-ShareBrush '#172c49'), [single]84, [single]260)
+    $graphics.DrawString('연세제일안과', $titleFont, (New-ShareBrush '#172c49'), [single]84, [single]260)
 
     $state = $graphics.Save()
     $graphics.TranslateTransform(735, 125)

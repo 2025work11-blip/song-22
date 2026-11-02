@@ -48,15 +48,15 @@
       { id: 'weekday', label: '월 ~ 금요일', start: '08:30', end: '19:00' }, { id: 'saturday', label: '토요일', start: '08:30', end: '17:00' },
       { id: 'holiday', label: '공휴일 · 오전진료', start: '08:30', end: '13:00' }, { id: 'lunch', label: '점심시간', start: '12:30', end: '14:00' }
     ];
-    state.bios = [{ id: 'greeting', title: '원장 인사말', text: '원장 이름과 인사말을 소개할 영역입니다. AA안과에서 확인한 내용을 반영할 예정입니다.' }, { id: 'career', title: '주요 약력 및 진료 분야', text: '원장의 주요 약력과 진료 분야를 안내할 영역입니다. 실제 경력과 자격 정보는 확인 후 등록합니다.' }];
-    state.equipment = [{ id: 'equipment', title: '진료 장비 안내 준비 중', text: '장비명과 용도를 소개할 영역입니다. AA안과의 실제 보유 장비를 확인한 뒤 설명을 반영합니다.' }];
+    state.bios = [{ id: 'greeting', title: '원장 인사말', text: '원장 이름과 인사말을 소개할 영역입니다. 연세제일안과에서 확인한 내용을 반영할 예정입니다.' }, { id: 'career', title: '주요 약력 및 진료 분야', text: '원장의 주요 약력과 진료 분야를 안내할 영역입니다. 실제 경력과 자격 정보는 확인 후 등록합니다.' }];
+    state.equipment = [{ id: 'equipment', title: '진료 장비 안내 준비 중', text: '장비명과 용도를 소개할 영역입니다. 연세제일안과의 실제 보유 장비를 확인한 뒤 설명을 반영합니다.' }];
     state.topicSummaries = []; state.articles = [];
     Object.keys(topics).forEach(function (key) {
       state.topicSummaries.push({ id: key, category: key, summary: topics[key].summary });
       Object.keys(sectionOptions).forEach(function (section) { (topics[key][section] || []).forEach(function (item, i) { state.articles.push({ id: key + section + i, category: key, section: section, title: item.title, text: item.text }); }); });
       var option = make('option', '', topics[key].title); option.value = key; topicFilter.appendChild(option);
     });
-    state.settings = [{ id: 'site', name: 'AA안과', logo: 'assets/logo.svg', kakao: config.kakaoChannelUrl, booking: config.naverBookingUrl, shareImage: 'assets/share-preview.png' }];
+    state.settings = [{ id: 'site', name: '연세제일안과', logo: 'assets/logo.svg', kakao: config.kakaoChannelUrl, booking: config.naverBookingUrl, shareImage: 'assets/share-preview.png' }];
     Object.keys(definitions).forEach(function (key) {
       if (definitions[key].table) state[key] = [];
       loaded[key] = false;
