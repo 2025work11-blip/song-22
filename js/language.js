@@ -27,7 +27,7 @@
     ['QnA 블로그', 'Q&A Blog', '问答博客'],
     ['궁금한 내용을 검색해 보세요.', 'Search for a topic you are curious about.', '搜索您想了解的内容。'],
     ['블로그 검색', 'Search the blog', '搜索博客'], ['제목이나 내용 검색', 'Search titles or content', '搜索标题或内容'],
-    ['검색', 'Search', '搜索'], ['검색 결과가 없습니다.', 'No results found.', '没有搜索结果。'],
+    ['검색', 'Search', '搜索'], ['검색 결과', 'Search results', '搜索结果'], ['검색 결과가 없습니다.', 'No results found.', '没有搜索结果。'],
     ['화면 확인용 예시 글입니다. 실제 내용은 병원 확인 후 등록됩니다.', 'These are sample posts. Actual content will be added after clinic review.', '以下为示例文章，实际内容将在医院确认后发布。'],
     ['눈 건강 질문 (예시)', 'Eye health questions (sample)', '眼健康问题（示例）'],
     ['눈 건강에 관해 자주 묻는 질문과 답변을 소개할 예정입니다.', 'Frequently asked questions and answers about eye health will appear here.', '此处将介绍眼健康常见问题及解答。'],

@@ -8,18 +8,26 @@
   var noPosts = document.querySelector('[data-blog-no-posts]');
   var error = document.querySelector('[data-blog-error]');
   var empty = document.querySelector('[data-blog-empty]');
+  var results = document.querySelector('[data-blog-results]');
+  var resultCount = document.querySelector('[data-blog-result-count]');
   var articles = [];
   var ready = false;
 
+  function normalize(text) {
+    return String(text || '').normalize('NFC').toLocaleLowerCase().replace(/\s+/g, ' ').trim();
+  }
   function search() {
-    var term = query.value.trim().toLocaleLowerCase();
+    var term = normalize(query.value);
+    var words = term ? term.split(' ') : [];
     var count = 0;
     articles.forEach(function (article) {
-      var matches = !term || article.blogSearchText.includes(term);
+      var matches = words.every(function (word) { return article.blogSearchText.includes(word); });
       article.hidden = !matches;
       if (matches) count += 1;
     });
     empty.hidden = !ready || !articles.length || count !== 0;
+    results.hidden = !ready || !term;
+    resultCount.textContent = String(count);
   }
   function element(tag, className, text) {
     var node = document.createElement(tag);
@@ -75,7 +83,7 @@
         article.setAttribute('translate', 'no');
         var date = element('time', '', post.post_date.replaceAll('-', '.'));
         date.dateTime = post.post_date;
-        article.blogSearchText = (post.title + '\n' + post.post_date + '\n' + post.content + '\n' + (post.source || '')).toLocaleLowerCase();
+        var searchParts = [post.title, post.post_date, post.content, post.source];
         var summary = element('summary', 'blog-post-summary');
         var heading = element('span', 'blog-post-summary-text');
         heading.append(element('span', 'blog-post-title', post.title), date);
@@ -85,6 +93,7 @@
         if (post.content_html) {
           body = element('div', 'blog-post-body blog-rich-body');
           var formatted = window.blogFormat.clean(post.content_html);
+          searchParts.push(formatted.textContent);
           while (formatted.firstChild) body.appendChild(formatted.firstChild);
         } else {
           body = renderBody(post.content);
@@ -93,6 +102,7 @@
           body.appendChild(element('h3', 'blog-source-heading', '출처'));
           body.appendChild(element('p', 'blog-source', post.source));
         }
+        article.blogSearchText = normalize(searchParts.join('\n'));
         article.append(summary, body);
         list.appendChild(article);
         articles.push(article);
@@ -109,6 +119,7 @@
     }
   }
   form.addEventListener('submit', function (event) { event.preventDefault(); search(); });
-  query.addEventListener('input', search);
+  query.addEventListener('input', function (event) { if (!event.isComposing) search(); });
+  query.addEventListener('compositionend', search);
   loadPosts();
 }());
