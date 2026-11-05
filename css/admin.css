@@ -47,6 +47,9 @@
 .admin-fields .blog-editor-size-label { display: flex; align-items: center; gap: 6px; }
 .admin-fields .blog-editor-size-label select { width: auto; min-height: 40px; }
 .blog-editor-bold { font-size: 14px; font-weight: 700; }
+.blog-editor-bold[aria-pressed='true'] { color: #fff; background: #436d99; border-color: #436d99; }
+.blog-editor-bold[aria-pressed='mixed'] { outline: 2px dashed #436d99; outline-offset: -4px; }
+html[data-theme='dark'] .blog-editor-bold[aria-pressed='true'] { color: #fff; background: #436d99; border-color: #8ab8ee; }
 .blog-editor-hint { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
 .admin-fields .blog-photo-label { display: inline-flex; position: relative; align-items: center; overflow: hidden; }
 .blog-photo-label input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }

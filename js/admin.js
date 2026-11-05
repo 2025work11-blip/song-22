@@ -151,11 +151,12 @@
     var sizeLabel = make('label', 'blog-editor-size-label', '글씨 크기');
     var size = make('select');
     size.setAttribute('aria-label', '선택한 글자의 크기');
+    var mixedSize = make('option', '', '혼합'); mixedSize.value = ''; mixedSize.disabled = true; size.appendChild(mixedSize);
     [['1','12px'],['2','14px'],['3','16px'],['4','18px'],['5','20px'],['6','24px'],['7','28px']].forEach(function (pair) {
       var option = make('option', '', pair[1]); option.value = pair[0]; size.appendChild(option);
     });
     size.value = '3'; sizeLabel.appendChild(size);
-    var bold = make('button', 'admin-button blog-editor-bold', '굵게'); bold.type = 'button';
+    var bold = make('button', 'admin-button blog-editor-bold', '굵게'); bold.type = 'button'; bold.setAttribute('aria-pressed', 'false');
     var photoLabel = make('label', 'admin-button blog-photo-label', '사진 첨부');
     var upload = make('input'); upload.type = 'file'; upload.accept = 'image/jpeg,image/png,image/webp'; upload.multiple = true;
     upload.setAttribute('aria-label', '본문에 사진 첨부');
@@ -174,7 +175,38 @@
     section.append(label, toolbar, hint, editor);
     function rememberSelection() {
       var selection = window.getSelection();
-      if (selection && selection.rangeCount && editor.contains(selection.getRangeAt(0).commonAncestorContainer)) savedRange = selection.getRangeAt(0).cloneRange();
+      if (!selection || !selection.rangeCount || !editor.contains(selection.getRangeAt(0).commonAncestorContainer)) return;
+      var range = selection.getRangeAt(0);
+      savedRange = range.cloneRange();
+      var styles = [];
+      function addStyle(node) {
+        var parent = node.nodeType === 1 ? node : node.parentElement;
+        if (!parent) return;
+        var style = window.getComputedStyle(parent);
+        styles.push({ size: parseFloat(style.fontSize), bold: style.fontWeight === 'bold' || parseInt(style.fontWeight, 10) >= 600 });
+      }
+      if (!range.collapsed) {
+        var walker = document.createTreeWalker(editor, NodeFilter.SHOW_TEXT);
+        var node;
+        while ((node = walker.nextNode())) {
+          if (!node.nodeValue.trim() || !range.intersectsNode(node)) continue;
+          if (range.startContainer === node && range.startOffset === node.nodeValue.length) continue;
+          if (range.endContainer === node && range.endOffset === 0) continue;
+          addStyle(node);
+        }
+      }
+      if (!styles.length) addStyle(range.startContainer);
+      var sizes = { 1: 12, 2: 14, 3: 16, 4: 18, 5: 20, 6: 24, 7: 28 };
+      var firstSize = styles[0] && styles[0].size;
+      var sameSize = styles.every(function (style) { return Math.abs(style.size - firstSize) < 0.1; });
+      var sizeKey = sameSize && Object.keys(sizes).find(function (key) { return Math.abs(sizes[key] - firstSize) < 0.1; });
+      mixedSize.textContent = sameSize && !sizeKey && firstSize ? firstSize + 'px' : '혼합';
+      size.value = sizeKey || '';
+      var firstBold = styles[0] && styles[0].bold;
+      var sameBold = styles.every(function (style) { return style.bold === firstBold; });
+      var boldState = sameBold ? String(Boolean(firstBold)) : 'mixed';
+      if (range.collapsed && document.queryCommandState) boldState = String(document.queryCommandState('bold'));
+      bold.setAttribute('aria-pressed', boldState);
     }
     function restoreSelection() {
       editor.focus();
@@ -184,6 +216,39 @@
     editor.addEventListener('mouseup', rememberSelection);
     editor.addEventListener('touchend', rememberSelection);
     editor.addEventListener('input', rememberSelection);
+    document.addEventListener('selectionchange', rememberSelection);
+    dialog.addEventListener('close', function () { document.removeEventListener('selectionchange', rememberSelection); }, { once: true });
+    editor.addEventListener('keydown', function (event) {
+      if (event.key !== 'Backspace' || event.isComposing || event.ctrlKey || event.altKey || event.metaKey) return;
+      var selection = window.getSelection();
+      if (!selection || !selection.rangeCount) return;
+      var range = selection.getRangeAt(0);
+      if (!editor.contains(range.commonAncestorContainer)) return;
+      var image = null;
+      if (!range.collapsed && range.startContainer === range.endContainer && range.startContainer.nodeType === 1 && range.endOffset === range.startOffset + 1) {
+        var selected = range.startContainer.childNodes[range.startOffset];
+        if (selected && selected.nodeType === 1 && selected.tagName === 'IMG') image = selected;
+      } else if (range.collapsed) {
+        var node = range.startContainer;
+        var offset = range.startOffset;
+        if (node.nodeType === 3 && offset > 0) return;
+        var previous = node.nodeType === 1 && offset > 0 ? node.childNodes[offset - 1] : null;
+        while (!previous && node !== editor) { previous = node.previousSibling; node = node.parentNode; }
+        while (previous && previous.nodeType === 1 && previous.tagName !== 'IMG' && previous.lastChild) previous = previous.lastChild;
+        if (previous && previous.nodeType === 1 && previous.tagName === 'IMG') image = previous;
+      }
+      if (!image) return;
+      event.preventDefault();
+      var cursor = document.createRange(); cursor.setStartBefore(image); cursor.collapse(true);
+      var pendingId = image.dataset.pendingImage;
+      image.remove();
+      if (pendingId && pendingImages.has(pendingId) && !Array.from(editor.querySelectorAll('[data-pending-image]')).some(function (item) { return item.dataset.pendingImage === pendingId; })) {
+        URL.revokeObjectURL(pendingImages.get(pendingId).preview);
+        pendingImages.delete(pendingId);
+      }
+      selection.removeAllRanges(); selection.addRange(cursor);
+      editor.dispatchEvent(new Event('input', { bubbles: true }));
+    });
     editor.addEventListener('paste', function (event) {
       event.preventDefault();
       document.execCommand('insertText', false, event.clipboardData.getData('text/plain'));
