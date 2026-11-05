@@ -71,7 +71,7 @@
     try {
       var client = window.supabaseClient;
       if (!client) throw new Error('DB 연결 없음');
-      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url,source_links';
+      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url,source_links,slug';
       while (true) {
         var result = await client.from('blog_posts').select(columns)
           .order('post_date', { ascending: false }).order('id', { ascending: false })
@@ -129,11 +129,13 @@
               link.rel = 'noopener noreferrer';
               if (text) link.appendChild(element('span', 'blog-source-text', text));
               link.appendChild(element('span', 'blog-source-link-hint', '원문 보기 ↗ (새 탭)'));
+              link.appendChild(element('span', 'blog-source-url', href));
               body.appendChild(link);
             } else if (text) body.appendChild(element('p', 'blog-source', text));
           });
         }
         article.blogSearchText = normalize(searchParts.join('\n'));
+        if (post.slug && /^[a-z0-9가-힣]+(?:-[a-z0-9가-힣]+)*$/.test(post.slug)) { var permalink = element('a', 'blog-article-link', '개별 글 보기'); permalink.href = '/blog/' + encodeURIComponent(post.slug); body.prepend(permalink); }
         article.append(summary, body);
         list.appendChild(article);
         articles.push(article);

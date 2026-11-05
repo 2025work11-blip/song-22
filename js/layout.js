@@ -12,6 +12,13 @@
     if (!slot) return;
     var template = document.createElement('template');
     template.innerHTML = sections[name];
+    // Normalize shared assets for nested blog URLs, consistently on every page.
+    template.content.querySelectorAll('[href],[src]').forEach(function (element) {
+      ['href','src'].forEach(function (attribute) {
+        var value = element.getAttribute(attribute);
+        if (value && !/^(?:[a-z][a-z0-9+.-]*:|\/|#|\?)/i.test(value)) element.setAttribute(attribute, '/' + value);
+      });
+    });
     slot.replaceWith(template.content);
   });
   // 각 페이지의 상담 메뉴에 동일한 전화 연결을 추가합니다.

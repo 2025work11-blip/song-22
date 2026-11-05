@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "api/*.js": {
+      "includeFiles": "{js/supabase-client.js,js/config.js,blog-article.html}"
+    }
+  },
+  "rewrites": [
+    { "source": "/blog/:slug", "destination": "/api/blog-article?slug=:slug" },
+    { "source": "/sitemap.xml", "destination": "/api/blog-sitemap" }
+  ]
+}
