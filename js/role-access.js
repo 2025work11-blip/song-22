@@ -18,8 +18,31 @@
     document.querySelectorAll('[data-admin-only]').forEach(function (node) { node.hidden = !admin; });
     if (adminPage) {
       document.querySelectorAll('[data-admin-protected]').forEach(function (node) {
+        if (node.tagName === 'DIALOG' && admin) {
+          var restoredForm = node.querySelector('[data-admin-form]');
+          var restoredAccess = node.querySelector('[data-admin-editor-access]');
+          if (restoredForm) restoredForm.hidden = false;
+          if (restoredAccess) restoredAccess.hidden = true;
+        }
+        if (node.tagName === 'DIALOG' && node.open) {
+          var editorAccess = node.querySelector('[data-admin-editor-access]');
+          var editorForm = node.querySelector('[data-admin-form]');
+          if (editorAccess && editorForm && (admin || next.status === 'checking' || next.status === 'error')) {
+            // 권한을 확인하는 동안에는 폼을 숨기되 창과 작성 중인 내용을 보존합니다.
+            node.hidden = false;
+            editorForm.hidden = !admin;
+            editorAccess.hidden = admin;
+            var editorText = node.querySelector('[data-admin-editor-access-text]');
+            var editorRetry = node.querySelector('[data-admin-editor-retry]');
+            if (editorText) editorText.textContent = next.status === 'error'
+              ? '관리자 권한을 확인하지 못했습니다. 작성 중인 내용은 유지됩니다.'
+              : '관리자 권한을 확인하고 있습니다. 작성 중인 내용은 유지됩니다.';
+            if (editorRetry) editorRetry.hidden = next.status !== 'error';
+            return;
+          }
+          if (!admin) node.close();
+        }
         node.hidden = !admin;
-        if (!admin && node.tagName === 'DIALOG' && node.open) node.close();
       });
       var message = document.querySelector('[data-admin-access-status]');
       if (message) {
@@ -91,6 +114,8 @@
   };
   var retry = document.querySelector('[data-admin-access-retry]');
   if (retry) retry.addEventListener('click', function () { check(); });
+  var editorRetry = document.querySelector('[data-admin-editor-retry]');
+  if (editorRetry) editorRetry.addEventListener('click', function () { check(); });
   // 뒤로가기로 복원하거나 다른 탭에서 돌아온 화면에서도 재확인합니다.
   window.addEventListener('pageshow', function (event) { if (event.persisted) check(); });
   document.addEventListener('visibilitychange', function () {

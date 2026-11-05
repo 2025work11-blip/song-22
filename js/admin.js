@@ -158,10 +158,13 @@
     size.value = '3'; sizeLabel.appendChild(size);
     var bold = make('button', 'admin-button blog-editor-bold', '굵게'); bold.type = 'button'; bold.setAttribute('aria-pressed', 'false');
     var photoLabel = make('label', 'admin-button blog-photo-label', '사진 첨부');
+    var subheading = make('button', 'admin-button blog-editor-subheading', '소제목');
+    subheading.type = 'button';
+    subheading.title = '선택한 글자에 소제목 서식 적용';
     var upload = make('input'); upload.type = 'file'; upload.accept = 'image/jpeg,image/png,image/webp'; upload.multiple = true;
     upload.setAttribute('aria-label', '본문에 사진 첨부');
     photoLabel.appendChild(upload);
-    toolbar.append(sizeLabel, bold, photoLabel);
+    toolbar.append(sizeLabel, bold, photoLabel, subheading);
     var editor = make('div', 'blog-editor-content');
     editor.contentEditable = 'true'; editor.setAttribute('role', 'textbox');
     editor.setAttribute('aria-multiline', 'true'); editor.setAttribute('aria-labelledby', label.id);
@@ -257,6 +260,23 @@
     bold.addEventListener('mousedown', function (event) { event.preventDefault(); });
     bold.addEventListener('click', function () { restoreSelection(); document.execCommand('bold'); rememberSelection(); });
     size.addEventListener('change', function () { restoreSelection(); document.execCommand('styleWithCSS', false, false); document.execCommand('fontSize', false, size.value); rememberSelection(); });
+    subheading.addEventListener('mousedown', function (event) { event.preventDefault(); });
+    subheading.addEventListener('click', function () {
+      if (!savedRange || savedRange.collapsed || !editor.contains(savedRange.commonAncestorContainer)) {
+        var error = document.querySelector('[data-admin-error]');
+        error.textContent = '소제목으로 바꿀 글자를 먼저 선택해 주세요.';
+        error.hidden = false;
+        return;
+      }
+      document.querySelector('[data-admin-error]').hidden = true;
+      restoreSelection();
+      // 선택 영역의 기존 크기와 굵기를 정리한 뒤 18px 굵은 글씨로 통일합니다.
+      document.execCommand('styleWithCSS', false, false);
+      document.execCommand('removeFormat');
+      document.execCommand('fontSize', false, '4');
+      if (!document.queryCommandState('bold')) document.execCommand('bold');
+      rememberSelection();
+    });
     upload.addEventListener('change', function () {
       var files = Array.from(upload.files || []);
       if (files.some(function (file) { return !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5242880; })) {
