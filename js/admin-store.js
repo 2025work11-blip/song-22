@@ -7,7 +7,7 @@
     doctor_date_schedules: ['doctor_id', 'schedule_date', 'period', 'end_time'],
     doctor_closures: ['doctor_id', 'start_date', 'end_date'],
     notices: ['notice_date', 'title', 'content', 'image_url'],
-    blog_posts: ['post_date', 'title', 'content', 'content_html', 'source']
+    blog_posts: ['post_date', 'title', 'content', 'content_html', 'source', 'source_url']
   };
   async function clientForWrite(table) {
     if (!Object.prototype.hasOwnProperty.call(columns, table)) throw new Error('저장 대상이 아닙니다.');
@@ -41,6 +41,13 @@
       if (id !== null && id !== undefined) { checkId(id); query = client.from(table).update(payload).eq('id', id); }
       else query = client.from(table).insert(payload);
       var result = await query.select('*').single();
+      // 새 출처 링크 컬럼이 아직 없어도 링크 없는 기존 글은 저장할 수 있습니다.
+      if (table === 'blog_posts' && !payload.source_url && result.error &&
+          ['42703', 'PGRST204'].includes(result.error.code) && /source_url/i.test(result.error.message || '')) {
+        delete payload.source_url;
+        query = id !== null && id !== undefined ? client.from(table).update(payload).eq('id', id) : client.from(table).insert(payload);
+        result = await query.select('*').single();
+      }
       if (result.error) throw result.error;
       if (!result.data) throw new Error('저장 결과를 확인하지 못했습니다. 목록을 다시 불러와 주세요.');
       return result.data;

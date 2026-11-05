@@ -24,7 +24,7 @@
     dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
-    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('content', '내용', 'richtext'), field('source', '출처', 'textarea', null, true)] },
+    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('content', '내용', 'richtext'), field('source', '출처', 'textarea', null, true), field('source_url', '출처 링크', 'url', null, true)] },
     hours: { group: 'hospital', title: '병원 진료시간', fixed: true, fields: [field('label', '요일 / 구분'), field('start', '시작 시간', 'time'), field('end', '종료 시간', 'time')] },
     bios: { group: 'hospital', title: '원장소개', fields: [field('title', '제목'), field('text', '소개 내용', 'textarea')] },
     equipment: { group: 'hospital', title: '장비소개', fields: [field('title', '장비명 / 제목'), field('text', '설명', 'textarea')] },
@@ -76,6 +76,12 @@
       if (def.table && !def.fixed) { var add = make('button', 'admin-button', key === 'blog' ? '새 글 작성' : '새 항목'); add.type = 'button'; add.dataset.adminEdit = key; add.disabled = !loaded[key] || (['weekly', 'dates', 'closures'].includes(key) && !state.doctors.length); heading.appendChild(add); }
       card.appendChild(heading);
       var rows = state[key].filter(function (row) { return def.group !== 'diseases' || row.category === topicFilter.value; });
+      if (key === 'blog') rows.sort(function (a, b) {
+        var dates = String(b.post_date || '').localeCompare(String(a.post_date || ''));
+        if (dates) return dates;
+        var left = String(a.id), right = String(b.id);
+        return right.length - left.length || right.localeCompare(left);
+      });
       if (!rows.length) card.appendChild(make('p', 'admin-empty', '등록된 항목이 없습니다.'));
       else {
         var scroll = make('div', 'admin-table-scroll'); var table = make('table', 'admin-table');
@@ -383,6 +389,13 @@
     }
     if ((key === 'closures' && values.end_date < values.start_date) || (key === 'hours' && values.end <= values.start)) { error.textContent = '종료일 또는 종료 시간은 시작보다 빠를 수 없습니다.'; error.hidden = false; return; }
     if (key === 'notices' && values.image_url && !values.image_url.startsWith('https://')) { error.textContent = '이미지 주소는 https://로 시작해야 합니다.'; error.hidden = false; return; }
+    if (key === 'blog' && values.source_url) {
+      try {
+        var sourceUrl = new URL(values.source_url);
+        if (!['http:', 'https:'].includes(sourceUrl.protocol) || sourceUrl.username || sourceUrl.password) throw new Error('invalid');
+        values.source_url = sourceUrl.href;
+      } catch (invalidUrl) { error.textContent = '출처 링크는 http:// 또는 https://로 시작하는 주소를 입력해 주세요.'; error.hidden = false; return; }
+    }
     var uniqueFields = key === 'weekly' ? ['doctor_id', 'weekday'] : key === 'dates' ? ['doctor_id', 'schedule_date'] : key === 'closures' ? ['doctor_id', 'start_date', 'end_date'] : [];
     if (uniqueFields.length && state[key].some(function (row) { return String(row.id) !== activeEditor.id && uniqueFields.every(function (f) { return String(row[f]) === values[f]; }); })) { error.textContent = '동일한 원장과 일정이 이미 있습니다.'; error.hidden = false; return; }
     var editingId = activeEditor.id;
@@ -393,6 +406,7 @@
         await uploadBlogImages(blogEditor);
         values.content_html = window.blogFormat.clean(blogEditor.innerHTML).innerHTML;
         values.source = values.source || null;
+        values.source_url = values.source_url || null;
       }
       var saved = await window.adminStore.save(def.table, values, editingId);
       saved = Object.assign({}, saved, { id: String(saved.id), doctor_id: saved.doctor_id === undefined ? undefined : String(saved.doctor_id) });

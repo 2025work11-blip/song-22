@@ -35,6 +35,14 @@
     if (text !== undefined) node.textContent = text;
     return node;
   }
+  function sourceLink(value) {
+    if (!value) return null;
+    try {
+      var url = new URL(value);
+      if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null;
+      return url.href;
+    } catch (error) { return null; }
+  }
   function renderBody(content) {
     var body = element('div', 'blog-post-body');
     var lines = content.replace(/\r\n?/g, '\n').split('\n');
@@ -63,11 +71,15 @@
     try {
       var client = window.supabaseClient;
       if (!client) throw new Error('DB 연결 없음');
-      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source';
+      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url';
       while (true) {
         var result = await client.from('blog_posts').select(columns)
           .order('post_date', { ascending: false }).order('id', { ascending: false })
           .range(rows.length, rows.length + size - 1);
+        if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes('source_url')) {
+          columns = 'id,post_date,title,content,content_html,source';
+          continue;
+        }
         if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes('content_html')) {
           columns = 'id,post_date,title,content';
           continue;
@@ -98,9 +110,18 @@
         } else {
           body = renderBody(post.content);
         }
-        if (post.source) {
+        var href = sourceLink(post.source_url);
+        if (post.source || href) {
           body.appendChild(element('h3', 'blog-source-heading', '출처'));
-          body.appendChild(element('p', 'blog-source', post.source));
+          if (href) {
+            var link = element('a', 'blog-source blog-source-link');
+            link.href = href;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            if (post.source) link.appendChild(element('span', 'blog-source-text', post.source));
+            link.appendChild(element('span', 'blog-source-link-hint', '원문 보기 ↗ (새 탭)'));
+            body.appendChild(link);
+          } else body.appendChild(element('p', 'blog-source', post.source));
         }
         article.blogSearchText = normalize(searchParts.join('\n'));
         article.append(summary, body);
