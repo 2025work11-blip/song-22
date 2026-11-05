@@ -72,6 +72,13 @@ html[data-theme='dark'] .blog-editor-bold[aria-pressed='true'] { color: #fff; ba
 .blog-editor-content font[size='7'] { font-size: 28px; }
 @media (max-width: 600px) { .blog-editor-content { min-height: 300px; } }
 .admin-fields input[type='color'] { height: 44px; }
+.doctor-photo-editor { display: grid; gap: 10px; justify-items: start; }
+.doctor-photo-editor label { width: 100%; }
+.doctor-photo-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 1px solid #bec9d5; }
+.admin-weekly-group { margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.admin-weekly-group summary { cursor: pointer; padding: 12px 14px; font-weight: 700; }
+.admin-weekly-list { padding: 0 14px 10px; }
+.admin-weekly-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); }
 .admin-editor-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 24px; }
 .admin-error { padding: 12px; border-radius: 8px; background: #fff0f1; color: #a33a49; font-size: 13px; }
 html[data-theme='dark'] .admin-preview-note { background: #233b54; color: #cadef3; }

@@ -6,6 +6,7 @@
   if (!main) return;
   var state = {}, sources = {}, loaded = {}, activeEditor = null, saving = false;
   var pendingImages = new Map();
+  var pendingDoctorPhoto = null, doctorPhotoPreview = null;
   var dialog = document.querySelector('[data-admin-editor]');
   var form = document.querySelector('[data-admin-form]');
   var fieldsRoot = document.querySelector('[data-admin-fields]');
@@ -19,7 +20,7 @@
   function field(key, label, type, options, optional) { return { key: key, label: label, type: type || 'text', options: options, optional: optional }; }
   function doctorOptions() { return Object.fromEntries((state.doctors || []).map(function (d) { return [d.id, d.name]; })); }
   var definitions = {
-    doctors: { group: 'schedule', title: '원장 정보', table: 'doctors', fields: [field('name', '원장 이름'), field('initial', '표시 문자'), field('color', '구분 색상', 'select', { blue: '파랑', amber: '주황', teal: '청록', purple: '보라' })] },
+    doctors: { group: 'schedule', title: '원장 정보', table: 'doctors', fields: [field('name', '원장 이름'), field('initial', '표시 문자'), field('color', '구분 색상', 'color'), field('photo_url', '사진', 'photo', null, true)] },
     weekly: { group: 'schedule', title: '정기 진료 일정', table: 'doctor_weekly_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('weekday', '진료 요일', 'select', Object.fromEntries(weekdays.map(function (d, i) { return [i, d + '요일']; }))), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
@@ -39,7 +40,7 @@
     return node;
   }
   function options(f) { return typeof f.options === 'function' ? f.options() : f.options || {}; }
-  function valueLabel(f, row) { if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; if (f.type === 'sources') return Array.isArray(row.source_links) ? row.source_links.map(function (item) { return item.text || item.url || ''; }).filter(Boolean).join('\n') || '—' : row.source || row.source_url || '—'; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
+  function valueLabel(f, row) { if (f.type === 'photo') return row.photo_url ? '등록됨' : '없음'; if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; if (f.type === 'sources') return Array.isArray(row.source_links) ? row.source_links.map(function (item) { return item.text || item.url || ''; }).filter(Boolean).join('\n') || '—' : row.source || row.source_url || '—'; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
   function initialData() {
     state.doctors = (home.doctors || []).map(function (d) { return { id: d.id, name: d.name, initial: d.initial, color: d.color }; });
     state.weekly = (home.doctors || []).flatMap(function (d) { return d.weekdays.map(function (day) { return { id: 'sample-' + d.id + day, doctor_id: d.id, weekday: day, period: d.morningOnly.includes(day) ? 'morning' : 'full' }; }); });
@@ -83,6 +84,23 @@
         return right.length - left.length || right.localeCompare(left);
       });
       if (!rows.length) card.appendChild(make('p', 'admin-empty', '등록된 항목이 없습니다.'));
+      else if (key === 'weekly') {
+        var groups = new Map();
+        rows.forEach(function (row) { var id = String(row.doctor_id); if (!groups.has(id)) groups.set(id, []); groups.get(id).push(row); });
+        groups.forEach(function (items, id) {
+          var accordion = make('details', 'admin-weekly-group');
+          var doctor = (state.doctors || []).find(function (item) { return String(item.id) === id; });
+          accordion.appendChild(make('summary', '', (doctor ? doctor.name : '원장 정보 확인 필요') + ' · ' + items.length + '개 일정'));
+          var list = make('div', 'admin-weekly-list');
+          items.sort(function (a, b) { return Number(a.weekday) - Number(b.weekday); }).forEach(function (row) {
+            var line = make('div', 'admin-weekly-row');
+            var period = row.period === 'morning' ? '오전' : '종일 · ' + valueLabel(def.fields[3], row);
+            line.appendChild(make('span', '', (weekdays[Number(row.weekday)] || '') + '요일 · ' + period));
+            var edit = make('button', 'admin-button', '편집'); edit.type = 'button'; edit.dataset.adminEdit = key; edit.dataset.rowId = String(row.id); edit.disabled = !loaded[key]; edit.setAttribute('aria-label', (doctor ? doctor.name : '원장') + ' ' + weekdays[Number(row.weekday)] + '요일 일정 편집'); line.appendChild(edit); list.appendChild(line);
+          });
+          accordion.appendChild(list); card.appendChild(accordion);
+        });
+      }
       else {
         var scroll = make('div', 'admin-table-scroll'); var table = make('table', 'admin-table');
         var caption = make('caption', 'visually-hidden', def.title); table.appendChild(caption);
@@ -148,6 +166,26 @@
   function releasePendingImages() {
     pendingImages.forEach(function (item) { URL.revokeObjectURL(item.preview); });
     pendingImages.clear();
+    if (doctorPhotoPreview) URL.revokeObjectURL(doctorPhotoPreview);
+    doctorPhotoPreview = null; pendingDoctorPhoto = null;
+  }
+  var legacyColors = { blue: '#3e7bc6', amber: '#b8791f', teal: '#238879', purple: '#8968b0' };
+  function createDoctorPhotoEditor(row) {
+    var section = make('div', 'doctor-photo-editor');
+    var label = make('label', '', '원장 사진 (선택)');
+    var input = make('input'); input.type = 'file'; input.accept = 'image/jpeg,image/png,image/webp';
+    var url = make('input'); url.type = 'hidden'; url.name = 'photo_url'; url.value = row && row.photo_url || '';
+    var preview = make('img', 'doctor-photo-preview'); preview.alt = '원장 사진 미리보기'; preview.src = url.value || 'assets/icons/doctor-placeholder.svg';
+    var remove = make('button', 'admin-button', '사진 제거'); remove.type = 'button';
+    var hint = make('p', 'blog-editor-hint', 'JPG, PNG, WebP 파일 · 최대 5MB. 저장을 눌러야 반영됩니다.');
+    input.addEventListener('change', function () {
+      var file = input.files && input.files[0]; if (!file) return;
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5242880) { input.value = ''; alert('JPG, PNG, WebP 사진을 5MB 이하로 선택해 주세요.'); return; }
+      if (doctorPhotoPreview) URL.revokeObjectURL(doctorPhotoPreview);
+      doctorPhotoPreview = URL.createObjectURL(file); pendingDoctorPhoto = { file: file }; preview.src = doctorPhotoPreview;
+    });
+    remove.addEventListener('click', function () { if (doctorPhotoPreview) URL.revokeObjectURL(doctorPhotoPreview); doctorPhotoPreview = null; pendingDoctorPhoto = null; input.value = ''; url.value = ''; preview.src = 'assets/icons/doctor-placeholder.svg'; });
+    label.appendChild(input); section.append(label, preview, remove, hint, url); return section;
   }
   function createSourceEditor(row, legacySource) {
     var fieldset = make('fieldset', 'blog-sources');
@@ -344,6 +382,7 @@
     fieldsRoot.replaceChildren();
     var blogEditor = null;
     def.fields.forEach(function (f) {
+      if (key === 'doctors' && f.type === 'photo') { fieldsRoot.appendChild(createDoctorPhotoEditor(row)); return; }
       if (key === 'blog' && f.type === 'richtext') {
         blogEditor = createBlogEditor(row);
         fieldsRoot.appendChild(blogEditor.section);
@@ -358,7 +397,8 @@
       input.name = f.key; input.required = !f.optional;
       if (f.type === 'select') Object.keys(options(f)).forEach(function (value) { var option = make('option', '', options(f)[value]); option.value = value; input.appendChild(option); });
       else if (f.type !== 'textarea') input.type = f.type;
-      if (row) input.value = row[f.key] === undefined ? '' : row[f.key];
+      if (f.type === 'color') input.value = row && (/^#[0-9a-f]{6}$/i.test(row.color) ? row.color : legacyColors[row.color]) || '#3e7bc6';
+      else if (row) input.value = row[f.key] === undefined ? '' : row[f.key];
       else if (f.key === 'category') input.value = topicFilter.value;
       else if (f.key === 'post_date') {
         var date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).reduce(function (parts, part) { if (part.type !== 'literal') parts[part.type] = part.value; return parts; }, {});
@@ -400,6 +440,21 @@
       image.src = publicUrl.data.publicUrl;
       delete image.dataset.pendingImage;
     }
+  }
+  async function uploadDoctorPhoto() {
+    if (!pendingDoctorPhoto) return form.elements.namedItem('photo_url').value;
+    if (pendingDoctorPhoto.url) return pendingDoctorPhoto.url;
+    var client = await window.adminStore.verifyDoctorWrite();
+    var file = pendingDoctorPhoto.file;
+    var ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[file.type];
+    var bucket = client.storage.from('blog-images');
+    var path = 'doctors/' + crypto.randomUUID() + '.' + ext;
+    var result = await bucket.upload(path, file, { contentType: file.type, upsert: false });
+    if (result.error) throw new Error('사진을 업로드하지 못했습니다. 저장소 설정과 관리자 권한을 확인해 주세요.');
+    var publicUrl = bucket.getPublicUrl(path);
+    if (!publicUrl.data || !publicUrl.data.publicUrl) throw new Error('사진 주소를 확인하지 못했습니다.');
+    pendingDoctorPhoto.url = publicUrl.data.publicUrl;
+    return pendingDoctorPhoto.url;
   }
   function showSaveError(error) {
     var messages = { '42501': '저장 권한을 확인해 주세요. 변경 내용은 저장되지 않았습니다.', '23505': '동일한 일정이 이미 등록되어 있습니다.', '23503': '연결된 원장이나 일정이 있습니다. 목록을 다시 불러와 확인해 주세요.', '23514': '날짜와 근무 구분을 확인해 주세요.', '42703': activeEditor && activeEditor.key === 'blog' ? '블로그 편집 기능을 위한 DB 업데이트가 필요합니다.' : '종료 시간 추가 SQL을 먼저 적용해 주세요.', 'PGRST204': activeEditor && activeEditor.key === 'blog' ? '블로그 편집 기능을 위한 DB 업데이트가 필요합니다.' : '종료 시간 추가 SQL을 먼저 적용해 주세요.' };
@@ -443,6 +498,7 @@
     error.hidden = true;
     setSaving(true);
     try {
+      if (key === 'doctors') values.photo_url = await uploadDoctorPhoto();
       if (blogEditor) {
         if (values.source_links.length > 1) {
           var blogClient = await window.adminStore.verifyBlogWrite();

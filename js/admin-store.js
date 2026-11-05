@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var columns = {
-    doctors: ['name', 'initial', 'color'],
+    doctors: ['name', 'initial', 'color', 'photo_url'],
     doctor_weekly_schedules: ['doctor_id', 'weekday', 'period', 'end_time'],
     doctor_date_schedules: ['doctor_id', 'schedule_date', 'period', 'end_time'],
     doctor_closures: ['doctor_id', 'start_date', 'end_date'],
@@ -26,6 +26,7 @@
   function checkId(id) { if (!/^\d+$/.test(String(id))) throw new Error('저장된 항목을 다시 불러와 주세요.'); }
   window.adminStore = {
     verifyBlogWrite: function () { return clientForWrite('blog_posts'); },
+    verifyDoctorWrite: function () { return clientForWrite('doctors'); },
     save: async function (table, values, id) {
       var client = await clientForWrite(table);
       // Generated posts are edited as private drafts, preserving their live approved copy.
@@ -44,6 +45,7 @@
       }
       if (table === 'doctor_weekly_schedules') payload.weekday = Number(payload.weekday);
       if (table === 'notices') payload.image_url = payload.image_url || null;
+      if (table === 'doctors') payload.photo_url = payload.photo_url || null;
       var query;
       if (id !== null && id !== undefined) { checkId(id); query = client.from(table).update(payload).eq('id', id); }
       else query = client.from(table).insert(payload);

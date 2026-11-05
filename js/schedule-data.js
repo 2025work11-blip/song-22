@@ -17,6 +17,10 @@
           columns = columns.replace(',end_time', '');
           continue;
         }
+        if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes(',photo_url')) {
+          columns = columns.replace(',photo_url', '');
+          continue;
+        }
         if (result.error) throw result.error;
         if (!Array.isArray(result.data)) throw new Error('일정 조회 결과를 확인할 수 없습니다.');
         rows = rows.concat(result.data);
@@ -24,7 +28,7 @@
       }
     }
     var result = await Promise.all([
-      readRows('doctors', 'id,name,initial,color'),
+      readRows('doctors', 'id,name,initial,color,photo_url'),
       readRows('doctor_weekly_schedules', 'id,doctor_id,weekday,period,end_time'),
       readRows('doctor_date_schedules', 'id,doctor_id,schedule_date,period,end_time'),
       readRows('doctor_closures', 'id,doctor_id,start_date,end_date')
@@ -33,7 +37,7 @@
     var doctors = result[0].map(function (doctor) {
       var weekly = result[1].filter(function (row) { return String(row.doctor_id) === String(doctor.id); });
       return {
-        id: String(doctor.id), name: doctor.name, initial: doctor.initial, color: doctor.color,
+        id: String(doctor.id), name: doctor.name, initial: doctor.initial, color: doctor.color, photoUrl: doctor.photo_url,
         weeklySchedules: weekly, weekdays: weekly.map(function (row) { return Number(row.weekday); }),
         morningOnly: weekly.filter(function (row) { return row.period === 'morning'; })
           .map(function (row) { return Number(row.weekday); })

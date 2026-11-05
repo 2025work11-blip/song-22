@@ -80,6 +80,9 @@
     var color = doctor && ['blue', 'amber', 'teal', 'purple'].includes(doctor.color) ? doctor.color : 'blue';
     return 'doctor-' + color;
   }
+  function applyDoctorColor(node, doctor) {
+    if (doctor && /^#[0-9a-f]{6}$/i.test(doctor.color || '')) node.style.setProperty('--doctor-color', doctor.color);
+  }
   function monthClosures() {
     return closures.filter(function (closure) {
       return closure.startDate <= dateKey(new Date(year, month + 1, 0).getDate()) &&
@@ -134,10 +137,12 @@
     doctorFilters.appendChild(allDoctorsButton);
     doctors.forEach(function (doctor) {
       var legend = make('button', 'doctor-legend-item ' + colorClass(doctor));
+      applyDoctorColor(legend, doctor);
       legend.type = 'button';
       legend.setAttribute('data-doctor-id', doctor.id);
       legend.setAttribute('aria-pressed', String(selectedDoctor === doctor.id && !closureOnly));
       var dot = make('span', 'doctor-initial ' + colorClass(doctor));
+      applyDoctorColor(dot, doctor);
       dot.setAttribute('aria-hidden', 'true');
       legend.append(dot, make('span', '', doctor.name));
       doctorFilters.appendChild(legend);
@@ -152,11 +157,12 @@
   }
   function doctorHeading(doctor, fallbackName) {
     var heading = make('h4', 'schedule-doctor-name ' + colorClass(doctor));
+    applyDoctorColor(heading, doctor);
     var portrait = make('span', 'schedule-doctor-portrait');
     portrait.setAttribute('aria-hidden', 'true');
     var image = make('img');
     var photos = (window.siteConfig || {}).doctorPhotoUrls || {};
-    image.src = doctor && photos[doctor.id] || 'assets/icons/doctor-placeholder.svg';
+    image.src = doctor && (doctor.photoUrl || photos[doctor.id]) || 'assets/icons/doctor-placeholder.svg';
     image.alt = '';
     image.width = 32;
     image.height = 32;
@@ -277,6 +283,7 @@
         var entry = entries(key).find(function (item) { return item.doctorId === doctor.id; });
         if (entry) {
           var dot = make('span', 'doctor-initial ' + colorClass(doctor) + (workHours(entry, key).morning ? ' initial-morning' : ''));
+          applyDoctorColor(dot, doctor);
           dot.title = doctor.name + ' · ' + workHours(entry, key).hours;
           markers.appendChild(dot);
         }
