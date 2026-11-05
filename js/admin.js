@@ -23,6 +23,7 @@
     dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
+    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('content', '내용', 'textarea')] },
     hours: { group: 'hospital', title: '병원 진료시간', fixed: true, fields: [field('label', '요일 / 구분'), field('start', '시작 시간', 'time'), field('end', '종료 시간', 'time')] },
     bios: { group: 'hospital', title: '원장소개', fields: [field('title', '제목'), field('text', '소개 내용', 'textarea')] },
     equipment: { group: 'hospital', title: '장비소개', fields: [field('title', '장비명 / 제목'), field('text', '설명', 'textarea')] },
@@ -71,7 +72,7 @@
       var card = make('article', 'admin-card');
       var heading = make('div', 'admin-card-heading');
       var title = make('div'); title.append(make('h3', '', def.title), make('p', 'admin-source', sources[key])); heading.appendChild(title);
-      if (def.table && !def.fixed) { var add = make('button', 'admin-button', '새 항목'); add.type = 'button'; add.dataset.adminEdit = key; add.disabled = !loaded[key] || (key !== 'doctors' && key !== 'notices' && !state.doctors.length); heading.appendChild(add); }
+      if (def.table && !def.fixed) { var add = make('button', 'admin-button', key === 'blog' ? '새 글 작성' : '새 항목'); add.type = 'button'; add.dataset.adminEdit = key; add.disabled = !loaded[key] || (['weekly', 'dates', 'closures'].includes(key) && !state.doctors.length); heading.appendChild(add); }
       card.appendChild(heading);
       var rows = state[key].filter(function (row) { return def.group !== 'diseases' || row.category === topicFilter.value; });
       if (!rows.length) card.appendChild(make('p', 'admin-empty', '등록된 항목이 없습니다.'));
@@ -119,12 +120,12 @@
         sources[key] = 'DB 연결됨 · 저장 시 홈페이지에 반영';
       } else { failed++; state[key] = []; loaded[key] = false; sources[key] = 'DB 조회 실패 · 새로고침 후 다시 확인'; }
     });
-    status.textContent = failed ? '일부 목록을 조회하지 못했습니다. 해당 항목은 편집할 수 없습니다.' : 'DB 조회를 완료했습니다. 일정·휴진·공지사항의 변경은 저장 버튼을 누르면 반영됩니다.';
+    status.textContent = failed ? '일부 목록을 조회하지 못했습니다. 해당 항목은 편집할 수 없습니다.' : 'DB 조회를 완료했습니다. 일정·휴진·공지사항·블로그의 변경은 저장 버튼을 누르면 반영됩니다.';
     render();
   }
   function showMenu() {
     var menu = window.location.hash.slice(1);
-    if (!['schedule', 'notices', 'hospital', 'diseases', 'settings'].includes(menu)) menu = 'schedule';
+    if (!['schedule', 'notices', 'blog', 'hospital', 'diseases', 'settings'].includes(menu)) menu = 'schedule';
     document.querySelectorAll('[data-admin-panel]').forEach(function (panel) { panel.hidden = panel.dataset.adminPanel !== menu; });
     document.querySelectorAll('[data-admin-menu]').forEach(function (link) { if (link.dataset.adminMenu === menu) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
   }
@@ -154,6 +155,10 @@
       else if (f.type !== 'textarea') input.type = f.type;
       if (row) input.value = row[f.key] === undefined ? '' : row[f.key];
       else if (f.key === 'category') input.value = topicFilter.value;
+      else if (f.key === 'post_date') {
+        var date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).reduce(function (parts, part) { if (part.type !== 'literal') parts[part.type] = part.value; return parts; }, {});
+        input.value = date.year + '-' + date.month + '-' + date.day;
+      }
       if (f.key === 'end_time') input.value = row ? (row.end_time || legacyEnd(row)).slice(0, 5) : '19:00';
       label.appendChild(input); fieldsRoot.appendChild(label);
     });
