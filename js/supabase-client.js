@@ -13,8 +13,8 @@
     return;
   }
 
-  var projectUrl = 'https://jhrygpmughystzskasaq.supabase.co';
-  var publishableKey = 'sb_publishable_d-h8y7jq3G76aR0uyhaMWA_u7yLeqDH';
+  var projectUrl = 'https://yzrpwqkcpkqimfpuexqd.supabase.co';
+  var publishableKey = 'sb_publishable_XWXSCiDaDlkwRd4lsFquCw_4dBJKEKK';
 
   try {
     window.supabaseClient = sdk.createClient(projectUrl, publishableKey, {

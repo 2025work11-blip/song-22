@@ -585,7 +585,7 @@ window.diseaseData = {
 
 - 모든 HTML 페이지에 `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2`를 `defer`로 연결한다.
 - CDN 스크립트 다음에 별도 연결 파일 `js/supabase-client.js`를 `defer`로 불러온다. 기존 화면 스크립트 뒤에 배치해 기존 동작 순서를 유지한다.
-- Project URL은 `https://jhrygpmughystzskasaq.supabase.co`를 사용한다.
+- Project URL은 서울 `jeileye-2`의 `https://yzrpwqkcpkqimfpuexqd.supabase.co`를 사용한다. 기존 런던 프로젝트는 이전 원본으로 유지한다.
 - 사용자가 제공한 브라우저용 Publishable Key만 연결 파일에서 사용한다. Secret Key 또는 service role 키는 사용하지 않는다.
 - CDN 전역 `window.supabase`는 SDK로 유지하고, 생성한 클라이언트는 `window.supabaseClient`로 구분한다. 전역 `const supabase` 등의 재선언을 하지 않는다.
 - 클라이언트는 페이지당 한 번만 생성하고 CDN 로딩 또는 초기화가 실패해도 기존 화면 기능은 중단하지 않는다.
@@ -701,11 +701,11 @@ window.diseaseData = {
 - `js/theme.js`는 저장한 테마를 첫 화면 표시 전에 적용하고 버튼 클릭과 다른 탭의 변경을 처리한다. 저장 값은 `aa-ui-theme`의 `light`/`dark`뿐이다.
 - 버튼은 `다크모드로 변경` / `라이트모드로 변경`으로 표시하고 상태를 `aria-pressed`로 제공한다. 언어 선택 시 버튼 문구도 현지화한다.
 - `css/theme.css`에서 홈·상세 안내·병원소개·마이페이지·인증 화면·Drawer·언어 선택·달력·공지 등의 다크모드 배경·테두리·글자 색을 조정한다. 기존 동작과 레이아웃은 유지한다.
-- 사용자가 제공한 배포 주소는 `https://jeileyepersonal0.vercel.app/`이며 공통 설정의 `publicSiteUrl`에 반영한다.
+- 사용자가 제공한 배포 주소는 `https://jeileye.vercel.app/`이며 공통 설정의 `publicSiteUrl`에 반영한다.
 - 공유 이미지 `assets/share-preview.png`는 1200×630px로 만든다. 이미지 안에서 왼쪽에 `연세제일안과`와 `최선의 시력으로 만나는 더 선명한 세상`, 오른쪽에 기존 병원 심볼을 배치한다.
 - 편집 참고용 벡터 원본은 `assets/share-preview.svg`, PNG 생성 코드는 `scripts/create-share-preview.ps1`에 둔다. 외부 사진이나 생성형 이미지는 사용하지 않는다.
 - 모든 페이지의 Open Graph·Twitter 메타태그는 공개 배포 주소의 공유 PNG를 사용한다. 개인 진료기록은 공유 메타데이터에 포함하지 않고 공통 병원 소개만 제공한다.
-- 공유 서비스가 읽을 이미지 주소는 `https://jeileyepersonal0.vercel.app/assets/share-preview.png`이다. 실제 공유 미리보기에는 수정 파일이 해당 주소에 배포되어 있어야 한다.
+- 공유 서비스가 읽을 이미지 주소는 `https://jeileye.vercel.app/assets/share-preview.png`이다. 실제 공유 미리보기에는 수정 파일이 해당 주소에 배포되어 있어야 한다.
 - 이번 작업은 프로젝트 파일 변경이며 외부 호스팅 배포를 수행하지 않는다. 공유 이미지 자체는 로컬에서 확인하고 실제 배포 사이트의 공유 크롤링 결과는 별도 확인한다.
 
 ## 31. 텍스트 히어로와 간결한 박스 구분
@@ -733,7 +733,7 @@ window.diseaseData = {
 ## 34. 공통 하단 링크 공유 버튼
 
 - 모든 기존·신규 페이지의 다크모드 버튼 옆에 링크 공유 버튼을 동일하게 표시한다. 공통 마크업은 js/layout.js에서 관리한다.
-- 공유 대상은 항상 https://jeileyepersonal0.vercel.app/index.html 이며 현재 페이지의 환자 정보·쿼리·해시는 포함하지 않는다.
+- 공유 대상은 항상 https://jeileye.vercel.app/index.html 이며 현재 페이지의 환자 정보·쿼리·해시는 포함하지 않는다.
 - js/share.js에서 기기의 기본 공유 기능을 우선 사용한다. 지원하지 않거나 실패하면 메인 링크를 복사하고 결과를 알린다. 사용자가 공유 창을 취소하면 오류를 표시하지 않는다.
 - 클립보드 접근이 차단되면 읽기 전용 링크 입력란을 보여주고 직접 복사할 수 있도록 선택한다. 중복 실행을 막고 완료 후 버튼을 복원한다.
 - 라이트·다크모드 및 한국어·영어·중국어 문구를 지원한다. 외부 SDK나 API를 추가하지 않는다.

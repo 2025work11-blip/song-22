@@ -5,5 +5,5 @@ window.siteConfig = {
   doctorPhotoUrls: {},
   kakaoChannelUrl: 'https://accounts.kakao.com/login/?continue=https%3A%2F%2Fpf.kakao.com%2F_mRjtn%2Fchat#login',
   naverBookingUrl: 'https://m.booking.naver.com/booking/13/bizes/1336750?theme=place&lang=ko&area=pll',
-  publicSiteUrl: 'https://jeileyepersonal0.vercel.app/'
+  publicSiteUrl: 'https://jeileye.vercel.app/'
 };
