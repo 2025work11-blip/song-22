@@ -7,7 +7,7 @@
     doctor_date_schedules: ['doctor_id', 'schedule_date', 'period', 'end_time'],
     doctor_closures: ['doctor_id', 'start_date', 'end_date'],
     notices: ['notice_date', 'title', 'content', 'image_url'],
-    blog_posts: ['post_date', 'title', 'content', 'content_html', 'source', 'source_url']
+    blog_posts: ['post_date', 'title', 'content', 'content_html', 'source', 'source_url', 'source_links']
   };
   async function clientForWrite(table) {
     if (!Object.prototype.hasOwnProperty.call(columns, table)) throw new Error('저장 대상이 아닙니다.');
@@ -41,10 +41,17 @@
       if (id !== null && id !== undefined) { checkId(id); query = client.from(table).update(payload).eq('id', id); }
       else query = client.from(table).insert(payload);
       var result = await query.select('*').single();
-      // 새 출처 링크 컬럼이 아직 없어도 링크 없는 기존 글은 저장할 수 있습니다.
-      if (table === 'blog_posts' && !payload.source_url && result.error &&
-          ['42703', 'PGRST204'].includes(result.error.code) && /source_url/i.test(result.error.message || '')) {
-        delete payload.source_url;
+      // 새 컬럼이 없는 DB에도 출처가 하나 이하면 기존 형식으로 저장합니다.
+      while (table === 'blog_posts' && result.error && ['42703', 'PGRST204'].includes(result.error.code)) {
+        var message = result.error.message || '';
+        if (/source_links/i.test(message) && Object.prototype.hasOwnProperty.call(payload, 'source_links')) {
+          if (Array.isArray(payload.source_links) && payload.source_links.length > 1) {
+            throw new Error('여러 출처를 저장하려면 DB 업데이트를 먼저 적용해 주세요.');
+          }
+          delete payload.source_links;
+        } else if (/source_url/i.test(message) && !payload.source_url && Object.prototype.hasOwnProperty.call(payload, 'source_url')) {
+          delete payload.source_url;
+        } else break;
         query = id !== null && id !== undefined ? client.from(table).update(payload).eq('id', id) : client.from(table).insert(payload);
         result = await query.select('*').single();
       }

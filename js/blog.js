@@ -71,11 +71,15 @@
     try {
       var client = window.supabaseClient;
       if (!client) throw new Error('DB 연결 없음');
-      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url';
+      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url,source_links';
       while (true) {
         var result = await client.from('blog_posts').select(columns)
           .order('post_date', { ascending: false }).order('id', { ascending: false })
           .range(rows.length, rows.length + size - 1);
+        if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes('source_links')) {
+          columns = 'id,post_date,title,content,content_html,source,source_url';
+          continue;
+        }
         if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes('source_url')) {
           columns = 'id,post_date,title,content,content_html,source';
           continue;
@@ -110,18 +114,24 @@
         } else {
           body = renderBody(post.content);
         }
-        var href = sourceLink(post.source_url);
-        if (post.source || href) {
+        var entries = Array.isArray(post.source_links) ? post.source_links : [{ text: post.source, url: post.source_url }];
+        entries = entries.filter(function (item) { return item && (typeof item.text === 'string' && item.text.trim() || typeof item.url === 'string' && sourceLink(item.url)); });
+        if (entries.length) {
           body.appendChild(element('h3', 'blog-source-heading', '출처'));
-          if (href) {
-            var link = element('a', 'blog-source blog-source-link');
-            link.href = href;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            if (post.source) link.appendChild(element('span', 'blog-source-text', post.source));
-            link.appendChild(element('span', 'blog-source-link-hint', '원문 보기 ↗ (새 탭)'));
-            body.appendChild(link);
-          } else body.appendChild(element('p', 'blog-source', post.source));
+          entries.forEach(function (entry) {
+            var text = typeof entry.text === 'string' ? entry.text : '';
+            var href = typeof entry.url === 'string' ? sourceLink(entry.url) : null;
+            searchParts.push(text);
+            if (href) {
+              var link = element('a', 'blog-source blog-source-link');
+              link.href = href;
+              link.target = '_blank';
+              link.rel = 'noopener noreferrer';
+              if (text) link.appendChild(element('span', 'blog-source-text', text));
+              link.appendChild(element('span', 'blog-source-link-hint', '원문 보기 ↗ (새 탭)'));
+              body.appendChild(link);
+            } else if (text) body.appendChild(element('p', 'blog-source', text));
+          });
         }
         article.blogSearchText = normalize(searchParts.join('\n'));
         article.append(summary, body);

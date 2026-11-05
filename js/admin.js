@@ -24,7 +24,7 @@
     dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
-    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('content', '내용', 'richtext'), field('source', '출처', 'textarea', null, true), field('source_url', '출처 링크', 'url', null, true)] },
+    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('content', '내용', 'richtext'), field('source_links', '출처', 'sources', null, true)] },
     hours: { group: 'hospital', title: '병원 진료시간', fixed: true, fields: [field('label', '요일 / 구분'), field('start', '시작 시간', 'time'), field('end', '종료 시간', 'time')] },
     bios: { group: 'hospital', title: '원장소개', fields: [field('title', '제목'), field('text', '소개 내용', 'textarea')] },
     equipment: { group: 'hospital', title: '장비소개', fields: [field('title', '장비명 / 제목'), field('text', '설명', 'textarea')] },
@@ -39,7 +39,7 @@
     return node;
   }
   function options(f) { return typeof f.options === 'function' ? f.options() : f.options || {}; }
-  function valueLabel(f, row) { if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
+  function valueLabel(f, row) { if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; if (f.type === 'sources') return Array.isArray(row.source_links) ? row.source_links.map(function (item) { return item.text || item.url || ''; }).filter(Boolean).join('\n') || '—' : row.source || row.source_url || '—'; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
   function initialData() {
     state.doctors = (home.doctors || []).map(function (d) { return { id: d.id, name: d.name, initial: d.initial, color: d.color }; });
     state.weekly = (home.doctors || []).flatMap(function (d) { return d.weekdays.map(function (day) { return { id: 'sample-' + d.id + day, doctor_id: d.id, weekday: day, period: d.morningOnly.includes(day) ? 'morning' : 'full' }; }); });
@@ -148,6 +148,34 @@
   function releasePendingImages() {
     pendingImages.forEach(function (item) { URL.revokeObjectURL(item.preview); });
     pendingImages.clear();
+  }
+  function createSourceEditor(row, legacySource) {
+    var fieldset = make('fieldset', 'blog-sources');
+    var heading = make('div', 'blog-sources-heading');
+    var legend = make('legend', '', '출처');
+    var add = make('button', 'admin-button', '출처 추가');
+    add.type = 'button';
+    var rows = make('div', 'blog-sources-list');
+    function addRow(source) {
+      var item = make('div', 'blog-source-row');
+      item.setAttribute('data-source-row', '');
+      var nameLabel = make('label', '', '출처');
+      var name = make('textarea'); name.setAttribute('data-source-text', ''); name.value = source.text || '';
+      var urlLabel = make('label', '', '출처 링크');
+      var url = make('input'); url.type = 'url'; url.setAttribute('data-source-url', ''); url.value = source.url || '';
+      var remove = make('button', 'admin-button', '삭제'); remove.type = 'button';
+      remove.addEventListener('click', function () {
+        if (rows.children.length === 1) { name.value = ''; url.value = ''; name.focus(); }
+        else { item.remove(); add.focus(); }
+      });
+      nameLabel.appendChild(name); urlLabel.appendChild(url); item.append(nameLabel, urlLabel, remove); rows.appendChild(item);
+    }
+    heading.appendChild(add); fieldset.append(legend, heading, rows);
+    var entries = row && Array.isArray(row.source_links) ? row.source_links : [{ text: row && row.source != null ? row.source : legacySource || '', url: row && row.source_url || '' }];
+    if (!entries.length) entries = [{}];
+    entries.forEach(function (entry) { addRow(entry || {}); });
+    add.addEventListener('click', function () { addRow({}); rows.lastChild.querySelector('[data-source-text]').focus(); });
+    return fieldset;
   }
   function createBlogEditor(row) {
     var section = make('div', 'blog-editor-field');
@@ -321,6 +349,10 @@
         fieldsRoot.appendChild(blogEditor.section);
         return;
       }
+      if (key === 'blog' && f.type === 'sources') {
+        fieldsRoot.appendChild(createSourceEditor(row, blogEditor.source));
+        return;
+      }
       var label = make('label', '', f.label + (f.optional ? ' (선택)' : ''));
       var input = make(f.type === 'textarea' ? 'textarea' : f.type === 'select' ? 'select' : 'input');
       input.name = f.key; input.required = !f.optional;
@@ -333,7 +365,6 @@
         input.value = date.year + '-' + date.month + '-' + date.day;
       }
       if (f.key === 'end_time') input.value = row ? (row.end_time || legacyEnd(row)).slice(0, 5) : '19:00';
-      if (key === 'blog' && f.key === 'source') input.value = blogEditor.source;
       label.appendChild(input); fieldsRoot.appendChild(label);
     });
     syncEndTime();
@@ -381,7 +412,7 @@
     if (saving || !window.roleAccess.isAdmin() || !activeEditor || !form.reportValidity()) return;
     var key = activeEditor.key, def = definitions[key], values = {};
     var error = document.querySelector('[data-admin-error]');
-    def.fields.forEach(function (f) { if (f.type !== 'richtext') values[f.key] = form.elements.namedItem(f.key).value.trim(); });
+    def.fields.forEach(function (f) { if (f.type !== 'richtext' && f.type !== 'sources') values[f.key] = form.elements.namedItem(f.key).value.trim(); });
     var blogEditor = key === 'blog' ? fieldsRoot.querySelector('.blog-editor-content') : null;
     if (blogEditor) {
       values.content = blogEditor.innerText.trim();
@@ -389,12 +420,22 @@
     }
     if ((key === 'closures' && values.end_date < values.start_date) || (key === 'hours' && values.end <= values.start)) { error.textContent = '종료일 또는 종료 시간은 시작보다 빠를 수 없습니다.'; error.hidden = false; return; }
     if (key === 'notices' && values.image_url && !values.image_url.startsWith('https://')) { error.textContent = '이미지 주소는 https://로 시작해야 합니다.'; error.hidden = false; return; }
-    if (key === 'blog' && values.source_url) {
-      try {
-        var sourceUrl = new URL(values.source_url);
-        if (!['http:', 'https:'].includes(sourceUrl.protocol) || sourceUrl.username || sourceUrl.password) throw new Error('invalid');
-        values.source_url = sourceUrl.href;
-      } catch (invalidUrl) { error.textContent = '출처 링크는 http:// 또는 https://로 시작하는 주소를 입력해 주세요.'; error.hidden = false; return; }
+    if (key === 'blog') {
+      values.source_links = [];
+      var invalidUrl = false;
+      fieldsRoot.querySelectorAll('[data-source-row]').forEach(function (item) {
+        var text = item.querySelector('[data-source-text]').value.trim();
+        var url = item.querySelector('[data-source-url]').value.trim();
+        if (url) {
+          try {
+            var parsed = new URL(url);
+            if (!['http:', 'https:'].includes(parsed.protocol) || parsed.username || parsed.password) throw new Error('invalid');
+            url = parsed.href;
+          } catch (failure) { invalidUrl = true; }
+        }
+        if (text || url) values.source_links.push({ text: text, url: url });
+      });
+      if (invalidUrl) { error.textContent = '출처 링크는 http:// 또는 https://로 시작하는 주소를 입력해 주세요.'; error.hidden = false; return; }
     }
     var uniqueFields = key === 'weekly' ? ['doctor_id', 'weekday'] : key === 'dates' ? ['doctor_id', 'schedule_date'] : key === 'closures' ? ['doctor_id', 'start_date', 'end_date'] : [];
     if (uniqueFields.length && state[key].some(function (row) { return String(row.id) !== activeEditor.id && uniqueFields.every(function (f) { return String(row[f]) === values[f]; }); })) { error.textContent = '동일한 원장과 일정이 이미 있습니다.'; error.hidden = false; return; }
@@ -403,10 +444,15 @@
     setSaving(true);
     try {
       if (blogEditor) {
+        if (values.source_links.length > 1) {
+          var blogClient = await window.adminStore.verifyBlogWrite();
+          var schema = await blogClient.from('blog_posts').select('id,source_links').limit(1);
+          if (schema.error) throw new Error('여러 출처를 저장하려면 DB 업데이트를 먼저 적용해 주세요.');
+        }
         await uploadBlogImages(blogEditor);
         values.content_html = window.blogFormat.clean(blogEditor.innerHTML).innerHTML;
-        values.source = values.source || null;
-        values.source_url = values.source_url || null;
+        values.source = values.source_links.length ? values.source_links[0].text || null : null;
+        values.source_url = values.source_links.length ? values.source_links[0].url || null : null;
       }
       var saved = await window.adminStore.save(def.table, values, editingId);
       saved = Object.assign({}, saved, { id: String(saved.id), doctor_id: saved.doctor_id === undefined ? undefined : String(saved.doctor_id) });
