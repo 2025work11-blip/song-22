@@ -7,7 +7,7 @@
     doctor_date_schedules: ['doctor_id', 'schedule_date', 'period', 'end_time'],
     doctor_closures: ['doctor_id', 'start_date', 'end_date'],
     notices: ['notice_date', 'title', 'content', 'image_url'],
-    blog_posts: ['post_date', 'title', 'content']
+    blog_posts: ['post_date', 'title', 'content', 'content_html', 'source']
   };
   async function clientForWrite(table) {
     if (!Object.prototype.hasOwnProperty.call(columns, table)) throw new Error('저장 대상이 아닙니다.');
@@ -25,6 +25,7 @@
   }
   function checkId(id) { if (!/^\d+$/.test(String(id))) throw new Error('저장된 항목을 다시 불러와 주세요.'); }
   window.adminStore = {
+    verifyBlogWrite: function () { return clientForWrite('blog_posts'); },
     save: async function (table, values, id) {
       var client = await clientForWrite(table);
       var payload = {};

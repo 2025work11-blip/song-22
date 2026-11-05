@@ -5,6 +5,7 @@
   var main = document.querySelector('.admin-main');
   if (!main) return;
   var state = {}, sources = {}, loaded = {}, activeEditor = null, saving = false;
+  var pendingImages = new Map();
   var dialog = document.querySelector('[data-admin-editor]');
   var form = document.querySelector('[data-admin-form]');
   var fieldsRoot = document.querySelector('[data-admin-fields]');
@@ -23,7 +24,7 @@
     dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
-    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('content', '내용', 'textarea')] },
+    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('content', '내용', 'richtext'), field('source', '출처', 'textarea', null, true)] },
     hours: { group: 'hospital', title: '병원 진료시간', fixed: true, fields: [field('label', '요일 / 구분'), field('start', '시작 시간', 'time'), field('end', '종료 시간', 'time')] },
     bios: { group: 'hospital', title: '원장소개', fields: [field('title', '제목'), field('text', '소개 내용', 'textarea')] },
     equipment: { group: 'hospital', title: '장비소개', fields: [field('title', '장비명 / 제목'), field('text', '설명', 'textarea')] },
@@ -137,6 +138,77 @@
     if (!period || !end) return;
     end.closest('label').hidden = period.value !== 'full';
     end.required = period.value === 'full';
+  }
+  function releasePendingImages() {
+    pendingImages.forEach(function (item) { URL.revokeObjectURL(item.preview); });
+    pendingImages.clear();
+  }
+  function createBlogEditor(row) {
+    var section = make('div', 'blog-editor-field');
+    var label = make('label', '', '내용');
+    label.id = 'blog-editor-label';
+    var toolbar = make('div', 'blog-editor-toolbar');
+    var sizeLabel = make('label', 'blog-editor-size-label', '글씨 크기');
+    var size = make('select');
+    size.setAttribute('aria-label', '선택한 글자의 크기');
+    [['1','12px'],['2','14px'],['3','16px'],['4','18px'],['5','20px'],['6','24px'],['7','28px']].forEach(function (pair) {
+      var option = make('option', '', pair[1]); option.value = pair[0]; size.appendChild(option);
+    });
+    size.value = '3'; sizeLabel.appendChild(size);
+    var bold = make('button', 'admin-button blog-editor-bold', '굵게'); bold.type = 'button';
+    var photoLabel = make('label', 'admin-button blog-photo-label', '사진 첨부');
+    var upload = make('input'); upload.type = 'file'; upload.accept = 'image/jpeg,image/png,image/webp'; upload.multiple = true;
+    upload.setAttribute('aria-label', '본문에 사진 첨부');
+    photoLabel.appendChild(upload);
+    toolbar.append(sizeLabel, bold, photoLabel);
+    var editor = make('div', 'blog-editor-content');
+    editor.contentEditable = 'true'; editor.setAttribute('role', 'textbox');
+    editor.setAttribute('aria-multiline', 'true'); editor.setAttribute('aria-labelledby', label.id);
+    var savedRange = null;
+    var legacy = window.blogFormat.splitLegacy(row ? row.content : '');
+    if (row && row.content_html) {
+      var safe = window.blogFormat.clean(row.content_html);
+      while (safe.firstChild) editor.appendChild(safe.firstChild);
+    } else editor.textContent = legacy.content;
+    section.append(label, toolbar, editor);
+    function rememberSelection() {
+      var selection = window.getSelection();
+      if (selection && selection.rangeCount && editor.contains(selection.getRangeAt(0).commonAncestorContainer)) savedRange = selection.getRangeAt(0).cloneRange();
+    }
+    function restoreSelection() {
+      editor.focus();
+      if (savedRange) { var selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(savedRange); }
+    }
+    editor.addEventListener('keyup', rememberSelection);
+    editor.addEventListener('mouseup', rememberSelection);
+    editor.addEventListener('input', rememberSelection);
+    editor.addEventListener('paste', function (event) {
+      event.preventDefault();
+      document.execCommand('insertText', false, event.clipboardData.getData('text/plain'));
+    });
+    bold.addEventListener('mousedown', function (event) { event.preventDefault(); });
+    bold.addEventListener('click', function () { restoreSelection(); document.execCommand('bold'); rememberSelection(); });
+    size.addEventListener('change', function () { restoreSelection(); document.execCommand('styleWithCSS', false, false); document.execCommand('fontSize', false, size.value); rememberSelection(); });
+    upload.addEventListener('change', function () {
+      var files = Array.from(upload.files || []);
+      if (files.some(function (file) { return !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5242880; })) {
+        var error = document.querySelector('[data-admin-error]'); error.textContent = '사진은 5MB 이하의 JPG, PNG 또는 WebP 파일을 선택해 주세요.'; error.hidden = false; upload.value = ''; return;
+      }
+      document.querySelector('[data-admin-error]').hidden = true;
+      restoreSelection();
+      files.forEach(function (file) {
+        var id = crypto.randomUUID(); var preview = URL.createObjectURL(file);
+        pendingImages.set(id, { file: file, preview: preview });
+        var image = make('img'); image.src = preview; image.alt = ''; image.dataset.pendingImage = id;
+        var selection = window.getSelection();
+        if (selection && selection.rangeCount && editor.contains(selection.getRangeAt(0).commonAncestorContainer)) {
+          var range = selection.getRangeAt(0); range.deleteContents(); range.insertNode(image); range.setStartAfter(image); range.collapse(true); selection.removeAllRanges(); selection.addRange(range);
+        } else editor.appendChild(image);
+        rememberSelection();
+      });
+      upload.value = '';
+    });
+    return { section: section, editor: editor, source: row && row.source != null ? row.source : legacy.source };
   }
   form.addEventListener('change', syncEndTime);
   function openEditor(key, id) {

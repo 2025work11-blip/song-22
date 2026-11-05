@@ -345,3 +345,31 @@ html:not([data-theme='dark']) body { --background: #f7f7f7; background: #f7f7f7;
   .menu-drawer .drawer-account-row .drawer-account-link { padding-inline: 3px; font-size: 9px; }
   .blog-post { padding: 18px; }
 }
+
+/* 블로그 글은 제목을 선택해 본문을 펼칩니다. */
+.blog-post { padding: 0; overflow: hidden; }
+.blog-post-summary { display: flex; align-items: center; gap: 16px; min-height: 80px; padding: 20px 24px; list-style: none; cursor: pointer; }
+.blog-post-summary::-webkit-details-marker { display: none; }
+.blog-post-summary:hover { background: rgba(100, 130, 160, .07); }
+.blog-post-summary-text { display: grid; flex: 1; min-width: 0; gap: 6px; }
+.blog-post-title { color: var(--ink); font-size: 19px; font-weight: 700; line-height: 1.45; overflow-wrap: anywhere; }
+.blog-post-summary time { font-size: 13px; line-height: 1.4; }
+.blog-post-toggle { width: 10px; height: 10px; flex: 0 0 10px; margin: 0 3px 5px 0; border: solid var(--muted); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+.blog-post[open] .blog-post-toggle { margin-top: 5px; margin-bottom: 0; transform: rotate(225deg); }
+.blog-post-body { padding: 24px; border-top: 1px solid var(--line); }
+.blog-post .blog-paragraph { margin: 0; color: var(--ink); font-size: 16px; font-weight: 400; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
+.blog-paragraph-gap { height: 1em; }
+.blog-post-body h3.blog-subheading, .blog-post-body h3.blog-source-heading { margin: 0 0 10px; color: var(--ink); font-size: 18px; font-weight: 700; line-height: 1.5; white-space: pre-wrap; }
+.blog-post-body h3.blog-source-heading { margin-top: 8px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
+.blog-post .blog-source { margin: 0 0 8px; color: var(--muted); font-size: 13px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.blog-rich-body { font-size: 16px; font-weight: 400; line-height: 1.9; overflow-wrap: anywhere; }
+.blog-rich-body p { margin: 0; color: var(--ink); }
+.blog-rich-body img { display: block; max-width: 100%; height: auto; margin: 16px auto; border-radius: 10px; }
+@media (max-width: 600px) {
+  .blog-post { padding: 0; }
+  .blog-post-summary { min-height: 72px; padding: 16px 18px; }
+  .blog-post-title { font-size: 17px; }
+  .blog-post-body { padding: 20px 18px; }
+  .blog-post .blog-paragraph { font-size: 15px; }
+  .blog-post-body h3.blog-subheading { font-size: 17px; }
+}
