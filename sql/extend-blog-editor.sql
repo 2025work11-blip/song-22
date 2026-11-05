@@ -14,5 +14,16 @@ CREATE POLICY blog_images_admin_insert ON storage.objects FOR INSERT TO authenti
 DROP POLICY IF EXISTS blog_images_admin_delete ON storage.objects;
 CREATE POLICY blog_images_admin_delete ON storage.objects FOR DELETE TO authenticated
   USING (bucket_id = 'blog-images' AND EXISTS (SELECT 1 FROM public.profiles WHERE id = (SELECT auth.uid()) AND role = 'admin'));
+-- 다른 기존 정책이 블로그 사진 쓰기를 허용하더라도 관리자만 변경합니다.
+DROP POLICY IF EXISTS blog_images_insert_guard ON storage.objects;
+CREATE POLICY blog_images_insert_guard ON storage.objects AS RESTRICTIVE FOR INSERT TO anon, authenticated
+  WITH CHECK (bucket_id <> 'blog-images' OR EXISTS (SELECT 1 FROM public.profiles WHERE id = (SELECT auth.uid()) AND role = 'admin'));
+DROP POLICY IF EXISTS blog_images_update_guard ON storage.objects;
+CREATE POLICY blog_images_update_guard ON storage.objects AS RESTRICTIVE FOR UPDATE TO anon, authenticated
+  USING (bucket_id <> 'blog-images' OR EXISTS (SELECT 1 FROM public.profiles WHERE id = (SELECT auth.uid()) AND role = 'admin'))
+  WITH CHECK (bucket_id <> 'blog-images' OR EXISTS (SELECT 1 FROM public.profiles WHERE id = (SELECT auth.uid()) AND role = 'admin'));
+DROP POLICY IF EXISTS blog_images_delete_guard ON storage.objects;
+CREATE POLICY blog_images_delete_guard ON storage.objects AS RESTRICTIVE FOR DELETE TO anon, authenticated
+  USING (bucket_id <> 'blog-images' OR EXISTS (SELECT 1 FROM public.profiles WHERE id = (SELECT auth.uid()) AND role = 'admin'));
 NOTIFY pgrst, 'reload schema';
 COMMIT;

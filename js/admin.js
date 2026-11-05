@@ -165,12 +165,13 @@
     editor.contentEditable = 'true'; editor.setAttribute('role', 'textbox');
     editor.setAttribute('aria-multiline', 'true'); editor.setAttribute('aria-labelledby', label.id);
     var savedRange = null;
-    var legacy = window.blogFormat.splitLegacy(row ? row.content : '');
+    var legacy = row && row.content_html ? { content: row.content || '', source: '' } : window.blogFormat.splitLegacy(row ? row.content : '');
     if (row && row.content_html) {
       var safe = window.blogFormat.clean(row.content_html);
       while (safe.firstChild) editor.appendChild(safe.firstChild);
     } else editor.textContent = legacy.content;
-    section.append(label, toolbar, editor);
+    var hint = make('p', 'blog-editor-hint', '글자를 선택한 후 크기나 굵기를 조절하세요. 사진은 JPG·PNG·WebP, 파일당 5MB까지 첨부할 수 있습니다.');
+    section.append(label, toolbar, hint, editor);
     function rememberSelection() {
       var selection = window.getSelection();
       if (selection && selection.rangeCount && editor.contains(selection.getRangeAt(0).commonAncestorContainer)) savedRange = selection.getRangeAt(0).cloneRange();
@@ -181,11 +182,13 @@
     }
     editor.addEventListener('keyup', rememberSelection);
     editor.addEventListener('mouseup', rememberSelection);
+    editor.addEventListener('touchend', rememberSelection);
     editor.addEventListener('input', rememberSelection);
     editor.addEventListener('paste', function (event) {
       event.preventDefault();
       document.execCommand('insertText', false, event.clipboardData.getData('text/plain'));
     });
+    editor.addEventListener('drop', function (event) { event.preventDefault(); });
     bold.addEventListener('mousedown', function (event) { event.preventDefault(); });
     bold.addEventListener('click', function () { restoreSelection(); document.execCommand('bold'); rememberSelection(); });
     size.addEventListener('change', function () { restoreSelection(); document.execCommand('styleWithCSS', false, false); document.execCommand('fontSize', false, size.value); rememberSelection(); });
@@ -218,8 +221,15 @@
     document.querySelector('#admin-editor-title').textContent = def.title + (row ? ' 편집' : ' 추가');
     document.querySelector('[data-admin-error]').hidden = true;
     document.querySelector('[data-admin-delete]').hidden = !row || def.fixed;
+    releasePendingImages();
     fieldsRoot.replaceChildren();
+    var blogEditor = null;
     def.fields.forEach(function (f) {
+      if (key === 'blog' && f.type === 'richtext') {
+        blogEditor = createBlogEditor(row);
+        fieldsRoot.appendChild(blogEditor.section);
+        return;
+      }
       var label = make('label', '', f.label + (f.optional ? ' (선택)' : ''));
       var input = make(f.type === 'textarea' ? 'textarea' : f.type === 'select' ? 'select' : 'input');
       input.name = f.key; input.required = !f.optional;
@@ -232,21 +242,45 @@
         input.value = date.year + '-' + date.month + '-' + date.day;
       }
       if (f.key === 'end_time') input.value = row ? (row.end_time || legacyEnd(row)).slice(0, 5) : '19:00';
+      if (key === 'blog' && f.key === 'source') input.value = blogEditor.source;
       label.appendChild(input); fieldsRoot.appendChild(label);
     });
     syncEndTime();
     dialog.showModal();
   }
   main.addEventListener('click', function (event) { var button = event.target.closest('[data-admin-edit]'); if (button) openEditor(button.dataset.adminEdit, button.dataset.rowId); });
+  dialog.addEventListener('close', releasePendingImages);
   document.querySelectorAll('[data-admin-close]').forEach(function (button) { button.addEventListener('click', function () { if (!saving) dialog.close(); }); });
   dialog.addEventListener('cancel', function (event) { if (saving) event.preventDefault(); });
   function setSaving(value) {
     saving = value;
     form.setAttribute('aria-busy', String(value));
     form.querySelectorAll('input, select, textarea, button').forEach(function (node) { node.disabled = value; });
+    var editor = form.querySelector('.blog-editor-content');
+    if (editor) editor.contentEditable = value ? 'false' : 'true';
+  }
+  async function uploadBlogImages(editor) {
+    var images = Array.from(editor.querySelectorAll('[data-pending-image]'));
+    if (!images.length) return;
+    var client = await window.adminStore.verifyBlogWrite();
+    var schema = await client.from('blog_posts').select('id,content_html,source').limit(1);
+    if (schema.error) throw new Error('블로그 편집 기능을 위한 DB 업데이트를 먼저 적용해 주세요.');
+    for (var i = 0; i < images.length; i++) {
+      var image = images[i], item = pendingImages.get(image.dataset.pendingImage);
+      if (!item) throw new Error('사진을 다시 선택해 주세요.');
+      var ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[item.file.type];
+      var path = crypto.randomUUID() + '.' + ext;
+      var bucket = client.storage.from('blog-images');
+      var result = await bucket.upload(path, item.file, { contentType: item.file.type, upsert: false });
+      if (result.error) throw new Error('사진을 업로드하지 못했습니다. 저장소 설정과 연결 상태를 확인해 주세요.');
+      var publicUrl = bucket.getPublicUrl(path);
+      if (!publicUrl.data || !publicUrl.data.publicUrl) throw new Error('사진 주소를 확인하지 못했습니다.');
+      image.src = publicUrl.data.publicUrl;
+      delete image.dataset.pendingImage;
+    }
   }
   function showSaveError(error) {
-    var messages = { '42501': '저장 권한을 확인해 주세요. 변경 내용은 저장되지 않았습니다.', '23505': '동일한 일정이 이미 등록되어 있습니다.', '23503': '연결된 원장이나 일정이 있습니다. 목록을 다시 불러와 확인해 주세요.', '23514': '날짜와 근무 구분을 확인해 주세요.', '42703': '종료 시간 추가 SQL을 먼저 적용해 주세요.', 'PGRST204': '종료 시간 추가 SQL을 먼저 적용해 주세요.' };
+    var messages = { '42501': '저장 권한을 확인해 주세요. 변경 내용은 저장되지 않았습니다.', '23505': '동일한 일정이 이미 등록되어 있습니다.', '23503': '연결된 원장이나 일정이 있습니다. 목록을 다시 불러와 확인해 주세요.', '23514': '날짜와 근무 구분을 확인해 주세요.', '42703': activeEditor && activeEditor.key === 'blog' ? '블로그 편집 기능을 위한 DB 업데이트가 필요합니다.' : '종료 시간 추가 SQL을 먼저 적용해 주세요.', 'PGRST204': activeEditor && activeEditor.key === 'blog' ? '블로그 편집 기능을 위한 DB 업데이트가 필요합니다.' : '종료 시간 추가 SQL을 먼저 적용해 주세요.' };
     var node = document.querySelector('[data-admin-error]');
     node.textContent = messages[error && error.code] || (error && error.message && !error.code && error.name !== 'TypeError' ? error.message : '저장하거나 삭제하지 못했습니다. 연결 상태와 권한을 확인한 후 다시 시도해 주세요.');
     node.hidden = false;
@@ -256,7 +290,12 @@
     if (saving || !window.roleAccess.isAdmin() || !activeEditor || !form.reportValidity()) return;
     var key = activeEditor.key, def = definitions[key], values = {};
     var error = document.querySelector('[data-admin-error]');
-    def.fields.forEach(function (f) { values[f.key] = form.elements.namedItem(f.key).value.trim(); });
+    def.fields.forEach(function (f) { if (f.type !== 'richtext') values[f.key] = form.elements.namedItem(f.key).value.trim(); });
+    var blogEditor = key === 'blog' ? fieldsRoot.querySelector('.blog-editor-content') : null;
+    if (blogEditor) {
+      values.content = blogEditor.innerText.trim();
+      if (!values.content) { error.textContent = '내용을 입력해 주세요.'; error.hidden = false; blogEditor.focus(); return; }
+    }
     if ((key === 'closures' && values.end_date < values.start_date) || (key === 'hours' && values.end <= values.start)) { error.textContent = '종료일 또는 종료 시간은 시작보다 빠를 수 없습니다.'; error.hidden = false; return; }
     if (key === 'notices' && values.image_url && !values.image_url.startsWith('https://')) { error.textContent = '이미지 주소는 https://로 시작해야 합니다.'; error.hidden = false; return; }
     var uniqueFields = key === 'weekly' ? ['doctor_id', 'weekday'] : key === 'dates' ? ['doctor_id', 'schedule_date'] : key === 'closures' ? ['doctor_id', 'start_date', 'end_date'] : [];
@@ -265,6 +304,11 @@
     error.hidden = true;
     setSaving(true);
     try {
+      if (blogEditor) {
+        await uploadBlogImages(blogEditor);
+        values.content_html = window.blogFormat.clean(blogEditor.innerHTML).innerHTML;
+        values.source = values.source || null;
+      }
       var saved = await window.adminStore.save(def.table, values, editingId);
       saved = Object.assign({}, saved, { id: String(saved.id), doctor_id: saved.doctor_id === undefined ? undefined : String(saved.doctor_id) });
       var index = state[key].findIndex(function (row) { return String(row.id) === editingId; });

@@ -362,7 +362,7 @@ html:not([data-theme='dark']) body { --background: #f7f7f7; background: #f7f7f7;
 .blog-post-body h3.blog-subheading, .blog-post-body h3.blog-source-heading { margin: 0 0 10px; color: var(--ink); font-size: 18px; font-weight: 700; line-height: 1.5; white-space: pre-wrap; }
 .blog-post-body h3.blog-source-heading { margin-top: 8px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
 .blog-post .blog-source { margin: 0 0 8px; color: var(--muted); font-size: 13px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
-.blog-rich-body { font-size: 16px; font-weight: 400; line-height: 1.9; overflow-wrap: anywhere; }
+.blog-rich-body { font-size: 16px; font-weight: 400; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
 .blog-rich-body p { margin: 0; color: var(--ink); }
 .blog-rich-body img { display: block; max-width: 100%; height: auto; margin: 16px auto; border-radius: 10px; }
 @media (max-width: 600px) {
