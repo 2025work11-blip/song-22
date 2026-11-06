@@ -34,7 +34,7 @@
         checkId(id);
         var original = await client.from('blog_posts').select('source_post_id').eq('id', id).maybeSingle();
         if (original.error) throw original.error;
-        if (original.data && original.data.source_post_id) throw new Error('자동 생성 글은 자동 생성 초안 영역에서 수정·승인 후 다시 게시하세요.');
+        if (original.data && original.data.source_post_id) throw new Error('자동 생성 글은 자동 생성 글 영역에서 수정한 뒤 다시 게시하세요.');
       }
       var payload = {};
       columns[table].forEach(function (key) { payload[key] = values[key]; });

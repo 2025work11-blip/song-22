@@ -535,6 +535,7 @@
     finally { setSaving(false); }
   });
   topicFilter.addEventListener('change', render);
+  window.addEventListener('blog-posts-changed', loadPublicData);
   window.addEventListener('hashchange', showMenu);
   initialData(); render(); showMenu();
   // DB 조회가 끝나기 전 편집으로 인한 덮어쓰기를 방지합니다.
