@@ -25,6 +25,16 @@
 .blog-article h1 { font-size:clamp(25px,5vw,38px); line-height:1.45; }
 .blog-article h2 { font-size:21px; margin-top:28px; }
 .blog-article p { font-size:16px; line-height:1.95; }
+.blog-article .blog-article-sources { margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+.blog-article .blog-article-sources h2 { margin:0 0 10px; font-size:15px; }
+.blog-article-sources ul { margin:0; padding:0; list-style:none; }
+.blog-article-sources li { margin:0 0 12px; color:var(--muted); font-size:11px; line-height:1.7; overflow-wrap:anywhere; }
+.blog-article-source-text { display:block; color:var(--muted); font-size:11px; }
+.blog-article-source-button,.blog-article-list-button { display:inline-flex; align-items:center; padding:4px 9px; border:1px solid #bac7d2; border-radius:6px; color:var(--muted); font-size:11px; font-weight:600; line-height:1.5; text-decoration:none; }
+.blog-article-source-button { margin-top:6px; }
+.blog-article-list-button { background:var(--ink); border-color:var(--ink); color:var(--white); }
+.blog-article-source-button:hover { color:var(--ink); background:rgba(100,130,160,.08); }
+.blog-article-list-button:hover { color:var(--white); background:var(--muted); border-color:var(--muted); }
 .blog-article-date,.blog-editorial-credit { opacity:.8; font-size:12px!important; }
 .blog-article img { display:block; width:100%; max-width:480px; height:auto; margin:auto; }
 .blog-article figcaption { font-size:12px; line-height:1.6; }
