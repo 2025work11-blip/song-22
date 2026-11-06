@@ -1,3 +1,4 @@
+alter table public.blog_posts add column if not exists is_academic boolean not null default false;
 create or replace function public.publish_blog_content(p_id uuid,p_expected_revision integer) returns bigint
  language plpgsql security invoker set search_path=pg_catalog as $$
 declare d public.blog_content_drafts; c jsonb; links jsonb; body text; public_data jsonb; post_id bigint; old_slug text; first_published timestamptz; expected_hash text;
@@ -20,17 +21,17 @@ begin
  -- Public metadata excludes raw abstracts, prompts, job logs and private checks.
  public_data:=jsonb_build_object('primary_question',c->'primary_question','answer_summary',c->'answer_summary','blocks',c->'content_blocks','faq',c->'faq','medical_commentary',c->'medical_commentary','author',d.author_profile,'reviewer',d.reviewer_profile,'reviewed_at',d.reviewed_at,'source_links',links,'suggested_internal_links',c->'suggested_internal_links','assets',(select coalesce(jsonb_agg(jsonb_build_object('block_id',a->'block_id','public_url',a->'public_url','alt',a->'alt_text_ko','caption',a->'caption_ko')),'[]'::jsonb) from jsonb_array_elements(coalesce(c->'assets','[]')) a));
  select id,slug,published_at into post_id,old_slug,first_published from public.blog_posts where source_post_id=d.source_post_id for update;
- if post_id is not null and exists(select 1 from public.blog_posts where id=post_id and title=c->>'title' and content=body and slug=c->>'slug' and seo_title=c->>'seo_title' and meta_description=c->>'meta_description' and seo_payload=public_data) then return post_id; end if;
+ if post_id is not null and exists(select 1 from public.blog_posts where id=post_id and title=c->>'title' and content=body and slug=c->>'slug' and seo_title=c->>'seo_title' and meta_description=c->>'meta_description' and seo_payload=public_data and is_academic=(c->'is_academic' is not distinct from 'true'::jsonb)) then return post_id; end if;
  first_published:=coalesce(first_published,now());
  if post_id is null then
-  insert into public.blog_posts(post_date,title,content,source,source_url,source_links,slug,source_post_id,seo_title,meta_description,seo_payload,published_at,content_modified_at) values((now() at time zone 'Asia/Seoul')::date,c->>'title',body,links->0->>'text',links->0->>'url',links,c->>'slug',d.source_post_id,c->>'seo_title',c->>'meta_description',public_data,first_published,now()) returning id into post_id;
+  insert into public.blog_posts(post_date,title,content,source,source_url,source_links,slug,source_post_id,seo_title,meta_description,seo_payload,published_at,content_modified_at,is_academic) values((now() at time zone 'Asia/Seoul')::date,c->>'title',body,links->0->>'text',links->0->>'url',links,c->>'slug',d.source_post_id,c->>'seo_title',c->>'meta_description',public_data,first_published,now(),c->'is_academic' is not distinct from 'true'::jsonb) returning id into post_id;
  else
   if old_slug is distinct from c->>'slug' then
    if exists(select 1 from public.blog_slug_redirects where old_slug=c->>'slug') then raise exception 'Slug was already used'; end if;
    update public.blog_slug_redirects set new_slug=c->>'slug' where new_slug=old_slug;
    insert into public.blog_slug_redirects values(old_slug,c->>'slug') on conflict(old_slug) do update set new_slug=excluded.new_slug;
   end if;
-  update public.blog_posts set title=c->>'title',content=body,content_html=null,source=links->0->>'text',source_url=links->0->>'url',source_links=links,slug=c->>'slug',seo_title=c->>'seo_title',meta_description=c->>'meta_description',seo_payload=public_data,content_modified_at=now() where id=post_id;
+  update public.blog_posts set title=c->>'title',content=body,content_html=null,source=links->0->>'text',source_url=links->0->>'url',source_links=links,slug=c->>'slug',seo_title=c->>'seo_title',meta_description=c->>'meta_description',seo_payload=public_data,is_academic=(c->'is_academic' is not distinct from 'true'::jsonb),content_modified_at=now() where id=post_id;
  end if;
  update public.blog_content_drafts set destination_post_id=post_id where id=d.id;
  return post_id;

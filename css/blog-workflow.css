@@ -1,4 +1,16 @@
 .blog-workflow { margin-top:24px; }
+.blog-import-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.blog-import-box { margin-top:16px; padding:16px; border:1px solid var(--line,#dce4e9); border-radius:12px; }
+.blog-import-box .admin-description { margin:6px 0 10px; }
+.blog-import-file { display:block; font-size:13px; font-weight:600; }
+.blog-draft-fields .blog-academic-check { display:flex; align-items:center; gap:8px; }
+.blog-academic-check input { width:auto; }
+.blog-post-title-row { display:flex; align-items:center; gap:7px; min-width:0; }
+.blog-academic-badge { flex:none; padding:2px 6px; border:1px solid #a8bdce; border-radius:5px; color:#48677d; font-size:10px; font-weight:600; line-height:1.4; }
+.blog-post .blog-source-text { display:block; color:var(--muted); }
+.blog-post .blog-source-link-hint,.blog-post .blog-article-link { display:inline-flex; align-items:center; margin:6px 0 0; padding:4px 9px; border:1px solid #bac7d2; border-radius:6px; color:var(--muted); font-size:11px; font-weight:600; line-height:1.5; text-decoration:none; }
+.blog-post .blog-source-link-hint:hover,.blog-post .blog-article-link:hover { color:var(--ink); background:rgba(100,130,160,.08); text-decoration:none; }
+.blog-post .blog-article-link { margin-top:16px; }
 .blog-workflow input[type=file] { display:block; max-width:100%; margin-top:8px; }
 .blog-draft-card { margin-top:16px; padding:16px; border:1px solid var(--border,#dce4e9); border-radius:12px; }
 .blog-draft-card summary { cursor:pointer; font-weight:600; }

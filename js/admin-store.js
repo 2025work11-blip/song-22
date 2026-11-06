@@ -7,7 +7,7 @@
     doctor_date_schedules: ['doctor_id', 'schedule_date', 'period', 'end_time'],
     doctor_closures: ['doctor_id', 'start_date', 'end_date'],
     notices: ['notice_date', 'title', 'content', 'image_url'],
-    blog_posts: ['post_date', 'title', 'content', 'content_html', 'source', 'source_url', 'source_links']
+    blog_posts: ['post_date', 'title', 'content', 'content_html', 'source', 'source_url', 'source_links', 'is_academic']
   };
   async function clientForWrite(table) {
     if (!Object.prototype.hasOwnProperty.call(columns, table)) throw new Error('저장 대상이 아닙니다.');

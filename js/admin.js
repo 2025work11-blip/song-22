@@ -25,7 +25,7 @@
     dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
-    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('content', '내용', 'richtext'), field('source_links', '출처', 'sources', null, true)] },
+    blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('is_academic', '학술정보 표시', 'checkbox', null, true), field('content', '내용', 'richtext'), field('source_links', '출처', 'sources', null, true)] },
     hours: { group: 'hospital', title: '병원 진료시간', fixed: true, fields: [field('label', '요일 / 구분'), field('start', '시작 시간', 'time'), field('end', '종료 시간', 'time')] },
     bios: { group: 'hospital', title: '원장소개', fields: [field('title', '제목'), field('text', '소개 내용', 'textarea')] },
     equipment: { group: 'hospital', title: '장비소개', fields: [field('title', '장비명 / 제목'), field('text', '설명', 'textarea')] },
@@ -40,7 +40,7 @@
     return node;
   }
   function options(f) { return typeof f.options === 'function' ? f.options() : f.options || {}; }
-  function valueLabel(f, row) { if (f.type === 'photo') return row.photo_url ? '등록됨' : '없음'; if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; if (f.type === 'sources') return Array.isArray(row.source_links) ? row.source_links.map(function (item) { return item.text || item.url || ''; }).filter(Boolean).join('\n') || '—' : row.source || row.source_url || '—'; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
+  function valueLabel(f, row) { if (f.type === 'checkbox') return row[f.key] ? '표시' : '—'; if (f.type === 'photo') return row.photo_url ? '등록됨' : '없음'; if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; if (f.type === 'sources') return Array.isArray(row.source_links) ? row.source_links.map(function (item) { return item.text || item.url || ''; }).filter(Boolean).join('\n') || '—' : row.source || row.source_url || '—'; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
   function initialData() {
     state.doctors = (home.doctors || []).map(function (d) { return { id: d.id, name: d.name, initial: d.initial, color: d.color }; });
     state.weekly = (home.doctors || []).flatMap(function (d) { return d.weekdays.map(function (day) { return { id: 'sample-' + d.id + day, doctor_id: d.id, weekday: day, period: d.morningOnly.includes(day) ? 'morning' : 'full' }; }); });
@@ -393,11 +393,13 @@
         return;
       }
       var label = make('label', '', f.label + (f.optional ? ' (선택)' : ''));
+      if (f.type === 'checkbox') label.className = 'admin-checkbox-label';
       var input = make(f.type === 'textarea' ? 'textarea' : f.type === 'select' ? 'select' : 'input');
       input.name = f.key; input.required = !f.optional;
       if (f.type === 'select') Object.keys(options(f)).forEach(function (value) { var option = make('option', '', options(f)[value]); option.value = value; input.appendChild(option); });
       else if (f.type !== 'textarea') input.type = f.type;
-      if (f.type === 'color') input.value = row && (/^#[0-9a-f]{6}$/i.test(row.color) ? row.color : legacyColors[row.color]) || '#3e7bc6';
+      if (f.type === 'checkbox') input.checked = Boolean(row && row[f.key]);
+      else if (f.type === 'color') input.value = row && (/^#[0-9a-f]{6}$/i.test(row.color) ? row.color : legacyColors[row.color]) || '#3e7bc6';
       else if (row) input.value = row[f.key] === undefined ? '' : row[f.key];
       else if (f.key === 'category') input.value = topicFilter.value;
       else if (f.key === 'post_date') {
@@ -467,7 +469,7 @@
     if (saving || !window.roleAccess.isAdmin() || !activeEditor || !form.reportValidity()) return;
     var key = activeEditor.key, def = definitions[key], values = {};
     var error = document.querySelector('[data-admin-error]');
-    def.fields.forEach(function (f) { if (f.type !== 'richtext' && f.type !== 'sources') values[f.key] = form.elements.namedItem(f.key).value.trim(); });
+    def.fields.forEach(function (f) { if (f.type !== 'richtext' && f.type !== 'sources') values[f.key] = f.type === 'checkbox' ? form.elements.namedItem(f.key).checked : form.elements.namedItem(f.key).value.trim(); });
     var blogEditor = key === 'blog' ? fieldsRoot.querySelector('.blog-editor-content') : null;
     if (blogEditor) {
       values.content = blogEditor.innerText.trim();

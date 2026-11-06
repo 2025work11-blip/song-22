@@ -71,7 +71,7 @@
     try {
       var client = window.supabaseClient;
       if (!client) throw new Error('DB 연결 없음');
-      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url,source_links,slug';
+      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url,source_links,slug,is_academic';
       while (true) {
         var result = await client.from('blog_posts').select(columns)
           .order('post_date', { ascending: false }).order('id', { ascending: false })
@@ -102,7 +102,10 @@
         var searchParts = [post.title, post.post_date, post.content, post.source];
         var summary = element('summary', 'blog-post-summary');
         var heading = element('span', 'blog-post-summary-text');
-        heading.append(element('span', 'blog-post-title', post.title), date);
+        var titleRow = element('span', 'blog-post-title-row');
+        if (post.is_academic) titleRow.appendChild(element('span', 'blog-academic-badge', '학술정보'));
+        titleRow.appendChild(element('span', 'blog-post-title', post.title));
+        heading.append(titleRow, date);
         summary.append(heading, element('span', 'blog-post-toggle'));
         summary.lastChild.setAttribute('aria-hidden', 'true');
         var body;
@@ -123,19 +126,19 @@
             var href = typeof entry.url === 'string' ? sourceLink(entry.url) : null;
             searchParts.push(text);
             if (href) {
-              var link = element('a', 'blog-source blog-source-link');
+              var source = element('div', 'blog-source');
+              if (text) source.appendChild(element('span', 'blog-source-text', text));
+              var link = element('a', 'blog-source-link-hint', '원문 보기 ↗ (새 탭)');
               link.href = href;
               link.target = '_blank';
               link.rel = 'noopener noreferrer';
-              if (text) link.appendChild(element('span', 'blog-source-text', text));
-              link.appendChild(element('span', 'blog-source-link-hint', '원문 보기 ↗ (새 탭)'));
-              link.appendChild(element('span', 'blog-source-url', href));
-              body.appendChild(link);
+              source.appendChild(link);
+              body.appendChild(source);
             } else if (text) body.appendChild(element('p', 'blog-source', text));
           });
         }
         article.blogSearchText = normalize(searchParts.join('\n'));
-        if (post.slug && /^[a-z0-9가-힣]+(?:-[a-z0-9가-힣]+)*$/.test(post.slug)) { var permalink = element('a', 'blog-article-link', '개별 글 보기'); permalink.href = '/blog/' + encodeURIComponent(post.slug); body.prepend(permalink); }
+        if (post.slug && /^[a-z0-9가-힣]+(?:-[a-z0-9가-힣]+)*$/.test(post.slug)) { var permalink = element('a', 'blog-article-link', '개별 글 보기'); permalink.href = '/blog/' + encodeURIComponent(post.slug); body.appendChild(permalink); }
         article.append(summary, body);
         list.appendChild(article);
         articles.push(article);
