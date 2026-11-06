@@ -10,7 +10,9 @@
 .blog-post .blog-source-text { display:block; color:var(--muted); }
 .blog-post .blog-source-link-hint,.blog-post .blog-article-link { display:inline-flex; align-items:center; margin:6px 0 0; padding:4px 9px; border:1px solid #bac7d2; border-radius:6px; color:var(--muted); font-size:11px; font-weight:600; line-height:1.5; text-decoration:none; }
 .blog-post .blog-source-link-hint:hover,.blog-post .blog-article-link:hover { color:var(--ink); background:rgba(100,130,160,.08); text-decoration:none; }
-.blog-post .blog-article-link { margin-top:16px; }
+.blog-post .blog-article-link { margin-top:16px; background:var(--ink); border-color:var(--ink); color:var(--white); }
+.blog-intro-divider { height:0; margin:24px 0; border:0; border-top:1px solid var(--line); }
+.blog-post .blog-article-link:hover { background:var(--muted); border-color:var(--muted); color:var(--white); }
 .blog-workflow input[type=file] { display:block; max-width:100%; margin-top:8px; }
 .blog-draft-card { margin-top:16px; padding:16px; border:1px solid var(--border,#dce4e9); border-radius:12px; }
 .blog-draft-card summary { cursor:pointer; font-weight:600; }

@@ -110,7 +110,29 @@
         var body = make('tbody');
         rows.forEach(function (row) {
           var tr = make('tr');
-          def.fields.forEach(function (f) { var td = make('td'); td.appendChild(make('span', 'admin-cell-text', valueLabel(f, row))); tr.appendChild(td); });
+          def.fields.forEach(function (f) {
+            var td = make('td');
+            if (key === 'blog' && f.key === 'is_academic') {
+              var toggle = make('button', 'admin-button admin-academic-toggle', '학술정보');
+              toggle.type = 'button'; toggle.disabled = !loaded[key];
+              toggle.setAttribute('aria-pressed', String(Boolean(row.is_academic)));
+              toggle.setAttribute('aria-label', (row.title || '블로그 글') + ' 학술정보 표시');
+              toggle.addEventListener('click', async function () {
+                if (toggle.disabled || !window.roleAccess.isAdmin()) return;
+                toggle.disabled = true; status.textContent = '학술정보 표시를 저장하고 있습니다.';
+                try {
+                  var updated = await window.adminStore.setBlogAcademic(row.id, !row.is_academic);
+                  Object.assign(row, updated, { id: String(updated.id) });
+                  toggle.setAttribute('aria-pressed', String(Boolean(row.is_academic)));
+                  status.textContent = row.is_academic ? '학술정보 표시를 켰습니다.' : '학술정보 표시를 껐습니다.';
+                } catch (error) {
+                  status.textContent = '학술정보 표시를 저장하지 못했습니다. 관리자 권한과 연결 상태를 확인해 주세요.';
+                } finally { toggle.disabled = !loaded[key]; }
+              });
+              td.appendChild(toggle);
+            } else td.appendChild(make('span', 'admin-cell-text' + (key === 'blog' && f.key === 'title' ? ' admin-blog-title' : key === 'blog' && f.key === 'source_links' ? ' admin-blog-source' : ''), valueLabel(f, row)));
+            tr.appendChild(td);
+          });
           var td = make('td');
           if (def.table) { var edit = make('button', 'admin-button', '편집'); edit.type = 'button'; edit.dataset.adminEdit = key; edit.dataset.rowId = String(row.id); edit.disabled = !loaded[key]; edit.setAttribute('aria-label', def.title + ' ' + (row.name || row.title || row.notice_date || row.id) + ' 편집'); td.appendChild(edit); }
           else td.appendChild(make('span', 'admin-source', '읽기 전용'));
@@ -409,10 +431,14 @@
       if (f.key === 'end_time') input.value = row ? (row.end_time || legacyEnd(row)).slice(0, 5) : '19:00';
       label.appendChild(input); fieldsRoot.appendChild(label);
     });
+    if (key === 'blog' && row && row.source_post_id) activeEditor.generatedSnapshot = generatedEditorSnapshot();
     syncEndTime();
     dialog.showModal();
   }
   main.addEventListener('click', function (event) { var button = event.target.closest('[data-admin-edit]'); if (button) openEditor(button.dataset.adminEdit, button.dataset.rowId); });
+  function generatedEditorSnapshot() {
+    return JSON.stringify({ fields: Array.from(fieldsRoot.querySelectorAll('input:not([type="file"]), select, textarea')).filter(function (input) { return input.name !== 'is_academic' && input.name !== 'post_date'; }).map(function (input) { return input.type === 'checkbox' ? input.checked : input.value; }), body: fieldsRoot.querySelector('.blog-editor-content').innerHTML });
+  }
   dialog.addEventListener('close', releasePendingImages);
   document.querySelectorAll('[data-admin-close]').forEach(function (button) { button.addEventListener('click', function () { if (!saving) dialog.close(); }); });
   dialog.addEventListener('cancel', function (event) { if (saving) event.preventDefault(); });
@@ -469,6 +495,18 @@
     if (saving || !window.roleAccess.isAdmin() || !activeEditor || !form.reportValidity()) return;
     var key = activeEditor.key, def = definitions[key], values = {};
     var error = document.querySelector('[data-admin-error]');
+    if (key === 'blog' && activeEditor.generatedSnapshot !== undefined) {
+      if (generatedEditorSnapshot() !== activeEditor.generatedSnapshot) { error.textContent = '본문이나 제목은 자동 생성 글 영역에서 수정하고, 작성일과 학술정보는 이곳에서 변경해 주세요.'; error.hidden = false; return; }
+      error.hidden = true; setSaving(true);
+      try {
+        var updated = await window.adminStore.setGeneratedBlogDisplay(activeEditor.id, form.elements.namedItem('is_academic').checked, form.elements.namedItem('post_date').value);
+        var updatedIndex = state.blog.findIndex(function (row) { return String(row.id) === activeEditor.id; });
+        if (updatedIndex >= 0) state.blog[updatedIndex] = Object.assign({}, updated, { id: String(updated.id) });
+        dialog.close(); render(); status.textContent = '작성일과 학술정보 표시를 저장했습니다. 홈페이지를 새로고침하면 반영됩니다.';
+      } catch (failure) { showSaveError(failure); }
+      finally { setSaving(false); }
+      return;
+    }
     def.fields.forEach(function (f) { if (f.type !== 'richtext' && f.type !== 'sources') values[f.key] = f.type === 'checkbox' ? form.elements.namedItem(f.key).checked : form.elements.namedItem(f.key).value.trim(); });
     var blogEditor = key === 'blog' ? fieldsRoot.querySelector('.blog-editor-content') : null;
     if (blogEditor) {

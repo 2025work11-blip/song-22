@@ -27,6 +27,22 @@
   window.adminStore = {
     verifyBlogWrite: function () { return clientForWrite('blog_posts'); },
     verifyDoctorWrite: function () { return clientForWrite('doctors'); },
+    setBlogAcademic: async function (id, enabled) {
+      checkId(id);
+      var client = await clientForWrite('blog_posts');
+      var result = await client.rpc('set_blog_academic', { p_id: Number(id), p_enabled: enabled });
+      if (result.error) throw result.error;
+      if (!result.data) throw new Error('저장 결과를 확인하지 못했습니다.');
+      return result.data;
+    },
+    setGeneratedBlogDisplay: async function (id, enabled, date) {
+      checkId(id);
+      var client = await clientForWrite('blog_posts');
+      var result = await client.rpc('set_blog_display', { p_id: Number(id), p_enabled: enabled, p_post_date: date });
+      if (result.error) throw result.error;
+      if (!result.data) throw new Error('저장 결과를 확인하지 못했습니다.');
+      return result.data;
+    },
     save: async function (table, values, id) {
       var client = await clientForWrite(table);
       // Generated posts are edited as private drafts, preserving their live approved copy.

@@ -74,6 +74,12 @@ html[data-theme='dark'] .blog-editor-bold[aria-pressed='true'] { color: #fff; ba
 .admin-fields input[type='color'] { height: 44px; }
 .admin-fields .admin-checkbox-label { display: flex; align-items: center; gap: 8px; }
 .admin-fields .admin-checkbox-label input[type='checkbox'] { width: auto; min-height: 0; }
+.admin-academic-toggle { min-height: 21px; padding: 3px 7px; border-radius: 5px; font-size: 9px; line-height: 1.4; white-space: nowrap; }
+.admin-blog-title { font-weight: 700; }
+.admin-blog-source { color: var(--muted); font-size: 10px; line-height: 1.5; }
+.admin-academic-toggle[aria-pressed='true'] { background: #436d99; border-color: #436d99; color: #fff; }
+.admin-academic-toggle[aria-pressed='false'] { opacity: .7; }
+html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background: #436d99; border-color: #8ab8ee; color: #fff; }
 .doctor-photo-editor { display: grid; gap: 10px; justify-items: start; }
 .doctor-photo-editor label { width: 100%; }
 .doctor-photo-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 1px solid #bec9d5; }

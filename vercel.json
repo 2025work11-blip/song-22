@@ -5,6 +5,7 @@
     }
   },
   "rewrites": [
+    { "source": "/blog/id/:id", "destination": "/api/blog-article?id=:id" },
     { "source": "/blog/:slug", "destination": "/api/blog-article?slug=:slug" },
     { "source": "/sitemap.xml", "destination": "/api/blog-sitemap" }
   ]

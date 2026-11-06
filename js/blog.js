@@ -71,11 +71,15 @@
     try {
       var client = window.supabaseClient;
       if (!client) throw new Error('DB 연결 없음');
-      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url,source_links,slug,is_academic';
+      var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url,source_links,slug,is_academic,seo_payload';
       while (true) {
         var result = await client.from('blog_posts').select(columns)
           .order('post_date', { ascending: false }).order('id', { ascending: false })
           .range(rows.length, rows.length + size - 1);
+        if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes(',seo_payload')) {
+          columns = columns.replace(',seo_payload', '');
+          continue;
+        }
         if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes('source_links')) {
           columns = 'id,post_date,title,content,content_html,source,source_url';
           continue;
@@ -115,7 +119,13 @@
           searchParts.push(formatted.textContent);
           while (formatted.firstChild) body.appendChild(formatted.firstChild);
         } else {
-          body = renderBody(post.content);
+          var intro = post.seo_payload && typeof post.seo_payload.answer_summary === 'string' ? post.seo_payload.answer_summary.trim() : '';
+          var fullContent = post.content || '';
+          if (intro && fullContent.startsWith(intro) && fullContent.slice(intro.length).trim()) {
+            body = renderBody(fullContent.slice(intro.length).replace(/^\s*\n+/, ''));
+            body.prepend(element('hr', 'blog-intro-divider'));
+            body.prepend(element('p', 'blog-paragraph blog-intro', intro));
+          } else body = renderBody(fullContent);
         }
         var entries = Array.isArray(post.source_links) ? post.source_links : [{ text: post.source, url: post.source_url }];
         entries = entries.filter(function (item) { return item && (typeof item.text === 'string' && item.text.trim() || typeof item.url === 'string' && sourceLink(item.url)); });
@@ -128,7 +138,7 @@
             if (href) {
               var source = element('div', 'blog-source');
               if (text) source.appendChild(element('span', 'blog-source-text', text));
-              var link = element('a', 'blog-source-link-hint', '원문 보기 ↗ (새 탭)');
+              var link = element('a', 'blog-source-link-hint', '원문 보기 ↗');
               link.href = href;
               link.target = '_blank';
               link.rel = 'noopener noreferrer';
@@ -138,7 +148,9 @@
           });
         }
         article.blogSearchText = normalize(searchParts.join('\n'));
-        if (post.slug && /^[a-z0-9가-힣]+(?:-[a-z0-9가-힣]+)*$/.test(post.slug)) { var permalink = element('a', 'blog-article-link', '개별 글 보기'); permalink.href = '/blog/' + encodeURIComponent(post.slug); body.appendChild(permalink); }
+        var permalink = element('a', 'blog-article-link', '새페이지에서 보기');
+        permalink.href = post.slug && /^[a-z0-9가-힣]+(?:-[a-z0-9가-힣]+)*$/.test(post.slug) ? '/blog/' + encodeURIComponent(post.slug) : '/blog/id/' + encodeURIComponent(post.id);
+        permalink.target = '_blank'; permalink.rel = 'noopener noreferrer'; body.appendChild(permalink);
         article.append(summary, body);
         list.appendChild(article);
         articles.push(article);

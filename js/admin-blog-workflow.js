@@ -7,7 +7,7 @@
  section.appendChild(el('p','파일을 가져온 뒤 내용을 확인하고 홈페이지에 게시할 수 있습니다.','admin-description'));
  var actions=el('div',undefined,'blog-import-actions');section.appendChild(actions);
  var studio=el('a','자동 생성 스튜디오 열기','admin-button');studio.href='https://oculus-content-review.ax-2-7139.chatgpt.site/create';studio.target='_blank';studio.rel='noopener noreferrer';actions.appendChild(studio);
- var refresh=el('button','목록 새로고침','admin-button');refresh.type='button';actions.appendChild(refresh);
+ var refresh=el('button','지우기','admin-button');refresh.type='button';actions.appendChild(refresh);
  var uploadBox=el('div',undefined,'blog-import-box');uploadBox.appendChild(el('strong','완성된 글 파일 가져오기'));uploadBox.appendChild(el('p','블로그 자동 생성 스튜디오에서 내보낸 홈페이지 전달 JSON v2 파일을 선택해 주세요. 선택한 글은 게시 버튼을 누르기 전까지 공개되지 않습니다.','admin-description'));
  var fileLabel=el('label','JSON 파일 선택 ','blog-import-file'),file=el('input');file.type='file';file.accept='.json,application/json';fileLabel.appendChild(file);uploadBox.appendChild(fileLabel);section.appendChild(uploadBox);
  var message=el('p','','admin-status');message.setAttribute('role','status');section.appendChild(message);var list=el('div');section.appendChild(list);host.appendChild(section);
