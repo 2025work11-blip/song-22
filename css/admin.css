@@ -75,8 +75,18 @@ html[data-theme='dark'] .blog-editor-bold[aria-pressed='true'] { color: #fff; ba
 .admin-fields .admin-checkbox-label { display: flex; align-items: center; gap: 8px; }
 .admin-fields .admin-checkbox-label input[type='checkbox'] { width: auto; min-height: 0; }
 .admin-academic-toggle { min-height: 21px; padding: 3px 7px; border-radius: 5px; font-size: 9px; line-height: 1.4; white-space: nowrap; }
+.admin-publish-toggle { min-height: 21px; padding: 3px 7px; border: 1px solid #111; border-radius: 5px; background: #fff; color: #111; font-size: 9px; font-weight: 700; line-height: 1.4; white-space: nowrap; }
+.admin-publish-toggle[aria-pressed='false'] { background: #c83138; border-color: #c83138; color: #fff; }
+html[data-theme='dark'] .admin-publish-toggle[aria-pressed='true'] { background: #fff; border-color: #111; color: #111; }
+html[data-theme='dark'] .admin-publish-toggle[aria-pressed='false'] { background: #c83138; border-color: #c83138; color: #fff; }
 .admin-blog-title { font-weight: 700; }
+.admin-blog-search { margin-left: auto; }
+.admin-blog-search input { width: min(230px, 100%); min-height: 40px; padding: 8px 10px; border: 1px solid #bec9d5; border-radius: 9px; background: var(--white); color: var(--ink); font: inherit; font-size: 12px; }
+.admin-blog-date { display: grid; line-height: 1.35; }
+.admin-blog-date-day { font-size: 13px; font-weight: 700; }
+.admin-blog-date-year { color: var(--muted); font-size: 10px; }
 .admin-blog-source { color: var(--muted); font-size: 10px; line-height: 1.5; }
+.admin-blog-stopped .admin-blog-title, .admin-blog-stopped .admin-blog-content, .admin-blog-stopped .admin-blog-source { text-decoration: line-through; }
 .admin-academic-toggle[aria-pressed='true'] { background: #436d99; border-color: #436d99; color: #fff; }
 .admin-academic-toggle[aria-pressed='false'] { opacity: .7; }
 html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background: #436d99; border-color: #8ab8ee; color: #fff; }

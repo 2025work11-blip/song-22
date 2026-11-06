@@ -1,5 +1,10 @@
 .blog-workflow { margin-top:24px; }
 .blog-import-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.blog-pagination { display:flex; justify-content:center; align-items:center; gap:12px; margin:20px 0; }
+.blog-pagination[hidden] { display:none; }
+.blog-pagination button { min-width:50px; min-height:36px; padding:6px 12px; border:1px solid var(--line); border-radius:8px; background:var(--white); color:var(--ink); font:inherit; font-size:13px; cursor:pointer; }
+.blog-pagination button:disabled { opacity:.45; cursor:default; }
+.blog-page-info { color:var(--muted); font-size:13px; font-variant-numeric:tabular-nums; }
 .blog-import-box { margin-top:16px; padding:16px; border:1px solid var(--line,#dce4e9); border-radius:12px; }
 .blog-import-box .admin-description { margin:6px 0 10px; }
 .blog-import-file { display:block; font-size:13px; font-weight:600; }
@@ -15,11 +20,15 @@
 .blog-post .blog-article-link:hover { background:var(--muted); border-color:var(--muted); color:var(--white); }
 .blog-workflow input[type=file] { display:block; max-width:100%; margin-top:8px; }
 .blog-draft-card { margin-top:16px; padding:16px; border:1px solid var(--border,#dce4e9); border-radius:12px; }
-.blog-draft-card summary { cursor:pointer; font-weight:600; }
+.blog-draft-card summary { cursor:pointer; font-size:18px; font-weight:700; }
 .blog-draft-fields { display:grid; gap:12px; padding-top:16px; }
 .blog-draft-fields label { display:grid; gap:6px; font-size:14px; }
 .blog-draft-fields input:not([type=checkbox]),.blog-draft-fields textarea,.blog-draft-fields select { width:100%; box-sizing:border-box; padding:10px; border:1px solid var(--border,#cad4dd); border-radius:6px; color:inherit; background:var(--card-bg,transparent); font:inherit; }
 .blog-draft-fields textarea { min-height:120px; line-height:1.8; }
+.blog-draft-fields input.blog-draft-title { font-size:18px; font-weight:700; }
+.blog-draft-fields input.blog-draft-subheading { font-weight:700; }
+.blog-draft-source { color:var(--muted); font-size:11px; line-height:1.6; }
+.blog-draft-source p { margin:0; }
 .blog-source-url { display:block; font-size:10px; line-height:1.6; overflow-wrap:anywhere; margin:4px 0 12px; }
 .blog-article { max-width:780px; margin:40px auto; padding:24px; }
 .blog-article h1 { font-size:clamp(25px,5vw,38px); line-height:1.45; }

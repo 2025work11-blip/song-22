@@ -27,6 +27,14 @@
   window.adminStore = {
     verifyBlogWrite: function () { return clientForWrite('blog_posts'); },
     verifyDoctorWrite: function () { return clientForWrite('doctors'); },
+    setBlogPublished: async function (id, enabled) {
+      checkId(id);
+      var client = await clientForWrite('blog_posts');
+      var result = await client.from('blog_posts').update({ is_published: enabled }).eq('id', id).select('*').single();
+      if (result.error) throw result.error;
+      if (!result.data) throw new Error('게시 상태를 저장하지 못했습니다.');
+      return result.data;
+    },
     setBlogAcademic: async function (id, enabled) {
       checkId(id);
       var client = await clientForWrite('blog_posts');

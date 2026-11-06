@@ -12,19 +12,33 @@
   var resultCount = document.querySelector('[data-blog-result-count]');
   var articles = [];
   var ready = false;
+  var page = 1, pageSize = 10, previousTerm = '';
+  var pagination = document.createElement('nav');
+  pagination.className = 'blog-pagination'; pagination.setAttribute('aria-label', '블로그 페이지'); pagination.hidden = true;
+  var prev = element('button', '', '이전'), pageInfo = element('span', 'blog-page-info'), next = element('button', '', '다음');
+  prev.type = next.type = 'button'; pageInfo.setAttribute('aria-live', 'polite');
+  pagination.append(prev, pageInfo, next); list.insertAdjacentElement('afterend', pagination);
+  prev.addEventListener('click', function () { if (page > 1) { page--; search(); } });
+  next.addEventListener('click', function () { page++; search(); });
 
   function normalize(text) {
     return String(text || '').normalize('NFC').toLocaleLowerCase().replace(/\s+/g, ' ').trim();
   }
   function search() {
     var term = normalize(query.value);
+    if (term !== previousTerm) { page = 1; previousTerm = term; }
     var words = term ? term.split(' ') : [];
-    var count = 0;
+    var matches = articles.filter(function (article) { return words.every(function (word) { return article.blogSearchText.includes(word); }); });
+    var count = matches.length, totalPages = Math.max(1, Math.ceil(count / pageSize));
+    page = Math.min(Math.max(1, page), totalPages);
+    var visible = new Set(matches.slice((page - 1) * pageSize, page * pageSize));
     articles.forEach(function (article) {
-      var matches = words.every(function (word) { return article.blogSearchText.includes(word); });
-      article.hidden = !matches;
-      if (matches) count += 1;
+      article.hidden = !visible.has(article);
+      if (article.hidden) article.open = false;
     });
+    pagination.hidden = !ready || totalPages <= 1;
+    prev.disabled = page === 1; next.disabled = page === totalPages;
+    pageInfo.textContent = page + ' / ' + totalPages;
     empty.hidden = !ready || !articles.length || count !== 0;
     results.hidden = !ready || !term;
     resultCount.textContent = String(count);
@@ -73,7 +87,7 @@
       if (!client) throw new Error('DB 연결 없음');
       var rows = [], size = 500, columns = 'id,post_date,title,content,content_html,source,source_url,source_links,slug,is_academic,seo_payload';
       while (true) {
-        var result = await client.from('blog_posts').select(columns)
+        var result = await client.from('blog_posts').select(columns).eq('is_published', true)
           .order('post_date', { ascending: false }).order('id', { ascending: false })
           .range(rows.length, rows.length + size - 1);
         if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes(',seo_payload')) {

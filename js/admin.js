@@ -5,6 +5,7 @@
   var main = document.querySelector('.admin-main');
   if (!main) return;
   var state = {}, sources = {}, loaded = {}, activeEditor = null, saving = false;
+  var blogPage = 1, blogPageSize = 10, listQueries = {};
   var pendingImages = new Map();
   var pendingDoctorPhoto = null, doctorPhotoPreview = null;
   var dialog = document.querySelector('[data-admin-editor]');
@@ -74,16 +75,38 @@
       var card = make('article', 'admin-card');
       var heading = make('div', 'admin-card-heading');
       var title = make('div'); title.append(make('h3', '', def.title), make('p', 'admin-source', sources[key])); heading.appendChild(title);
+      var searchFields = def.searchFields || (def.table && !def.fixed && def.fields.some(function (f) { return f.key === 'title'; }) ? def.fields.filter(function (f) { return ['title', 'content', 'text'].includes(f.key); }).map(function (f) { return f.key; }) : []);
+      if (searchFields.length) {
+        var searchLabel = make('label', 'admin-blog-search');
+        searchLabel.appendChild(make('span', 'visually-hidden', def.title + ' 제목 또는 내용 검색'));
+        var searchInput = make('input'); searchInput.type = 'search'; searchInput.placeholder = '제목 또는 내용 검색'; searchInput.value = listQueries[key] || ''; searchInput.disabled = !loaded[key]; searchInput.setAttribute('data-admin-list-search', key);
+        function updateListSearch() {
+          var start = searchInput.selectionStart, end = searchInput.selectionEnd;
+          listQueries[key] = searchInput.value; if (key === 'blog') blogPage = 1; render();
+          var replacement = document.querySelector('[data-admin-list-search="' + key + '"]');
+          if (replacement) { replacement.focus(); try { replacement.setSelectionRange(start, end); } catch (error) { /* 일부 검색 입력창은 선택 범위를 지원하지 않습니다. */ } }
+        }
+        searchInput.addEventListener('input', function (event) { if (!event.isComposing) updateListSearch(); });
+        searchInput.addEventListener('compositionend', updateListSearch);
+        searchLabel.appendChild(searchInput); heading.appendChild(searchLabel);
+      }
       if (def.table && !def.fixed) { var add = make('button', 'admin-button', key === 'blog' ? '새 글 작성' : '새 항목'); add.type = 'button'; add.dataset.adminEdit = key; add.disabled = !loaded[key] || (['weekly', 'dates', 'closures'].includes(key) && !state.doctors.length); heading.appendChild(add); }
       card.appendChild(heading);
       var rows = state[key].filter(function (row) { return def.group !== 'diseases' || row.category === topicFilter.value; });
+      var searchTerm = listQueries[key] || '';
+      if (searchFields.length && searchTerm.trim()) {
+        var words = searchTerm.normalize('NFC').toLocaleLowerCase().trim().split(/\s+/);
+        rows = rows.filter(function (row) { var text = searchFields.map(function (name) { return String(row[name] || ''); }).join('\n').normalize('NFC').toLocaleLowerCase(); return words.every(function (word) { return text.includes(word); }); });
+      }
       if (key === 'blog') rows.sort(function (a, b) {
         var dates = String(b.post_date || '').localeCompare(String(a.post_date || ''));
         if (dates) return dates;
         var left = String(a.id), right = String(b.id);
         return right.length - left.length || right.localeCompare(left);
       });
-      if (!rows.length) card.appendChild(make('p', 'admin-empty', '등록된 항목이 없습니다.'));
+      var blogTotalPages = key === 'blog' ? Math.max(1, Math.ceil(rows.length / blogPageSize)) : 1;
+      if (key === 'blog') { blogPage = Math.min(blogPage, blogTotalPages); rows = rows.slice((blogPage - 1) * blogPageSize, blogPage * blogPageSize); }
+      if (!rows.length) card.appendChild(make('p', 'admin-empty', searchFields.length && searchTerm.trim() ? '검색 결과가 없습니다.' : '등록된 항목이 없습니다.'));
       else if (key === 'weekly') {
         var groups = new Map();
         rows.forEach(function (row) { var id = String(row.doctor_id); if (!groups.has(id)) groups.set(id, []); groups.get(id).push(row); });
@@ -105,11 +128,12 @@
         var scroll = make('div', 'admin-table-scroll'); var table = make('table', 'admin-table');
         var caption = make('caption', 'visually-hidden', def.title); table.appendChild(caption);
         var head = make('thead'), headRow = make('tr');
-        def.fields.forEach(function (f) { var th = make('th', '', f.label); th.scope = 'col'; headRow.appendChild(th); });
+        def.fields.forEach(function (f) { var th = make('th', '', f.label); th.scope = 'col'; headRow.appendChild(th); if (key === 'blog' && f.key === 'post_date') { var statusHead = make('th', '', '게시 상태'); statusHead.scope = 'col'; headRow.appendChild(statusHead); } });
         var actions = make('th', '', '작업'); actions.scope = 'col'; headRow.appendChild(actions); head.appendChild(headRow); table.appendChild(head);
         var body = make('tbody');
         rows.forEach(function (row) {
           var tr = make('tr');
+          if (key === 'blog') tr.classList.toggle('admin-blog-stopped', row.is_published === false);
           def.fields.forEach(function (f) {
             var td = make('td');
             if (key === 'blog' && f.key === 'is_academic') {
@@ -130,8 +154,37 @@
                 } finally { toggle.disabled = !loaded[key]; }
               });
               td.appendChild(toggle);
-            } else td.appendChild(make('span', 'admin-cell-text' + (key === 'blog' && f.key === 'title' ? ' admin-blog-title' : key === 'blog' && f.key === 'source_links' ? ' admin-blog-source' : ''), valueLabel(f, row)));
+            } else {
+              var label = valueLabel(f, row);
+              if (key === 'blog' && f.key === 'post_date' && /^\d{4}-\d{2}-\d{2}$/.test(label)) {
+                var date = make('span', 'admin-blog-date');
+                date.append(make('span', 'admin-blog-date-day', label.slice(5).replace('-', '/')), make('span', 'admin-blog-date-year', label.slice(0, 4)));
+                td.appendChild(date);
+              } else td.appendChild(make('span', 'admin-cell-text' + (key === 'blog' && f.key === 'title' ? ' admin-blog-title' : key === 'blog' && f.key === 'content' ? ' admin-blog-content' : key === 'blog' && f.key === 'source_links' ? ' admin-blog-source' : ''), label));
+            }
             tr.appendChild(td);
+            if (key === 'blog' && f.key === 'post_date') {
+              var statusCell = make('td');
+              var published = row.is_published !== false;
+              var statusButton = make('button', 'admin-button admin-publish-toggle', published ? '게시중' : '중지');
+              statusButton.type = 'button'; statusButton.disabled = !loaded[key];
+              statusButton.setAttribute('aria-pressed', String(published));
+              statusButton.setAttribute('aria-label', (row.title || '블로그 글') + ' 게시 상태');
+              statusButton.addEventListener('click', async function () {
+                if (statusButton.disabled || !window.roleAccess.isAdmin()) return;
+                statusButton.disabled = true; status.textContent = '게시 상태를 저장하고 있습니다.';
+                try {
+                  var updated = await window.adminStore.setBlogPublished(row.id, row.is_published === false);
+                  Object.assign(row, updated, { id: String(updated.id) });
+                  statusButton.textContent = row.is_published ? '게시중' : '중지';
+                  statusButton.setAttribute('aria-pressed', String(Boolean(row.is_published)));
+                  tr.classList.toggle('admin-blog-stopped', !row.is_published);
+                  status.textContent = row.is_published ? '글을 게시했습니다.' : '게시를 중지했습니다. 관리자만 볼 수 있습니다.';
+                } catch (error) { status.textContent = '게시 상태를 저장하지 못했습니다. 연결 상태를 확인해 주세요.'; }
+                finally { statusButton.disabled = !loaded[key]; }
+              });
+              statusCell.appendChild(statusButton); tr.appendChild(statusCell);
+            }
           });
           var td = make('td');
           if (def.table) { var edit = make('button', 'admin-button', '편집'); edit.type = 'button'; edit.dataset.adminEdit = key; edit.dataset.rowId = String(row.id); edit.disabled = !loaded[key]; edit.setAttribute('aria-label', def.title + ' ' + (row.name || row.title || row.notice_date || row.id) + ' 편집'); td.appendChild(edit); }
@@ -139,6 +192,14 @@
           tr.appendChild(td); body.appendChild(tr);
         });
         table.appendChild(body); scroll.appendChild(table); card.appendChild(scroll);
+        if (key === 'blog' && blogTotalPages > 1) {
+          var pagination = make('nav', 'blog-pagination'); pagination.setAttribute('aria-label', '관리자 블로그 페이지');
+          var prev = make('button', 'admin-button', '이전'), info = make('span', 'blog-page-info', blogPage + ' / ' + blogTotalPages), next = make('button', 'admin-button', '다음');
+          prev.type = next.type = 'button'; prev.disabled = blogPage === 1; next.disabled = blogPage === blogTotalPages; info.setAttribute('aria-live', 'polite');
+          prev.addEventListener('click', function () { if (blogPage > 1) { blogPage--; render(); } });
+          next.addEventListener('click', function () { if (blogPage < blogTotalPages) { blogPage++; render(); } });
+          pagination.append(prev, info, next); card.appendChild(pagination);
+        }
       }
       root.appendChild(card);
     });
