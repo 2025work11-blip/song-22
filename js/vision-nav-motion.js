@@ -20,13 +20,13 @@
     hair: 'M5 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4z M5 16a2 2 0 1 0 0 4 2 2 0 0 0 0-4z M7 7l12 12 M7 17L19 5',
     drink: 'M10 3h4v5l3 3v9a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-9l3-3z M10 5h4 M7 13h10 M7 18h10',
     exercise: 'M3 10v4 M6 8v8 M9 10v4 M9 12h6 M15 10v4 M18 8v8 M21 10v4',
-    brush: 'M2 13s4-5 10-5 10 5 10 5-4 5-10 5S2 13 2 13z M12 10a3 3 0 1 0 0 6 3 3 0 0 0 0-6z M6 7L5 5 M10 6V4 M14 6V4 M18 7l1-2'
+    brush: 'M3 10c2 3 5 5 9 5s7-2 9-5 M6 13l-1 3 M10 15l-.5 3 M14 15l.5 3 M18 13l1 3'
   };
   var headings = [
     ['수술을 계획하기 전에', 'checklist'], ['검사/수술 전 준비사항', 'checklist'], ['렌즈 착용 중단', 'lens'],
     ['눈화장은', 'brush'], ['대중교통 이용', 'travel'], ['신분증 필수', 'id'], ['검사 안내', 'clock'],
     ['기초검사', 'equipment'], ['각막이상증 유전자 검사', 'dna'], ['병원 이용 안내', 'location'], ['일정 변경', 'calendar'],
-    ['오시는 길', 'location'], ['건조한 환경', 'wind'], ['세안', 'water'], ['펌·염색', 'hair'],
+    ['층 안내', 'location'], ['건조한 환경', 'wind'], ['세안', 'water'], ['펌·염색', 'hair'],
     ['음주', 'drink'], ['운동', 'exercise'], ['화장', 'brush']
   ];
   document.querySelectorAll('#beforeSurgery .vision-guide-content h4, #beforeSurgery .vision-guide-content h5, #afterSurgery .vision-daily-care h3').forEach(function (heading) {
