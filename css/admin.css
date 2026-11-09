@@ -1,7 +1,7 @@
 /* 관리자 화면에만 적용합니다. 기존 사용자 화면의 스타일은 변경하지 않습니다. */
 .admin-main { padding-block: 34px 60px; }
 .admin-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
-.admin-eyebrow { margin: 0 0 4px; font-size: 11px; color: #436d99; letter-spacing: .12em; }
+.admin-eyebrow { margin: 0 0 4px; font-size: 11px; color: #0074ff; letter-spacing: .12em; }
 .admin-heading h1 { margin: 0; font-size: 30px; letter-spacing: -.04em; }
 .admin-heading p:last-child { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
 .admin-preview-note { padding: 16px 20px; border-radius: 12px; background: #eaf2fb; color: #355573; font-size: 13px; }
@@ -11,7 +11,7 @@
 .admin-layout { display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: start; gap: 28px; }
 .admin-nav { position: sticky; top: 110px; display: grid; gap: 6px; padding: 10px; border-radius: 16px; background: var(--white); box-shadow: 0 3px 16px #1c2e410b; }
 .admin-nav a { padding: 12px; border-radius: 9px; font-size: 14px; font-weight: 600; }
-.admin-nav a[aria-current] { background: #edf4fc; color: #436d99; }
+.admin-nav a[aria-current] { background: #edf4fc; color: #0074ff; }
 .admin-content h2 { margin: 0; font-size: 24px; }
 .admin-description { margin: 7px 0 20px; color: var(--muted); font-size: 13px; }
 .admin-card { min-width: 0; padding: 22px; margin-bottom: 20px; border-radius: 16px; background: var(--white); box-shadow: 0 3px 16px #1c2e410b; }
@@ -22,7 +22,7 @@
 .admin-button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 12px; border: 1px solid #b7c3cf; border-radius: 9px; background: #fff; color: #42586f; font: inherit; font-size: 12px; cursor: pointer; }
 .admin-button:hover { background: #edf4fb; }
 .admin-button:disabled { cursor: not-allowed; opacity: .5; }
-.admin-primary { background: #436d99; color: #fff; border-color: #436d99; }
+.admin-primary { background: #0074ff; color: #fff; border-color: #0074ff; }
 .admin-primary:hover { background: #365c84; }
 .admin-danger { color: #b34351; }
 .admin-table-scroll { overflow-x: auto; }
@@ -50,9 +50,9 @@
 .admin-fields .blog-editor-size-label { display: flex; align-items: center; gap: 6px; }
 .admin-fields .blog-editor-size-label select { width: auto; min-height: 40px; }
 .blog-editor-bold { font-size: 14px; font-weight: 700; }
-.blog-editor-bold[aria-pressed='true'] { color: #fff; background: #436d99; border-color: #436d99; }
-.blog-editor-bold[aria-pressed='mixed'] { outline: 2px dashed #436d99; outline-offset: -4px; }
-html[data-theme='dark'] .blog-editor-bold[aria-pressed='true'] { color: #fff; background: #436d99; border-color: #8ab8ee; }
+.blog-editor-bold[aria-pressed='true'] { color: #fff; background: #0074ff; border-color: #0074ff; }
+.blog-editor-bold[aria-pressed='mixed'] { outline: 2px dashed #0074ff; outline-offset: -4px; }
+html[data-theme='dark'] .blog-editor-bold[aria-pressed='true'] { color: #fff; background: #0074ff; border-color: #8ab8ee; }
 .blog-editor-hint { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
 .blog-sources { min-width: 0; margin: 0; padding: 14px; border: 1px solid var(--line); border-radius: 10px; }
 .blog-sources legend { padding: 0 5px; font-size: 13px; font-weight: 600; }
@@ -90,9 +90,9 @@ html[data-theme='dark'] .admin-publish-toggle[aria-pressed='false'] { background
 .admin-blog-date-year { color: var(--muted); font-size: 10px; }
 .admin-blog-source { color: var(--muted); font-size: 10px; line-height: 1.5; }
 .admin-blog-stopped .admin-blog-title, .admin-blog-stopped .admin-blog-content, .admin-blog-stopped .admin-blog-source { text-decoration: line-through; }
-.admin-academic-toggle[aria-pressed='true'] { background: #436d99; border-color: #436d99; color: #fff; }
+.admin-academic-toggle[aria-pressed='true'] { background: #0074ff; border-color: #0074ff; color: #fff; }
 .admin-academic-toggle[aria-pressed='false'] { opacity: .7; }
-html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background: #436d99; border-color: #8ab8ee; color: #fff; }
+html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background: #0074ff; border-color: #8ab8ee; color: #fff; }
 .doctor-photo-editor { display: grid; gap: 10px; justify-items: start; }
 .doctor-photo-editor label { width: 100%; }
 .doctor-photo-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 1px solid #bec9d5; }
@@ -143,7 +143,7 @@ html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background
 html[data-theme='dark'] .admin-preview-note { background: #233b54; color: #cadef3; }
 html[data-theme='dark'] .admin-nav a[aria-current] { background: #29405a; color: #cde1fb; }
 html[data-theme='dark'] .admin-button { background: #23364b; color: #d9e6f5; border-color: #52657b; }
-html[data-theme='dark'] .admin-primary { background: #436d99; }
+html[data-theme='dark'] .admin-primary { background: #0074ff; }
 html[data-theme='dark'] .admin-table th { background: #213147; }
 html[data-theme='dark'] .admin-fields input,
 html[data-theme='dark'] .admin-fields select,

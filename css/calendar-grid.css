@@ -6,7 +6,7 @@
 .schedule-calendar tbody tr:last-child td { border-bottom: 0; }
 .schedule-calendar .calendar-day, .schedule-calendar .calendar-day[aria-current='date'],
 .schedule-calendar .calendar-day[aria-pressed='true'], .schedule-calendar td:first-child .calendar-day[aria-pressed='true'] { border: 0; border-radius: 0; }
-.schedule-calendar .calendar-day:focus-visible { outline: 2px solid #436d99; outline-offset: -3px; }
+.schedule-calendar .calendar-day:focus-visible { outline: 2px solid #0074ff; outline-offset: -3px; }
 .calendar-markers .doctor-initial { width: 7px; height: 7px; }
 .day-panel h3[data-selected-date] { font-size: 26px; }
 .schedule-entry .schedule-doctor-name { font-size: 19px; }

@@ -25,7 +25,7 @@
   document.querySelectorAll('[data-quick-actions]').forEach(function (actions) {
     if (actions.querySelector('[data-phone-link]')) return;
     var template = document.createElement('template');
-    template.innerHTML = '<a class="quick-action" data-phone-link href="tel:0647272700" title="064-727-2700"><svg viewBox="0 0 36 36" width="36" height="36" fill="none" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#e8f1fc"/><path d="M11 9h4l2 6-3 2a17 17 0 0 0 5 5l2-3 6 2v4c0 2-2 3-4 2-8-2-13-7-15-15-1-2 1-3 3-3Z" stroke="#356db8" stroke-width="1.7" stroke-linejoin="round"/></svg><span>전화 상담</span><span class="visually-hidden"> 064-727-2700</span></a>';
+    template.innerHTML = '<a class="quick-action" data-phone-link href="tel:0647272700" title="064-727-2700"><svg viewBox="0 0 36 36" width="36" height="36" fill="none" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#e8f1fc"/><path d="M11 9h4l2 6-3 2a17 17 0 0 0 5 5l2-3 6 2v4c0 2-2 3-4 2-8-2-13-7-15-15-1-2 1-3 3-3Z" stroke="#0074ff" stroke-width="1.7" stroke-linejoin="round"/></svg><span>전화 상담</span><span class="visually-hidden"> 064-727-2700</span></a>';
     actions.appendChild(template.content);
   });
 }());

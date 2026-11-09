@@ -15,7 +15,7 @@ html[data-theme='dark'] .about-doctors details[open] > summary { background: #17
 .about-doctor-profile p { margin: 0 0 10px; }
 .about-doctor-profile p strong { font-size: 24px; }
 .about-specialties { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
-.about-specialties span { padding: 4px 9px; border: 1px solid #c5d5e4; border-radius: 15px; color: #436d99; font-size: 12px; }
+.about-specialties span { padding: 4px 9px; border: 1px solid #c5d5e4; border-radius: 15px; color: #0074ff; font-size: 12px; }
 .about-doctor-body section { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
 .about-doctor-body h3 { margin: 0 0 10px; font-size: 17px; }
 .about-doctor-body p { line-height: 1.7; }
@@ -28,7 +28,7 @@ html[data-theme='dark'] .about-doctors details[open] > summary { background: #17
 .about-schedule-table small { display: block; color: var(--muted); font-size: 10px; }
 .about-schedule-table .about-external-schedule { font-size: 13px; font-weight: 600; }
 .about-table-legend { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
-.about-doctor-body .about-career-heading { margin-top: 20px; color: #126ba7; }
+.about-doctor-body .about-career-heading { margin-top: 20px; color: #0074ff; }
 .about-career-list { margin: 0; padding-left: 20px; }
 .about-career-list li + li { margin-top: 6px; }
 .about-schedule-list li + li { margin-top: 4px; }
