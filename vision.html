@@ -22,7 +22,7 @@
   <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261029-layout2">
   <link rel="stylesheet" href="css/theme.css?v=20261103-blog1">
-  <link rel="stylesheet" href="css/vision-preop.css?v=20261109-guide1">
+  <link rel="stylesheet" href="css/vision-preop.css?v=20261109-medicine4">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261102-yonsei1">
   <script defer src="js/layout.js?v=20261103-blog1"></script>
   <script defer src="js/config.js"></script>
@@ -47,7 +47,7 @@
       <p class="eyebrow">YONSEI JEIL EYE CLINIC GUIDE</p>
       <h1 data-title>시력교정</h1>
       <p class="detail-summary" data-summary>시력교정 관련 안내를 확인하세요.</p>
-      <div class="mock-notice" data-mock-notice><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><p>기본 정보·외래 안내·수술 후 안내는 화면 확인용 샘플입니다.</p></div>
+      <div class="mock-notice" data-mock-notice><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></svg><p>기본 정보·외래 안내는 화면 확인용 샘플입니다.</p></div>
     </div>
     <nav class="section-nav" aria-label="안내 섹션 이동"><div class="container section-nav-inner">
       <a href="#overview">기본 정보</a>
@@ -60,8 +60,8 @@
       <section class="information-section" id="outpatient" aria-labelledby="heading-outpatient"><div class="section-heading"><span class="section-number" aria-hidden="true">02</span><h2 id="heading-outpatient">외래 안내</h2></div><div class="info-grid" data-section="outpatient"><p class="empty-state">해당 안내는 준비 중입니다.</p></div></section>
       <section class="information-section" id="beforeSurgery" aria-labelledby="heading-beforeSurgery">
         <div class="section-heading"><span class="section-number" aria-hidden="true">03</span><h2 id="heading-beforeSurgery">수술 전</h2></div>
-        <div class="vision-guide" data-section="beforeSurgery" data-static-content translate="no">
-          <header class="vision-guide-header"><p>VISION CORRECTION</p><h3>시력교정 검사 전 안내사항</h3><p>정확한 검사를 위해 아래 내용을 꼭 확인해 주세요.</p></header>
+        <details class="vision-guide" data-section="beforeSurgery" data-static-content translate="no">
+          <summary class="vision-guide-header"><span class="vision-guide-header-title">시력교정 검사 전 안내사항</span><span class="vision-guide-chevron" aria-hidden="true"></span></summary>
           <div class="vision-guide-content">
             <section class="vision-guide-notice" aria-labelledby="vision-before-check"><h4 id="vision-before-check">검사를 받기 전에!</h4><ul><li>임신 중이거나 임신 계획 중이신 분들은 전후 3개월이 지난 후에, 수유 중인 분들은 수유가 끝난 후 검사와 수술을 계획하시는 것이 좋습니다.</li><li>안질환이 있는 경우 검사 진행이 불가합니다.</li></ul></section>
             <section class="vision-guide-section" aria-labelledby="vision-preparation"><h4 id="vision-preparation">검사 전 준비사항</h4>
@@ -74,9 +74,55 @@
             <section class="vision-guide-section" aria-labelledby="vision-cost"><h4 id="vision-cost">검사비용 안내</h4><div class="vision-fee-card"><div><span class="vision-fee-tag">필수</span><h5>시력교정수술을 위한 기초검사</h5><p class="vision-price">5만원</p><p>검사일 결제 기준입니다.</p><p>소요시간 <strong>약 2~3시간</strong></p></div><div><span class="vision-fee-tag">선택</span><h5>각막이상증 유전자 검사</h5><p>아벨리노 각막이상증 외 4종</p><p class="vision-price">10만원 <small>(전문 검사 기관 의뢰)</small></p><p>수술 확정 시 검사 진행됩니다.</p></div></div></section>
             <section class="vision-guide-section" aria-labelledby="vision-visit"><h4 id="vision-visit">병원 이용 안내</h4><h5>일정 변경 시</h5><p>검사 예약 변경은 검사일 전날까지 병원으로 꼭 연락 주세요.</p><a class="vision-phone" href="tel:0647272703"><span>시력교정수술센터</span><strong>064-727-2703</strong></a><h5>오시는 길</h5><p><strong>주소</strong><br>제주특별자치도 제주시 연북로 449<br>메디온빌딩 2층, 3층<br><strong>연북로 제스코마트 맞은편</strong></p><p>시력교정수술센터 <strong>3층</strong>으로 내원해 주세요.</p><h5>주차</h5><p>건물 뒷편 대형 주차시설 (무료)</p></section>
           </div>
+        </details>
+      </section>
+      <section class="information-section" id="afterSurgery" aria-labelledby="heading-afterSurgery">
+        <div class="section-heading"><span class="section-number" aria-hidden="true">04</span><h2 id="heading-afterSurgery">수술 후</h2></div>
+        <div class="vision-aftercare" data-section="afterSurgery" data-static-content translate="no">
+          <details class="vision-aftercare-chapter">
+            <summary><span><small>LASIK / SMILE</small><strong>라식 / 스마일 수술 후</strong></span><span class="vision-guide-chevron" aria-hidden="true"></span></summary>
+            <div class="vision-aftercare-body">
+              <p class="vision-aftercare-fee">비보험 기간(수술 후 3개월까지)에는 진료와 처방이 비보험으로 적용되며 평일 13,000원 / 주말 16,000원의 진료비가 발생합니다.</p>
+              <section><h3>수술 후 증상</h3><ul><li>수술 당일은 통증, 시린 느낌과 눈물, 이물감이 있을 수 있습니다.</li><li>양쪽 눈의 느낌과 회복 속도가 다른 것은 정상입니다.</li></ul></section>
+              <section><h3>주의사항</h3><ul><li>눈을 비비거나 힘을 주어 세게 감지 않도록 주의해 주시고 눈을 부딪히지 않도록 해주세요.</li><li>충격의 위험이 있는 심한 운동(헬스, 수영, 등산 등)은 한 달 후부터 가능합니다.</li><li>치료용 렌즈를 넣어드린 경우, 수술 다음날 제거하며 눈이 건조하거나 세게 감을 경우 렌즈가 빠질 수 있으므로 인공 눈물을 자주 넣어주세요.</li><li>다음날부터는 비누 세안이 가능합니다. 단, 비눗물이 들어가지 않게 조심하시고 눈두덩이 부분을 세게 비비지 마십시오.</li><li>수면 시간은 6~7시간을 권장합니다.</li></ul></section>
+              <section class="vision-medicine-section"><h3>약 사용법</h3><p>모든 약은 반드시 처방전이 있어야 구입 가능합니다. 먹는 약은 1일~3일치이며 식후 30분 후 복용합니다.</p><p class="vision-medicine-note">모든 안약은 1방울씩만 사용하시고, 약물의 충분한 흡수를 위해 최소 5분 간격을 두고 점안해 주세요.</p>
+                <div class="vision-medicine-group"><h4>항생제 <small>수술 당일부터 매일 사용</small></h4><div class="vision-medicine-grid">
+                  <figure><span class="vision-medicine-image"><img class="medicine-levotin" src="assets/vision-medicines/levotin.png" alt="레보틴 안약"></span><figcaption>레보틴</figcaption></figure>
+                  <figure><span class="vision-medicine-image"><img class="medicine-cravit" src="assets/vision-medicines/cravit-1-5.png" alt="크라비트 안약"></span><figcaption>크라비트</figcaption></figure>
+                  <figure><span class="vision-medicine-image"><img class="medicine-vigamox" src="assets/vision-medicines/vigamox.png" alt="비가목스 안약"></span><figcaption>비가목스</figcaption></figure>
+                </div><p>레보틴·크라비트·비가목스는 처방에 따라 2시간마다 또는 하루 4번(아침/점심/저녁/자기 전) 사용합니다.</p></div>
+                <div class="vision-medicine-group"><h4>소염제(스테로이드) <small>수술 당일부터 매일 사용 · 흔들어서 사용</small></h4><div class="vision-medicine-grid">
+                  <figure><span class="vision-medicine-image"><img class="medicine-fulliron" src="assets/vision-medicines/fulliron.png" alt="풀아이론 안약"></span><figcaption>풀아이론</figcaption></figure>
+                  <figure><span class="vision-medicine-image"><img class="medicine-lotemax" src="assets/vision-medicines/lotemax.png" alt="로테맥스 안약"></span><figcaption>로테맥스</figcaption></figure>
+                  <figure><span class="vision-medicine-image"><img class="medicine-prednilone" src="assets/vision-medicines/prednilone.png" alt="프레드니론 안약"></span><figcaption>프레드니론</figcaption></figure>
+                </div><p>처방에 따라 2시간마다 또는 하루 4번(아침/점심/저녁/자기 전) 사용합니다.</p></div>
+                <div class="vision-medicine-group"><h4>인공눈물</h4><div class="vision-medicine-grid"><figure><span class="vision-medicine-image"><img class="medicine-hialosan" src="assets/vision-medicines/hialosan.png" alt="히알산 인공눈물"></span><figcaption>히알산</figcaption></figure></div><p>건조해지지 않도록 수시로 점안하세요. 개봉 후에는 24시간 이내로 사용하세요.</p></div>
+              </section>
+            </div>
+          </details>
+          <details class="vision-aftercare-chapter vision-aftercare-lasek">
+            <summary><span><small>LASEK</small><strong>라섹 수술 후</strong></span><span class="vision-guide-chevron" aria-hidden="true"></span></summary>
+            <div class="vision-aftercare-body">
+              <p class="vision-aftercare-fee">비보험 기간(수술 후 3개월까지)에는 진료와 처방이 비보험으로 적용되며 평일 13,000원 / 주말 16,000원의 진료비가 발생합니다.</p>
+              <section><h3>수술 후 증상</h3><ul><li>2~3일 정도 심한 통증, 시린 느낌과 눈물, 이물감이 있을 수 있습니다.</li><li>양쪽 눈의 느낌과 회복 속도가 다른 것은 정상입니다.</li></ul></section>
+              <section><h3>주의사항</h3><ul><li>일상생활은 3일 이후부터 가능하며 가급적 수술 후 3일까지는 외출을 삼가 주십시오.</li><li>수술 시 넣어드리는 각막 보호용 렌즈는 눈이 건조하거나 세게 감을 경우, 혹은 눈을 강제로 벌리고 안약을 넣을 경우 빠질 수 있으므로 인공 눈물을 자주 넣어주시고, 눈을 살짝 감고 계시는 것이 좋습니다. 보호렌즈 교체 시 소모품 비용이 발생될 수 있습니다.</li><li>렌즈가 빠진 것이 의심되는 경우에는 가급적 바로 내원해 주시거나, 저녁에 빠져서 내원이 어려우신 경우에는 인공눈물을 자주 넣으시고 반드시 방문해 주시기 바랍니다.</li><li>수술 당일은 물 세안, 1~3일 후 비누 세안이 가능합니다. 단, 비눗물이 들어가지 않게 조심하시고 눈두덩이 부분을 세게 비비지 마십시오.</li><li>수면 시간은 6~7시간을 권장합니다.</li></ul></section>
+              <section class="vision-medicine-section"><h3>약 사용법</h3><p>모든 약은 반드시 처방전이 있어야 구입 가능합니다. 먹는 약은 1일~3일치이며 식후 30분 후 복용합니다.</p><p class="vision-medicine-note">모든 안약은 1방울씩만 사용하시고, 약물의 충분한 흡수를 위해 최소 5분 간격을 두고 점안해 주세요.</p>
+                <div class="vision-medicine-group"><h4>항생제 <small>수술 당일부터 매일 사용</small></h4><div class="vision-medicine-grid">
+                  <figure><span class="vision-medicine-image"><img class="medicine-levotin" src="assets/vision-medicines/levotin.png" alt="레보틴 안약"></span><figcaption>레보틴</figcaption></figure>
+                  <figure><span class="vision-medicine-image"><img class="medicine-cravit" src="assets/vision-medicines/cravit-1-5.png" alt="크라비트 안약"></span><figcaption>크라비트</figcaption></figure>
+                </div><p>레보틴·크라비트는 하루 4번(아침/점심/저녁/자기 전) 사용합니다.</p></div>
+                <div class="vision-medicine-group"><h4>소염제(스테로이드) <small>수술 당일부터 매일 사용 · 흔들어서 사용</small></h4><div class="vision-medicine-grid">
+                  <figure><span class="vision-medicine-image"><img class="medicine-fulliron" src="assets/vision-medicines/fulliron.png" alt="풀아이론 안약"></span><figcaption>풀아이론</figcaption></figure>
+                  <figure><span class="vision-medicine-image"><img class="medicine-lotemax" src="assets/vision-medicines/lotemax.png" alt="로테맥스 안약"></span><figcaption>로테맥스</figcaption></figure>
+                  <figure><span class="vision-medicine-image"><img class="medicine-prednilone" src="assets/vision-medicines/prednilone.png" alt="프레드니론 안약"></span><figcaption>프레드니론</figcaption></figure>
+                </div><p>하루 4번(아침/점심/저녁/자기 전) 사용합니다.</p></div>
+                <div class="vision-medicine-group"><h4>프로파라카인 (진통 안약)</h4><div class="vision-medicine-grid"><figure><span class="vision-medicine-image"><img class="medicine-proparacaine" src="assets/vision-medicines/proparacaine-w.jpg" alt="프로파라카인 진통 안약"></span><figcaption>프로파라카인</figcaption></figure></div><p>참기 힘든 통증이 있을 때에만 넣으세요. 가급적 넣지 마세요.</p></div>
+                <div class="vision-medicine-group"><h4>인공눈물</h4><div class="vision-medicine-grid"><figure><span class="vision-medicine-image"><img class="medicine-hialosan" src="assets/vision-medicines/hialosan.png" alt="히알산 인공눈물"></span><figcaption>히알산</figcaption></figure></div><p>건조해지지 않도록 수시로 점안하세요. 개봉 후에는 24시간 이내로 사용하세요.</p></div>
+              </section>
+            </div>
+          </details>
         </div>
       </section>
-      <section class="information-section" id="afterSurgery" aria-labelledby="heading-afterSurgery"><div class="section-heading"><span class="section-number" aria-hidden="true">04</span><h2 id="heading-afterSurgery">수술 후</h2></div><div class="info-grid" data-section="afterSurgery"><p class="empty-state">해당 분야의 수술 안내는 준비 중입니다.</p></div></section>
     </div>
   </div>
   <div class="container error-state" data-error hidden><h1>안내 정보를 불러올 수 없습니다.</h1><p>홈에서 원하시는 분야를 다시 선택해 주세요.</p><a class="home-link" href="index.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h13"/></svg>홈으로</a></div>
