@@ -6,6 +6,7 @@
 .admin-heading p:last-child { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
 .admin-preview-note { padding: 16px 20px; border-radius: 12px; background: #eaf2fb; color: #355573; font-size: 13px; }
 .admin-preview-note p { margin: 4px 0 0; }
+.admin-preview-help { color: var(--muted); font-size: 12px; margin: 8px 0; }
 .admin-status { min-height: 22px; color: var(--muted); font-size: 12px; margin: 14px 0 22px; }
 .admin-layout { display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: start; gap: 28px; }
 .admin-nav { position: sticky; top: 110px; display: grid; gap: 6px; padding: 10px; border-radius: 16px; background: var(--white); box-shadow: 0 3px 16px #1c2e410b; }
@@ -98,6 +99,7 @@ html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background
 .admin-weekly-group summary { cursor: pointer; padding: 12px 14px; font-weight: 700; }
 .admin-weekly-list { padding: 0 14px 10px; }
 .admin-about-schedule-editor { padding: 0 14px 18px; }
+.admin-about-schedule-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
 .admin-about-schedule-editor p { color: var(--muted); font-size: 13px; }
 .admin-about-schedule-fields { display: grid; gap: 12px; margin: 12px 0; }
 .admin-about-schedule-row-wrap { display: grid; gap: 6px; justify-items: start; max-width: 100%; }
@@ -105,6 +107,9 @@ html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background
 .admin-about-schedule-row label { display: grid; gap: 4px; font-size: 12px; }
 .admin-about-schedule-row input { width: 100%; min-width: 0; padding: 7px; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
 .admin-profile-form { display: grid; gap: 12px; }
+.admin-profile-schedule { padding: 16px 0 0; border: 1.5px solid #8c9cad; border-radius: 10px; }
+.admin-profile-schedule > p, .admin-profile-schedule > button { margin: 0 16px 16px; }
+.admin-profile-schedule h4 { margin: 0 0 8px; font-size: 15px; }
 .admin-doctor-picker { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; }
 .admin-doctor-picker[hidden] { display: none; }
 .admin-doctor-picker label { display: grid; gap: 4px; font-size: 12px; }

@@ -1,6 +1,7 @@
 .about-doctors { border-top: 1px solid #bfc7c8; }
 body[data-about-page] #hours .schedule-hours-list > div:first-child { border-top: 0; }
 .about-doctors details { border-bottom: 1px solid var(--line); background: var(--white); }
+.about-doctors details { scroll-margin-top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 69px) + 8px); }
 .about-doctors summary { display: flex; align-items: center; min-height: 76px; padding: 20px 22px; list-style: none; font-size: 20px; font-weight: 600; cursor: pointer; }
 .about-doctors details[open] > summary { position: sticky; top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 69px)); z-index: 4; background: #fff; }
 html[data-theme='dark'] .about-doctors details[open] > summary { background: #172230; }

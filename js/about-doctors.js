@@ -4,6 +4,19 @@
   var weekdays = ['일', '월', '화', '수', '목', '금', '토'];
   function normalizedName(name) { return String(name || '').replace(/\s*원장\s*$/, '').trim(); }
   function make(tag, text) { var node = document.createElement(tag); if (text !== undefined) node.textContent = text; return node; }
+  function mergeAdjacentCells(table) {
+    table.querySelectorAll('tbody tr').forEach(function (tr) {
+      var previous = null;
+      Array.from(tr.children).filter(function (node) { return node.tagName === 'TD'; }).forEach(function (cell) {
+        var text = cell.textContent.trim();
+        if (previous && text && text !== '—' && previous.textContent.trim() === text) {
+          if (previous.getAttribute('aria-label') !== cell.getAttribute('aria-label')) previous.removeAttribute('aria-label');
+          previous.colSpan += cell.colSpan; cell.remove();
+        } else previous = cell;
+      });
+    });
+    return table;
+  }
   function makeTable(rows, name) {
     var table = make('table'); table.className = 'about-schedule-table';
     var caption = make('caption', name + ' 원장 정기 진료일정'); caption.className = 'visually-hidden'; table.appendChild(caption);
@@ -36,7 +49,7 @@
       });
       body.appendChild(tr);
     });
-    table.appendChild(body); return table;
+    table.appendChild(body); return mergeAdjacentCells(table);
   }
   window.makeDefaultAboutScheduleTable = makeTable;
   if (!cards.length) return;
@@ -48,12 +61,11 @@
       var tr = make('tr'), th = make('th', row.label); th.scope = 'row'; tr.appendChild(th);
       for (var i = 0; i < 6; i++) {
         var cell = make('td', row.cells[i] || '—');
-        if (i === 0 && row.cells[0].length > 6 && row.cells.slice(0, 5).every(function (value) { return value === row.cells[0]; })) { cell.colSpan = 5; cell.className = 'about-external-schedule'; i = 4; }
         tr.appendChild(cell);
       }
       body.appendChild(tr);
     });
-    return table;
+    return mergeAdjacentCells(table);
   }
   async function load() {
     try {

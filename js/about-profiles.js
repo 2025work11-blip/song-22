@@ -37,5 +37,10 @@ window.aboutProfilesReady = (async function () {
       if (data.career.length) list(data.career); else { var empty = document.createElement('p'); empty.textContent = '약력은 준비 중입니다.'; section.appendChild(empty); }
       if (data.activities.length) { heading('학회활동', 'about-career-heading'); list(data.activities); }
     });
+    var requested = new URLSearchParams(window.location.search).get('previewDoctor');
+    if (requested) {
+      var target = cards.find(function (card) { return card.isConnected && card.dataset.doctorName === requested; });
+      if (target) { target.open = true; requestAnimationFrame(function () { target.scrollIntoView({ block: 'start' }); }); }
+    }
   } catch (error) { /* 연결 실패 시 기존 소개를 유지합니다. */ }
 }());

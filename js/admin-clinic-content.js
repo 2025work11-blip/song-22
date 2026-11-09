@@ -60,9 +60,11 @@
       });
       removePhoto.addEventListener('click', function () { releasePreview(); pendingPhoto = null; photoInput.value = ''; photoUrl = ''; preview.src = 'assets/icons/doctor-placeholder.svg'; photoHint.textContent = '사진 제거는 의료진 소개 저장을 누르면 반영됩니다.'; });
       photoSection.append(preview, photoLabel, removePhoto, photoHint); form.appendChild(photoSection);
+      var greetingLabel;
       [['greeting', '인사말'], ['career', '주요 약력 (한 줄에 한 항목)'], ['activities', '학회활동 (한 줄에 한 항목)']].forEach(function (field) {
         var fieldLabel = make('label', field[1]), input = make('textarea'); input.name = field[0]; input.rows = field[0] === 'greeting' ? 3 : 5;
         input.value = Array.isArray(data[field[0]]) ? data[field[0]].join('\n') : String(data[field[0]] || '');
+        if (field[0] === 'greeting') greetingLabel = fieldLabel;
         fieldLabel.appendChild(input); form.appendChild(fieldLabel);
       });
       var specialties = make('fieldset'); specialties.className = 'admin-specialties';
@@ -77,10 +79,12 @@
       }
       (Array.isArray(data.specialties) && data.specialties.length ? data.specialties : ['']).forEach(function (value) { addSpecialty(value, false); });
       var addField = make('button', '진료분야 추가'); addField.type = 'button'; addField.className = 'admin-button'; addField.addEventListener('click', function () { addSpecialty('', true); });
-      specialties.appendChild(addField); form.appendChild(specialties);
+      specialties.appendChild(addField); form.insertBefore(specialties, greetingLabel);
+      var scheduleEditor = make('div', '진료표를 불러오는 중입니다.'); scheduleEditor.className = 'admin-profile-schedule'; scheduleEditor.dataset.profileSchedule = String(doctor.id); scheduleEditor.profileDoctor = doctor; form.appendChild(scheduleEditor);
       var save = make('button', '의료진 소개 저장'); save.type = 'submit'; save.className = 'admin-button admin-primary'; form.appendChild(save);
       var remove = make('button', '항목 삭제'); remove.type = 'button'; remove.className = 'admin-button admin-danger'; form.appendChild(remove);
       var status = make('p'); status.setAttribute('role', 'status'); form.appendChild(status); details.appendChild(form); profileRoot.appendChild(details);
+      document.dispatchEvent(new CustomEvent('admin-profile-added', { detail: { doctor: doctor, container: scheduleEditor } }));
       form.addEventListener('submit', async function (event) {
         event.preventDefault(); if (!window.roleAccess.isAdmin()) return;
         function lines(key) { return form.elements[key].value.split(/\r?\n/).map(function (text) { return text.trim(); }).filter(Boolean); }
