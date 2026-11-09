@@ -1,7 +1,7 @@
 .vision-guide { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--white); }
 .vision-guide-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px clamp(24px, 5vw, 52px); background: #0869ee; color: #fff; cursor: pointer; list-style: none; }
 .vision-guide-header::-webkit-details-marker, .vision-aftercare-chapter summary::-webkit-details-marker { display: none; }
-.vision-guide-header-title { font-size: clamp(20px, 3.2vw, 28px); line-height: 1.35; font-weight: 700; }
+.vision-guide-header-title { font-size: 19px; line-height: 1.4; font-weight: 700; }
 .vision-guide-chevron { flex: 0 0 12px; width: 12px; height: 12px; margin-right: 4px; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg); transition: transform .2s; }
 details[open] > summary .vision-guide-chevron { transform: rotate(225deg); }
 .vision-guide-header p { margin: 0; font-size: 15px; }
@@ -34,11 +34,10 @@ details[open] > summary .vision-guide-chevron { transform: rotate(225deg); }
 .vision-phone strong { font-size: 20px; }
 .vision-aftercare { display: grid; gap: 14px; }
 .vision-aftercare-chapter { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--white); }
-.vision-aftercare-chapter summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px clamp(20px, 4vw, 36px); background: #eaf3fa; color: #126ba7; cursor: pointer; list-style: none; }
+.vision-aftercare-chapter summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px clamp(20px, 4vw, 36px); background: #fff; color: #111; cursor: pointer; list-style: none; }
 .vision-aftercare-chapter summary small, .vision-aftercare-chapter summary strong { display: block; }
 .vision-aftercare-chapter summary small { font-size: 11px; font-weight: 700; }
-.vision-aftercare-chapter summary strong { font-size: clamp(20px, 3vw, 27px); line-height: 1.4; }
-.vision-aftercare-lasek summary { background: #f2efeb; color: #705b45; }
+.vision-aftercare-chapter summary strong { font-size: 19px; font-weight: 700; line-height: 1.4; }
 .vision-aftercare-body { max-width: 850px; margin: auto; padding: clamp(20px, 4vw, 36px); }
 .vision-aftercare-body section + section { margin-top: 32px; }
 .vision-aftercare-body h3 { margin: 0 0 10px; color: #126ba7; font-size: 19px; }
@@ -65,8 +64,6 @@ details[open] > summary .vision-guide-chevron { transform: rotate(225deg); }
 .vision-medicine-grid .medicine-cravit, .vision-medicine-grid .medicine-vigamox, .vision-medicine-grid .medicine-fulliron { transform: scale(1.25); }
 .vision-medicine-grid .medicine-prednilone { object-fit: contain; }
 .vision-medicine-grid figcaption { margin-top: 6px; font-size: 13px; font-weight: 700; }
-html[data-theme='dark'] .vision-aftercare-chapter summary { background: #243d55; color: #cde1fb; }
-html[data-theme='dark'] .vision-aftercare-lasek summary { background: #40382f; color: #f1dec7; }
 html[data-theme='dark'] .vision-aftercare-body h3, html[data-theme='dark'] .vision-medicine-group h4 { color: #a8cff4; }
 html[data-theme='dark'] .vision-aftercare-lasek .vision-aftercare-body h3, html[data-theme='dark'] .vision-aftercare-lasek .vision-medicine-group h4 { color: #e6cbb0; }
-@media (max-width: 600px) { .vision-guide-header { padding: 28px 22px; } .vision-guide-content { padding: 24px 18px; } .vision-guide-notice, .vision-fee-card { padding: 18px; } .vision-lens-table th, .vision-lens-table td { padding: 9px; font-size: 13px; } }
+@media (max-width: 600px) { .vision-guide-header { padding: 28px 22px; } .vision-guide-header-title, .vision-aftercare-chapter summary strong { font-size: 18px; } .vision-guide-content { padding: 24px 18px; } .vision-guide-notice, .vision-fee-card { padding: 18px; } .vision-lens-table th, .vision-lens-table td { padding: 9px; font-size: 13px; } }
