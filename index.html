@@ -35,6 +35,7 @@
   <script defer src="js/language.js?v=20261109-schedule1"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/supabase-client.js"></script>
+  <script defer src="js/clinic-hours.js?v=20261109-clinic1"></script>
   <script defer src="js/schedule-data.js?v=20261109-schedule1"></script>
   <script defer src="js/home.js?v=20261109-grid6"></script>
   <script defer src="js/notices.js?v=20261030-noticeempty1"></script>
@@ -81,7 +82,7 @@
     </div>
     <div class="schedule-hours" aria-labelledby="schedule-hours-title">
       <h3 id="schedule-hours-title">병원 진료시간</h3>
-      <dl class="schedule-hours-list">
+      <dl class="schedule-hours-list" data-clinic-hours>
         <div><dt>월 ~ 금요일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
         <div><dt>토요일</dt><dd>오전 8:30 ~ 오후 5:00</dd></div>
         <div><dt><span>공휴일</span> <span class="hours-morning-badge">오전진료</span></dt><dd>오전 8:30 ~ 오후 1:00</dd></div>

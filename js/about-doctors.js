@@ -57,6 +57,8 @@
   }
   async function load() {
     try {
+      if (window.aboutProfilesReady) await window.aboutProfilesReady;
+      cards = Array.from(document.querySelectorAll('[data-about-doctors] [data-doctor-name]'));
       var results = await Promise.all([window.loadDoctorScheduleData(), window.supabaseClient.from('doctor_about_schedules').select('doctor_id,schedule')]);
       var data = results[0], custom = results[1];
       if (custom.error) throw custom.error;

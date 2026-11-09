@@ -104,6 +104,14 @@ html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background
 .admin-about-schedule-row { display: grid; width: 100%; grid-template-columns: repeat(7, minmax(70px, 1fr)); gap: 7px; overflow-x: auto; }
 .admin-about-schedule-row label { display: grid; gap: 4px; font-size: 12px; }
 .admin-about-schedule-row input { width: 100%; min-width: 0; padding: 7px; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
+.admin-profile-form { display: grid; gap: 12px; }
+.admin-profile-form label { display: grid; gap: 5px; font-size: 13px; font-weight: 600; }
+.admin-profile-form textarea { width: 100%; min-height: 90px; padding: 9px; border: 1px solid #bec9d5; border-radius: 8px; background: var(--white); color: var(--ink); font: inherit; resize: vertical; }
+.admin-clinic-hours-form { display: grid; gap: 12px; margin-top: 14px; }
+.admin-clinic-hours-row { display: grid; grid-template-columns: minmax(110px, 1fr) repeat(2, minmax(110px, 1fr)); align-items: end; gap: 8px; }
+.admin-clinic-hours-row label { display: grid; gap: 4px; font-size: 12px; }
+.admin-clinic-hours-row input { width: 100%; min-width: 0; padding: 8px; border: 1px solid #bec9d5; border-radius: 7px; font: inherit; }
+@media (max-width: 500px) { .admin-clinic-hours-row { grid-template-columns: 1fr 1fr; } .admin-clinic-hours-row strong { grid-column: 1 / -1; } }
 .admin-weekly-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); }
 .admin-editor-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 24px; }
 .admin-error { padding: 12px; border-radius: 8px; background: #fff0f1; color: #a33a49; font-size: 13px; }

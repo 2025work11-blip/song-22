@@ -57,15 +57,32 @@
     var result = await Promise.all([window.loadDoctorScheduleData(), window.supabaseClient.from('doctor_about_schedules').select('doctor_id,schedule')]);
     if (result[1].error) throw result[1].error;
     root.replaceChildren();
-    var searchLabel = make('label', '원장 찾기 '), search = make('input'); search.type = 'search'; search.placeholder = '원장 이름 검색'; searchLabel.appendChild(search); root.appendChild(searchLabel);
+    var add = make('button', '새 항목 추가'); add.type = 'button'; add.className = 'admin-button'; root.appendChild(add);
+    var picker = make('div'); picker.hidden = true; picker.className = 'admin-about-schedule-editor';
+    var pickerLabel = make('label', '추가할 원장 '), select = make('select'); pickerLabel.appendChild(select); picker.appendChild(pickerLabel);
+    var choose = make('button', '추가'); choose.type = 'button'; choose.className = 'admin-button'; picker.appendChild(choose);
+    var pickerStatus = make('p'); pickerStatus.setAttribute('role', 'status'); picker.appendChild(pickerStatus); root.appendChild(picker);
     var order = ['정진호', '이택관', '심종우', '최한솔', '이정진'];
     var doctors = result[0].doctors.slice().sort(function (a, b) { var ai = order.indexOf(a.name.replace(/\s*원장\s*$/, '').trim()), bi = order.indexOf(b.name.replace(/\s*원장\s*$/, '').trim()); return (ai < 0 ? 999 : ai) - (bi < 0 ? 999 : bi); });
-    doctors.forEach(function (doctor) {
+    var shown = new Set();
+    doctors.filter(function (doctor) { return order.includes(doctor.name.replace(/\s*원장\s*$/, '').trim()) || result[1].data.some(function (item) { return String(item.doctor_id) === doctor.id; }); }).forEach(function (doctor) {
       var saved = result[1].data.find(function (item) { return String(item.doctor_id) === doctor.id; });
       var value = saved && saved.schedule;
       if (!value || !Array.isArray(value.rows) || !value.rows.length || value.rows.length > 4 || value.rows.some(function (row) { return !row || typeof row.label !== 'string' || !Array.isArray(row.cells) || row.cells.length !== 6 || row.cells.some(function (cell) { return typeof cell !== 'string'; }); })) value = defaults(doctor);
-      draw(doctor, value);
+      shown.add(doctor.id); draw(doctor, value);
     });
-    search.addEventListener('input', function () { root.querySelectorAll('details').forEach(function (detail) { detail.hidden = !detail.querySelector('summary').textContent.toLowerCase().includes(search.value.trim().toLowerCase()); }); });
+    function refreshPicker() {
+      select.replaceChildren();
+      doctors.filter(function (doctor) { return !shown.has(doctor.id); }).forEach(function (doctor) { var option = make('option', doctor.name); option.value = doctor.id; select.appendChild(option); });
+      choose.disabled = !select.options.length; select.disabled = choose.disabled;
+      pickerStatus.textContent = choose.disabled ? '추가할 원장이 없습니다. 먼저 원장별 일정 관리에서 원장 정보를 등록해 주세요.' : '';
+    }
+    add.addEventListener('click', function () { picker.hidden = !picker.hidden; if (!picker.hidden) refreshPicker(); });
+    choose.addEventListener('click', function () {
+      var doctor = doctors.find(function (item) { return item.id === select.value && !shown.has(item.id); });
+      if (!doctor) return;
+      shown.add(doctor.id); draw(doctor, defaults(doctor)); root.lastElementChild.open = true;
+      pickerStatus.textContent = '새 진료표를 입력한 뒤 표 저장을 눌러 주세요.'; select.replaceChildren(); choose.disabled = true; select.disabled = true;
+    });
   } catch (error) { root.textContent = '진료표를 불러오지 못했습니다. 연결 상태를 확인한 뒤 새로고침해 주세요.'; }
 }());

@@ -27,8 +27,6 @@
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
     blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('is_academic', '학술정보 표시', 'checkbox', null, true), field('content', '내용', 'richtext'), field('source_links', '출처', 'sources', null, true)] },
-    hours: { group: 'hospital', title: '병원 진료시간', fixed: true, fields: [field('label', '요일 / 구분'), field('start', '시작 시간', 'time'), field('end', '종료 시간', 'time')] },
-    bios: { group: 'hospital', title: '원장소개', fields: [field('title', '제목'), field('text', '소개 내용', 'textarea')] },
     equipment: { group: 'hospital', title: '장비소개', fields: [field('title', '장비명 / 제목'), field('text', '설명', 'textarea')] },
     topicSummaries: { group: 'diseases', title: '분야별 소개', fixed: true, fields: [field('category', '분야', 'select', function () { return Object.fromEntries(Object.keys(topics).map(function (k) { return [k, topics[k].title]; })); }), field('summary', '소개 문구', 'textarea')] },
     articles: { group: 'diseases', title: '상세 안내', fields: [field('category', '분야', 'select', function () { return Object.fromEntries(Object.keys(topics).map(function (k) { return [k, topics[k].title]; })); }), field('section', '안내 구분', 'select', sectionOptions), field('title', '소제목'), field('text', '안내 내용', 'textarea')] },

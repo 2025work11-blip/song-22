@@ -34,8 +34,10 @@
   <script defer src="js/language.js?v=20261103-blog1"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/supabase-client.js"></script>
+  <script defer src="js/clinic-hours.js?v=20261109-clinic1"></script>
+  <script defer src="js/about-profiles.js?v=20261109-clinic2"></script>
   <script defer src="js/schedule-data.js?v=20261109-schedule1"></script>
-  <script defer src="js/about-doctors.js?v=20261109-about7"></script>
+  <script defer src="js/about-doctors.js?v=20261109-about8"></script>
   <script defer src="js/role-access.js?v=20261030-roles1"></script>
   <script defer src="js/auth.js?v=20261030-roles1"></script>
 </head>
@@ -59,7 +61,7 @@
     <!-- 실제 운영시간을 확인한 후 아래 '확인 후 안내' 문구를 교체하세요. -->
     <section class="information-section" id="hours" aria-labelledby="heading-hours">
       <div class="section-heading"><span class="section-number" aria-hidden="true">01</span><h2 id="heading-hours">진료시간</h2></div>
-      <div class="info-card"><dl class="schedule-hours-list">
+      <div class="info-card"><dl class="schedule-hours-list" data-clinic-hours>
         <div><dt>월 ~ 금요일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
         <div><dt>토요일</dt><dd>오전 8:30 ~ 오후 5:00</dd></div>
         <div><dt><span>공휴일</span> <span class="hours-morning-badge">오전진료</span></dt><dd>오전 8:30 ~ 오후 1:00</dd></div>
