@@ -45,6 +45,9 @@ details[open] > summary .vision-guide-chevron { transform: rotate(225deg); }
 .vision-aftercare-lasek .vision-aftercare-body h3 { color: #705b45; }
 .vision-aftercare-body ul { margin: 0; padding-left: 22px; }
 .vision-aftercare-body li + li { margin-top: 8px; }
+.vision-daily-note, .vision-daily-footer { margin: 0; padding: 14px 16px; border-radius: 10px; background: var(--background); font-size: 14px; line-height: 1.7; }
+.vision-daily-note { margin-bottom: 28px; }
+.vision-daily-footer { margin-top: 32px; }
 .vision-medicine-section > p { margin: 8px 0; }
 .vision-medicine-note { font-weight: 600; }
 .vision-medicine-group { margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: 12px; }
