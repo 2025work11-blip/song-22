@@ -1,0 +1,87 @@
+/* 병원소개와 같은 시력교정 페이지 전용 디자인 */
+html:not([data-theme='dark']) body[data-category='vision'] { --background: #fff; background: #fff; }
+body[data-category='vision'] .detail-intro { padding-top: clamp(72px, 11vw, 130px); padding-bottom: clamp(72px, 11vw, 130px); text-align: center; }
+body[data-category='vision'] .detail-intro .eyebrow { color: #777; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+body[data-category='vision'] .detail-intro .eyebrow::before { content: none; }
+body[data-category='vision'] .detail-intro h1 { margin: 0; font-size: clamp(38px, 6vw, 68px); font-weight: 700; }
+body[data-category='vision'] .section-nav { width: 80%; margin-inline: auto; padding: 0; background: #f2f2f2; border: 0; transition: width .35s ease; }
+body[data-category='vision'] .section-nav.is-stuck { width: 100%; }
+body[data-category='vision'] .section-nav-inner { width: min(1120px, 100%); gap: 0; padding: 4px; }
+body[data-category='vision'] .section-nav a { display: flex; flex: 1; align-items: center; justify-content: center; min-width: 0; min-height: 56px; padding: 10px 6px; border-radius: 3px; color: #333; background: transparent; transition: color .25s ease, background-color .25s ease; }
+body[data-category='vision'] .section-nav a:hover,
+body[data-category='vision'] .section-nav a[aria-current='location'] { background: #202020; color: #fff; }
+body[data-category='vision'] .detail-content { padding-top: 0; padding-bottom: 90px; }
+body[data-category='vision'] .information-section { padding-top: clamp(56px, 8vw, 100px); }
+body[data-category='vision'] .section-heading { flex-direction: column; gap: 2px; align-items: flex-start; margin-bottom: 28px; }
+body[data-category='vision'] .section-number { color: #666; font-size: 14px; font-weight: 500; }
+body[data-category='vision'] .section-heading h2 { font-size: clamp(27px, 3.4vw, 38px); }
+body[data-category='vision'] .vision-guide,
+body[data-category='vision'] .vision-aftercare-chapter { overflow: visible; border-radius: 0; }
+body[data-category='vision'] .vision-guide > summary,
+body[data-category='vision'] .vision-aftercare-chapter > summary { min-height: 76px; padding-inline: 18px; background: #202020; color: #fff; transition: width .25s ease, margin-left .25s ease, min-height .25s ease, padding .25s ease, background-color .2s ease; }
+body[data-category='vision'] .vision-guide > summary:hover,
+body[data-category='vision'] .vision-aftercare-chapter > summary:hover { background: #343434; }
+body[data-category='vision'] .vision-guide > summary::after,
+body[data-category='vision'] .vision-aftercare-chapter > summary::after { color: #fff; transition: transform .25s ease, color .2s ease; }
+body[data-category='vision'] .vision-guide[open] > summary,
+body[data-category='vision'] .vision-aftercare-chapter[open] > summary { position: sticky; top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 64px)); z-index: 4; }
+body[data-category='vision'] .vision-guide[open] > summary::after,
+body[data-category='vision'] .vision-aftercare-chapter[open] > summary::after { color: #0074ff; }
+body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary,
+body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary,
+html[data-theme='dark'] body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary,
+html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary { box-sizing: border-box; width: 100vw; margin-left: calc(50% - 50vw); min-height: var(--disease-nav-height, 56px); height: var(--disease-nav-height, 56px); padding: 8px max(28px, calc((100vw - 1120px) / 2 + 12px)); background: #0074ff; color: #fff; }
+body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary::after,
+body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary::after { color: #fff; }
+body[data-category='vision'] .vision-guide-content,
+body[data-category='vision'] .vision-aftercare-body { padding-top: 56px; padding-bottom: 68px; }
+body[data-category='vision'] .vision-guide-section h5 span,
+body[data-category='vision'] .vision-fee-card h5,
+body[data-category='vision'] .vision-lens-table td { color: #0074ff; }
+body[data-category='vision'] #afterSurgery .vision-aftercare-body h3,
+body[data-category='vision'] #afterSurgery .vision-medicine-group h4 { color: var(--ink); }
+body[data-category='vision'] #afterSurgery .vision-medicine-group h4 { font-size: 21px; }
+body[data-category='vision'] .vision-medicine-label { display: inline-block; margin-left: 8px; padding: 1px 5px; border: 1px solid #d0d5db; border-radius: 5px; color: var(--ink); font-size: 11px; font-weight: 500; vertical-align: 3px; }
+body[data-category='vision'] .vision-medicine-section .vision-medicine-prescription { margin: 0 0 14px; color: var(--muted); font-size: 13px; font-weight: 400; }
+body[data-category='vision'] .vision-heading-icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin-right: 9px;
+  vertical-align: -4px;
+  fill: none;
+  stroke: #0074ff;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body[data-category='vision'] .vision-guide-content li::marker,
+body[data-category='vision'] .vision-aftercare-body li::marker { color: #0074ff; }
+body[data-category='vision'] .vision-phone { padding: 0; border-radius: 0; background: transparent; }
+body[data-category='vision'] .vision-phone span { color: var(--muted); font-size: 12px; }
+body[data-category='vision'] .vision-phone strong { color: #0074ff; }
+html:not([data-theme='dark']) body[data-category='vision'] .site-footer { background: #f7f7f7; }
+html[data-theme='dark'] body[data-category='vision'] .detail-intro .eyebrow { color: #b6b6b6; }
+html[data-theme='dark'] body[data-category='vision'] .section-nav { background: #303030; }
+html[data-theme='dark'] body[data-category='vision'] .section-nav a { color: #b6b6b6; }
+html[data-theme='dark'] body[data-category='vision'] .section-nav a:hover,
+html[data-theme='dark'] body[data-category='vision'] .section-nav a[aria-current='location'] { background: #eee; color: #171717; }
+html[data-theme='dark'] body[data-category='vision'] .vision-guide > summary,
+html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter > summary { background: #303030; color: #fff; }
+@media (max-width: 600px) {
+  body[data-category='vision'] .section-nav a { min-height: 48px; padding-inline: 2px; font-size: clamp(11px, 3vw, 14px); }
+  body[data-category='vision'] .detail-content { padding-bottom: 60px; }
+  body[data-category='vision'] .section-heading { margin-bottom: 22px; }
+  body[data-category='vision'] .vision-guide-header-title,
+  body[data-category='vision'] .vision-aftercare-chapter summary strong { font-size: 18px; }
+  body[data-category='vision'] .vision-guide-content,
+  body[data-category='vision'] .vision-aftercare-body { padding-top: 44px; padding-bottom: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-category='vision'] .section-nav,
+  body[data-category='vision'] .section-nav a,
+  body[data-category='vision'] .vision-guide > summary,
+  body[data-category='vision'] .vision-aftercare-chapter > summary,
+  body[data-category='vision'] .vision-guide > summary::after,
+  body[data-category='vision'] .vision-aftercare-chapter > summary::after { transition: none; }
+}
