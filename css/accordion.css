@@ -34,3 +34,10 @@ html[data-theme='dark'] .admin-weekly-group > summary { background: #172230; col
   .vision-guide-header-title, .vision-aftercare-chapter summary strong, .blog-post-title,
   .medication-trigger, .admin-weekly-group > summary { font-size: 14px; }
 }
+/* 시력교정 안내의 아코디언 제목은 공지사항보다 3pt 크게 표시합니다. */
+body[data-category='vision'] .vision-guide-header-title,
+body[data-category='vision'] .vision-aftercare-chapter summary strong { font-size: 20px; }
+@media (max-width: 600px) {
+  body[data-category='vision'] .vision-guide-header-title,
+  body[data-category='vision'] .vision-aftercare-chapter summary strong { font-size: 18px; }
+}
