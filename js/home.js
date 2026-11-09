@@ -156,7 +156,7 @@
       var dot = make('span', 'doctor-initial ' + colorClass(doctor));
       applyDoctorColor(dot, doctor);
       dot.setAttribute('aria-hidden', 'true');
-      legend.append(dot, make('span', '', doctor.name));
+      legend.append(dot, make('span', '', doctor.name.replace(/\s*원장\s*$/, '')));
       doctorFilters.appendChild(legend);
     });
   }
@@ -177,7 +177,12 @@
       image.src = 'assets/icons/doctor-placeholder.svg';
     }, { once: true });
     portrait.appendChild(image);
-    heading.append(portrait, make('span', '', doctor ? doctor.name : fallbackName || '원장 정보 확인 중'));
+    var fullName = doctor ? doctor.name : fallbackName || '원장 정보 확인 중';
+    var name = make('span', 'schedule-doctor-label');
+    var hasTitle = /원장\s*$/.test(fullName);
+    name.appendChild(make('span', '', hasTitle ? fullName.replace(/\s*원장\s*$/, '') : fullName));
+    if (hasTitle) name.appendChild(make('span', 'schedule-doctor-title', '원장'));
+    heading.append(portrait, name);
     return heading;
   }
   function renderDay() {

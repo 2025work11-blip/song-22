@@ -7,8 +7,14 @@
 .schedule-calendar .calendar-day[aria-pressed='true'], .schedule-calendar td:first-child .calendar-day[aria-pressed='true'] { border: 0; border-radius: 0; }
 .schedule-calendar .calendar-day:focus-visible { outline: 2px solid #436d99; outline-offset: -3px; }
 .calendar-markers .doctor-initial { width: 7px; height: 7px; }
+.day-panel h3[data-selected-date] { font-size: 26px; }
+.schedule-entry .schedule-doctor-name { font-size: 19px; }
+.schedule-doctor-label { display: inline-flex; align-items: baseline; gap: 5px; }
+.schedule-doctor-title { color: var(--muted); font-size: 13px; font-weight: 400; }
+.schedule-work-hours { font-weight: 500; }
 html[data-theme='dark'] .schedule-calendar, html[data-theme='dark'] .schedule-calendar th, html[data-theme='dark'] .schedule-calendar td { border-color: #354f6b; }
 @media (max-width: 600px) {
   .schedule-calendar { --calendar-gap: 0px; border-spacing: 0; border-radius: 12px; }
   .calendar-markers .doctor-initial { width: 7px; height: 7px; }
+  .day-panel h3[data-selected-date] { font-size: 24px; }
 }
