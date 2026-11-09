@@ -1,0 +1,39 @@
+.about-doctors { border-top: 1px solid #bfc7c8; }
+body[data-about-page] #hours .schedule-hours-list > div:first-child { border-top: 0; }
+.about-doctors details { border-bottom: 1px solid var(--line); background: var(--white); }
+.about-doctors summary { display: flex; align-items: center; min-height: 76px; padding: 20px 22px; list-style: none; font-size: 20px; font-weight: 600; cursor: pointer; }
+.about-doctors summary::-webkit-details-marker { display: none; }
+.about-doctors summary::after { content: '+'; margin-left: auto; color: #6c7f89; font-size: 20px; font-weight: 400; }
+.about-doctors details[open] > summary::after { transform: rotate(45deg); }
+.about-doctor-body { padding: 24px; border-top: 1px solid var(--line); }
+.about-doctor-intro { display: grid; grid-template-columns: minmax(160px, 230px) minmax(0, 1fr); gap: 32px; }
+.about-doctor-profile { text-align: center; }
+.about-doctor-profile img { display: block; width: 150px; height: 150px; margin: 0 auto 14px; border-radius: 50%; background: #eff3f7; object-fit: cover; }
+.about-doctor-profile p { margin: 0 0 10px; }
+.about-doctor-profile p strong { font-size: 24px; }
+.about-specialties { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
+.about-specialties span { padding: 4px 9px; border: 1px solid #c5d5e4; border-radius: 15px; color: #436d99; font-size: 12px; }
+.about-doctor-body section { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.about-doctor-body h3 { margin: 0 0 10px; font-size: 17px; }
+.about-doctor-body p { line-height: 1.7; }
+.about-schedule-list { margin: 0; padding-left: 20px; }
+.about-schedule-start { margin: 0 0 8px; font-weight: 600; }
+.about-schedule-table { width: 100%; table-layout: fixed; border-collapse: collapse; text-align: center; font-size: 14px; }
+.about-schedule-table th, .about-schedule-table td { padding: 10px 3px; border-bottom: 1px solid var(--line); }
+.about-schedule-table thead th { background: #72c8f2; color: #fff; font-weight: 700; }
+.about-schedule-table tbody th { font-weight: 600; }
+.about-schedule-table small { display: block; color: var(--muted); font-size: 10px; }
+.about-schedule-table .about-external-schedule { font-size: 13px; font-weight: 600; }
+.about-table-legend { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+.about-doctor-body .about-career-heading { margin-top: 20px; color: #126ba7; }
+.about-career-list { margin: 0; padding-left: 20px; }
+.about-career-list li + li { margin-top: 6px; }
+.about-schedule-list li + li { margin-top: 4px; }
+.about-schedule-note { margin: 14px 0 0; color: var(--muted); font-size: 12px; }
+html[data-theme='dark'] .about-doctors details { background: #172230; }
+@media (max-width: 600px) {
+  .about-doctors summary { padding: 16px; font-size: 18px; }
+  .about-doctor-body { padding: 20px 16px; }
+  .about-doctor-intro { grid-template-columns: 1fr; gap: 24px; }
+  .about-schedule-table { font-size: 12px; }
+}

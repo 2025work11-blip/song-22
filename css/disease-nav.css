@@ -1,7 +1,11 @@
 /* 질환 탭을 실제 상단 배너 아래에 고정합니다. */
 body[data-category] .section-nav { top: var(--disease-header-height, 71.4px); }
 body[data-category] .information-section { scroll-margin-top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 69px) + 16px); }
+body[data-about-page] .section-nav { top: var(--disease-header-height, 71.4px); }
+body[data-about-page] .information-section { scroll-margin-top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 69px) + 16px); }
 @media (max-width: 600px) {
   body[data-category] .section-nav { top: var(--disease-header-height, 60.2px); }
   body[data-category] .information-section { scroll-margin-top: calc(var(--disease-header-height, 60.2px) + var(--disease-nav-height, 69px) + 16px); }
+  body[data-about-page] .section-nav { top: var(--disease-header-height, 60.2px); }
+  body[data-about-page] .information-section { scroll-margin-top: calc(var(--disease-header-height, 60.2px) + var(--disease-nav-height, 69px) + 16px); }
 }

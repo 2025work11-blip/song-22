@@ -17,13 +17,16 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="연세제일안과">
   <meta name="twitter:image" content="https://jeileye.vercel.app/assets/share-preview.png?v=20261102-yonsei1">
-  <meta name="description" content="연세제일안과 병원소개: 진료시간, 원장소개, 장비소개를 확인하세요.">
+  <meta name="description" content="연세제일안과 병원소개: 진료시간, 의료진 소개, 장비 안내를 확인하세요.">
   <title>병원소개 | 연세제일안과</title>
   <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261029-layout2">
   <link rel="stylesheet" href="css/theme.css?v=20261109-quick1">
+  <link rel="stylesheet" href="css/disease-nav.css?v=20261109-about1">
+  <link rel="stylesheet" href="css/about-doctors.css?v=20261109-about4">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261102-yonsei1">
   <script defer src="js/layout.js?v=20261103-blog1"></script>
+  <script defer src="js/disease-nav.js?v=20261109-about1"></script>
   <script defer src="js/config.js"></script>
   <script defer src="js/share.js?v=20261029-share1"></script>
   <script defer src="js/data.js?v=20261030-closures1"></script>
@@ -31,10 +34,12 @@
   <script defer src="js/language.js?v=20261103-blog1"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/supabase-client.js"></script>
+  <script defer src="js/schedule-data.js?v=20261109-schedule1"></script>
+  <script defer src="js/about-doctors.js?v=20261109-about7"></script>
   <script defer src="js/role-access.js?v=20261030-roles1"></script>
   <script defer src="js/auth.js?v=20261030-roles1"></script>
 </head>
-<body>
+<body data-about-page>
 <a class="skip-link" href="#main">본문으로 바로가기</a>
 <div data-site-header></div>
 <p class="container auth-global-message" data-auth-global-message role="alert" hidden></p>
@@ -45,33 +50,37 @@
     <p class="eyebrow">ABOUT AA EYE CLINIC</p>
     <h1>병원소개</h1>
     <p class="detail-summary">연세제일안과의 진료시간과 의료진, 진료 장비를 안내합니다.</p>
-    <div class="mock-notice"><p>진료시간은 병원에서 제공한 안내를 반영했습니다. 원장 및 장비 소개는 화면 확인용 샘플입니다.</p></div>
+    <div class="mock-notice"><p>의료진 인사말과 일부 약력, 장비 안내는 준비 중입니다.</p></div>
   </div>
   <nav class="section-nav" aria-label="병원소개 섹션 이동"><div class="container section-nav-inner">
-    <a href="#hours">진료시간</a><a href="#director">원장소개</a><a href="#equipment">장비소개</a>
+    <a href="#hours">진료시간</a><a href="#director">의료진 소개</a><a href="#equipment">장비 안내</a>
   </div></nav>
   <div class="container detail-content">
     <!-- 실제 운영시간을 확인한 후 아래 '확인 후 안내' 문구를 교체하세요. -->
     <section class="information-section" id="hours" aria-labelledby="heading-hours">
       <div class="section-heading"><span class="section-number" aria-hidden="true">01</span><h2 id="heading-hours">진료시간</h2></div>
-      <div class="info-card"><dl class="hours-list">
-        <div class="hours-row"><dt>월 ~ 금요일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
-        <div class="hours-row"><dt>토요일</dt><dd>오전 8:30 ~ 오후 5:00</dd></div>
-        <div class="hours-row"><dt><span>공휴일</span> <span class="hours-morning-badge">오전진료</span></dt><dd>오전 8:30 ~ 오후 1:00</dd></div>
-        <div class="hours-row"><dt>점심시간</dt><dd>오후 12:30 ~ 오후 2:00</dd></div>
+      <div class="info-card"><dl class="schedule-hours-list">
+        <div><dt>월 ~ 금요일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
+        <div><dt>토요일</dt><dd>오전 8:30 ~ 오후 5:00</dd></div>
+        <div><dt><span>공휴일</span> <span class="hours-morning-badge">오전진료</span></dt><dd>오전 8:30 ~ 오후 1:00</dd></div>
+        <div class="hours-substitute"><dt>대체공휴일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
+        <div><dt>점심시간</dt><dd>오후 12:30 ~ 오후 2:00</dd></div>
       </dl></div>
     </section>
     <!-- 원장 이름, 인사말, 약력은 확인된 내용으로 교체하세요. -->
     <section class="information-section" id="director" aria-labelledby="heading-director">
-      <div class="section-heading"><span class="section-number" aria-hidden="true">02</span><h2 id="heading-director">원장소개</h2></div>
-      <div class="info-grid">
-        <article class="info-card"><div class="about-placeholder"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="20" cy="12" r="7"/><path d="M7 35v-4a13 13 0 0 1 26 0v4M16 27h8m-4-4v8"/></svg></div><h3>원장 인사말</h3><p>원장 이름과 인사말을 소개할 영역입니다. 연세제일안과에서 확인한 내용을 반영할 예정입니다.</p></article>
-        <article class="info-card"><h3>주요 약력 및 진료 분야</h3><p>원장의 주요 약력과 진료 분야를 안내할 영역입니다. 실제 경력과 자격 정보는 확인 후 등록합니다.</p></article>
+      <div class="section-heading"><span class="section-number" aria-hidden="true">02</span><h2 id="heading-director">의료진 소개</h2></div>
+      <div class="about-doctors" data-about-doctors>
+        <details data-doctor-name="정진호"><summary>정진호 원장</summary><div class="about-doctor-body"><div class="about-doctor-intro"><div class="about-doctor-profile"><img src="assets/icons/doctor-placeholder.svg" alt=""><p>안과전문의 <strong>정진호</strong></p><div class="about-specialties"><span>시력교정</span><span>각막</span><span>백내장</span></div></div><div><h3>인사말</h3><p>인사말은 준비 중입니다.</p></div></div><section><h3>약력</h3><ul class="about-career-list"><li>서울대학교 의과대학 의학박사</li><li>서울 아산병원 안과 전공의</li><li>서울대학교병원 안과 각막/외안부 전임의</li><li>인천광역시의료원 안과 과장 역임</li><li>제주대학교 의과대학 안과학교실 주임교수</li><li>실명예방재단 제주지역 지부장</li><li>듀크대학병원 안과 방문교수(2016)</li><li>현) 제주대학교병원 안과 교수</li></ul><h3 class="about-career-heading">학회활동</h3><ul class="about-career-list"><li>대한안과학회 정회원</li><li>외안부학회 정회원</li><li>대한안과학회지 편집위원</li><li>대한검안학회 학술이사 역임</li><li>한국 콘택트렌즈학회 홍보이사</li><li>한국 백내장굴절수술학회 교육이사</li><li>한국 각막학회 기획이사</li><li>한국 건성안학회 교육이사</li><li>한국 근시학회 기획이사</li><li>복지부장관 표창(2023)</li><li>안과 전문의 자격시험 고시위원회 위원 (2024–2027)</li><li>한국 근시학회 기획이사</li></ul></section><section><h3>진료일정</h3><div data-doctor-schedule>정기 일정을 불러오는 중입니다.</div><p class="about-schedule-note">정기 일정은 휴진 및 날짜별 변경에 따라 달라질 수 있습니다. 내원 전 일정을 확인해 주세요.</p></section></div></details>
+        <details data-doctor-name="이택관"><summary>이택관 원장</summary><div class="about-doctor-body"><div class="about-doctor-intro"><div class="about-doctor-profile"><img src="assets/icons/doctor-placeholder.svg" alt=""><p>안과전문의 <strong>이택관</strong></p><div class="about-specialties"><span>녹내장</span><span>백내장</span></div></div><div><h3>인사말</h3><p>인사말은 준비 중입니다.</p></div></div><section><h3>약력</h3><ul class="about-career-list"><li>충남대학교 의과대학 졸업</li><li>영등포 김안과병원 레지던트 수료</li><li>서울삼성병원 안과 녹내장 전임의</li><li>UCLA Jules Stein Eye Institute 녹내장 전임의</li><li>한라병원 안과 과장(전)</li><li>대전보건대학 임상강사(전)</li></ul><h3 class="about-career-heading">학회활동</h3><ul class="about-career-list"><li>대한안과학회 정회원</li><li>미국 안과학회(AAO) 정회원</li><li>미국백내장굴절수술학회(ASCRS) 정회원</li><li>한국녹내장학회 정회원</li><li>한라병원 장기이식위원회 위원(전)</li><li>제주도 의료자문위원회 위원(전)</li></ul></section><section><h3>진료일정</h3><div data-doctor-schedule>정기 일정을 불러오는 중입니다.</div><p class="about-schedule-note">정기 일정은 휴진 및 날짜별 변경에 따라 달라질 수 있습니다. 내원 전 일정을 확인해 주세요.</p></section></div></details>
+        <details data-doctor-name="심종우"><summary>심종우 원장</summary><div class="about-doctor-body"><div class="about-doctor-intro"><div class="about-doctor-profile"><img src="assets/icons/doctor-placeholder.svg" alt=""><p>안과전문의 <strong>심종우</strong></p><div class="about-specialties"><span>시력교정</span><span>백내장</span><span>망막</span></div></div><div><h3>인사말</h3><p>인사말은 준비 중입니다.</p></div></div><section><h3>약력</h3><ul class="about-career-list"><li>연세대학교 의과대학 졸업</li><li>일본 게이오 의과대학 한일 교류협력단 대표</li><li>미국 California UCSF 기초의학 연구원 연수</li><li>세브란스병원 안과 전문의</li><li>미국 Harvard Medical school 안과학교실 공동 연구원</li><li>제주특별자치도 제주시 서부보건소 공중보건의 복무</li><li>Dr. Argawal’s Eye Hospital, Chennai, India 연수</li><li>평택 김안과 병원 원장(전)</li><li>종로 새안안과 병원 원장(전)</li><li>현) 연세대학교 의과대학 안과학교실 외래교수</li></ul><h3 class="about-career-heading">학회활동</h3><ul class="about-career-list"><li>대한안과학회 정회원</li><li>미국 안과학회(AAO) 정회원</li><li>미국 시과학 연구회(ARVO) 정회원</li><li>한국백내장굴절수술학회(KSCRS) 정회원</li><li>한국 콘택트렌즈 연구회(KCLS) 정회원</li></ul></section><section><h3>진료일정</h3><div data-doctor-schedule>정기 일정을 불러오는 중입니다.</div><p class="about-schedule-note">정기 일정은 휴진 및 날짜별 변경에 따라 달라질 수 있습니다. 내원 전 일정을 확인해 주세요.</p></section></div></details>
+        <details data-doctor-name="최한솔"><summary>최한솔 원장</summary><div class="about-doctor-body"><div class="about-doctor-intro"><div class="about-doctor-profile"><img src="assets/icons/doctor-placeholder.svg" alt=""><p>안과전문의 <strong>최한솔</strong></p><div class="about-specialties"><span>안구건조</span><span>소아근시</span></div></div><div><h3>인사말</h3><p>인사말은 준비 중입니다.</p></div></div><section><h3>약력</h3><ul class="about-career-list"><li>순천향대학교 의과대학 졸업</li><li>순천향대학교 부속 부천병원 인턴 수석수료</li><li>순천향대학교 부속 부천병원 레지던트 수료</li><li>순천향대학교 의과대학 안과학 석사과정 수료</li><li>서울리더스안과 원장(전)</li></ul><h3 class="about-career-heading">학회활동</h3><ul class="about-career-list"><li>대한안과학회 정회원</li><li>한국 콘택트렌즈학회(KCLS) 정회원</li><li>한국 백내장굴절수술학회(KSCRS) 정회원</li><li>대한 검안학회 정회원</li></ul></section><section><h3>진료일정</h3><div data-doctor-schedule>정기 일정을 불러오는 중입니다.</div><p class="about-schedule-note">정기 일정은 휴진 및 날짜별 변경에 따라 달라질 수 있습니다. 내원 전 일정을 확인해 주세요.</p></section></div></details>
+        <details data-doctor-name="이정진"><summary>이정진 원장</summary><div class="about-doctor-body"><div class="about-doctor-intro"><div class="about-doctor-profile"><img src="assets/icons/doctor-placeholder.svg" alt=""><p>안과전문의 <strong>이정진</strong></p><div class="about-specialties"><span>각막</span><span>백내장</span></div></div><div><h3>인사말</h3><p>인사말은 준비 중입니다.</p></div></div><section><h3>약력</h3><p>약력은 준비 중입니다.</p></section><section><h3>진료일정</h3><div data-doctor-schedule>정기 일정을 불러오는 중입니다.</div><p class="about-schedule-note">정기 일정은 휴진 및 날짜별 변경에 따라 달라질 수 있습니다. 내원 전 일정을 확인해 주세요.</p></section></div></details>
       </div>
     </section>
     <!-- 장비 카드를 복사해 추가할 수 있습니다. 실제 보유 장비만 등록하세요. -->
     <section class="information-section" id="equipment" aria-labelledby="heading-equipment">
-      <div class="section-heading"><span class="section-number" aria-hidden="true">03</span><h2 id="heading-equipment">장비소개</h2></div>
+      <div class="section-heading"><span class="section-number" aria-hidden="true">03</span><h2 id="heading-equipment">장비 안내</h2></div>
       <div class="info-grid">
         <article class="info-card"><div class="about-placeholder"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="5" width="30" height="21" rx="3"/><path d="M20 26v8m-8 0h16M11 16s3-5 9-5 9 5 9 5-3 5-9 5-9-5-9-5Z"/><circle cx="20" cy="16" r="2"/></svg></div><h3>진료 장비 안내 준비 중</h3><p>장비명과 용도를 소개할 영역입니다. 연세제일안과의 실제 보유 장비를 확인한 뒤 설명을 반영합니다.</p></article>
       </div>

@@ -10,7 +10,7 @@
   <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261029-layout2">
   <link rel="stylesheet" href="css/theme.css?v=20261103-blog1">
-  <link rel="stylesheet" href="css/admin.css?v=20261109-schedule1">
+  <link rel="stylesheet" href="css/admin.css?v=20261109-about1">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261102-yonsei1">
   <script defer src="js/layout.js?v=20261103-blog1"></script>
   <script defer src="js/config.js"></script>
@@ -25,6 +25,9 @@
   <script defer src="js/blog-format.js?v=20261105-blogeditor"></script>
   <script defer src="js/admin-store.js?v=20261109-schedule1"></script>
   <script defer src="js/admin.js?v=20261109-schedule1"></script>
+  <script defer src="js/schedule-data.js?v=20261109-schedule1"></script>
+  <script defer src="js/about-doctors.js?v=20261109-about7"></script>
+  <script defer src="js/admin-about-schedules.js?v=20261109-about1"></script>
   <script defer src="js/blog-transfer.js?v=20261105-seo1"></script>
   <script defer src="js/admin-blog-workflow.js?v=20261106-blogdate1"></script>
   <link rel="stylesheet" href="css/blog-workflow.css?v=20261106-blogpagination1">
@@ -38,7 +41,7 @@
 <div class="container admin-access-message"><p data-admin-access-status role="status">관리자 권한을 확인하고 있습니다.</p><button class="admin-button" data-admin-access-retry type="button" hidden>다시 확인</button><noscript><p>관리자 권한을 확인하려면 JavaScript를 활성화해 주세요.</p></noscript></div>
 <main id="main" class="container admin-main" tabindex="-1" data-admin-protected hidden>
   <div class="admin-heading"><div><p class="admin-eyebrow">AA EYE CLINIC</p><h1>홈페이지 관리</h1><p>병원 안내와 운영 일정을 한곳에서 확인하세요.</p></div><a class="admin-button" href="index.html">홈페이지 보기</a></div>
-  <div class="admin-preview-note"><strong>홈페이지 데이터 관리</strong><p>원장 정보·진료 일정·휴진·공지사항·블로그 글은 저장하면 DB에 반영됩니다. 병원소개·질환 안내·홈페이지 설정은 아직 읽기 전용입니다.</p></div>
+  <div class="admin-preview-note"><strong>홈페이지 데이터 관리</strong><p>원장 정보·진료 일정·휴진·공지사항·블로그 글과 병원소개 진료표는 저장하면 DB에 반영됩니다. 그 밖의 병원소개·질환 안내·홈페이지 설정은 읽기 전용입니다.</p></div>
   <p class="admin-status" data-admin-status role="status" aria-live="polite">공용 데이터를 확인하고 있습니다.</p>
   <div class="admin-layout">
     <nav class="admin-nav" aria-label="관리자 메뉴">
@@ -53,7 +56,7 @@
       <section data-admin-panel="schedule" aria-labelledby="admin-schedule-title"><h2 id="admin-schedule-title">원장별 일정 관리</h2><p class="admin-description">정기 일정, 특정 날짜의 변경 일정, 휴진 기간을 구분해 확인합니다.</p><div data-admin-group="schedule"></div></section>
       <section data-admin-panel="notices" aria-labelledby="admin-notices-title" hidden><h2 id="admin-notices-title">공지사항 관리</h2><p class="admin-description">홈에는 최근 3개월 공지만 표시됩니다. 여기에서는 지난 공지도 함께 확인합니다. 이미지는 공개 HTTPS 주소로 입력합니다.</p><div data-admin-group="notices"></div></section>
       <section data-admin-panel="blog" aria-labelledby="admin-blog-title" hidden><h2 id="admin-blog-title">QnA 블로그 관리</h2><p class="admin-description">작성일, 제목, 내용과 선택 사항인 출처 링크를 입력합니다. 저장한 글은 블로그에 공개됩니다.</p><div data-admin-group="blog"></div></section>
-      <section data-admin-panel="hospital" aria-labelledby="admin-hospital-title" hidden><h2 id="admin-hospital-title">병원소개 관리</h2><p class="admin-description">진료시간과 원장·장비 소개를 확인합니다. 현재 홈페이지 안내를 바탕으로 구성한 미리보기입니다.</p><div data-admin-group="hospital"></div></section>
+      <section data-admin-panel="hospital" aria-labelledby="admin-hospital-title" hidden><h2 id="admin-hospital-title">병원소개 관리</h2><p class="admin-description">병원소개에 표시되는 의료진별 진료표를 수정할 수 있습니다.</p><div class="admin-card"><h3>의료진 소개 진료표</h3><p class="admin-description">이 표는 병원소개에만 표시됩니다. 메인 달력의 정기 일정과 휴진은 원장별 일정 관리에서 따로 변경해 주세요.</p><div data-admin-about-schedules>진료표를 불러오는 중입니다.</div></div><div data-admin-group="hospital"></div></section>
       <section data-admin-panel="diseases" aria-labelledby="admin-diseases-title" hidden><h2 id="admin-diseases-title">질환 안내 관리</h2><p class="admin-description">병원이 확인한 안내 내용으로 교체할 영역입니다. 현재 내용은 기존 홈페이지의 샘플입니다.</p><label class="admin-topic-label">분야 선택<select data-admin-disease-filter></select></label><div data-admin-group="diseases"></div></section>
       <section data-admin-panel="settings" aria-labelledby="admin-settings-title" hidden><h2 id="admin-settings-title">홈페이지 설정</h2><p class="admin-description">현재 사용 중인 병원명·로고·상담 및 예약 주소·공유 이미지를 확인합니다.</p><div data-admin-group="settings"></div></section>
     </div>

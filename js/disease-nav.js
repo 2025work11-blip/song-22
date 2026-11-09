@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   var header = document.querySelector('.site-header');
-  var nav = document.querySelector('body[data-category] .section-nav');
+  var nav = document.querySelector('body[data-category] .section-nav, body[data-about-page] .section-nav');
   if (!header || !nav) return;
   var links = Array.from(nav.querySelectorAll('a[href^="#"]'));
   var sections = links.map(function (link) {
