@@ -35,12 +35,37 @@ body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary::aft
 body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary::after { color: #fff; }
 body[data-category='vision'] .vision-guide-content,
 body[data-category='vision'] .vision-aftercare-body { padding-top: 56px; padding-bottom: 68px; }
+body[data-category='vision'] .vision-guide-content,
+body[data-category='vision'] .vision-aftercare-body { font-size: 19px; line-height: 1.8; }
+body[data-category='vision'] .vision-guide-content p,
+body[data-category='vision'] .vision-aftercare-body p,
+body[data-category='vision'] .vision-guide-content li,
+body[data-category='vision'] .vision-aftercare-body li { line-height: 1.8; }
+body[data-category='vision'] .vision-medicine-group p,
+body[data-category='vision'] .vision-daily-note,
+body[data-category='vision'] .vision-daily-footer { font-size: 17px; }
+body[data-category='vision'] .vision-guide-content h5,
+body[data-category='vision'] .vision-aftercare-body h3 { font-size: 24px; line-height: 1.4; }
+body[data-category='vision'] .vision-guide-content h4 { font-size: clamp(23px, 3vw, 27px); line-height: 1.4; }
+body[data-category='vision'] .vision-lens-table,
+body[data-category='vision'] .vision-lens-table th,
+body[data-category='vision'] .vision-lens-table td { font-size: 16px; line-height: 1.6; }
+body[data-category='vision'] .vision-medicine-grid figcaption { font-size: 15px; }
 body[data-category='vision'] .vision-guide-section h5 span,
 body[data-category='vision'] .vision-fee-card h5,
 body[data-category='vision'] .vision-lens-table td { color: #0074ff; }
 body[data-category='vision'] #afterSurgery .vision-aftercare-body h3,
 body[data-category='vision'] #afterSurgery .vision-medicine-group h4 { color: var(--ink); }
-body[data-category='vision'] #afterSurgery .vision-medicine-group h4 { font-size: 21px; }
+body[data-category='vision'] #afterSurgery .vision-medicine-group h4 { margin: 0 0 14px; font-size: 23px; line-height: 1.4; }
+body[data-category='vision'] .vision-medicine-section { margin-top: 48px; }
+body[data-category='vision'] .vision-medicine-section > h3 { margin-bottom: 16px; }
+body[data-category='vision'] .vision-medicine-note { margin-top: 16px; padding: 14px 16px; border-left: 3px solid #0074ff; background: #f4f7fb; }
+body[data-category='vision'] .vision-medicine-group { margin-top: 24px; padding: 26px; border: 1px solid #dce1e6; border-radius: 12px; background: #fafafa; }
+body[data-category='vision'] .vision-medicine-group h4.vision-medicine-important small { margin-top: 8px; color: #0074ff; font-size: 15px; line-height: 1.5; }
+body[data-category='vision'] .vision-medicine-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 16px; padding: 18px 0; border-block: 1px solid #e2e5e8; }
+body[data-category='vision'] .vision-medicine-grid figure { min-width: 0; }
+body[data-category='vision'] .vision-medicine-grid figcaption { margin-top: 10px; font-size: 16px; }
+body[data-category='vision'] .vision-medicine-group > p:last-child { margin-top: 16px; font-size: 17px; line-height: 1.7; }
 body[data-category='vision'] .vision-medicine-label { display: inline-block; margin-left: 8px; padding: 1px 5px; border: 1px solid #d0d5db; border-radius: 5px; color: var(--ink); font-size: 11px; font-weight: 500; vertical-align: 3px; }
 body[data-category='vision'] .vision-medicine-section .vision-medicine-prescription { margin: 0 0 14px; color: var(--muted); font-size: 13px; font-weight: 400; }
 body[data-category='vision'] .vision-heading-icon {
@@ -68,6 +93,9 @@ html[data-theme='dark'] body[data-category='vision'] .section-nav a:hover,
 html[data-theme='dark'] body[data-category='vision'] .section-nav a[aria-current='location'] { background: #eee; color: #171717; }
 html[data-theme='dark'] body[data-category='vision'] .vision-guide > summary,
 html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter > summary { background: #303030; color: #fff; }
+html[data-theme='dark'] body[data-category='vision'] .vision-medicine-note { background: #202c3b; }
+html[data-theme='dark'] body[data-category='vision'] .vision-medicine-group { background: #202329; border-color: #48515b; }
+html[data-theme='dark'] body[data-category='vision'] .vision-medicine-grid { border-color: #48515b; }
 @media (max-width: 600px) {
   body[data-category='vision'] .section-nav a { min-height: 48px; padding-inline: 2px; font-size: clamp(11px, 3vw, 14px); }
   body[data-category='vision'] .detail-content { padding-bottom: 60px; }
@@ -76,6 +104,21 @@ html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter >
   body[data-category='vision'] .vision-aftercare-chapter summary strong { font-size: 18px; }
   body[data-category='vision'] .vision-guide-content,
   body[data-category='vision'] .vision-aftercare-body { padding-top: 44px; padding-bottom: 56px; }
+  body[data-category='vision'] .vision-guide-content,
+  body[data-category='vision'] .vision-aftercare-body,
+  body[data-category='vision'] .vision-medicine-group p,
+  body[data-category='vision'] .vision-daily-note,
+  body[data-category='vision'] .vision-daily-footer { font-size: 17px; line-height: 1.8; }
+  body[data-category='vision'] .vision-guide-content h5,
+  body[data-category='vision'] .vision-aftercare-body h3 { font-size: 22px; }
+  body[data-category='vision'] .vision-guide-content h4 { font-size: 23px; }
+  body[data-category='vision'] #afterSurgery .vision-medicine-group h4 { font-size: 22px; }
+  body[data-category='vision'] .vision-medicine-group { padding: 20px 16px; }
+  body[data-category='vision'] .vision-medicine-grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 12px; }
+  body[data-category='vision'] .vision-medicine-group > p:last-child { font-size: 16px; }
+  body[data-category='vision'] .vision-lens-table,
+  body[data-category='vision'] .vision-lens-table th,
+  body[data-category='vision'] .vision-lens-table td { font-size: 15px; }
 }
 @media (prefers-reduced-motion: reduce) {
   body[data-category='vision'] .section-nav,
