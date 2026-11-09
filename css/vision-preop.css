@@ -45,13 +45,14 @@ details[open] > summary .vision-guide-chevron { transform: rotate(225deg); }
 .vision-aftercare-lasek .vision-aftercare-body h3 { color: #705b45; }
 .vision-aftercare-body ul { margin: 0; padding-left: 22px; }
 .vision-aftercare-body li + li { margin-top: 8px; }
-.vision-aftercare-fee { margin: 0 0 28px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--background); font-size: 14px; }
 .vision-medicine-section > p { margin: 8px 0; }
 .vision-medicine-note { font-weight: 600; }
 .vision-medicine-group { margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: 12px; }
 .vision-medicine-group h4 { margin: 0 0 14px; color: #126ba7; font-size: 16px; }
+.vision-medicine-group h4.vision-medicine-important { font-size: 21px; }
 .vision-aftercare-lasek .vision-medicine-group h4 { color: #705b45; }
 .vision-medicine-group h4 small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; font-weight: 400; }
+.vision-medicine-group h4.vision-medicine-important small { margin-top: 5px; color: inherit; font-size: 14px; font-weight: 700; }
 .vision-medicine-group p { margin: 12px 0 0; font-size: 14px; }
 .vision-medicine-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px; }
 .vision-medicine-grid figure { margin: 0; text-align: center; }
