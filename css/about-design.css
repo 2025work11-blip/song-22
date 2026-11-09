@@ -61,7 +61,7 @@ body[data-about-page] #hours .info-card {
   box-shadow: none;
 }
 html[data-theme='dark'] body[data-about-page] #hours .info-card { box-shadow: none; }
-body[data-about-page] #hours .schedule-hours-list > div { padding: 18px 0; border-color: #e5e5e5; }
+body[data-about-page] #hours .schedule-hours-list > div { padding: 18px 24px; border-color: #e5e5e5; }
 body[data-about-page] #hours .schedule-hours-list dt,
 body[data-about-page] #hours .schedule-hours-list dd { font-size: 18px; }
 body[data-about-page] #hours .schedule-hours-list .hours-substitute dt,
@@ -98,7 +98,7 @@ body[data-about-page] .about-doctors details[open].is-summary-stuck > summary::a
 body[data-about-page] .equipment-category[open].is-summary-stuck .equipment-toggle,
 html[data-theme='dark'] body[data-about-page] .about-doctors details[open].is-summary-stuck > summary::after,
 html[data-theme='dark'] body[data-about-page] .equipment-category[open].is-summary-stuck .equipment-toggle { color: #fff; }
-body[data-about-page] .about-schedule-table thead th { background: #eceeef; color: #222; }
+body[data-about-page] .about-schedule-table thead th { background: #e1f0f9; color: #15364b; }
 body[data-about-page] .about-doctor-body { padding-top: 72px; padding-bottom: 88px; }
 body[data-about-page] .about-doctor-body .about-career-heading { color: inherit; }
 body[data-about-page] .about-career-list li::marker { color: #0074ff; }
@@ -125,13 +125,13 @@ html[data-theme='dark'] body[data-about-page] .about-doctors summary,
 html[data-theme='dark'] body[data-about-page] .equipment-category > summary { background: #303030; color: #fff; }
 html[data-theme='dark'] body[data-about-page] .about-doctors summary::after,
 html[data-theme='dark'] body[data-about-page] .equipment-toggle { color: #ddd; }
-html[data-theme='dark'] body[data-about-page] .about-schedule-table thead th { background: #393939; color: #fff; }
+html[data-theme='dark'] body[data-about-page] .about-schedule-table thead th { background: #e1f0f9; color: #15364b; }
 @media (max-width: 600px) {
   body[data-about-page] .section-nav-inner { gap: 0; }
   body[data-about-page] .section-nav a { min-height: 48px; padding-inline: 3px; font-size: clamp(12px, 3.4vw, 14px); }
   body[data-about-page] .detail-content { padding-bottom: 60px; }
   body[data-about-page] .section-heading { margin-bottom: 22px; }
-  body[data-about-page] #hours .schedule-hours-list > div { padding-block: 15px; }
+  body[data-about-page] #hours .schedule-hours-list > div { padding: 15px 12px; }
   body[data-about-page] #hours .schedule-hours-list dt,
   body[data-about-page] #hours .schedule-hours-list dd { font-size: clamp(14px, 3.8vw, 16px); }
   body[data-about-page] #hours .schedule-hours-list .hours-substitute dt,

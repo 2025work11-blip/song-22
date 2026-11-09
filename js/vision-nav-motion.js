@@ -6,7 +6,7 @@
   if (!nav || !intro || !header) return;
   var iconPaths = {
     checklist: 'M9 5h10v16H5V5h2 M9 3h6v4H9z M8 11l1 1 2-2 M13 11h3 M8 16l1 1 2-2 M13 16h3',
-    lens: 'M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z',
+    lens: 'M3 9c.7 6 3.8 9 9 9s8.3-3 9-9 M3 9c1.4 1.2 4.8 2 9 2s7.6-.8 9-2 M6 6c2-.7 4-.9 6-.9s4 .2 6 .9',
     equipment: 'M4 20h16 M7 20v-3h10v3 M12 17v-5 M8 4h8v7H8z M10 6h4 M10 9h4 M6 6H4v5h4 M16 6h3v5h-3',
     makeup: 'M5 19l8-8 3 3-8 8H5z M12 12l2-5 3-3 3 3-3 3-2 2 M4 4l3 3 M4 9h4',
     travel: 'M4 16h16l-1-7H5z M7 9V6h10v3 M6 16v2 M18 16v2 M7 13h.01 M17 13h.01',
@@ -32,6 +32,7 @@
   document.querySelectorAll('#beforeSurgery .vision-guide-content h4, #beforeSurgery .vision-guide-content h5, #afterSurgery .vision-daily-care h3').forEach(function (heading) {
     var match = headings.find(function (entry) { return heading.textContent.trim().indexOf(entry[0]) === 0 || heading.textContent.indexOf(entry[0]) !== -1; });
     if (!match) return;
+    heading.classList.add('vision-heading-with-icon');
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 24 24');
     svg.setAttribute('aria-hidden', 'true');
