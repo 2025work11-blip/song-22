@@ -1,0 +1,41 @@
+/* 모든 아코디언의 열기/닫기 표시를 공통으로 사용합니다. */
+html body :is(.notice-item, .equipment-category, .vision-guide, .vision-aftercare-chapter, .blog-post, .medication-accordion, .admin-weekly-group, .about-doctors details) > summary::after {
+  content: '+';
+  display: inline-flex;
+  flex: 0 0 1.5em;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 1.5em;
+  height: 1.5em;
+  margin: 0 0 0 auto;
+  border: 1px solid #d0d0d0;
+  border-radius: 50%;
+  background: #fff;
+  color: #111 !important;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1;
+  transform: none !important;
+  transition: scale .15s ease;
+}
+html body :is(.notice-item, .equipment-category, .vision-guide, .vision-aftercare-chapter, .blog-post, .medication-accordion, .admin-weekly-group, .about-doctors details)[open] > summary::after {
+  content: '−';
+  color: #0074ff !important;
+  transform: none !important;
+  animation: accordion-control-open .24s ease-out;
+}
+html body :is(.equipment-category, .vision-guide, .vision-aftercare-chapter, .about-doctors details)[open].is-summary-stuck > summary::after {
+  background: #111;
+  border-color: #111;
+  color: #fff !important;
+}
+html body :is(.notice-item, .equipment-category, .vision-guide, .vision-aftercare-chapter, .blog-post, .medication-accordion, .admin-weekly-group, .about-doctors details) > summary:active::after { scale: .8; }
+html body :is(.notice-item, .equipment-category) > summary :is(.notice-expand, .equipment-toggle) { display: none; }
+@keyframes accordion-control-open {
+  0% { scale: .8; }
+  100% { scale: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body :is(.notice-item, .equipment-category, .vision-guide, .vision-aftercare-chapter, .blog-post, .medication-accordion, .admin-weekly-group, .about-doctors details) > summary::after { transition: none; animation: none !important; }
+}
