@@ -1,0 +1,36 @@
+/* 공지사항과 같은 제목 줄과 펼침 표시를 사용합니다. */
+.vision-aftercare, .blog-list, .medication-list { gap: 0; border-top: 1px solid #bfc7c8; }
+.vision-guide { border: 0; border-top: 1px solid #bfc7c8; border-bottom: 1px solid var(--section-border); border-radius: 0; }
+.vision-aftercare-chapter, .blog-post, .medication-item, .admin-weekly-group {
+  margin-top: 0; border: 0; border-bottom: 1px solid var(--section-border, #d8dedb); border-radius: 0; background: #fff;
+}
+.vision-guide > summary, .vision-aftercare-chapter > summary, .blog-post > summary,
+.medication-accordion > summary, .admin-weekly-group > summary {
+  display: flex; align-items: center; gap: 24px; min-height: 76px; padding: 20px 22px;
+  background: #fff; color: var(--ink); list-style: none; cursor: pointer;
+}
+.vision-guide > summary::-webkit-details-marker, .admin-weekly-group > summary::-webkit-details-marker { display: none; }
+.vision-guide-header-title, .vision-aftercare-chapter summary strong, .blog-post-title,
+.medication-trigger, .admin-weekly-group > summary { font-size: 16px; font-weight: 600; line-height: 1.5; }
+.vision-guide-chevron, .blog-post-toggle, .medication-expand { display: none; }
+.vision-guide > summary::after, .vision-aftercare-chapter > summary::after, .blog-post > summary::after,
+.medication-accordion > summary::after, .admin-weekly-group > summary::after {
+  content: '+'; flex: none; margin-left: auto; color: #6c7f89; font-size: 20px; font-weight: 400; line-height: 1;
+}
+.vision-guide[open] > summary::after, .vision-aftercare-chapter[open] > summary::after,
+.blog-post[open] > summary::after, .medication-accordion[open] > summary::after,
+.admin-weekly-group[open] > summary::after { transform: rotate(45deg); }
+.vision-guide > summary:hover, .vision-aftercare-chapter > summary:hover, .blog-post > summary:hover,
+.medication-accordion > summary:hover, .admin-weekly-group > summary:hover { background: #fff; }
+html[data-theme='dark'] .vision-guide, html[data-theme='dark'] .vision-aftercare-chapter,
+html[data-theme='dark'] .blog-post, html[data-theme='dark'] .medication-item,
+html[data-theme='dark'] .admin-weekly-group { background: #172230; border-color: #405268; }
+html[data-theme='dark'] .vision-guide > summary, html[data-theme='dark'] .vision-aftercare-chapter > summary,
+html[data-theme='dark'] .blog-post > summary, html[data-theme='dark'] .medication-accordion > summary,
+html[data-theme='dark'] .admin-weekly-group > summary { background: #172230; color: var(--ink); }
+@media (max-width: 600px) {
+  .vision-guide > summary, .vision-aftercare-chapter > summary, .blog-post > summary,
+  .medication-accordion > summary, .admin-weekly-group > summary { padding: 16px; gap: 12px; }
+  .vision-guide-header-title, .vision-aftercare-chapter summary strong, .blog-post-title,
+  .medication-trigger, .admin-weekly-group > summary { font-size: 14px; }
+}
