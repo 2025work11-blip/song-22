@@ -278,6 +278,8 @@ html:not([data-theme='dark']) body { --background: #f7f7f7; background: #f7f7f7;
 .footer-account { display: flex; justify-content: center; margin-top: 14px; }
 .footer-logout { min-height: 44px; padding: 8px 16px; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 13px; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
 .quick-widget .quick-toggle { width: auto; min-width: 100px; height: 48px; padding: 0 20px; border-radius: 24px; }
+.quick-widget .quick-toggle { background: #0074ff; border-color: #0074ff; }
+.quick-widget .quick-toggle:hover { background: #0063d9; border-color: #0063d9; }
 .quick-toggle-label { font-size: 14px; font-weight: 600; white-space: nowrap; }
 .quick-widget .quick-toggle[aria-expanded='true'] { width: 48px; min-width: 48px; padding: 0; border-radius: 50%; }
 .quick-toggle[aria-expanded='true'] .quick-toggle-label { display: none; }

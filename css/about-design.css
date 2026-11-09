@@ -98,7 +98,8 @@ body[data-about-page] .about-doctors details[open].is-summary-stuck > summary::a
 body[data-about-page] .equipment-category[open].is-summary-stuck .equipment-toggle,
 html[data-theme='dark'] body[data-about-page] .about-doctors details[open].is-summary-stuck > summary::after,
 html[data-theme='dark'] body[data-about-page] .equipment-category[open].is-summary-stuck .equipment-toggle { color: #fff; }
-body[data-about-page] .about-schedule-table thead th { background: #e1f0f9; color: #15364b; }
+body[data-about-page] .about-schedule-table thead th { background: #dcf3ff; color: #15364b; }
+body[data-about-page] .about-doctor-intro { grid-template-columns: 1fr; gap: 24px; }
 body[data-about-page] .about-doctor-body { padding-top: 72px; padding-bottom: 88px; }
 body[data-about-page] .about-doctor-body .about-career-heading { color: inherit; }
 body[data-about-page] .about-career-list li::marker { color: #0074ff; }
@@ -125,7 +126,7 @@ html[data-theme='dark'] body[data-about-page] .about-doctors summary,
 html[data-theme='dark'] body[data-about-page] .equipment-category > summary { background: #303030; color: #fff; }
 html[data-theme='dark'] body[data-about-page] .about-doctors summary::after,
 html[data-theme='dark'] body[data-about-page] .equipment-toggle { color: #ddd; }
-html[data-theme='dark'] body[data-about-page] .about-schedule-table thead th { background: #e1f0f9; color: #15364b; }
+html[data-theme='dark'] body[data-about-page] .about-schedule-table thead th { background: #dcf3ff; color: #15364b; }
 @media (max-width: 600px) {
   body[data-about-page] .section-nav-inner { gap: 0; }
   body[data-about-page] .section-nav a { min-height: 48px; padding-inline: 3px; font-size: clamp(12px, 3.4vw, 14px); }
