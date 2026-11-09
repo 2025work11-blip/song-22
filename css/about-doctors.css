@@ -2,6 +2,8 @@
 body[data-about-page] #hours .schedule-hours-list > div:first-child { border-top: 0; }
 .about-doctors details { border-bottom: 1px solid var(--line); background: var(--white); }
 .about-doctors summary { display: flex; align-items: center; min-height: 76px; padding: 20px 22px; list-style: none; font-size: 20px; font-weight: 600; cursor: pointer; }
+.about-doctors details[open] > summary { position: sticky; top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 69px)); z-index: 4; background: #fff; }
+html[data-theme='dark'] .about-doctors details[open] > summary { background: #172230; }
 .about-doctors summary::-webkit-details-marker { display: none; }
 .about-doctors summary::after { content: '+'; margin-left: auto; color: #6c7f89; font-size: 20px; font-weight: 400; }
 .about-doctors details[open] > summary::after { transform: rotate(45deg); }
@@ -33,6 +35,7 @@ body[data-about-page] #hours .schedule-hours-list > div:first-child { border-top
 html[data-theme='dark'] .about-doctors details { background: #172230; }
 @media (max-width: 600px) {
   .about-doctors summary { padding: 16px; font-size: 18px; }
+  .about-doctors details[open] > summary { top: calc(var(--disease-header-height, 60.2px) + var(--disease-nav-height, 69px)); }
   .about-doctor-body { padding: 20px 16px; }
   .about-doctor-intro { grid-template-columns: 1fr; gap: 24px; }
   .about-schedule-table { font-size: 12px; }
