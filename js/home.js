@@ -140,6 +140,13 @@
     allDoctorsButton.setAttribute('data-doctor-id', '');
     allDoctorsButton.setAttribute('aria-pressed', String(!selectedDoctor && !closureOnly));
     doctorFilters.appendChild(allDoctorsButton);
+    if (monthClosures().length) {
+      var closureButton = make('button', 'doctor-legend-item doctor-filter-closed', '휴진');
+      closureButton.type = 'button';
+      closureButton.setAttribute('data-closure-filter', '');
+      closureButton.setAttribute('aria-pressed', String(closureOnly));
+      doctorFilters.appendChild(closureButton);
+    }
     doctors.forEach(function (doctor) {
       var legend = make('button', 'doctor-legend-item ' + colorClass(doctor));
       applyDoctorColor(legend, doctor);
@@ -152,13 +159,6 @@
       legend.append(dot, make('span', '', doctor.name));
       doctorFilters.appendChild(legend);
     });
-    if (monthClosures().length) {
-      var closureButton = make('button', 'doctor-legend-item doctor-filter-closed', '휴진');
-      closureButton.type = 'button';
-      closureButton.setAttribute('data-closure-filter', '');
-      closureButton.setAttribute('aria-pressed', String(closureOnly));
-      doctorFilters.appendChild(closureButton);
-    }
   }
   function doctorHeading(doctor, fallbackName) {
     var heading = make('h4', 'schedule-doctor-name ' + colorClass(doctor));

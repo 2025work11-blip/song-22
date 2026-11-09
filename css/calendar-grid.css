@@ -1,0 +1,14 @@
+/* 날짜는 하나의 둥근 표 안에서 선으로 구분합니다. */
+.schedule-calendar { --calendar-gap: 0px; border: 1px solid #dce9f4; border-collapse: separate; border-spacing: 0; border-radius: 16px; overflow: hidden; }
+.schedule-calendar th, .schedule-calendar td { border-right: 1px solid #dce9f4; border-bottom: 1px solid #dce9f4; }
+.schedule-calendar tr > :last-child { border-right: 0; }
+.schedule-calendar tbody tr:last-child td { border-bottom: 0; }
+.schedule-calendar .calendar-day, .schedule-calendar .calendar-day[aria-current='date'],
+.schedule-calendar .calendar-day[aria-pressed='true'], .schedule-calendar td:first-child .calendar-day[aria-pressed='true'] { border: 0; border-radius: 0; }
+.schedule-calendar .calendar-day:focus-visible { outline: 2px solid #436d99; outline-offset: -3px; }
+.calendar-markers .doctor-initial { width: 7px; height: 7px; }
+html[data-theme='dark'] .schedule-calendar, html[data-theme='dark'] .schedule-calendar th, html[data-theme='dark'] .schedule-calendar td { border-color: #354f6b; }
+@media (max-width: 600px) {
+  .schedule-calendar { --calendar-gap: 0px; border-spacing: 0; border-radius: 12px; }
+  .calendar-markers .doctor-initial { width: 7px; height: 7px; }
+}
