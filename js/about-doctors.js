@@ -78,7 +78,7 @@
         start.textContent = '진료 시작 오전 8:30';
         root.appendChild(start);
         root.appendChild(saved ? savedTable(saved.schedule, card.dataset.doctorName) || makeTable(rows, card.dataset.doctorName) : makeTable(rows, card.dataset.doctorName));
-        var legend = make('p', '○ 진료 · X 진료 없음 · — 정기 일정 미등록 또는 오후 진료 없음'); legend.className = 'about-table-legend'; root.appendChild(legend);
+        var legend = make('p', '○ 진료 · X 진료 없음'); legend.className = 'about-table-legend'; root.appendChild(legend);
       });
     } catch (error) {
       cards.forEach(function (card) { card.querySelector('[data-doctor-schedule]').textContent = '정기 일정을 불러오지 못했습니다. 잠시 후 다시 확인해 주세요.'; });

@@ -12,7 +12,7 @@ window.aboutProfilesReady = (async function () {
       var profile = results[1].data.find(function (row) { return String(row.doctor_id) === String(doctor.id); });
       if (!name || cards.some(function (card) { return card.dataset.doctorName === name; }) || (profile && !profile.is_visible) || (!profile && !scheduleIds.includes(String(doctor.id)))) return;
       var card = document.createElement('details'); card.dataset.doctorName = name;
-      card.innerHTML = '<summary></summary><div class="about-doctor-body"><div class="about-doctor-intro"><div class="about-doctor-profile"><img src="assets/icons/doctor-placeholder.svg" alt=""><p>안과전문의 <strong></strong></p><div class="about-specialties"></div></div><div><h3>인사말</h3><p>인사말은 준비 중입니다.</p></div></div><section><h3>약력</h3><p>약력은 준비 중입니다.</p></section><section><h3>진료일정</h3><div data-doctor-schedule>정기 일정을 불러오는 중입니다.</div><p class="about-schedule-note">정기 일정은 휴진 및 날짜별 변경에 따라 달라질 수 있습니다. 내원 전 일정을 확인해 주세요.</p></section></div>';
+      card.innerHTML = '<summary></summary><div class="about-doctor-body"><div class="about-doctor-intro"><div class="about-doctor-profile"><img src="assets/icons/doctor-placeholder.svg" alt=""><p>안과전문의 <strong></strong></p><div class="about-specialties"></div></div><div><h3>인사말</h3><p>인사말은 준비 중입니다.</p></div></div><section><h3>약력</h3><p>약력은 준비 중입니다.</p></section><section><h3>진료일정</h3><div data-doctor-schedule>정기 일정을 불러오는 중입니다.</div></section></div>';
       card.querySelector('summary').textContent = name + ' 원장'; card.querySelector('strong').textContent = name;
       root.appendChild(card); cards.push(card);
     });
