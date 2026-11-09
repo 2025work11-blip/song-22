@@ -1,16 +1,18 @@
 /* 병원소개 전용: 여백과 구분선을 살린 간결한 구성 */
 body[data-about-page] .detail-intro {
-  padding-top: clamp(32px, 6vw, 76px);
-  padding-bottom: clamp(38px, 6vw, 76px);
+  padding-top: clamp(72px, 11vw, 130px);
+  padding-bottom: clamp(72px, 11vw, 130px);
+  text-align: center;
 }
 body[data-about-page] .breadcrumb { color: #777; }
 body[data-about-page] .breadcrumb a { text-decoration: none; }
 body[data-about-page] .detail-intro .eyebrow {
-  color: #1769b0;
+  color: #777;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .08em;
 }
+body[data-about-page] .detail-intro .eyebrow::before { content: none; }
 body[data-about-page] .detail-intro h1 {
   margin: 0;
   font-size: clamp(38px, 6vw, 68px);
@@ -20,7 +22,7 @@ body[data-about-page] .section-nav {
   width: 80%;
   margin-inline: auto;
   padding: 0;
-  background: #f1f1f1;
+  background: #fff;
   border: 0;
   transition: width .35s ease, background-color .35s ease;
 }
@@ -56,7 +58,9 @@ body[data-about-page] #hours .info-card {
   border-bottom: 1px solid #dedede;
   border-radius: 0;
   background: transparent;
+  box-shadow: none;
 }
+html[data-theme='dark'] body[data-about-page] #hours .info-card { box-shadow: none; }
 body[data-about-page] #hours .schedule-hours-list > div { padding: 18px 0; border-color: #e5e5e5; }
 body[data-about-page] #hours .schedule-hours-list .hours-substitute { padding-top: 0; }
 body[data-about-page] .about-doctors,
@@ -66,21 +70,39 @@ body[data-about-page] .equipment-category { border-color: #dedede; }
 body[data-about-page] .about-doctors summary,
 body[data-about-page] .equipment-category > summary,
 body[data-about-page] .about-doctors details[open] > summary,
-body[data-about-page] .equipment-category[open] > summary { padding-inline: 18px; background: #202020; color: #fff; transition: color .2s ease, background-color .2s ease; }
+body[data-about-page] .equipment-category[open] > summary { padding-inline: 18px; background: #202020; color: #fff; transition: color .2s ease, background-color .2s ease, width .25s ease, margin-left .25s ease, min-height .25s ease, padding .25s ease; }
 body[data-about-page] .about-doctors summary:hover,
 body[data-about-page] .equipment-category > summary:hover { background: #343434; color: #fff; }
 body[data-about-page] .about-doctors summary::after,
 body[data-about-page] .equipment-toggle { color: #fff; transition: transform .25s ease, color .2s ease; }
 body[data-about-page] .about-doctors details[open] > summary::after,
 body[data-about-page] .equipment-category[open] .equipment-toggle { color: #1769b0; }
+body[data-about-page] .about-doctors details[open].is-summary-stuck > summary,
+body[data-about-page] .equipment-category[open].is-summary-stuck > summary,
+html[data-theme='dark'] body[data-about-page] .about-doctors details[open].is-summary-stuck > summary,
+html[data-theme='dark'] body[data-about-page] .equipment-category[open].is-summary-stuck > summary {
+  box-sizing: border-box;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  min-height: var(--disease-nav-height, 56px);
+  height: var(--disease-nav-height, 56px);
+  padding: 8px max(28px, calc((100vw - 1120px) / 2 + 12px));
+  background: #1769b0;
+  color: #fff;
+}
+body[data-about-page] .about-doctors details[open].is-summary-stuck > summary::after,
+body[data-about-page] .equipment-category[open].is-summary-stuck .equipment-toggle,
+html[data-theme='dark'] body[data-about-page] .about-doctors details[open].is-summary-stuck > summary::after,
+html[data-theme='dark'] body[data-about-page] .equipment-category[open].is-summary-stuck .equipment-toggle { color: #fff; }
 body[data-about-page] .about-schedule-table thead th { background: #eceeef; color: #222; }
-html:not([data-theme='dark']) body[data-about-page] { background: #fff; }
+html:not([data-theme='dark']) body[data-about-page] { --background: #fff; background: #fff; }
+html:not([data-theme='dark']) body[data-about-page] .site-footer { background: #f7f7f7; }
 html[data-theme='dark'] body[data-about-page] .section-nav { background: #303030; }
 html[data-theme='dark'] body[data-about-page] .section-nav a { color: #b6b6b6; }
 html[data-theme='dark'] body[data-about-page] .section-nav a:hover,
 html[data-theme='dark'] body[data-about-page] .section-nav a[aria-current='location'] { background: #eee; color: #171717; }
 html[data-theme='dark'] body[data-about-page] .section-nav a::after { background: #83bfff; }
-html[data-theme='dark'] body[data-about-page] .detail-intro .eyebrow,
+html[data-theme='dark'] body[data-about-page] .detail-intro .eyebrow { color: #b6b6b6; }
 html[data-theme='dark'] body[data-about-page] .section-number { color: #83bfff; }
 html[data-theme='dark'] body[data-about-page] #hours .info-card,
 html[data-theme='dark'] body[data-about-page] .about-doctors,
