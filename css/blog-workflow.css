@@ -11,11 +11,15 @@
 .blog-draft-fields .blog-academic-check { display:flex; align-items:center; gap:8px; }
 .blog-academic-check input { width:auto; }
 .blog-post-title-row { display:flex; align-items:center; gap:7px; min-width:0; }
+.blog-post-meta { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
 .blog-academic-badge { flex:none; padding:2px 6px; border:1px solid #a8bdce; border-radius:5px; color:#48677d; font-size:10px; font-weight:600; line-height:1.4; }
 .blog-post .blog-source-text { display:block; color:var(--muted); }
 .blog-post .blog-source-link-hint,.blog-post .blog-article-link { display:inline-flex; align-items:center; margin:6px 0 0; padding:4px 9px; border:1px solid #bac7d2; border-radius:6px; color:var(--muted); font-size:11px; font-weight:600; line-height:1.5; text-decoration:none; }
 .blog-post .blog-source-link-hint:hover,.blog-post .blog-article-link:hover { color:var(--ink); background:rgba(100,130,160,.08); text-decoration:none; }
-.blog-post .blog-article-link { margin-top:16px; background:var(--ink); border-color:var(--ink); color:var(--white); }
+.blog-post .blog-article-link { margin:0; background:var(--ink); border-color:var(--ink); color:var(--white); }
+.blog-post-close-row { display:flex; justify-content:flex-end; margin-top:24px; }
+.blog-post-close { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; padding:0; border:1px solid var(--muted); border-radius:50%; background:transparent; color:var(--ink); font-size:24px; line-height:1; cursor:pointer; }
+.blog-post-close:hover { background:rgba(100,130,160,.08); }
 .blog-intro-divider { height:0; margin:24px 0; border:0; border-top:1px solid var(--line); }
 .blog-post .blog-article-link:hover { background:var(--muted); border-color:var(--muted); color:var(--white); }
 .blog-workflow input[type=file] { display:block; max-width:100%; margin-top:8px; }
