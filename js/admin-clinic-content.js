@@ -44,6 +44,22 @@
       shown.add(String(doctor.id));
       var details = make('details'); details.className = 'admin-weekly-group'; details.appendChild(make('summary', doctor.name));
       var form = make('form'); form.className = 'admin-about-schedule-editor admin-profile-form';
+      var photoUrl = data.profile_photo_url || '', pendingPhoto = null, previewUrl = '';
+      var photoSection = make('fieldset'); photoSection.className = 'admin-specialties admin-profile-photo';
+      photoSection.appendChild(make('legend', '프로필 사진'));
+      var preview = make('img'); preview.className = 'doctor-photo-preview'; preview.alt = name + ' 원장 프로필 사진 미리보기'; preview.src = photoUrl || 'assets/icons/doctor-placeholder.svg';
+      var photoLabel = make('label', '사진 선택'), photoInput = make('input'); photoInput.type = 'file'; photoInput.accept = 'image/jpeg,image/png,image/webp'; photoLabel.appendChild(photoInput);
+      var removePhoto = make('button', '사진 제거'); removePhoto.type = 'button'; removePhoto.className = 'admin-button';
+      var photoHint = make('p', 'JPG, PNG, WebP · 최대 5MB · 정사각형 800×800픽셀 권장. 소개 저장을 눌러야 반영됩니다.');
+      function releasePreview() { if (previewUrl) URL.revokeObjectURL(previewUrl); previewUrl = ''; }
+      photoInput.addEventListener('change', function () {
+        var file = photoInput.files && photoInput.files[0]; if (!file) return;
+        if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5242880) { photoInput.value = ''; photoHint.textContent = 'JPG, PNG, WebP 사진을 5MB 이하로 선택해 주세요.'; return; }
+        releasePreview(); previewUrl = URL.createObjectURL(file); pendingPhoto = { file: file }; preview.src = previewUrl;
+        photoHint.textContent = '사진을 선택했습니다. 의료진 소개 저장을 눌러 주세요.';
+      });
+      removePhoto.addEventListener('click', function () { releasePreview(); pendingPhoto = null; photoInput.value = ''; photoUrl = ''; preview.src = 'assets/icons/doctor-placeholder.svg'; photoHint.textContent = '사진 제거는 의료진 소개 저장을 누르면 반영됩니다.'; });
+      photoSection.append(preview, photoLabel, removePhoto, photoHint); form.appendChild(photoSection);
       [['greeting', '인사말'], ['career', '주요 약력 (한 줄에 한 항목)'], ['activities', '학회활동 (한 줄에 한 항목)']].forEach(function (field) {
         var fieldLabel = make('label', field[1]), input = make('textarea'); input.name = field[0]; input.rows = field[0] === 'greeting' ? 3 : 5;
         input.value = Array.isArray(data[field[0]]) ? data[field[0]].join('\n') : String(data[field[0]] || '');
@@ -69,17 +85,31 @@
         event.preventDefault(); if (!window.roleAccess.isAdmin()) return;
         function lines(key) { return form.elements[key].value.split(/\r?\n/).map(function (text) { return text.trim(); }).filter(Boolean); }
         var payload = { doctor_id: Number(doctor.id), greeting: form.elements.greeting.value.trim(), career: lines('career'), activities: lines('activities'), specialties: Array.from(specialtyList.querySelectorAll('[data-specialty-input]')).map(function (input) { return input.value.trim(); }).filter(Boolean), is_visible: true };
-        save.disabled = true; message(status, '저장 중입니다.');
-        try { var client = await window.adminStore.verifyDoctorWrite(); var result = await client.from('doctor_about_profiles').upsert(payload).select('doctor_id').single(); if (result.error || !result.data) throw result.error || new Error('저장 결과 없음'); saved = saved.filter(function (row) { return String(row.doctor_id) !== String(doctor.id); }); saved.push(payload); message(status, '저장했습니다. 병원소개 페이지를 새로고침하면 반영됩니다.'); }
+        save.disabled = remove.disabled = photoInput.disabled = removePhoto.disabled = true; message(status, '저장 중입니다.');
+        try {
+          var client = await window.adminStore.verifyDoctorWrite();
+          if (pendingPhoto && !pendingPhoto.url) {
+            var ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[pendingPhoto.file.type];
+            var bucket = client.storage.from('blog-images'), path = 'doctor-profiles/' + crypto.randomUUID() + '.' + ext;
+            var upload = await bucket.upload(path, pendingPhoto.file, { contentType: pendingPhoto.file.type, upsert: false });
+            if (upload.error) throw upload.error;
+            var publicUrl = bucket.getPublicUrl(path); if (!publicUrl.data || !publicUrl.data.publicUrl) throw new Error('사진 주소 없음');
+            pendingPhoto.url = publicUrl.data.publicUrl;
+          }
+          payload.profile_photo_url = pendingPhoto ? pendingPhoto.url : photoUrl || null;
+          var result = await client.from('doctor_about_profiles').upsert(payload).select('doctor_id').single(); if (result.error || !result.data) throw result.error || new Error('저장 결과 없음');
+          photoUrl = payload.profile_photo_url || ''; pendingPhoto = null; releasePreview(); preview.src = photoUrl || 'assets/icons/doctor-placeholder.svg'; photoInput.value = '';
+          saved = saved.filter(function (row) { return String(row.doctor_id) !== String(doctor.id); }); saved.push(payload); message(status, '저장했습니다. 병원소개 페이지를 새로고침하면 반영됩니다.');
+        }
         catch (error) { message(status, '저장하지 못했습니다. 연결 상태와 관리자 권한을 확인해 주세요.'); }
-        finally { save.disabled = false; }
+        finally { save.disabled = remove.disabled = photoInput.disabled = removePhoto.disabled = false; }
       });
       remove.addEventListener('click', async function () {
         if (!window.roleAccess.isAdmin() || !window.confirm('이 원장소개 항목을 삭제할까요? 병원소개에서 표시되지 않습니다. 메인 달력의 원장과 일정은 유지됩니다.')) return;
         var previous = saved.find(function (row) { return String(row.doctor_id) === String(doctor.id); }) || data;
-        var payload = { doctor_id: Number(doctor.id), greeting: previous.greeting || '', career: previous.career || [], activities: previous.activities || [], specialties: previous.specialties || [], is_visible: false };
+        var payload = { doctor_id: Number(doctor.id), greeting: previous.greeting || '', career: previous.career || [], activities: previous.activities || [], specialties: previous.specialties || [], profile_photo_url: previous.profile_photo_url || null, is_visible: false };
         save.disabled = remove.disabled = true;
-        try { var client = await window.adminStore.verifyDoctorWrite(); var result = await client.from('doctor_about_profiles').upsert(payload).select('doctor_id').single(); if (result.error || !result.data) throw result.error || new Error('삭제 결과 없음'); saved = saved.filter(function (row) { return String(row.doctor_id) !== String(doctor.id); }); saved.push(payload); shown.delete(String(doctor.id)); details.remove(); listStatus.textContent = doctor.name + ' 소개를 삭제했습니다. 새 항목에서 다시 추가할 수 있습니다.'; }
+        try { var client = await window.adminStore.verifyDoctorWrite(); var result = await client.from('doctor_about_profiles').upsert(payload).select('doctor_id').single(); if (result.error || !result.data) throw result.error || new Error('삭제 결과 없음'); saved = saved.filter(function (row) { return String(row.doctor_id) !== String(doctor.id); }); saved.push(payload); shown.delete(String(doctor.id)); releasePreview(); details.remove(); listStatus.textContent = doctor.name + ' 소개를 삭제했습니다. 새 항목에서 다시 추가할 수 있습니다.'; }
         catch (error) { message(status, '삭제하지 못했습니다. 연결 상태와 관리자 권한을 확인해 주세요.'); save.disabled = remove.disabled = false; }
       });
       return details;
@@ -90,7 +120,7 @@
     });
     window.createAdminDoctorPicker(profileRoot, document.querySelector('[data-admin-add-profile]'), function (id) { return shown.has(String(id)); }, function (doctor) { var details = drawProfile(doctor); details.open = true; listStatus.textContent = '내용을 입력한 뒤 의료진 소개 저장을 눌러 주세요.'; });
   }
-  var results = await Promise.allSettled([window.supabaseClient.from('clinic_hours').select('id,start_time,end_time'), window.supabaseClient.from('doctors').select('id,name'), window.supabaseClient.from('doctor_about_profiles').select('doctor_id,greeting,career,activities,specialties,is_visible')]);
+  var results = await Promise.allSettled([window.supabaseClient.from('clinic_hours').select('id,start_time,end_time'), window.supabaseClient.from('doctors').select('id,name'), window.supabaseClient.from('doctor_about_profiles').select('doctor_id,greeting,career,activities,specialties,is_visible,profile_photo_url')]);
   try { if (results[0].status !== 'fulfilled' || results[0].value.error) throw new Error(); renderHours(results[0].value.data); } catch (error) { message(hoursRoot, '진료시간을 불러오지 못했습니다. 새로고침 후 다시 확인해 주세요.'); }
   try { if (results[1].status !== 'fulfilled' || results[1].value.error || results[2].status !== 'fulfilled' || results[2].value.error) throw new Error(); renderProfiles(results[1].value.data, results[2].value.data); } catch (error) { message(profileRoot, '의료진 소개를 불러오지 못했습니다. 새로고침 후 다시 확인해 주세요.'); }
 }());

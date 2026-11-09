@@ -3,7 +3,7 @@ window.aboutProfilesReady = (async function () {
   var cards = Array.from(document.querySelectorAll('[data-about-doctors] [data-doctor-name]'));
   if (!cards.length || !window.supabaseClient) return;
   try {
-    var results = await Promise.all([window.supabaseClient.from('doctors').select('id,name'), window.supabaseClient.from('doctor_about_profiles').select('doctor_id,greeting,career,activities,specialties,is_visible'), window.supabaseClient.from('doctor_about_schedules').select('doctor_id,is_visible')]);
+    var results = await Promise.all([window.supabaseClient.from('doctors').select('id,name'), window.supabaseClient.from('doctor_about_profiles').select('doctor_id,greeting,career,activities,specialties,is_visible,profile_photo_url'), window.supabaseClient.from('doctor_about_schedules').select('doctor_id,is_visible')]);
     if (results[0].error || results[1].error || !Array.isArray(results[0].data) || !Array.isArray(results[1].data)) return;
     var scheduleIds = results[2].error || !Array.isArray(results[2].data) ? [] : results[2].data.filter(function (row) { return row.is_visible; }).map(function (row) { return String(row.doctor_id); });
     var root = document.querySelector('[data-about-doctors]');
@@ -22,6 +22,8 @@ window.aboutProfilesReady = (async function () {
       var data = results[1].data.find(function (row) { return String(row.doctor_id) === String(doctors[0].id); });
       if (data && !data.is_visible) { card.remove(); return; }
       if (!data || !Array.isArray(data.career) || !Array.isArray(data.activities) || !Array.isArray(data.specialties)) return;
+      var photo = card.querySelector('.about-doctor-profile img');
+      if (photo && typeof data.profile_photo_url === 'string' && /^https:\/\//i.test(data.profile_photo_url)) { photo.src = data.profile_photo_url; photo.alt = card.dataset.doctorName + ' 원장 사진'; photo.addEventListener('error', function () { photo.src = 'assets/icons/doctor-placeholder.svg'; photo.alt = ''; }, { once: true }); }
       var greeting = card.querySelector('.about-doctor-intro > div:nth-child(2) p');
       if (greeting) { greeting.textContent = data.greeting || '인사말은 준비 중입니다.'; greeting.style.whiteSpace = 'pre-line'; }
       var tags = card.querySelector('.about-specialties');
