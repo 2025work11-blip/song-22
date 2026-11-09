@@ -59,13 +59,28 @@
     body.replaceChildren();
     schedule.rows.forEach(function (row) {
       var tr = make('tr'), th = make('th', row.label); th.scope = 'row'; tr.appendChild(th);
+      var merges = [];
+      if (Array.isArray(row.merges)) {
+        row.merges.forEach(function (pair) {
+          if (Array.isArray(pair) && pair.length === 2 && Number.isInteger(pair[0]) && Number.isInteger(pair[1]) && pair[0] >= 0 && pair[1] < 6 && pair[1] > pair[0] && !merges.some(function (item) { return item[0] <= pair[1] && item[1] >= pair[0]; })) merges.push(pair);
+        });
+      } else {
+        for (var start = 0; start < 6;) {
+          var end = start;
+          while (end + 1 < 6 && row.cells[start].trim() && row.cells[start].trim() !== '—' && row.cells[end + 1].trim() === row.cells[start].trim()) end++;
+          if (end > start) merges.push([start, end]);
+          start = end + 1;
+        }
+      }
       for (var i = 0; i < 6; i++) {
         var cell = make('td', row.cells[i] || '—');
+        var merged = merges.find(function (pair) { return pair[0] === i; });
+        if (merged) { cell.colSpan = merged[1] - merged[0] + 1; i = merged[1]; }
         tr.appendChild(cell);
       }
       body.appendChild(tr);
     });
-    return mergeAdjacentCells(table);
+    return table;
   }
   async function load() {
     try {

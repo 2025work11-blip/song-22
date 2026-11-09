@@ -28,7 +28,7 @@
     node.href = href; node.target = '_blank'; node.rel = 'noopener noreferrer';
     node.title = '저장되거나 게시된 내용을 새 탭에서 확인합니다.'; return node;
   }
-  var names = { '원장 정보': 'doctors', '정기 진료 일정': 'weekly', '날짜별 변경 일정': 'dates', '휴진 기간': 'closures', '공지 목록': 'notices', '블로그 글': 'blog', '자동 생성 글 가져오기': 'blog', '병원 진료시간': 'hours', '원장소개': 'bios', '장비소개': 'equipment', '장비 안내': 'equipment', '분야별 소개': 'topicSummaries', '상세 안내': 'articles', '기본 정보와 연결 주소': 'settings' };
+  var names = { '원장 정보': 'doctors', '정기 진료 일정': 'weekly', '날짜별 변경 일정': 'dates', '휴진 기간': 'closures', '공지 목록': 'notices', '블로그 글': 'blog', '자동 생성 글 가져오기': 'blog', '병원 진료시간': 'hours', '원장소개': 'bios', '장비소개': 'equipment', '장비 안내': 'equipment', '보유장비': 'equipment', '분야별 소개': 'topicSummaries', '상세 안내': 'articles', '기본 정보와 연결 주소': 'settings' };
   function setupCards() {
     main.querySelectorAll('.admin-card').forEach(function (card) {
       if (card.dataset.previewAdded) return;
@@ -38,7 +38,12 @@
       if (!area) { area = document.createElement('div'); area.className = 'admin-card-heading'; title.parentNode.insertBefore(area, title); area.appendChild(title); }
       var anchor = link(urlFor(key));
       if (key === 'topicSummaries' || key === 'articles') anchor.addEventListener('click', function () { anchor.href = urlFor(key); });
-      area.appendChild(anchor); card.dataset.previewAdded = 'true';
+      var addButton = area.querySelector(':scope > [data-admin-edit], :scope > [data-admin-add-profile], :scope > [data-admin-add-schedule]');
+      if (addButton) {
+        var tools = document.createElement('div'); tools.className = 'admin-card-tools';
+        area.insertBefore(tools, addButton); tools.append(addButton, anchor);
+      } else area.appendChild(anchor);
+      card.dataset.previewAdded = 'true';
     });
     main.querySelectorAll('.admin-profile-form').forEach(function (form) {
       if (form.dataset.previewAdded) return;

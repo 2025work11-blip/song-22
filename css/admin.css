@@ -16,6 +16,7 @@
 .admin-description { margin: 7px 0 20px; color: var(--muted); font-size: 13px; }
 .admin-card { min-width: 0; padding: 22px; margin-bottom: 20px; border-radius: 16px; background: var(--white); box-shadow: 0 3px 16px #1c2e410b; }
 .admin-card-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.admin-card-tools { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; }
 .admin-card h3 { margin: 0; font-size: 17px; }
 .admin-source { margin: 3px 0 0; color: var(--muted); font-size: 11px; }
 .admin-button { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 12px; border: 1px solid #b7c3cf; border-radius: 9px; background: #fff; color: #42586f; font: inherit; font-size: 12px; cursor: pointer; }
@@ -95,6 +96,7 @@ html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background
 .doctor-photo-editor { display: grid; gap: 10px; justify-items: start; }
 .doctor-photo-editor label { width: 100%; }
 .doctor-photo-preview { width: 72px; height: 72px; object-fit: cover; border-radius: 50%; border: 1px solid #bec9d5; }
+.equipment-photo-preview { width: 112px; height: 112px; object-fit: contain; border: 1px solid #bec9d5; background: #fff; }
 .admin-weekly-group { margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .admin-weekly-group summary { cursor: pointer; padding: 12px 14px; font-weight: 700; }
 .admin-weekly-list { padding: 0 14px 10px; }
@@ -105,7 +107,13 @@ html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background
 .admin-about-schedule-row-wrap { display: grid; gap: 6px; justify-items: start; max-width: 100%; }
 .admin-about-schedule-row { display: grid; width: 100%; grid-template-columns: repeat(7, minmax(70px, 1fr)); gap: 7px; overflow-x: auto; }
 .admin-about-schedule-row label { display: grid; gap: 4px; font-size: 12px; }
+.admin-schedule-cell { display: grid; align-content: start; gap: 4px; min-width: 0; }
 .admin-about-schedule-row input { width: 100%; min-width: 0; padding: 7px; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
+.admin-about-schedule-row .admin-cell-merged { background: #eaf4fc; border-radius: 6px; }
+.admin-about-schedule-row .admin-merge-select { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 400; }
+.admin-about-schedule-row .admin-merge-select input { width: auto; min-width: auto; padding: 0; }
+.admin-merge-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.admin-merge-controls span, .admin-about-schedule-editor .admin-merge-info { margin: 0; color: var(--muted); font-size: 12px; }
 .admin-profile-form { display: grid; gap: 12px; }
 .admin-profile-schedule { padding: 16px 0 0; border: 1.5px solid #8c9cad; border-radius: 10px; }
 .admin-profile-schedule > p, .admin-profile-schedule > button { margin: 0 16px 16px; }

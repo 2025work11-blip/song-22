@@ -108,7 +108,7 @@
     ['오전 8:30 ~ 오후 5:00', '8:30 AM–5:00 PM', '上午8:30至下午5:00'],
     ['오전 8:30 ~ 오후 1:00', '8:30 AM–1:00 PM', '上午8:30至下午1:00'],
     ['오후 12:30 ~ 오후 2:00', '12:30 PM–2:00 PM', '中午12:30至下午2:00'],
-    ['장비소개', 'Our equipment', '设备介绍'], ['평일', 'Weekdays', '工作日'],
+    ['장비소개', 'Our equipment', '设备介绍'], ['보유장비', 'Our equipment', '医疗设备'], ['검진', 'Examination', '检查'], ['수술', 'Surgery', '手术'], ['치료', 'Treatment', '治疗'], ['장비 안내를 준비 중입니다.', 'Equipment information is coming soon.', '设备信息准备中。'], ['평일', 'Weekdays', '工作日'],
     ['토요일', 'Saturday', '周六'], ['점심시간', 'Lunch break', '午休时间'],
     ['일요일 · 공휴일', 'Sundays and holidays', '周日及节假日'], ['확인 후 안내', 'To be confirmed', '确认后公布'],
     ['진료 여부 확인 후 안내', 'Opening status to be confirmed', '确认是否接诊后公布'],

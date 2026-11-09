@@ -7,6 +7,7 @@
     doctor_date_schedules: ['doctor_id', 'schedule_date', 'period', 'end_time'],
     doctor_closures: ['doctor_id', 'start_date', 'end_date'],
     notices: ['notice_date', 'title', 'content', 'image_url'],
+    equipment: ['category', 'title', 'description', 'image_url'],
     blog_posts: ['post_date', 'title', 'content', 'content_html', 'source', 'source_url', 'source_links', 'is_academic']
   };
   async function clientForWrite(table) {
@@ -27,6 +28,7 @@
   window.adminStore = {
     verifyBlogWrite: function () { return clientForWrite('blog_posts'); },
     verifyDoctorWrite: function () { return clientForWrite('doctors'); },
+    verifyEquipmentWrite: function () { return clientForWrite('equipment'); },
     setBlogPublished: async function (id, enabled) {
       checkId(id);
       var client = await clientForWrite('blog_posts');
@@ -73,6 +75,10 @@
         if (payload.weekday !== 6) payload.saturday_weeks = 'all';
       }
       if (table === 'notices') payload.image_url = payload.image_url || null;
+      if (table === 'equipment') {
+        if (!['exam', 'surgery', 'treatment'].includes(payload.category)) throw new Error('장비 분류를 확인해 주세요.');
+        payload.image_url = payload.image_url || null;
+      }
       if (table === 'doctors') { payload.photo_url = payload.photo_url || null; if (id === null || id === undefined) payload.initial = ''; }
       var query;
       if (id !== null && id !== undefined) { checkId(id); query = client.from(table).update(payload).eq('id', id); }

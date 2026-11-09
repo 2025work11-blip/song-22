@@ -27,7 +27,7 @@
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
     blog: { group: 'blog', title: '블로그 글', table: 'blog_posts', fields: [field('post_date', '작성일', 'date'), field('title', '제목'), field('is_academic', '학술정보 표시', 'checkbox', null, true), field('content', '내용', 'richtext'), field('source_links', '출처', 'sources', null, true)] },
-    equipment: { group: 'hospital', title: '장비소개', fields: [field('title', '장비명 / 제목'), field('text', '설명', 'textarea')] },
+    equipment: { group: 'hospital', title: '보유장비', table: 'equipment', searchFields: ['title', 'description'], fields: [field('category', '분류', 'select', { exam: '검진', surgery: '수술', treatment: '치료' }), field('title', '장비명'), field('description', '설명', 'textarea', null, true), field('image_url', '장비 사진', 'photo', null, true)] },
     topicSummaries: { group: 'diseases', title: '분야별 소개', fixed: true, fields: [field('category', '분야', 'select', function () { return Object.fromEntries(Object.keys(topics).map(function (k) { return [k, topics[k].title]; })); }), field('summary', '소개 문구', 'textarea')] },
     articles: { group: 'diseases', title: '상세 안내', fields: [field('category', '분야', 'select', function () { return Object.fromEntries(Object.keys(topics).map(function (k) { return [k, topics[k].title]; })); }), field('section', '안내 구분', 'select', sectionOptions), field('title', '소제목'), field('text', '안내 내용', 'textarea')] },
     settings: { group: 'settings', title: '기본 정보와 연결 주소', fixed: true, fields: [field('name', '병원명'), field('logo', '로고 주소'), field('kakao', '카카오상담 주소', 'url'), field('booking', '네이버예약 주소', 'url'), field('shareImage', '공유 이미지 주소')] }
@@ -39,7 +39,7 @@
     return node;
   }
   function options(f) { return typeof f.options === 'function' ? f.options() : f.options || {}; }
-  function valueLabel(f, row) { if (f.type === 'checkbox') return row[f.key] ? '표시' : '—'; if (f.type === 'photo') return row.photo_url ? '등록됨' : '없음'; if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; if (f.type === 'sources') return Array.isArray(row.source_links) ? row.source_links.map(function (item) { return item.text || item.url || ''; }).filter(Boolean).join('\n') || '—' : row.source || row.source_url || '—'; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
+  function valueLabel(f, row) { if (f.type === 'checkbox') return row[f.key] ? '표시' : '—'; if (f.type === 'photo') return row[f.key] ? '등록됨' : '없음'; if (f.key === 'end_time') return row.period === 'morning' ? '—' : options(f)[(row.end_time || legacyEnd(row)).slice(0, 5)]; if (f.type === 'sources') return Array.isArray(row.source_links) ? row.source_links.map(function (item) { return item.text || item.url || ''; }).filter(Boolean).join('\n') || '—' : row.source || row.source_url || '—'; return f.type === 'select' ? options(f)[row[f.key]] || '원장 정보 확인 필요' : row[f.key] || '—'; }
   function initialData() {
     state.doctors = (home.doctors || []).map(function (d) { return { id: d.id, name: d.name, initial: d.initial, color: d.color }; });
     state.weekly = (home.doctors || []).flatMap(function (d) { return d.weekdays.map(function (day) { return { id: 'sample-' + d.id + day, doctor_id: d.id, weekday: day, period: d.morningOnly.includes(day) ? 'morning' : 'full' }; }); });
@@ -259,21 +259,22 @@
     doctorPhotoPreview = null; pendingDoctorPhoto = null;
   }
   var legacyColors = { blue: '#3e7bc6', amber: '#b8791f', teal: '#238879', purple: '#8968b0' };
-  function createDoctorPhotoEditor(row) {
+  function createDoctorPhotoEditor(row, fieldKey) {
+    var equipmentPhoto = fieldKey === 'image_url';
     var section = make('div', 'doctor-photo-editor');
-    var label = make('label', '', '원장 사진 (선택)');
+    var label = make('label', '', equipmentPhoto ? '장비 사진 (선택)' : '원장 사진 (선택)');
     var input = make('input'); input.type = 'file'; input.accept = 'image/jpeg,image/png,image/webp';
-    var url = make('input'); url.type = 'hidden'; url.name = 'photo_url'; url.value = row && row.photo_url || '';
-    var preview = make('img', 'doctor-photo-preview'); preview.alt = '원장 사진 미리보기'; preview.src = url.value || 'assets/icons/doctor-placeholder.svg';
+    var url = make('input'); url.type = 'hidden'; url.name = fieldKey; url.value = row && row[fieldKey] || '';
+    var preview = make('img', equipmentPhoto ? 'equipment-photo-preview' : 'doctor-photo-preview'); preview.alt = equipmentPhoto ? '장비 사진 미리보기' : '원장 사진 미리보기'; if (url.value) preview.src = url.value; else if (!equipmentPhoto) preview.src = 'assets/icons/doctor-placeholder.svg'; preview.hidden = equipmentPhoto && !url.value;
     var remove = make('button', 'admin-button', '사진 제거'); remove.type = 'button';
     var hint = make('p', 'blog-editor-hint', 'JPG, PNG, WebP 파일 · 최대 5MB. 저장을 눌러야 반영됩니다.');
     input.addEventListener('change', function () {
       var file = input.files && input.files[0]; if (!file) return;
       if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5242880) { input.value = ''; alert('JPG, PNG, WebP 사진을 5MB 이하로 선택해 주세요.'); return; }
       if (doctorPhotoPreview) URL.revokeObjectURL(doctorPhotoPreview);
-      doctorPhotoPreview = URL.createObjectURL(file); pendingDoctorPhoto = { file: file }; preview.src = doctorPhotoPreview;
+      doctorPhotoPreview = URL.createObjectURL(file); pendingDoctorPhoto = { file: file }; preview.src = doctorPhotoPreview; preview.hidden = false;
     });
-    remove.addEventListener('click', function () { if (doctorPhotoPreview) URL.revokeObjectURL(doctorPhotoPreview); doctorPhotoPreview = null; pendingDoctorPhoto = null; input.value = ''; url.value = ''; preview.src = 'assets/icons/doctor-placeholder.svg'; });
+    remove.addEventListener('click', function () { if (doctorPhotoPreview) URL.revokeObjectURL(doctorPhotoPreview); doctorPhotoPreview = null; pendingDoctorPhoto = null; input.value = ''; url.value = ''; if (equipmentPhoto) { preview.hidden = true; preview.removeAttribute('src'); } else preview.src = 'assets/icons/doctor-placeholder.svg'; });
     label.appendChild(input); section.append(label, preview, remove, hint, url); return section;
   }
   function createSourceEditor(row, legacySource) {
@@ -477,7 +478,7 @@
     fieldsRoot.replaceChildren();
     var blogEditor = null;
     def.fields.forEach(function (f) {
-      if (key === 'doctors' && f.type === 'photo') { fieldsRoot.appendChild(createDoctorPhotoEditor(row)); return; }
+      if (f.type === 'photo') { fieldsRoot.appendChild(createDoctorPhotoEditor(row, f.key)); return; }
       if (key === 'blog' && f.type === 'richtext') {
         blogEditor = createBlogEditor(row);
         fieldsRoot.appendChild(blogEditor.section);
@@ -496,7 +497,7 @@
       if (f.type === 'checkbox') input.checked = Boolean(row && row[f.key]);
       else if (f.type === 'color') input.value = row && (/^#[0-9a-f]{6}$/i.test(row.color) ? row.color : legacyColors[row.color]) || '#3e7bc6';
       else if (row) input.value = row[f.key] === undefined ? '' : row[f.key];
-      else if (f.key === 'category') input.value = topicFilter.value;
+      else if (f.key === 'category' && def.group === 'diseases') input.value = topicFilter.value;
       else if (f.key === 'post_date') {
         var date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).reduce(function (parts, part) { if (part.type !== 'literal') parts[part.type] = part.value; return parts; }, {});
         input.value = date.year + '-' + date.month + '-' + date.day;
@@ -543,14 +544,14 @@
       delete image.dataset.pendingImage;
     }
   }
-  async function uploadDoctorPhoto() {
-    if (!pendingDoctorPhoto) return form.elements.namedItem('photo_url').value;
+  async function uploadDoctorPhoto(fieldKey) {
+    if (!pendingDoctorPhoto) return form.elements.namedItem(fieldKey).value;
     if (pendingDoctorPhoto.url) return pendingDoctorPhoto.url;
-    var client = await window.adminStore.verifyDoctorWrite();
+    var client = fieldKey === 'image_url' ? await window.adminStore.verifyEquipmentWrite() : await window.adminStore.verifyDoctorWrite();
     var file = pendingDoctorPhoto.file;
     var ext = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[file.type];
     var bucket = client.storage.from('blog-images');
-    var path = 'doctors/' + crypto.randomUUID() + '.' + ext;
+    var path = (fieldKey === 'image_url' ? 'equipment/' : 'doctors/') + crypto.randomUUID() + '.' + ext;
     var result = await bucket.upload(path, file, { contentType: file.type, upsert: false });
     if (result.error) throw new Error('사진을 업로드하지 못했습니다. 저장소 설정과 관리자 권한을 확인해 주세요.');
     var publicUrl = bucket.getPublicUrl(path);
@@ -612,7 +613,8 @@
     error.hidden = true;
     setSaving(true);
     try {
-      if (key === 'doctors') values.photo_url = await uploadDoctorPhoto();
+      if (key === 'doctors') values.photo_url = await uploadDoctorPhoto('photo_url');
+      if (key === 'equipment') values.image_url = await uploadDoctorPhoto('image_url');
       if (blogEditor) {
         if (values.source_links.length > 1) {
           var blogClient = await window.adminStore.verifyBlogWrite();
