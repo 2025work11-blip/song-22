@@ -30,6 +30,7 @@
     ['음주', 'drink'], ['운동', 'exercise'], ['화장', 'brush']
   ];
   document.querySelectorAll('#beforeSurgery .vision-guide-content h4, #beforeSurgery .vision-guide-content h5, #afterSurgery .vision-daily-care h3').forEach(function (heading) {
+    if (heading.matches('.vision-guide-section > h4')) return;
     var match = headings.find(function (entry) { return heading.textContent.trim().indexOf(entry[0]) === 0 || heading.textContent.indexOf(entry[0]) !== -1; });
     if (!match) return;
     heading.classList.add('vision-heading-with-icon');

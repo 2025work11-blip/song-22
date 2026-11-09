@@ -12,6 +12,8 @@ body[data-blog-page] .blog-search input:focus-visible { outline: 2px solid #0074
 body[data-blog-page] .blog-search button { border-radius: 4px; background: #202020; color: #fff; }
 body[data-blog-page] .blog-search button:hover { background: #0074ff; }
 body[data-blog-page] .blog-post > summary { min-height: 112px; padding-block: 26px; }
+html:not([data-theme='dark']) body[data-blog-page] .blog-post > summary { background: #fff; }
+html:not([data-theme='dark']) body[data-blog-page] .blog-post[open] > summary { background: #f3f3f3; }
 body[data-blog-page] .blog-post .blog-post-title { font-size: 23px; font-weight: 700; line-height: 1.4; }
 body[data-blog-page] .blog-post .blog-source,
 body[data-blog-page] .blog-post .blog-source-text { font-size: 11px; line-height: 1.4; }

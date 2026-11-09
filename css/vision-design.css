@@ -46,7 +46,7 @@ body[data-category='vision'] .vision-daily-note,
 body[data-category='vision'] .vision-daily-footer { font-size: 17px; }
 body[data-category='vision'] .vision-guide-content h5,
 body[data-category='vision'] .vision-aftercare-body h3 { font-size: 24px; line-height: 1.4; }
-body[data-category='vision'] .vision-guide-content h4 { font-size: clamp(23px, 3vw, 27px); line-height: 1.4; }
+body[data-category='vision'] .vision-guide-content h4 { font-size: clamp(26px, 3.2vw, 29px); line-height: 1.4; }
 body[data-category='vision'] .vision-guide-section { margin-top: 88px; }
 html:not([data-theme='dark']) body[data-category='vision'] .vision-guide-notice,
 html:not([data-theme='dark']) body[data-category='vision'] .vision-fee-card { background: #f5f5f5; }
@@ -132,10 +132,17 @@ html[data-theme='dark'] body[data-category='vision'] .vision-lens-table th { bac
   body[data-category='vision'] .vision-daily-footer { font-size: 17px; line-height: 1.8; }
   body[data-category='vision'] .vision-guide-content h5,
   body[data-category='vision'] .vision-aftercare-body h3 { font-size: 22px; }
-  body[data-category='vision'] .vision-guide-content h4 { font-size: 23px; }
+  body[data-category='vision'] .vision-guide-content h4 { font-size: 24px; }
   body[data-category='vision'] #afterSurgery .vision-medicine-group h4 { font-size: 22px; }
   body[data-category='vision'] .vision-medicine-group { padding: 20px 16px; }
   body[data-category='vision'] .vision-medicine-grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 12px; }
+  body[data-category='vision'] .vision-medicine-image { max-width: 100px; height: 110px; }
+  body[data-category='vision'] .vision-medicine-grid .medicine-levotin,
+  body[data-category='vision'] .vision-medicine-grid .medicine-lotemax,
+  body[data-category='vision'] .vision-medicine-grid .medicine-prednilone { transform: none; }
+  body[data-category='vision'] .vision-medicine-grid .medicine-cravit,
+  body[data-category='vision'] .vision-medicine-grid .medicine-vigamox,
+  body[data-category='vision'] .vision-medicine-grid .medicine-fulliron { transform: scale(1.45); }
   body[data-category='vision'] .vision-medicine-group > p:last-child { font-size: 16px; }
   body[data-category='vision'] .vision-lens-table,
   body[data-category='vision'] .vision-lens-table th,
