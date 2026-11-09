@@ -59,7 +59,7 @@
     try {
       if (window.aboutProfilesReady) await window.aboutProfilesReady;
       cards = Array.from(document.querySelectorAll('[data-about-doctors] [data-doctor-name]'));
-      var results = await Promise.all([window.loadDoctorScheduleData(), window.supabaseClient.from('doctor_about_schedules').select('doctor_id,schedule')]);
+      var results = await Promise.all([window.loadDoctorScheduleData(), window.supabaseClient.from('doctor_about_schedules').select('doctor_id,schedule,is_visible')]);
       var data = results[0], custom = results[1];
       if (custom.error) throw custom.error;
       cards.forEach(function (card) {
@@ -69,6 +69,9 @@
         if (matches.length !== 1) { root.textContent = '원장 정기 일정을 확인해 주세요.'; return; }
         var rows = (matches[0].weeklySchedules || []).slice().sort(function (a, b) { return Number(a.weekday) - Number(b.weekday); });
         var saved = custom.data.find(function (item) { return String(item.doctor_id) === matches[0].id; });
+        var scheduleSection = root.closest('section');
+        if (saved && !saved.is_visible) { if (scheduleSection) scheduleSection.hidden = true; return; }
+        if (scheduleSection) scheduleSection.hidden = false;
         if (!rows.length && !saved && card.dataset.doctorName !== '정진호') { root.textContent = '등록된 정기 일정이 없습니다.'; return; }
         var start = document.createElement('p');
         start.className = 'about-schedule-start';

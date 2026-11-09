@@ -105,8 +105,18 @@ html[data-theme='dark'] .admin-academic-toggle[aria-pressed='true'] { background
 .admin-about-schedule-row label { display: grid; gap: 4px; font-size: 12px; }
 .admin-about-schedule-row input { width: 100%; min-width: 0; padding: 7px; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
 .admin-profile-form { display: grid; gap: 12px; }
+.admin-doctor-picker { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; }
+.admin-doctor-picker[hidden] { display: none; }
+.admin-doctor-picker label { display: grid; gap: 4px; font-size: 12px; }
+.admin-doctor-picker input, .admin-doctor-picker select { min-height: 40px; padding: 8px; border: 1px solid #bec9d5; border-radius: 7px; font: inherit; }
+.admin-doctor-picker p { flex-basis: 100%; margin: 0; color: var(--muted); font-size: 12px; }
 .admin-profile-form label { display: grid; gap: 5px; font-size: 13px; font-weight: 600; }
 .admin-profile-form textarea { width: 100%; min-height: 90px; padding: 9px; border: 1px solid #bec9d5; border-radius: 8px; background: var(--white); color: var(--ink); font: inherit; resize: vertical; }
+.admin-specialties { min-width: 0; margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: 8px; }
+.admin-specialties legend { padding: 0 4px; font-size: 13px; font-weight: 600; }
+.admin-specialties-list { display: grid; gap: 8px; margin-bottom: 8px; }
+.admin-specialty-row { display: flex; align-items: center; gap: 8px; }
+.admin-specialty-row input { flex: 1; min-width: 0; padding: 9px; border: 1px solid #bec9d5; border-radius: 8px; background: var(--white); color: var(--ink); font: inherit; }
 .admin-clinic-hours-form { display: grid; gap: 12px; margin-top: 14px; }
 .admin-clinic-hours-row { display: grid; grid-template-columns: minmax(110px, 1fr) repeat(2, minmax(110px, 1fr)); align-items: end; gap: 8px; }
 .admin-clinic-hours-row label { display: grid; gap: 4px; font-size: 12px; }
