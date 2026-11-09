@@ -12,9 +12,19 @@
 .schedule-doctor-label { display: inline-flex; align-items: baseline; gap: 5px; }
 .schedule-doctor-title { color: var(--muted); font-size: 13px; font-weight: 400; }
 .schedule-work-hours { font-weight: 500; }
+.schedule-closure-dates { color: #b93240; }
+.schedule-closure-duration { display: inline-block; margin-left: 6px; font-size: 12px; font-weight: 400; white-space: nowrap; }
+html[data-theme='dark'] .schedule-closure-dates { color: #ffbbc1; }
+.month-navigation button:disabled { opacity: .3; cursor: not-allowed; }
+.month-navigation button:disabled:hover::before { background: transparent; }
+.schedule-description { margin-bottom: 5px; }
+.schedule-range-note { margin: 0 0 22px; }
 html[data-theme='dark'] .schedule-calendar, html[data-theme='dark'] .schedule-calendar th, html[data-theme='dark'] .schedule-calendar td { border-color: #354f6b; }
 @media (max-width: 600px) {
   .schedule-calendar { --calendar-gap: 0px; border-spacing: 0; border-radius: 12px; }
   .calendar-markers .doctor-initial { width: 7px; height: 7px; }
   .day-panel h3[data-selected-date] { font-size: 24px; }
+  .doctor-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .doctor-legend-item { width: auto; gap: 5px; padding: 6px 12px; }
+  .doctor-legend-item .doctor-initial { width: 10px; height: 10px; }
 }

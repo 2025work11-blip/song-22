@@ -14,6 +14,7 @@
   var selected = todayPart('year') + '-' + todayPart('month') + '-' + todayPart('day');
   var year = Number(todayPart('year'));
   var month = Number(todayPart('month')) - 1;
+  var currentMonthIndex = year * 12 + month;
   var todayKey = selected;
   var selectedDoctor = '';
   var closureOnly = false;
@@ -64,6 +65,14 @@
     return element;
   }
   function dateKey(day) { return year + '-' + String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0'); }
+  function formatClosureRange(startDate, endDate) {
+    var start = startDate.split('-').map(Number), end = endDate.split('-').map(Number);
+    function dayLabel(parts) { return parts[2] + '일(' + weekdays[new Date(parts[0], parts[1] - 1, parts[2]).getDay()] + ')'; }
+    var first = start[0] + '년 ' + start[1] + '월 ' + dayLabel(start);
+    if (startDate === endDate) return first;
+    var prefix = start[0] !== end[0] ? end[0] + '년 ' + end[1] + '월 ' : start[1] !== end[1] ? end[1] + '월 ' : '';
+    return first + ' ~ ' + prefix + dayLabel(end);
+  }
   function closureLabel(closure, doctor) {
     var start = closure.startDate.split('-').map(Number);
     var end = closure.endDate.split('-').map(Number);
@@ -220,8 +229,12 @@
       var card = make('article', 'schedule-entry');
       card.appendChild(doctorHeading(doctorById(closure.doctorId), closure.doctorName));
       var period = make('div', 'schedule-period-row schedule-closure-row');
+      var closureDates = make('span', 'schedule-work-hours schedule-closure-dates', formatClosureRange(closure.startDate, closure.endDate));
+      var startParts = closure.startDate.split('-').map(Number), endParts = closure.endDate.split('-').map(Number);
+      var duration = Math.round((Date.UTC(endParts[0], endParts[1] - 1, endParts[2]) - Date.UTC(startParts[0], startParts[1] - 1, startParts[2])) / 86400000) + 1;
+      if (duration > 1) closureDates.appendChild(make('span', 'schedule-closure-duration', duration === 7 ? '일주일간' : duration + '일간'));
       period.append(make('span', 'work-period work-closed', '휴진'),
-        make('span', 'schedule-work-hours', closure.startDate + ' ~ ' + closure.endDate));
+        closureDates);
       card.appendChild(period);
       dayList.appendChild(card);
     });
@@ -248,9 +261,10 @@
     if (!monthClosures().length) closureOnly = false;
     renderDoctorFilters();
     monthTitle.textContent = year + '년 ' + (month + 1) + '월';
-    document.querySelector('[data-calendar-footnote]').textContent = holidays.years.includes(year)
-      ? '※ 공휴일은 2026~2027년 확인 자료 기준입니다. 원장 근무는 예시이며 실제 휴진 여부는 별도 확인이 필요합니다.'
-      : '※ 해당 연도의 공휴일 정보는 준비 중입니다. 원장 근무는 예시입니다.';
+    document.querySelectorAll('[data-month-step]').forEach(function (button) {
+      var target = year * 12 + month + Number(button.getAttribute('data-month-step'));
+      button.disabled = Math.abs(target - currentMonthIndex) > 1;
+    });
     body.replaceChildren();
     var firstDay = new Date(year, month, 1).getDay();
     var days = new Date(year, month + 1, 0).getDate();
@@ -385,6 +399,8 @@
   });
   document.querySelectorAll('[data-month-step]').forEach(function (button) {
     button.addEventListener('click', function () {
+      var target = year * 12 + month + Number(button.getAttribute('data-month-step'));
+      if (Math.abs(target - currentMonthIndex) > 1) return;
       var next = new Date(year, month + Number(button.getAttribute('data-month-step')), 1);
       year = next.getFullYear();
       month = next.getMonth();
