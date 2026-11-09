@@ -128,8 +128,6 @@
         var permalink = element('a', 'blog-article-link', '새페이지에서 보기');
         permalink.href = post.slug && /^[a-z0-9가-힣]+(?:-[a-z0-9가-힣]+)*$/.test(post.slug) ? '/blog/' + encodeURIComponent(post.slug) : '/blog/id/' + encodeURIComponent(post.id);
         permalink.target = '_blank'; permalink.rel = 'noopener noreferrer';
-        permalink.addEventListener('click', function (event) { event.stopPropagation(); });
-        meta.appendChild(permalink);
         heading.append(titleRow, meta);
         summary.append(heading, element('span', 'blog-post-toggle'));
         summary.lastChild.setAttribute('aria-hidden', 'true');
@@ -169,6 +167,7 @@
           });
         }
         article.blogSearchText = normalize(searchParts.join('\n'));
+        body.prepend(permalink);
         var closeRow = element('div', 'blog-post-close-row');
         var closeButton = element('button', 'blog-post-close', '×');
         closeButton.type = 'button';
