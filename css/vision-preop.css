@@ -1,0 +1,31 @@
+.vision-guide { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--white); }
+.vision-guide-header { padding: 36px clamp(24px, 5vw, 52px); background: #0869ee; color: #fff; }
+.vision-guide-header p { margin: 0; font-size: 15px; }
+.vision-guide-header p:first-child { margin-bottom: 8px; font-size: 11px; letter-spacing: .13em; font-weight: 700; }
+.vision-guide-header h3 { margin: 0 0 8px; color: #fff; font-size: clamp(24px, 4vw, 34px); line-height: 1.35; }
+.vision-guide-content { max-width: 850px; margin: auto; padding: clamp(24px, 5vw, 52px); }
+.vision-guide-notice, .vision-fee-card { padding: 24px; border: 1px solid var(--line); border-radius: 14px; background: var(--background); }
+.vision-guide-notice h4 { margin: 0 0 10px; font-size: 18px; }
+.vision-guide-notice ul { margin: 0; padding-left: 20px; }
+.vision-guide-notice li + li { margin-top: 8px; }
+.vision-guide-section { margin-top: 44px; }
+.vision-guide-section h4 { margin: 0 0 24px; padding-block: 10px; border-block: 1px solid var(--line); font-size: clamp(20px, 3vw, 25px); }
+.vision-guide-section h5 { margin: 28px 0 8px; font-size: 18px; }
+.vision-guide-section h5 span, .vision-fee-card h5 { color: var(--blue); }
+.vision-guide-section p { margin: 0 0 12px; line-height: 1.8; }
+.vision-guide-tag, .vision-fee-tag { display: inline-block; padding: 3px 10px; border: 1px solid var(--line); border-radius: 20px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.vision-guide-section p.vision-guide-tag { margin: 0; }
+.vision-lens-table { width: 100%; margin: 18px 0 30px; border-collapse: collapse; font-size: 15px; }
+.vision-lens-table th, .vision-lens-table td { padding: 10px 14px; border: 1px solid var(--line); text-align: left; }
+.vision-lens-table th { width: 38%; background: var(--background); }
+.vision-lens-table td { color: var(--blue); font-weight: 700; }
+.vision-fee-card { display: grid; gap: 20px; }
+.vision-fee-card > div + div { padding-top: 20px; border-top: 1px solid var(--line); }
+.vision-fee-card h5 { margin: 8px 0; }
+.vision-fee-card p { margin-bottom: 4px; }
+.vision-fee-card .vision-price { color: var(--ink); font-size: 24px; font-weight: 700; }
+.vision-price small { font-size: 13px; font-weight: 400; }
+.vision-phone { display: inline-flex; flex-direction: column; margin: 8px 0; padding: 11px 22px; border-radius: 24px; background: #0869ee; color: #fff; line-height: 1.4; }
+.vision-phone span { font-size: 12px; }
+.vision-phone strong { font-size: 20px; }
+@media (max-width: 600px) { .vision-guide-header { padding: 28px 22px; } .vision-guide-content { padding: 24px 18px; } .vision-guide-notice, .vision-fee-card { padding: 18px; } .vision-lens-table th, .vision-lens-table td { padding: 9px; font-size: 13px; } }

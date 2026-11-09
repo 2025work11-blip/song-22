@@ -97,6 +97,7 @@
     });
   }
   function renderItems(container, items, emptyText) {
+    if (!container || container.hasAttribute('data-static-content')) return;
     container.replaceChildren();
     if (!Array.isArray(items) || items.length === 0) {
       var empty = document.createElement('p');
