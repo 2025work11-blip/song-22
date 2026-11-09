@@ -54,6 +54,14 @@ body[data-category='vision'] .vision-lens-table,
 body[data-category='vision'] .vision-lens-table th,
 body[data-category='vision'] .vision-lens-table td { font-size: 16px; line-height: 1.6; }
 body[data-category='vision'] .vision-medicine-grid figcaption { font-size: 15px; }
+body[data-category='vision'] .vision-followup > p + p { margin-top: 16px; }
+body[data-category='vision'] .vision-followup-table { width: 100%; margin: 30px 0 22px; border-collapse: collapse; table-layout: fixed; border-top: 2px solid #0074ff; text-align: center; font-size: 17px; }
+body[data-category='vision'] .vision-followup-table th,
+body[data-category='vision'] .vision-followup-table td { padding: 16px 12px; border-bottom: 1px solid var(--line); line-height: 1.5; overflow-wrap: anywhere; }
+body[data-category='vision'] .vision-followup-table thead th { background: #f3f5f7; font-weight: 700; }
+body[data-category='vision'] .vision-followup-table tbody th { background: #f3f8ff; font-weight: 600; }
+body[data-category='vision'] .vision-followup-table td { font-weight: 700; }
+body[data-category='vision'] .vision-followup-note { margin: 0; color: var(--muted); }
 body[data-category='vision'] .vision-guide-section h5 span,
 body[data-category='vision'] .vision-fee-card h5,
 body[data-category='vision'] .vision-lens-table td { color: #0074ff; }
@@ -110,6 +118,8 @@ html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter >
 html[data-theme='dark'] body[data-category='vision'] .vision-medicine-note { background: #202c3b; }
 html[data-theme='dark'] body[data-category='vision'] .vision-medicine-group { background: #202329; border-color: #48515b; }
 html[data-theme='dark'] body[data-category='vision'] .vision-medicine-grid { border-color: #48515b; }
+html[data-theme='dark'] body[data-category='vision'] .vision-followup-table thead th { background: #30343a; }
+html[data-theme='dark'] body[data-category='vision'] .vision-followup-table tbody th { background: #243347; }
 html[data-theme='dark'] body[data-category='vision'] .vision-medicine-group .vision-medicine-timing { background: #fff; border-color: #0074ff; color: #0074ff; }
 html[data-theme='dark'] body[data-category='vision'] .vision-fee-tag,
 html[data-theme='dark'] body[data-category='vision'] .vision-medicine-label { color: #42474d; }
@@ -144,6 +154,9 @@ html[data-theme='dark'] body[data-category='vision'] .vision-lens-table th { bac
   body[data-category='vision'] .vision-medicine-grid .medicine-vigamox,
   body[data-category='vision'] .vision-medicine-grid .medicine-fulliron { transform: scale(1.45); }
   body[data-category='vision'] .vision-medicine-group > p:last-child { font-size: 16px; }
+  body[data-category='vision'] .vision-followup-table { font-size: 15px; }
+  body[data-category='vision'] .vision-followup-table th,
+  body[data-category='vision'] .vision-followup-table td { padding: 14px 8px; }
   body[data-category='vision'] .vision-lens-table,
   body[data-category='vision'] .vision-lens-table th,
   body[data-category='vision'] .vision-lens-table td { font-size: 15px; }
