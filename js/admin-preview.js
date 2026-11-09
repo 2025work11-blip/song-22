@@ -18,6 +18,7 @@
     if (key === 'notices') return 'index.html#notice-title';
     if (key === 'blog') return rowId && !stopped && /^\d+$/.test(rowId) && location.protocol !== 'file:' ? '/blog/id/' + encodeURIComponent(rowId) : 'blog.html';
     if (key === 'equipment') return 'about.html#equipment';
+    if (['equipment-exam', 'equipment-surgery', 'equipment-treatment'].includes(key)) return 'about.html#' + key;
     if (key === 'hours') return 'about.html#hours';
     if (key === 'bios') return 'about.html#director';
     if (key === 'topicSummaries' || key === 'articles') return diseaseUrl('overview');
@@ -28,7 +29,7 @@
     node.href = href; node.target = '_blank'; node.rel = 'noopener noreferrer';
     node.title = '저장되거나 게시된 내용을 새 탭에서 확인합니다.'; return node;
   }
-  var names = { '원장 정보': 'doctors', '정기 진료 일정': 'weekly', '날짜별 변경 일정': 'dates', '휴진 기간': 'closures', '공지 목록': 'notices', '블로그 글': 'blog', '자동 생성 글 가져오기': 'blog', '병원 진료시간': 'hours', '원장소개': 'bios', '장비소개': 'equipment', '장비 안내': 'equipment', '보유장비': 'equipment', '분야별 소개': 'topicSummaries', '상세 안내': 'articles', '기본 정보와 연결 주소': 'settings' };
+  var names = { '원장 정보': 'doctors', '정기 진료 일정': 'weekly', '날짜별 변경 일정': 'dates', '휴진 기간': 'closures', '공지 목록': 'notices', '블로그 글': 'blog', '자동 생성 글 가져오기': 'blog', '병원 진료시간': 'hours', '원장소개': 'bios', '장비소개': 'equipment', '장비 안내': 'equipment', '보유장비': 'equipment', '검진 장비': 'equipment-exam', '수술 장비': 'equipment-surgery', '치료 장비': 'equipment-treatment', '분야별 소개': 'topicSummaries', '상세 안내': 'articles', '기본 정보와 연결 주소': 'settings' };
   function setupCards() {
     main.querySelectorAll('.admin-card').forEach(function (card) {
       if (card.dataset.previewAdded) return;

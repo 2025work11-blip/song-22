@@ -2,6 +2,9 @@
   'use strict';
   var sections = Array.from(document.querySelectorAll('[data-equipment-category]'));
   if (!sections.length || !window.supabaseClient) return;
+  var anchor = window.location.hash.slice(1);
+  var targeted = sections.find(function (section) { return section.id === anchor; });
+  if (targeted) targeted.open = true;
   var names = { exam: '검진', surgery: '수술', treatment: '치료' };
   function make(tag, className, text) { var node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node; }
   function imageUrl(value) {

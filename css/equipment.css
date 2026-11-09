@@ -1,5 +1,6 @@
 .equipment-categories { border-top: 1px solid #bfc7c8; }
 .equipment-category { border-bottom: 1px solid var(--line); background: var(--white); }
+.equipment-category { scroll-margin-top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 69px)); }
 .equipment-category > summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 76px; padding: 20px 22px; list-style: none; font-size: 20px; font-weight: 600; cursor: pointer; }
 .equipment-category[open] > summary { position: sticky; top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 69px)); z-index: 4; background: #fff; }
 html[data-theme='dark'] .equipment-category[open] > summary { background: #172230; }

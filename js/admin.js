@@ -67,31 +67,34 @@
   }
   function render() {
     document.querySelectorAll('[data-admin-group]').forEach(function (root) { root.replaceChildren(); });
-    Object.keys(definitions).forEach(function (key) {
+    Object.keys(definitions).flatMap(function (key) { return key === 'equipment' ? ['exam', 'surgery', 'treatment'].map(function (category) { return { key: key, category: category }; }) : [{ key: key }]; }).forEach(function (view) {
+      var key = view.key;
       var def = definitions[key];
       var root = document.querySelector('[data-admin-group="' + def.group + '"]');
       var card = make('article', 'admin-card');
       var heading = make('div', 'admin-card-heading');
-      var title = make('div'); title.append(make('h3', '', def.title), make('p', 'admin-source', sources[key])); heading.appendChild(title);
+      var titleText = key === 'equipment' ? options(def.fields[0])[view.category] + ' 장비' : def.title;
+      var listKey = key === 'equipment' ? key + '-' + view.category : key;
+      var title = make('div'); title.append(make('h3', '', titleText), make('p', 'admin-source', sources[key])); heading.appendChild(title);
       var searchFields = def.searchFields || (def.table && !def.fixed && def.fields.some(function (f) { return f.key === 'title'; }) ? def.fields.filter(function (f) { return ['title', 'content', 'text'].includes(f.key); }).map(function (f) { return f.key; }) : []);
       if (searchFields.length) {
         var searchLabel = make('label', 'admin-blog-search');
-        searchLabel.appendChild(make('span', 'visually-hidden', def.title + ' 제목 또는 내용 검색'));
-        var searchInput = make('input'); searchInput.type = 'search'; searchInput.placeholder = '제목 또는 내용 검색'; searchInput.value = listQueries[key] || ''; searchInput.disabled = !loaded[key]; searchInput.setAttribute('data-admin-list-search', key);
+        searchLabel.appendChild(make('span', 'visually-hidden', titleText + ' 제목 또는 내용 검색'));
+        var searchInput = make('input'); searchInput.type = 'search'; searchInput.placeholder = '제목 또는 내용 검색'; searchInput.value = listQueries[listKey] || ''; searchInput.disabled = !loaded[key]; searchInput.setAttribute('data-admin-list-search', listKey);
         function updateListSearch() {
           var start = searchInput.selectionStart, end = searchInput.selectionEnd;
-          listQueries[key] = searchInput.value; if (key === 'blog') blogPage = 1; render();
-          var replacement = document.querySelector('[data-admin-list-search="' + key + '"]');
+          listQueries[listKey] = searchInput.value; if (key === 'blog') blogPage = 1; render();
+          var replacement = document.querySelector('[data-admin-list-search="' + listKey + '"]');
           if (replacement) { replacement.focus(); try { replacement.setSelectionRange(start, end); } catch (error) { /* 일부 검색 입력창은 선택 범위를 지원하지 않습니다. */ } }
         }
         searchInput.addEventListener('input', function (event) { if (!event.isComposing) updateListSearch(); });
         searchInput.addEventListener('compositionend', updateListSearch);
         searchLabel.appendChild(searchInput); heading.appendChild(searchLabel);
       }
-      if (def.table && !def.fixed) { var add = make('button', 'admin-button', key === 'blog' ? '새 글 작성' : '새 항목'); add.type = 'button'; add.dataset.adminEdit = key; add.disabled = !loaded[key] || (['weekly', 'dates', 'closures'].includes(key) && !state.doctors.length); heading.appendChild(add); }
+      if (def.table && !def.fixed) { var add = make('button', 'admin-button', key === 'blog' ? '새 글 작성' : '새 항목'); add.type = 'button'; add.dataset.adminEdit = key; if (view.category) add.dataset.equipmentCategory = view.category; add.disabled = !loaded[key] || (['weekly', 'dates', 'closures'].includes(key) && !state.doctors.length); heading.appendChild(add); }
       card.appendChild(heading);
-      var rows = state[key].filter(function (row) { return def.group !== 'diseases' || row.category === topicFilter.value; });
-      var searchTerm = listQueries[key] || '';
+      var rows = state[key].filter(function (row) { return (def.group !== 'diseases' || row.category === topicFilter.value) && (key !== 'equipment' || row.category === view.category); });
+      var searchTerm = listQueries[listKey] || '';
       if (searchFields.length && searchTerm.trim()) {
         var words = searchTerm.normalize('NFC').toLocaleLowerCase().trim().split(/\s+/);
         rows = rows.filter(function (row) { var text = searchFields.map(function (name) { return String(row[name] || ''); }).join('\n').normalize('NFC').toLocaleLowerCase(); return words.every(function (word) { return text.includes(word); }); });
@@ -125,7 +128,7 @@
       }
       else {
         var scroll = make('div', 'admin-table-scroll'); var table = make('table', 'admin-table');
-        var caption = make('caption', 'visually-hidden', def.title); table.appendChild(caption);
+        var caption = make('caption', 'visually-hidden', titleText); table.appendChild(caption);
         var head = make('thead'), headRow = make('tr');
         def.fields.forEach(function (f) { var th = make('th', '', f.label); th.scope = 'col'; headRow.appendChild(th); if (key === 'blog' && f.key === 'post_date') { var statusHead = make('th', '', '게시 상태'); statusHead.scope = 'col'; headRow.appendChild(statusHead); } });
         var actions = make('th', '', '작업'); actions.scope = 'col'; headRow.appendChild(actions); head.appendChild(headRow); table.appendChild(head);
@@ -467,7 +470,7 @@
     if (event.target.value !== '6') weeks.value = 'all';
     else if (!activeEditor.id) { form.elements.namedItem('period').value = 'full'; form.elements.namedItem('end_time').value = '17:00'; syncEndTime(); }
   });
-  function openEditor(key, id) {
+  function openEditor(key, id, equipmentCategory) {
     if (saving || !window.roleAccess.isAdmin() || !definitions[key] || !definitions[key].table || !loaded[key]) return;
     var def = definitions[key], row = state[key].find(function (item) { return String(item.id) === id; });
     activeEditor = { key: key, id: row ? String(row.id) : null };
@@ -498,6 +501,7 @@
       else if (f.type === 'color') input.value = row && (/^#[0-9a-f]{6}$/i.test(row.color) ? row.color : legacyColors[row.color]) || '#3e7bc6';
       else if (row) input.value = row[f.key] === undefined ? '' : row[f.key];
       else if (f.key === 'category' && def.group === 'diseases') input.value = topicFilter.value;
+      else if (f.key === 'category' && key === 'equipment' && ['exam', 'surgery', 'treatment'].includes(equipmentCategory)) input.value = equipmentCategory;
       else if (f.key === 'post_date') {
         var date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date()).reduce(function (parts, part) { if (part.type !== 'literal') parts[part.type] = part.value; return parts; }, {});
         input.value = date.year + '-' + date.month + '-' + date.day;
@@ -510,7 +514,7 @@
     syncEndTime();
     dialog.showModal();
   }
-  main.addEventListener('click', function (event) { var button = event.target.closest('[data-admin-edit]'); if (button) openEditor(button.dataset.adminEdit, button.dataset.rowId); });
+  main.addEventListener('click', function (event) { var button = event.target.closest('[data-admin-edit]'); if (button) openEditor(button.dataset.adminEdit, button.dataset.rowId, button.dataset.equipmentCategory); });
   function generatedEditorSnapshot() {
     return JSON.stringify({ fields: Array.from(fieldsRoot.querySelectorAll('input:not([type="file"]), select, textarea')).filter(function (input) { return input.name !== 'is_academic' && input.name !== 'post_date'; }).map(function (input) { return input.type === 'checkbox' ? input.checked : input.value; }), body: fieldsRoot.querySelector('.blog-editor-content').innerHTML });
   }
