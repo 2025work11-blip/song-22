@@ -21,6 +21,10 @@
           columns = columns.replace(',photo_url', '');
           continue;
         }
+        if (result.error && ['42703', 'PGRST204'].includes(result.error.code) && columns.includes(',saturday_weeks')) {
+          columns = columns.replace(',saturday_weeks', '');
+          continue;
+        }
         if (result.error) throw result.error;
         if (!Array.isArray(result.data)) throw new Error('일정 조회 결과를 확인할 수 없습니다.');
         rows = rows.concat(result.data);
@@ -29,7 +33,7 @@
     }
     var result = await Promise.all([
       readRows('doctors', 'id,name,initial,color,photo_url'),
-      readRows('doctor_weekly_schedules', 'id,doctor_id,weekday,period,end_time'),
+      readRows('doctor_weekly_schedules', 'id,doctor_id,weekday,period,end_time,saturday_weeks'),
       readRows('doctor_date_schedules', 'id,doctor_id,schedule_date,period,end_time'),
       readRows('doctor_closures', 'id,doctor_id,start_date,end_date')
     ]);

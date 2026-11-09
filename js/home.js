@@ -101,7 +101,12 @@
     var weekday = new Date(parts[0], parts[1] - 1, parts[2]).getDay();
     var specific = schedules.filter(function (entry) { return entry.date === date; });
     var weekly = doctors.filter(function (doctor) {
-      return (doctor.weekdays || []).includes(weekday) &&
+      var rule = (doctor.weeklySchedules || []).find(function (row) { return Number(row.weekday) === weekday; });
+      var weekOfMonth = Math.floor((parts[2] - 1) / 7) + 1;
+      var matchesWeek = weekday !== 6 || !rule || !rule.saturday_weeks || rule.saturday_weeks === 'all' ||
+        (rule.saturday_weeks === 'first_third' && [1, 3].includes(weekOfMonth)) ||
+        (rule.saturday_weeks === 'second_fourth' && [2, 4].includes(weekOfMonth));
+      return (doctor.weekdays || []).includes(weekday) && matchesWeek &&
         !specific.some(function (entry) { return entry.doctorId === doctor.id; });
     }).map(function (doctor) {
       var weeklySchedule = (doctor.weeklySchedules || []).find(function (row) { return Number(row.weekday) === weekday; });

@@ -2,8 +2,8 @@
 (function () {
   'use strict';
   var columns = {
-    doctors: ['name', 'initial', 'color', 'photo_url'],
-    doctor_weekly_schedules: ['doctor_id', 'weekday', 'period', 'end_time'],
+    doctors: ['name', 'color', 'photo_url'],
+    doctor_weekly_schedules: ['doctor_id', 'weekday', 'period', 'end_time', 'saturday_weeks'],
     doctor_date_schedules: ['doctor_id', 'schedule_date', 'period', 'end_time'],
     doctor_closures: ['doctor_id', 'start_date', 'end_date'],
     notices: ['notice_date', 'title', 'content', 'image_url'],
@@ -67,9 +67,13 @@
         if (payload.period === 'full' && !['17:00', '19:00'].includes(payload.end_time)) throw new Error('종일 종료 시간을 선택해 주세요.');
         payload.end_time = payload.period === 'full' ? payload.end_time : null;
       }
-      if (table === 'doctor_weekly_schedules') payload.weekday = Number(payload.weekday);
+      if (table === 'doctor_weekly_schedules') {
+        payload.weekday = Number(payload.weekday);
+        if (!['all', 'first_third', 'second_fourth'].includes(payload.saturday_weeks)) throw new Error('토요일 근무 주차를 확인해 주세요.');
+        if (payload.weekday !== 6) payload.saturday_weeks = 'all';
+      }
       if (table === 'notices') payload.image_url = payload.image_url || null;
-      if (table === 'doctors') payload.photo_url = payload.photo_url || null;
+      if (table === 'doctors') { payload.photo_url = payload.photo_url || null; if (id === null || id === undefined) payload.initial = ''; }
       var query;
       if (id !== null && id !== undefined) { checkId(id); query = client.from(table).update(payload).eq('id', id); }
       else query = client.from(table).insert(payload);

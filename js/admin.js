@@ -21,8 +21,8 @@
   function field(key, label, type, options, optional) { return { key: key, label: label, type: type || 'text', options: options, optional: optional }; }
   function doctorOptions() { return Object.fromEntries((state.doctors || []).map(function (d) { return [d.id, d.name]; })); }
   var definitions = {
-    doctors: { group: 'schedule', title: '원장 정보', table: 'doctors', fields: [field('name', '원장 이름'), field('initial', '표시 문자'), field('color', '구분 색상', 'color'), field('photo_url', '사진', 'photo', null, true)] },
-    weekly: { group: 'schedule', title: '정기 진료 일정', table: 'doctor_weekly_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('weekday', '진료 요일', 'select', Object.fromEntries(weekdays.map(function (d, i) { return [i, d + '요일']; }))), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
+    doctors: { group: 'schedule', title: '원장 정보', table: 'doctors', fields: [field('name', '원장 이름'), field('color', '구분 색상', 'color'), field('photo_url', '사진', 'photo', null, true)] },
+    weekly: { group: 'schedule', title: '정기 진료 일정', table: 'doctor_weekly_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('weekday', '진료 요일', 'select', Object.fromEntries(weekdays.map(function (d, i) { return [i, d + '요일']; }))), field('period', '근무 구분', 'select', { full: '종일', morning: '오전' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' }), field('saturday_weeks', '토요일 근무 주차', 'select', { all: '매주 토요일', first_third: '첫째·셋째 토요일', second_fourth: '둘째·넷째 토요일' })] },
     dates: { group: 'schedule', title: '날짜별 변경 일정', table: 'doctor_date_schedules', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('schedule_date', '적용 날짜', 'date'), field('period', '근무 구분', 'select', { morning: '오전', full: '종일' }), field('end_time', '종일 종료 시간', 'select', { '17:00': '오후 5:00까지', '19:00': '오후 7:00까지' })] },
     closures: { group: 'schedule', title: '휴진 기간', table: 'doctor_closures', fields: [field('doctor_id', '원장', 'select', doctorOptions), field('start_date', '시작일', 'date'), field('end_date', '종료일', 'date')] },
     notices: { group: 'notices', title: '공지 목록', table: 'notices', fields: [field('notice_date', '날짜', 'date'), field('title', '제목'), field('content', '내용', 'textarea'), field('image_url', '이미지 주소', 'url', null, true)] },
@@ -118,7 +118,8 @@
           items.sort(function (a, b) { return Number(a.weekday) - Number(b.weekday); }).forEach(function (row) {
             var line = make('div', 'admin-weekly-row');
             var period = row.period === 'morning' ? '오전' : '종일 · ' + valueLabel(def.fields[3], row);
-            line.appendChild(make('span', '', (weekdays[Number(row.weekday)] || '') + '요일 · ' + period));
+            var weekLabel = Number(row.weekday) === 6 ? ' · ' + (options(def.fields[4])[row.saturday_weeks || 'all']) : '';
+            line.appendChild(make('span', '', (weekdays[Number(row.weekday)] || '') + '요일' + weekLabel + ' · ' + period));
             var edit = make('button', 'admin-button', '편집'); edit.type = 'button'; edit.dataset.adminEdit = key; edit.dataset.rowId = String(row.id); edit.disabled = !loaded[key]; edit.setAttribute('aria-label', (doctor ? doctor.name : '원장') + ' ' + weekdays[Number(row.weekday)] + '요일 일정 편집'); line.appendChild(edit); list.appendChild(line);
           });
           accordion.appendChild(list); card.appendChild(accordion);
@@ -156,7 +157,12 @@
               td.appendChild(toggle);
             } else {
               var label = valueLabel(f, row);
-              if (key === 'blog' && f.key === 'post_date' && /^\d{4}-\d{2}-\d{2}$/.test(label)) {
+              if (key === 'doctors' && f.key === 'color') {
+                var swatch = make('span', 'admin-color-swatch');
+                swatch.style.backgroundColor = /^#[0-9a-f]{6}$/i.test(row.color || '') ? row.color : legacyColors[row.color] || '#3e7bc6';
+                swatch.setAttribute('aria-label', '지정된 구분 색상');
+                td.appendChild(swatch);
+              } else if (key === 'blog' && f.key === 'post_date' && /^\d{4}-\d{2}-\d{2}$/.test(label)) {
                 var date = make('span', 'admin-blog-date');
                 date.append(make('span', 'admin-blog-date-day', label.slice(5).replace('-', '/')), make('span', 'admin-blog-date-year', label.slice(0, 4)));
                 td.appendChild(date);
@@ -245,6 +251,8 @@
     if (!period || !end) return;
     end.closest('label').hidden = period.value !== 'full';
     end.required = period.value === 'full';
+    var weekday = form.elements.namedItem('weekday'), weeks = form.elements.namedItem('saturday_weeks');
+    if (weekday && weeks) { weeks.closest('label').hidden = weekday.value !== '6'; }
   }
   function releasePendingImages() {
     pendingImages.forEach(function (item) { URL.revokeObjectURL(item.preview); });
@@ -454,6 +462,12 @@
     return { section: section, editor: editor, source: row && row.source != null ? row.source : legacy.source };
   }
   form.addEventListener('change', syncEndTime);
+  form.addEventListener('change', function (event) {
+    if (event.target.name !== 'weekday' || !activeEditor || activeEditor.key !== 'weekly') return;
+    var weeks = form.elements.namedItem('saturday_weeks');
+    if (event.target.value !== '6') weeks.value = 'all';
+    else if (!activeEditor.id) { form.elements.namedItem('period').value = 'full'; form.elements.namedItem('end_time').value = '17:00'; syncEndTime(); }
+  });
   function openEditor(key, id) {
     if (saving || !window.roleAccess.isAdmin() || !definitions[key] || !definitions[key].table || !loaded[key]) return;
     var def = definitions[key], row = state[key].find(function (item) { return String(item.id) === id; });
@@ -490,6 +504,7 @@
         input.value = date.year + '-' + date.month + '-' + date.day;
       }
       if (f.key === 'end_time') input.value = row ? (row.end_time || legacyEnd(row)).slice(0, 5) : '19:00';
+      if (f.key === 'saturday_weeks') input.value = row && row.saturday_weeks || 'all';
       label.appendChild(input); fieldsRoot.appendChild(label);
     });
     if (key === 'blog' && row && row.source_post_id) activeEditor.generatedSnapshot = generatedEditorSnapshot();
