@@ -130,10 +130,12 @@
       return;
     }
     document.title = disease.title + ' 안내 | 연세제일안과';
-    document.querySelector('[data-title]').textContent = disease.title;
+    var title = document.querySelector('[data-title]');
+    if (title && !title.hasAttribute('data-static-title')) title.textContent = disease.title;
     document.querySelector('[data-breadcrumb]').textContent = disease.title;
     document.querySelector('[data-summary]').textContent = disease.summary;
-    document.querySelector('[data-mock-notice]').hidden = disease.isMock !== true;
+    var notice = document.querySelector('[data-mock-notice]');
+    if (notice) notice.hidden = disease.isMock !== true;
 
     ['overview', 'outpatient', 'beforeSurgery', 'afterSurgery'].forEach(function (key) {
       var isSurgery = key === 'beforeSurgery' || key === 'afterSurgery';
