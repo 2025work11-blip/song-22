@@ -227,14 +227,16 @@
     var closed = closuresOn(selected);
     closed.forEach(function (closure) {
       var card = make('article', 'schedule-entry');
-      card.appendChild(doctorHeading(doctorById(closure.doctorId), closure.doctorName));
-      var period = make('div', 'schedule-period-row schedule-closure-row');
+      var heading = doctorHeading(doctorById(closure.doctorId), closure.doctorName);
+      heading.appendChild(make('span', 'work-period work-closed', '휴진'));
+      card.appendChild(heading);
+      var period = make('div', 'schedule-period-row');
+      period.appendChild(make('span', 'schedule-detail-label', '| 휴진일 |'));
       var closureDates = make('span', 'schedule-work-hours schedule-closure-dates', formatClosureRange(closure.startDate, closure.endDate));
       var startParts = closure.startDate.split('-').map(Number), endParts = closure.endDate.split('-').map(Number);
       var duration = Math.round((Date.UTC(endParts[0], endParts[1] - 1, endParts[2]) - Date.UTC(startParts[0], startParts[1] - 1, startParts[2])) / 86400000) + 1;
       if (duration > 1) closureDates.appendChild(make('span', 'schedule-closure-duration', duration === 7 ? '일주일간' : duration + '일간'));
-      period.append(make('span', 'work-period work-closed', '휴진'),
-        closureDates);
+      period.appendChild(closureDates);
       card.appendChild(period);
       dayList.appendChild(card);
     });
@@ -245,14 +247,16 @@
     list.forEach(function (entry) {
       var doctor = doctorById(entry.doctorId);
       var card = make('article', 'schedule-entry');
-      card.appendChild(doctorHeading(doctor));
       // 동작이 없는 상태 표시이므로 실제 버튼 대신 버튼 모양의 라벨로 표시합니다.
       var work = workHours(entry, selected);
       var morning = work.morning;
       var hours = work.hours;
+      var heading = doctorHeading(doctor);
+      heading.appendChild(make('span', 'work-period ' + (morning ? 'work-morning' : 'work-full'), morning ? '오전' : '종일'));
+      card.appendChild(heading);
       var period = make('div', 'schedule-period-row');
-      period.append(make('span', 'work-period ' + (morning ? 'work-morning' : 'work-full'), morning ? '오전' : '종일'),
-        make('span', 'schedule-work-hours', hours));
+      period.appendChild(make('span', 'schedule-detail-label', '| 진료시간 |'));
+      period.appendChild(make('span', 'schedule-work-hours', hours));
       card.appendChild(period);
       dayList.appendChild(card);
     });

@@ -88,6 +88,13 @@ html[data-theme='dark'] .home-page .schedule-calendar { --calendar-line: #354f6b
 html[data-theme='dark'] .home-page .day-panel { margin: 10px 0 0; padding: 22px; border: 0; border-radius: 0; background: #fff; box-shadow: none; }
 html[data-theme='dark'] .home-page .day-panel { background: #292d33; }
 .home-page .day-panel [data-day-schedules] { grid-template-columns: 1fr; gap: 0; }
+.home-page .day-panel .schedule-doctor-name { flex-wrap: wrap; gap: 6px; }
+.home-page .day-panel .schedule-doctor-name .work-period { flex: none; padding: 2px 5px; border-radius: 5px; font-size: 10px; line-height: 1.3; letter-spacing: 0; }
+.home-page .day-panel .schedule-doctor-name .work-period { background: #fff; }
+html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-period { background: #fff; color: #4a5e70; }
+html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-morning { color: #8b651f; }
+html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-closed { color: #b93240; }
+.home-page .day-panel .schedule-detail-label { color: #858b92; font-size: 11px; font-weight: 400; }
 .home-page .day-panel .schedule-entry + .schedule-entry { margin-top: 14px; padding-top: 14px; border-top: 1px solid #dce1e7; }
 html[data-theme='dark'] .home-page .day-panel .schedule-entry + .schedule-entry { border-color: #48515b; }
 .home-page .day-panel.day-panel-reveal { animation: home-day-panel-reveal 1s ease-out; }

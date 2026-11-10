@@ -15,14 +15,9 @@ body[data-eye-guide] .eye-guide-lead strong { color: #0074ff; }
 body[data-eye-guide] .eye-guide-list { margin: 0; padding: 0; border-top: 1px solid #333; list-style: none; }
 body[data-eye-guide] .eye-guide-list li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 20px; align-items: start; padding: 24px 0; border-bottom: 1px solid #dedede; }
 body[data-eye-guide] .eye-guide-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #eaf4ff; color: #0074ff; }
-body[data-eye-guide] .eye-guide-icon svg, body[data-eye-guide] .eye-guide-highlight svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+body[data-eye-guide] .eye-guide-icon svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 body[data-eye-guide] .eye-guide-list h3 { margin: 0 0 7px; font-size: 21px; line-height: 1.45; }
 body[data-eye-guide] .eye-guide-list p { margin: 0; color: var(--ink); font-size: 17px; line-height: 1.8; }
-body[data-eye-guide] .eye-guide-highlight { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; padding: 26px; background: #eaf4ff; color: #111; }
-body[data-eye-guide] .eye-guide-highlight svg { flex: 0 0 36px; width: 36px; height: 36px; color: #0074ff; }
-body[data-eye-guide] .eye-guide-highlight span { font-size: 15px; }
-body[data-eye-guide] .eye-guide-highlight p { margin: 2px 0 0; font-size: clamp(22px, 3vw, 30px); font-weight: 700; line-height: 1.4; }
-body[data-eye-guide] .eye-guide-highlight strong { color: #0074ff; }
 body[data-eye-guide] .eye-guide-priority { margin: 24px 0 0; padding: 20px 22px; border-left: 3px solid #0074ff; background: #f5f5f5; font-size: 16px; font-weight: 600; line-height: 1.7; }
 body[data-eye-guide] .eye-guide-sources { margin: 34px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 body[data-eye-guide] .eye-guide-sources a { text-decoration: underline; text-underline-offset: 3px; }
@@ -41,6 +36,5 @@ html[data-theme='dark'] body[data-eye-guide] .eye-guide-priority { background: #
   body[data-eye-guide] .eye-guide-icon svg { width: 25px; height: 25px; }
   body[data-eye-guide] .eye-guide-list h3 { font-size: 19px; }
   body[data-eye-guide] .eye-guide-list p { font-size: 16px; }
-  body[data-eye-guide] .eye-guide-highlight { padding: 20px 16px; }
 }
 @media (prefers-reduced-motion: reduce) { body[data-eye-guide] .eye-guide-nav, body[data-eye-guide] .eye-guide-nav a { transition: none; } }
