@@ -1,6 +1,22 @@
 // 원장 일정은 Supabase에서 읽습니다. 공지사항 조회는 notices.js에서 처리합니다.
 (function () {
   'use strict';
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var categoryObserver = new IntersectionObserver(function (entries) {
+      entries.filter(function (entry) { return entry.isIntersecting; })
+        .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left; })
+        .forEach(function (entry, index) {
+          var card = entry.target;
+          card.style.setProperty('--home-card-delay', Math.min(index, 5) * 110 + 'ms');
+          card.classList.add('home-card-reveal');
+          card.addEventListener('animationend', function () { card.classList.remove('home-card-reveal'); }, { once: true });
+          categoryObserver.unobserve(card);
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.home-page .category-grid .category-card').forEach(function (card) {
+      if (card.getAttribute('href') !== 'eye-drops.html' && card.getAttribute('href') !== 'about.html') categoryObserver.observe(card);
+    });
+  }
   var calendar = document.querySelector('[data-calendar]');
   if (!calendar) return;
   var doctors = [];
@@ -20,6 +36,30 @@
   var closureOnly = false;
   var closures = [];
   var doctorFilters = document.querySelector('[data-doctor-legend]');
+  var revealedFilters = new Set();
+  var scheduleRevealObserver = null;
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    scheduleRevealObserver = new IntersectionObserver(function (entries) {
+      entries.filter(function (entry) { return entry.isIntersecting && entry.target.isConnected; })
+        .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left; })
+        .forEach(function (entry, index) {
+          var element = entry.target;
+          if (element.matches('.doctor-legend-item')) {
+            var key = element.hasAttribute('data-closure-filter') ? 'closure' : 'doctor:' + element.getAttribute('data-doctor-id');
+            if (revealedFilters.has(key)) { scheduleRevealObserver.unobserve(element); return; }
+            revealedFilters.add(key);
+          }
+          element.style.setProperty('--schedule-reveal-delay', Math.min(index, 5) * 110 + 'ms');
+          element.classList.add('schedule-item-reveal');
+          element.addEventListener('animationend', function (event) {
+            if (event.animationName === 'schedule-item-enter' || event.animationName === 'schedule-selected-enter') element.classList.remove('schedule-item-reveal');
+          });
+          scheduleRevealObserver.unobserve(element);
+        });
+    }, { threshold: 0.1 });
+    var hoursCard = document.querySelector('.home-page .schedule-hours');
+    if (hoursCard) scheduleRevealObserver.observe(hoursCard);
+  }
   var monthTitle = document.querySelector('[data-calendar-month]');
   var body = document.querySelector('[data-calendar-body]');
   var dayTitle = document.querySelector('[data-selected-date]');
@@ -168,6 +208,7 @@
       legend.append(dot, make('span', '', doctor.name.replace(/\s*원장\s*$/, '')));
       doctorFilters.appendChild(legend);
     });
+    if (scheduleRevealObserver) doctorFilters.querySelectorAll('button').forEach(function (button) { scheduleRevealObserver.observe(button); });
   }
   function doctorHeading(doctor, fallbackName) {
     var heading = make('h4', 'schedule-doctor-name ' + colorClass(doctor));

@@ -4,7 +4,7 @@ body[data-category='vision'] .detail-intro { padding-top: clamp(72px, 11vw, 130p
 body[data-category='vision'] .detail-intro .eyebrow { color: #777; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
 body[data-category='vision'] .detail-intro .eyebrow::before { content: none; }
 body[data-category='vision'] .detail-intro h1 { margin: 0; font-size: clamp(38px, 6vw, 68px); font-weight: 700; }
-body[data-category='vision'] .section-nav { width: 80%; margin-inline: auto; padding: 0; background: #f2f2f2; border: 0; transition: width .35s ease; }
+body[data-category='vision'] .section-nav { width: 80%; margin-inline: auto; padding: 0; background: #f2f2f2; border: 0; border-radius: 7px; transition: width .35s ease; }
 body[data-category='vision'] .section-nav.is-stuck { width: 100%; }
 body[data-category='vision'] .section-nav-inner { width: min(1120px, 100%); gap: 0; padding: 4px; }
 body[data-category='vision'] .section-nav a { display: flex; flex: 1; align-items: center; justify-content: center; min-width: 0; min-height: 56px; padding: 10px 8px; border-radius: 3px; color: #111111; background: transparent; transition: color .25s ease, background-color .25s ease; }
@@ -19,7 +19,18 @@ body[data-category='vision'] .vision-guide,
 body[data-category='vision'] .vision-aftercare-chapter { overflow: visible; border-radius: 0; }
 body[data-category='vision'] .vision-guide > summary,
 body[data-category='vision'] .vision-aftercare-chapter > summary { min-height: 76px; padding-inline: 18px; background: #202020; color: #fff; transition: width .25s ease, margin-left .25s ease, min-height .25s ease, padding .25s ease, background-color .2s ease; }
-body[data-category='vision'] .vision-summary-reveal { animation: vision-summary-enter .5s ease-out var(--vision-reveal-delay, 0ms) both; }
+body[data-category='vision'] .vision-aftercare { border-top: 0; }
+body[data-category='vision'] .vision-guide,
+body[data-category='vision'] .vision-aftercare-chapter { margin-bottom: 12px; border: 0; background: transparent; }
+html body[data-category='vision'] .vision-guide > summary,
+html body[data-category='vision'] .vision-aftercare-chapter > summary { position: relative; box-sizing: border-box; min-height: var(--disease-nav-height, 56px); padding: 8px 30px; border: 0; border-radius: 999px; background: #202020; color: #fff; box-shadow: none; }
+html body[data-category='vision'] .vision-guide > summary::after,
+html body[data-category='vision'] .vision-aftercare-chapter > summary::after { color: #fff; }
+html body[data-category='vision'] .vision-guide:not([open]) > summary:hover,
+html body[data-category='vision'] .vision-aftercare-chapter:not([open]) > summary:hover { background: #343434; color: #fff; }
+html body[data-category='vision'] .vision-guide[open] > summary,
+html body[data-category='vision'] .vision-aftercare-chapter[open] > summary { position: sticky; }
+body[data-category='vision'] .vision-summary-reveal { animation: vision-summary-enter .7s ease-out var(--vision-reveal-delay, 0ms) both; }
 @keyframes vision-summary-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { body[data-category='vision'] .vision-summary-reveal { animation: none; } }
 body[data-category='vision'] .vision-guide > summary:hover,
@@ -33,7 +44,7 @@ body[data-category='vision'] .vision-aftercare-chapter[open] > summary::after { 
 body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary,
 body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary,
 html[data-theme='dark'] body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary,
-html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary { box-sizing: border-box; width: 100vw; margin-left: calc(50% - 50vw); min-height: var(--disease-nav-height, 56px); height: var(--disease-nav-height, 56px); padding: 8px max(28px, calc((100vw - 1120px) / 2 + 12px)); background: #202020; color: #fff; }
+html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary { box-sizing: border-box; width: 100vw; margin-left: calc(50% - 50vw); min-height: var(--disease-nav-height, 56px); height: var(--disease-nav-height, 56px); padding: 8px max(28px, calc((100vw - 1120px) / 2 + 12px)); border: 0; border-radius: 0; background: #202020; color: #fff; }
 body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary::after,
 body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary::after { color: #fff; }
 body[data-category='vision'] .vision-guide-content,

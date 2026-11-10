@@ -278,6 +278,7 @@ html body:not(.home-page) .site-footer { background: #ededed; color: #555; }
 html body:not(.home-page) .site-footer .footer-brand { color: #111111; }
 html body:not(.home-page) .site-footer .footer-logout,
 html body:not(.home-page) .site-footer .share-status { color: #555; }
+html body:is([data-category], [data-about-page], [data-eye-guide]) :is(.section-nav, .eye-guide-nav) { border-radius: 7px; }
 html body .detail-intro .eyebrow,
 html body[data-category] .detail-intro .eyebrow,
 html body[data-about-page] .detail-intro .eyebrow,

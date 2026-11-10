@@ -1,0 +1,33 @@
+/* 시력교정 페이지와 같은 아코디언 제목 스타일 */
+html body[data-about-page] .about-doctors,
+html body[data-about-page] .equipment-categories,
+body .medication-list { border-top: 0; }
+body .medication-item { padding: 0; border: 0; background: transparent; overflow: visible; }
+body details:not(.blog-post):not(.notice-item) { margin-bottom: 12px; border: 0; background: transparent; }
+html body details:not(.blog-post):not(.notice-item) > summary {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-height: var(--disease-nav-height, 56px);
+  padding: 8px 30px;
+  border: 0;
+  border-radius: 999px;
+  background: #202020;
+  color: #fff;
+  box-shadow: none;
+  cursor: pointer;
+}
+html body details:not(.blog-post):not(.notice-item) > summary:hover { background: #343434; }
+html body details:not(.blog-post):not(.notice-item) > summary::after,
+html body details:not(.blog-post):not(.notice-item) > summary .equipment-toggle,
+html body details:not(.blog-post):not(.notice-item) > summary .medication-expand { color: #fff; }
+html body details:not(.blog-post):not(.notice-item)[open] > summary { background: #ededed; color: #111; }
+html body details:not(.blog-post):not(.notice-item)[open] > summary::after,
+html body details:not(.blog-post):not(.notice-item)[open] > summary .equipment-toggle,
+html body details:not(.blog-post):not(.notice-item)[open] > summary .medication-expand { color: #111; }
+html body details.is-summary-stuck[open] > summary { border-radius: 0; }
+html body details.is-summary-stuck[open] > summary::after,
+html body details.is-summary-stuck[open] > summary .equipment-toggle { color: #fff; }
+body .unified-summary-reveal { animation: unified-summary-enter .7s ease-out var(--summary-reveal-delay, 0ms) both; }
+@keyframes unified-summary-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { body .unified-summary-reveal { animation: none; } }

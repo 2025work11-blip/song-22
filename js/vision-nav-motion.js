@@ -51,7 +51,7 @@
           var item = entry.target;
           var summary = item.querySelector(':scope > summary');
           if (summary && !item.open) {
-            summary.style.setProperty('--vision-reveal-delay', Math.min(index, 4) * 75 + 'ms');
+            summary.style.setProperty('--vision-reveal-delay', Math.min(index, 4) * 110 + 'ms');
             summary.classList.add('vision-summary-reveal');
             summary.addEventListener('animationend', function () { summary.classList.remove('vision-summary-reveal'); }, { once: true });
           }
