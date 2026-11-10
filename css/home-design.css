@@ -1,6 +1,10 @@
 /* 홈 섹션은 위아래 30px 여백과 가로 구분선으로 나눕니다. */
 .home-page .home-main { padding-bottom: 0; }
 .home-page .home-main > section.home-intro { margin: 0; padding-block: 30px; }
+.home-page .home-intro .eyebrow { color: #777; }
+.home-page .home-intro .hero-tagline { color: #0074ff; }
+.home-page .home-intro h1 strong { color: #111; font-size: clamp(42px, 7vw, 68px); }
+html[data-theme='dark'] .home-page .home-intro h1 strong { color: #fff; }
 .home-page .home-main > section:not(.home-intro) {
   margin-top: 0;
   padding: 30px 0;
@@ -56,6 +60,7 @@ html[data-theme='dark'] .home-page .month-navigation button::before { border: 1p
 .home-page .doctor-legend button[data-doctor-id]:not(.doctor-filter-all),
 html[data-theme='dark'] .home-page .doctor-legend button[data-doctor-id]:not(.doctor-filter-all) { background: var(--doctor-color); border-color: var(--doctor-color); color: #fff; opacity: 1; }
 .home-page .doctor-legend button[data-doctor-id]:not(.doctor-filter-all) .doctor-initial { display: none; }
+.home-page .doctor-legend button[aria-pressed='true'] { outline: 2px solid var(--doctor-color, #0074ff); outline-offset: 3px; }
 /* 달력 날짜 사이에 짧은 세로선만 표시합니다. */
 .home-page .schedule-calendar { --calendar-line: #dce9f4; border-left: 0; border-right: 0; border-radius: 0; }
 .home-page .schedule-calendar th,
@@ -86,9 +91,12 @@ html[data-theme='dark'] .home-page .day-panel .schedule-entry + .schedule-entry 
 .home-page .day-panel.day-panel-reveal { animation: home-day-panel-reveal 1s ease-out; }
 @keyframes home-day-panel-reveal { from { background-color: #e4f1ff; } to { background-color: #fff; } }
 html[data-theme='dark'] .home-page .day-panel.day-panel-reveal { animation: none; }
-.home-page .clinic-hours-section .home-section-heading { margin-bottom: 18px; }
-.home-page .schedule-hours-list { padding: 4px 0; border-top: 1px solid #333; border-bottom: 1px solid #dedede; }
-.home-page .schedule-hours-list > div { padding: 11px 24px; border-color: #e5e5e5; }
+.home-page .schedule-hours,
+html[data-theme='dark'] .home-page .schedule-hours { margin-top: 24px; padding: 30px 28px; border: 1px solid #d6d6d6; border-radius: 16px; background: #f3f3f3; box-shadow: none; }
+html[data-theme='dark'] .home-page .schedule-hours { background: #292d33; border-color: #48515b; }
+.home-page .schedule-hours h3 { margin: 0 0 22px; }
+.home-page .schedule-hours-list { padding: 4px 0; border-top: 1px solid #777; border-bottom: 1px solid #777; }
+.home-page .schedule-hours-list > div { padding: 11px 18px; border-color: #e5e5e5; }
 .home-page .schedule-hours-list > div:first-child { border-top: 0; }
 .home-page .schedule-hours-list dt,
 .home-page .schedule-hours-list dd { font-size: 18px; }
@@ -104,18 +112,17 @@ html[data-theme='dark'] .home-page .schedule-hours-list > div { border-color: #4
 html[data-theme='dark'] .home-page .home-main > section:not(.home-intro) { background: transparent; border-color: #425368; color: var(--ink); box-shadow: none; }
 html[data-theme='dark'] .home-page .home-main > .notice-section { color: #fff; }
 html[data-theme='dark'] .home-page .home-main > .home-section:not(.notice-section)::before { background: #425368; }
-.home-page .home-main > section.home-section.clinic-hours-section::before,
-html[data-theme='dark'] .home-page .home-main > section.home-section.clinic-hours-section::before {
-  z-index: -1;
-  height: 100%;
-  background: #f3f3f3;
-}
-html[data-theme='dark'] .home-page .home-main > section.home-section.clinic-hours-section::before { background: #292d33; }
+.home-page .home-main > section.home-section.parking-section::before,
+html[data-theme='dark'] .home-page .home-main > section.home-section.parking-section::before { z-index: -1; height: 100%; background: #f3f3f3; }
+html[data-theme='dark'] .home-page .home-main > section.home-section.parking-section::before { background: #292d33; }
 @media (max-width: 600px) {
   .home-page .home-main > section:not(.home-intro) { margin-top: 0; padding: 30px 0; }
   .home-page .day-panel,
   html[data-theme='dark'] .home-page .day-panel { padding: 16px; }
-  .home-page .schedule-hours-list > div { padding: 10px 12px; }
+  .home-page .schedule-hours,
+  html[data-theme='dark'] .home-page .schedule-hours { padding: 24px 18px; border-radius: 12px; }
+  .home-page .schedule-hours h3 { margin-bottom: 18px; }
+  .home-page .schedule-hours-list > div { padding: 10px 8px; }
   .home-page .schedule-hours-list > div:nth-child(3) { padding-bottom: 3px; }
   .home-page .schedule-hours-list dt,
   .home-page .schedule-hours-list dd { font-size: clamp(14px, 3.8vw, 16px); }
