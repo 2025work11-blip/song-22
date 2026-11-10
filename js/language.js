@@ -69,7 +69,7 @@
     ['관리자 권한을 확인하지 못했습니다. 잠시 후 다시 확인해 주세요.', 'Unable to verify administrator access. Please try again shortly.', '无法确认管理员权限，请稍后重试。'],
     ['다시 확인', 'Check again', '重新确认'],
     ['선택한 날짜에는 휴진 일정이 없습니다.', 'No closures on the selected date.', '所选日期没有停诊安排。'],
-    ['최근 3개월의 공지사항입니다. 공지사항이 없으면 표시되지 않습니다.', 'Notices from the last 3 months. Nothing is displayed if there are no notices.', '显示最近三个月的公告，没有公告时不显示。'],
+    ['최근 3개월의 원내 소식입니다. 소식이 없으면 표시되지 않습니다.', 'Notices from the last 3 months. Nothing is displayed if there are no notices.', '显示最近三个月的公告，没有公告时不显示。'],
     ['공지사항을 불러오는 중입니다.', 'Loading notices.', '正在加载公告。'],
     ['최근 3개월 내 등록된 공지사항이 없습니다.', 'No notices have been posted in the last 3 months.', '最近三个月暂无公告。'],
     ['공지사항을 불러오지 못했습니다. 잠시 후 새로고침해 주세요.', 'Unable to load notices. Please refresh shortly.', '无法加载公告，请稍后刷新。'],
