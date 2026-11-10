@@ -30,6 +30,7 @@ html body[data-category='vision'] .vision-guide:not([open]) > summary:hover,
 html body[data-category='vision'] .vision-aftercare-chapter:not([open]) > summary:hover { background: #343434; color: #fff; }
 html body[data-category='vision'] .vision-guide[open] > summary,
 html body[data-category='vision'] .vision-aftercare-chapter[open] > summary { position: sticky; }
+html body[data-category='vision'] :is(.vision-guide, .vision-aftercare-chapter):not(.is-summary-stuck) > summary { padding-inline: 30px; }
 body[data-category='vision'] .vision-summary-reveal { animation: vision-summary-enter .7s ease-out var(--vision-reveal-delay, 0ms) both; }
 @keyframes vision-summary-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { body[data-category='vision'] .vision-summary-reveal { animation: none; } }

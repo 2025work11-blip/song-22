@@ -21,3 +21,4 @@ html body :is(.vision-guide, .vision-aftercare-chapter, .about-doctors details)[
 html body .equipment-category[open].is-summary-stuck > summary .equipment-toggle { color: #fff !important; }
 html body:is([data-category], [data-about-page]) .section-nav a[aria-current='location'] { background: #0074ff !important; color: #fff !important; }
 html body:is([data-category], [data-about-page]) .section-number { color: #0074ff !important; }
+

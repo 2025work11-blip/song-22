@@ -18,6 +18,7 @@ html body details:not(.blog-post):not(.notice-item) > summary {
   cursor: pointer;
 }
 html body details:not(.blog-post):not(.notice-item) > summary:hover { background: #343434; }
+html body[data-about-page] :is(.about-doctors details, .equipment-category):not(.is-summary-stuck) > summary { padding-inline: 30px; }
 html body details:not(.blog-post):not(.notice-item) > summary::after,
 html body details:not(.blog-post):not(.notice-item) > summary .equipment-toggle,
 html body details:not(.blog-post):not(.notice-item) > summary .medication-expand { color: #fff; }
