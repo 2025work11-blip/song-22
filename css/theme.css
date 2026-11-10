@@ -274,6 +274,10 @@ html body .site-footer { padding-top: 76px; border-top: 0; background: #111; col
 html body .site-footer .footer-brand { color: #fff; }
 html body .site-footer .footer-logout,
 html body .site-footer .share-status { color: #d0d0d0; }
+html body:not(.home-page) .site-footer { background: #ededed; color: #555; }
+html body:not(.home-page) .site-footer .footer-brand { color: #222; }
+html body:not(.home-page) .site-footer .footer-logout,
+html body:not(.home-page) .site-footer .share-status { color: #555; }
 .site-header, .home-page .site-header { background: #fff; }
 .language-inline { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 .language-inline a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 2px; color: #858585; font-size: 12px; font-weight: 400; }

@@ -5,6 +5,26 @@
   var header = document.querySelector('.site-header');
   if (!nav || !intro || !header) return;
 
+  function addDoctorPhotos() {
+    document.querySelectorAll('.about-doctors [data-doctor-name]').forEach(function (card) {
+      var summary = card.querySelector('summary');
+      var photo = card.querySelector('.about-doctor-profile img');
+      if (!summary || !photo) return;
+      var thumbnail = summary.querySelector('.about-summary-photo');
+      if (!thumbnail) {
+        thumbnail = document.createElement('img');
+        thumbnail.className = 'about-summary-photo';
+        thumbnail.alt = '';
+        thumbnail.setAttribute('aria-hidden', 'true');
+        thumbnail.addEventListener('error', function () { thumbnail.src = 'assets/icons/doctor-placeholder.svg'; }, { once: true });
+        summary.insertBefore(thumbnail, summary.firstChild);
+      }
+      thumbnail.src = photo.src;
+    });
+  }
+  addDoctorPhotos();
+  if (window.aboutProfilesReady) window.aboutProfilesReady.then(addDoctorPhotos, addDoctorPhotos);
+
   var frame = null;
   function update() {
     frame = null;
