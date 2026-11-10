@@ -278,6 +278,16 @@ html body:not(.home-page) .site-footer { background: #ededed; color: #555; }
 html body:not(.home-page) .site-footer .footer-brand { color: #222; }
 html body:not(.home-page) .site-footer .footer-logout,
 html body:not(.home-page) .site-footer .share-status { color: #555; }
+html body .detail-intro .eyebrow,
+html body[data-category] .detail-intro .eyebrow,
+html body[data-about-page] .detail-intro .eyebrow,
+html body[data-blog-page] .detail-intro .eyebrow,
+html body.home-page .home-intro .eyebrow { color: #888; font-size: 10px; font-weight: 400; }
+html[data-theme='dark'] body .detail-intro .eyebrow,
+html[data-theme='dark'] body[data-category] .detail-intro .eyebrow,
+html[data-theme='dark'] body[data-about-page] .detail-intro .eyebrow,
+html[data-theme='dark'] body[data-blog-page] .detail-intro .eyebrow,
+html[data-theme='dark'] body.home-page .home-intro .eyebrow { color: #b6b6b6; }
 .site-header, .home-page .site-header { background: #fff; }
 .language-inline { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 .language-inline a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 2px; color: #858585; font-size: 12px; font-weight: 400; }
