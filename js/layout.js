@@ -38,11 +38,11 @@
         });
       }
     }
-    // Normalize shared assets for nested blog URLs, consistently on every page.
+    // 웹에서는 중첩된 블로그 주소도 루트 경로를 사용하고, 파일 미리보기에서는 상대 경로를 유지합니다.
     template.content.querySelectorAll('[href],[src]').forEach(function (element) {
       ['href','src'].forEach(function (attribute) {
         var value = element.getAttribute(attribute);
-        if (value && !/^(?:[a-z][a-z0-9+.-]*:|\/|#|\?)/i.test(value)) element.setAttribute(attribute, '/' + value);
+        if (window.location.protocol !== 'file:' && value && !/^(?:[a-z][a-z0-9+.-]*:|\/|#|\?)/i.test(value)) element.setAttribute(attribute, '/' + value);
       });
     });
     slot.replaceWith(template.content);
