@@ -64,7 +64,7 @@ html[data-theme='dark'] .home-page .doctor-legend button[data-doctor-id]:not(.do
 .home-page .doctor-legend button[data-doctor-id]:not(.doctor-filter-all) .doctor-initial { display: none; }
 .home-page .doctor-legend button[aria-pressed='true'] { outline: 2px solid var(--doctor-color, #0074ff); outline-offset: 3px; }
 /* 달력 날짜 사이에 짧은 세로선만 표시합니다. */
-.home-page .schedule-calendar { --calendar-line: #dce9f4; border-left: 0; border-right: 0; border-radius: 0; }
+.home-page .schedule-calendar { --calendar-line: #e8e8e8; border-left: 0; border-right: 0; border-radius: 0; }
 .home-page .schedule-calendar th,
 .home-page .schedule-calendar td { position: relative; border: 0; }
 .home-page .schedule-calendar tbody tr > :not(:last-child)::before {
@@ -77,9 +77,28 @@ html[data-theme='dark'] .home-page .doctor-legend button[data-doctor-id]:not(.do
 .home-page .schedule-calendar tbody tr > :not(:last-child)::before { top: 12px; right: 0; height: 22px; width: 1px; }
 .home-page .schedule-calendar thead th { border-bottom: 1px solid var(--calendar-line); }
 .home-page .schedule-calendar .calendar-number { font-weight: 700; }
+.home-page .schedule-calendar .calendar-day .closure-range,
+html[data-theme='dark'] .home-page .schedule-calendar .calendar-day .closure-range { border: 0; color: #111; }
+.home-page .schedule-calendar .calendar-day .closure-range::before,
+.home-page .schedule-calendar .calendar-day .closure-range::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  pointer-events: none;
+  border-color: #b93240;
+  border-style: solid;
+  border-width: 0;
+  -webkit-mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(transparent, #000 30%, #000 70%, transparent);
+}
+.home-page .schedule-calendar .calendar-day .closure-range::before { left: 0; border-left-width: 2px; border-radius: 6px 0 0 6px; }
+.home-page .schedule-calendar .calendar-day .closure-range::after { right: 0; border-right-width: 2px; border-radius: 0 6px 6px 0; }
 .home-page .schedule-calendar .calendar-day[aria-current='date'],
 html[data-theme='dark'] .home-page .schedule-calendar .calendar-day[aria-current='date'] {
   background: #dcf3ff;
+  border-radius: 10px;
   box-shadow: inset 0 0 0 2px #111;
   color: #111;
 }
@@ -95,14 +114,14 @@ html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-period
 html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-morning { color: #8b651f; }
 html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-closed { color: #b93240; }
 .home-page .day-panel .schedule-detail-label { color: #858b92; font-size: 11px; font-weight: 400; }
-.home-page .day-panel .schedule-entry + .schedule-entry { margin-top: 14px; padding-top: 14px; border-top: 1px solid #dce1e7; }
-html[data-theme='dark'] .home-page .day-panel .schedule-entry + .schedule-entry { border-color: #48515b; }
+.home-page .day-panel .schedule-entry + .schedule-entry { margin-top: 14px; padding-top: 14px; border-top: 1px solid #e1e1e1; }
+html[data-theme='dark'] .home-page .day-panel .schedule-entry + .schedule-entry { border-color: #515151; }
 .home-page .day-panel.day-panel-reveal { animation: home-day-panel-reveal 1s ease-out; }
 @keyframes home-day-panel-reveal { from { background-color: #e4f1ff; } to { background-color: #fff; } }
 html[data-theme='dark'] .home-page .day-panel.day-panel-reveal { animation: none; }
 .home-page .schedule-hours,
 html[data-theme='dark'] .home-page .schedule-hours { margin-top: 24px; padding: 30px 28px; border: 1px solid #d6d6d6; border-radius: 16px; background: #f3f3f3; box-shadow: none; }
-html[data-theme='dark'] .home-page .schedule-hours { background: #292d33; border-color: #48515b; }
+html[data-theme='dark'] .home-page .schedule-hours { background: #292d33; border-color: #515151; }
 .home-page .schedule-hours h3 { margin: 0 0 22px; }
 .home-page .schedule-hours-list { padding: 4px 0; border-top: 1px solid #777; border-bottom: 1px solid #777; }
 .home-page .schedule-hours-list > div { padding: 11px 18px; border-color: #e5e5e5; }
@@ -118,7 +137,7 @@ html[data-theme='dark'] .home-page .schedule-hours-list > div { border-color: #4
 @media (prefers-reduced-motion: reduce) {
   .home-page .day-panel.day-panel-reveal { animation: none; }
 }
-html[data-theme='dark'] .home-page .home-main > section:not(.home-intro) { background: transparent; border-color: #425368; color: var(--ink); box-shadow: none; }
+html[data-theme='dark'] .home-page .home-main > section:not(.home-intro) { background: transparent; border-color: #545454; color: var(--ink); box-shadow: none; }
 html[data-theme='dark'] .home-page .home-main > .notice-section { color: #fff; }
 html[data-theme='dark'] .home-page .home-main > .home-section:not(.notice-section)::before { background: #425368; }
 .home-page .home-main > section.home-section.parking-section::before,

@@ -24,7 +24,7 @@
 .medication-accordion > summary:hover, .admin-weekly-group > summary:hover { background: #fff; }
 html[data-theme='dark'] .vision-guide, html[data-theme='dark'] .vision-aftercare-chapter,
 html[data-theme='dark'] .blog-post, html[data-theme='dark'] .medication-item,
-html[data-theme='dark'] .admin-weekly-group { background: #172230; border-color: #405268; }
+html[data-theme='dark'] .admin-weekly-group { background: #172230; border-color: #535353; }
 html[data-theme='dark'] .vision-guide > summary, html[data-theme='dark'] .vision-aftercare-chapter > summary,
 html[data-theme='dark'] .blog-post > summary, html[data-theme='dark'] .medication-accordion > summary,
 html[data-theme='dark'] .admin-weekly-group > summary { background: #172230; color: var(--ink); }

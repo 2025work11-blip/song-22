@@ -1,7 +1,7 @@
 /* 날짜는 하나의 둥근 표 안에서 선으로 구분합니다. */
 #schedule-title, #notice-title { scroll-margin-top: 90px; }
-.schedule-calendar { --calendar-gap: 0px; border: 1px solid #dce9f4; border-collapse: separate; border-spacing: 0; border-radius: 16px; overflow: hidden; }
-.schedule-calendar th, .schedule-calendar td { border-right: 1px solid #dce9f4; border-bottom: 1px solid #dce9f4; }
+.schedule-calendar { --calendar-gap: 0px; border: 1px solid #e8e8e8; border-collapse: separate; border-spacing: 0; border-radius: 16px; overflow: hidden; }
+.schedule-calendar th, .schedule-calendar td { border-right: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; }
 .schedule-calendar tr > :last-child { border-right: 0; }
 .schedule-calendar tbody tr:last-child td { border-bottom: 0; }
 .schedule-calendar .calendar-day, .schedule-calendar .calendar-day[aria-current='date'],
