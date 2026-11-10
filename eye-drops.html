@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0074ff">
+  <script src="js/theme.js?v=20261029-theme1"></script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="연세제일안과">
+  <meta property="og:title" content="연세제일안과">
+  <meta property="og:url" content="https://jeileye.vercel.app/">
+  <meta property="og:image" content="https://jeileye.vercel.app/assets/share-preview.png?v=20261102-yonsei1">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="왼쪽에 연세제일안과, 오른쪽에 병원 심볼">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="연세제일안과">
+  <meta name="twitter:image" content="https://jeileye.vercel.app/assets/share-preview.png?v=20261102-yonsei1">
+  <meta name="description" content="올바른 안약 점안 방법과 여러 안약을 사용할 때의 간격, 보관 및 확인 사항을 안내합니다.">
+  <title>안약사용 안내 | 연세제일안과</title>
+  <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css?v=20261109-bluewhite1">
+  <link rel="stylesheet" href="css/theme.css?v=20261110-footerblack2">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261102-yonsei1">
+  <script defer src="js/layout.js?v=20261110-drawer2"></script>
+  <script defer src="js/config.js"></script>
+  <script defer src="js/share.js?v=20261029-share1"></script>
+  <script defer src="js/data.js?v=20261030-closures1"></script>
+  <script defer src="js/common.js?v=20261029-explicit1"></script>
+  <script defer src="js/language.js?v=20261105-blogsearch"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="js/supabase-client.js"></script>
+  <script defer src="js/role-access.js?v=20261030-roles1"></script>
+  <script defer src="js/auth.js?v=20261030-roles1"></script>
+  <link rel="stylesheet" href="css/accordion.css?v=20261109-notice1">
+  <link rel="stylesheet" href="css/guide-placeholder.css?v=20261110-guide1">
+  <link rel="stylesheet" href="css/eye-drops-guide.css?v=20261110-guide1">
+  <script defer src="js/eye-drops-nav.js?v=20261110-guide1"></script>
+  <link rel="stylesheet" href="css/accordion-controls.css?v=20261110-controls5">
+</head>
+<body data-simple-guide data-eye-guide>
+<a class="skip-link" href="#main">본문으로 바로가기</a>
+<div data-site-header></div>
+<p class="container auth-global-message" data-auth-global-message role="alert" hidden></p>
+<div data-site-drawer></div>
+<main id="main" tabindex="-1">
+  <svg class="eye-guide-symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="eye-guide-drop" viewBox="0 0 32 32"><path d="M16 3S8 12 8 19a8 8 0 0 0 16 0c0-7-8-16-8-16Z"/><path d="M12 19c0 2.5 1.5 4 4 4"/></symbol>
+    <symbol id="eye-guide-eye" viewBox="0 0 32 32"><path d="M3 16s5-7 13-7 13 7 13 7-5 7-13 7S3 16 3 16Z"/><circle cx="16" cy="16" r="3.5"/></symbol>
+    <symbol id="eye-guide-clock" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M16 9v7l5 3"/></symbol>
+    <symbol id="eye-guide-bottle" viewBox="0 0 32 32"><path d="M12 4h8v4l3 3v14a3 3 0 0 1-3 3h-8a3 3 0 0 1-3-3V11l3-3V4Z"/><path d="M12 8h8M9 15h14M13 20h6"/></symbol>
+    <symbol id="eye-guide-check" viewBox="0 0 32 32"><rect x="5" y="5" width="22" height="22" rx="3"/><path d="m10 16 4 4 8-9"/></symbol>
+    <symbol id="eye-guide-calendar" viewBox="0 0 32 32"><rect x="5" y="7" width="22" height="20" rx="2"/><path d="M10 4v6M22 4v6M5 13h22M10 18h4M18 18h4M10 22h4"/></symbol>
+  </svg>
+  <div class="container detail-intro"><p class="eyebrow">YONSEI JEIL EYE CLINIC GUIDE</p><h1>안약사용</h1></div>
+  <nav class="eye-guide-nav" aria-label="안약사용 안내 목차"><div class="container eye-guide-nav-inner">
+    <a href="#eye-method">점안 방법</a><a href="#eye-interval">함께 사용할 때</a><a href="#eye-check">사용 전 확인</a>
+  </div></nav>
+  <div class="container eye-guide-content">
+    <section class="eye-guide-section" id="eye-method" aria-labelledby="eye-method-title">
+      <div class="eye-guide-heading"><span>01</span><h2 id="eye-method-title">올바른 안약 점안 방법</h2></div>
+      <p class="eye-guide-lead">많이 넣기보다 <strong>한 번에 한 방울</strong></p>
+      <ol class="eye-guide-list eye-guide-steps">
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-drop"></use></svg></span><div><h3>손을 씻고 한 방울 점안하기</h3><p>손을 씻은 뒤 아래 눈꺼풀을 살짝 당겨 안쪽 공간에 한 방울을 넣어주세요.</p></div></li>
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-bottle"></use></svg></span><div><h3>용기 끝이 눈에 닿지 않게</h3><p>오염을 막기 위해 용기 끝이 눈·눈꺼풀·속눈썹이나 손에 닿지 않도록 해주세요.</p></div></li>
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-eye"></use></svg></span><div><h3>점안 후 눈을 가볍게 감기</h3><p>눈을 세게 감거나 반복해서 깜빡이지 말고 편안하게 감아주세요.</p></div></li>
+      </ol>
+    </section>
+    <section class="eye-guide-section" id="eye-interval" aria-labelledby="eye-interval-title">
+      <div class="eye-guide-heading"><span>02</span><h2 id="eye-interval-title">여러 안약을 함께 사용할 때</h2></div>
+      <div class="eye-guide-highlight"><svg aria-hidden="true"><use href="#eye-guide-clock"></use></svg><div><span>서로 다른 안약 사이에는</span><p>일반적으로 <strong>5분 간격</strong></p></div></div>
+      <ul class="eye-guide-list">
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-clock"></use></svg></span><div><h3>서로 다른 점안액</h3><p>같은 눈에 여러 종류를 넣을 때에는 일반적으로 각 안약 사이에 5분 간격을 둡니다.</p></div></li>
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-drop"></use></svg></span><div><h3>점안액과 안연고를 함께 사용할 때</h3><p>점안액을 먼저 넣고 5분 이상 지난 뒤 안연고를 사용합니다.</p></div></li>
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-bottle"></use></svg></span><div><h3>흔들어 사용해야 하는 안약</h3><p>제품 안내를 확인하고 흔들어야 하는 안약은 사용 전에 충분히 흔들어주세요.</p></div></li>
+      </ul>
+      <p class="eye-guide-priority">제품별 사용법이나 의료진이 지정한 순서가 있다면 해당 안내를 우선 따라주세요.</p>
+    </section>
+    <section class="eye-guide-section" id="eye-check" aria-labelledby="eye-check-title">
+      <div class="eye-guide-heading"><span>03</span><h2 id="eye-check-title">사용 전 확인사항</h2></div>
+      <p class="eye-guide-lead">뚜껑 색보다 <strong>약 이름과 넣는 눈</strong>을 확인하세요.</p>
+      <ul class="eye-guide-list">
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-eye"></use></svg></span><div><h3>오른쪽·왼쪽·양쪽 구분</h3><p>처방받은 눈을 확인하고 필요하면 약 봉투나 별도 표에 표시해 두세요.</p></div></li>
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-calendar"></use></svg></span><div><h3>하루 횟수와 점안 시간 기록</h3><p>여러 약을 쓴다면 일정표로 중복하거나 빠뜨린 점안이 없는지 확인하세요.</p></div></li>
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-check"></use></svg></span><div><h3>개봉일과 사용기한 확인</h3><p>제품별 개봉 후 사용기한과 보관 방법을 확인하고 지켜주세요.</p></div></li>
+        <li><span class="eye-guide-icon"><svg aria-hidden="true"><use href="#eye-guide-bottle"></use></svg></span><div><h3>다른 사람과 함께 사용하지 않기</h3><p>겉모습이 비슷해도 성분과 사용 목적이 다를 수 있으므로 함께 사용하지 마세요.</p></div></li>
+      </ul>
+      <p class="eye-guide-priority">남은 안약은 증상만 보고 임의로 다시 사용하지 마세요.</p>
+      <p class="eye-guide-sources">참고: <a href="https://www.aao.org/eye-health/treatments/how-to-put-in-eye-drops" target="_blank" rel="noopener noreferrer">미국안과학회 안약 점안 안내</a> · <a href="https://www.moorfields.nhs.uk/mediaLocal/i21m3rba/how-to-use-your-eye-drops.pdf" target="_blank" rel="noopener noreferrer">Moorfields 안약 사용 안내</a></p>
+    </section>
+  </div>
+</main>
+<div data-site-footer></div>
+<aside class="quick-widget" data-quick-widget aria-label="상담 및 예약">
+  <div class="quick-actions" id="quick-actions" data-quick-actions hidden>
+    <a class="quick-action" data-kakao-link role="link" tabindex="0" aria-disabled="true" aria-describedby="kakao-status"><img src="assets/icons/kakao.svg" width="36" height="36" alt=""><span>카카오상담</span><span class="visually-hidden" id="kakao-status" data-kakao-status>연결 준비 중</span></a>
+    <a class="quick-action" data-booking-link role="link" tabindex="0" aria-disabled="true" aria-describedby="booking-status"><img src="assets/icons/naver.svg" width="36" height="36" alt=""><span>네이버예약</span><span class="visually-hidden" id="booking-status" data-booking-status>연결 준비 중</span></a>
+  </div>
+  <button class="quick-toggle" type="button" data-quick-toggle aria-label="상담 및 예약 메뉴 열기" aria-expanded="false" aria-controls="quick-actions"><span class="quick-toggle-label">예약 문의</span></button>
+</aside>
+</body>
+</html>

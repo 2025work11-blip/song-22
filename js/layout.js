@@ -16,6 +16,21 @@
       var drawerNav = template.content.querySelector('.drawer-nav');
       var accountRow = drawerNav && drawerNav.querySelector('.drawer-account-row');
       if (accountRow) {
+        var aboutLink = drawerNav.querySelector('a[href="about.html"]');
+        if (aboutLink) {
+          [['dry-eye.html', '안구건조'], ['eye-drops.html', '안약사용']].forEach(function (entry) {
+            var link = document.createElement('a');
+            var number = document.createElement('span');
+            var label = document.createElement('span');
+            link.setAttribute('href', entry[0]);
+            number.className = 'drawer-number';
+            label.textContent = entry[1];
+            link.append(number, label);
+            drawerNav.insertBefore(link, aboutLink);
+          });
+        }
+        var blogLink = drawerNav.querySelector('a[href="blog.html"]');
+        if (blogLink) drawerNav.appendChild(blogLink);
         drawerNav.appendChild(accountRow);
         Array.from(drawerNav.children).forEach(function (item, index) {
           var number = item.querySelector('.drawer-number');

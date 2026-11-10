@@ -1,0 +1,9 @@
+/* 안내를 준비하는 페이지의 공통 제목과 여백 */
+html:not([data-theme='dark']) body[data-simple-guide] { --background: #fff; background: #fff; }
+body[data-simple-guide] .detail-intro { padding-block: clamp(72px, 11vw, 130px); text-align: center; }
+body[data-simple-guide] .detail-intro .eyebrow { color: #777; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+body[data-simple-guide] .detail-intro .eyebrow::before { content: none; }
+body[data-simple-guide] .detail-intro h1 { margin: 0; font-size: clamp(38px, 6vw, 68px); font-weight: 700; }
+body[data-simple-guide] .guide-placeholder { padding: 0 0 90px; color: var(--muted); text-align: center; }
+html[data-theme='dark'] body[data-simple-guide] .detail-intro .eyebrow { color: #b6b6b6; }
+@media (max-width: 600px) { body[data-simple-guide] .guide-placeholder { padding-bottom: 60px; } }
