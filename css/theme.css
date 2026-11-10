@@ -275,7 +275,7 @@ html body .site-footer .footer-brand { color: #fff; }
 html body .site-footer .footer-logout,
 html body .site-footer .share-status { color: #d0d0d0; }
 html body:not(.home-page) .site-footer { background: #ededed; color: #555; }
-html body:not(.home-page) .site-footer .footer-brand { color: #222; }
+html body:not(.home-page) .site-footer .footer-brand { color: #111111; }
 html body:not(.home-page) .site-footer .footer-logout,
 html body:not(.home-page) .site-footer .share-status { color: #555; }
 html body .detail-intro .eyebrow,

@@ -3,7 +3,7 @@
   --blue: #0074ff;
   --blue-dark: #123974;
   --sky: #eaf4ff;
-  --ink: #172c49;
+  --ink: #111111;
   --muted: #536780;
   --line: #e6e6e6;
   --background: #f6f9fd;
@@ -150,7 +150,7 @@ h1, h2, h3, p { margin-top: 0; }
 /* 홈 리디자인: 상세 안내 화면의 기존 배치는 유지합니다. */
 .home-page {
   --blue: #0074ff;
-  --ink: #353d42;
+  --ink: #111111;
   --muted: #626a70;
   --line: #d9d9d2;
   min-height: 100vh;
@@ -226,7 +226,7 @@ body.drawer-open { overflow: hidden; }
 .language-picker { position: relative; }
 .language-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 8px; color: var(--ink); background: transparent; border: 1px solid transparent; border-radius: 12px; cursor: pointer; }
 .language-toggle:hover, .language-toggle[aria-expanded='true'] { background: #edf0f2; border-color: #dddddd; }
-.language-panel { position: absolute; right: 0; top: calc(100% + 12px); z-index: 30; width: 240px; max-width: calc(100vw - 40px); padding: 16px; border: 1px solid #d5dadb; border-radius: 16px; background: #fffefb; color: #353d42; }
+.language-panel { position: absolute; right: 0; top: calc(100% + 12px); z-index: 30; width: 240px; max-width: calc(100vw - 40px); padding: 16px; border: 1px solid #d5dadb; border-radius: 16px; background: #fffefb; color: #111111; }
 .language-title { margin: 0 8px 10px; font-size: 13px; font-weight: 700; color: #656d72; }
 .language-panel a { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px; border-radius: 9px; font-size: 15px; font-weight: 600; cursor: pointer; }
 .language-panel a:hover { background: #e9eff4; }
@@ -527,7 +527,7 @@ body.drawer-open { overflow: hidden; }
 .home-patient-summary:hover { border-color: #6d89a5; }
 
 /* Drawer 색상을 페이지별 변수와 무관하게 통일합니다. */
-.menu-drawer { --ink: #353d42; --blue: #0074ff; --muted: #626a70; --line: #d9d9d2; }
+.menu-drawer { --ink: #111111; --blue: #0074ff; --muted: #626a70; --line: #d9d9d2; }
 .language-reset { display: block; margin: 2px 0 0 auto; padding: 5px 0; min-height: 32px; border: 0; background: transparent; color: #0074ff; font: inherit; font-size: 11px; cursor: pointer; }
 .language-reset:hover { text-decoration: underline; }
 
@@ -537,7 +537,7 @@ body.drawer-open { overflow: hidden; }
 .language-options { display: flex; flex-direction: column; align-items: stretch; gap: 7px; }
 .language-options a { position: relative; display: flex; justify-content: flex-start; gap: 10px; width: 100%; min-height: 44px; padding: 7px 9px; border-radius: 10px; }
 .language-options a + a::before { content: ''; position: absolute; top: -4px; left: 9px; right: 9px; border-top: 1px dotted #d6d6d6; }
-.language-options a span { color: #171c22; font-size: 12px; font-weight: 500; }
+.language-options a span { color: #111111; font-size: 12px; font-weight: 500; }
 .language-options img { width: 25px; height: 25px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .language-options a:hover, .language-options a[aria-current='true'] { background: #d3e7fa; }
 .language-options a[aria-current='true'] span { font-weight: 600; }

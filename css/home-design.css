@@ -3,7 +3,7 @@
 .home-page .home-main > section.home-intro { margin: 0; padding-block: 30px; }
 .home-page .home-intro .eyebrow { color: #777; }
 .home-page .home-intro .hero-tagline { color: #0074ff; }
-.home-page .home-intro h1 strong { color: #111; font-size: clamp(42px, 7vw, 68px); }
+.home-page .home-intro h1 strong { color: #111111; font-size: clamp(42px, 7vw, 68px); }
 html[data-theme='dark'] .home-page .home-intro h1 strong { color: #fff; }
 .home-page .home-main > section:not(.home-intro) {
   margin-top: 0;
@@ -54,15 +54,22 @@ html[data-theme='dark'] .home-page .category-card:not(.category-card-dark):hover
 .home-page .notice-section .notice-item:not([open]) .notice-expand { color: #fff; }
 .home-page .notice-section .notice-item:not([open]) summary time { color: #ccc; }
 .home-page .notice-section .notice-content,
-html[data-theme='dark'] .home-page .notice-section .notice-content { background: #fff; color: #111; border-color: #ddd; }
+html[data-theme='dark'] .home-page .notice-section .notice-content { background: #fff; color: #111111; border-color: #ddd; }
 .home-page .notice-section .notice-item > summary { min-height: 56px; padding-block: 10px; }
 .home-page .calendar-key { justify-content: center; }
+.home-page .month-navigation h3 { min-width: 160px; font-size: clamp(25px, 5vw, 30px); }
 .home-page .month-navigation button::before,
 html[data-theme='dark'] .home-page .month-navigation button::before { border: 1px solid #aaa; box-shadow: none; }
 .home-page .doctor-legend button[data-doctor-id]:not(.doctor-filter-all),
 html[data-theme='dark'] .home-page .doctor-legend button[data-doctor-id]:not(.doctor-filter-all) { background: var(--doctor-color); border-color: var(--doctor-color); color: #fff; opacity: 1; }
 .home-page .doctor-legend button[data-doctor-id]:not(.doctor-filter-all) .doctor-initial { display: none; }
-.home-page .doctor-legend button[aria-pressed='true'] { outline: 2px solid var(--doctor-color, #0074ff); outline-offset: 3px; }
+.home-page .doctor-legend button[aria-pressed='true'] { outline: none; }
+.home-page .doctor-legend button[aria-pressed='true']:focus-visible { outline: 2px solid #111; outline-offset: 5px; }
+.home-page .doctor-legend button { transition: transform .2s ease; }
+.home-page .doctor-legend button[aria-pressed='true'] { position: relative; overflow: hidden; transform: scale(1.06); box-shadow: 0 3px 9px rgba(0, 0, 0, .22); font-size: 15px; font-weight: 700; }
+.home-page .doctor-legend button[aria-pressed='true']::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, .65) 50%, transparent 75%); transform: translateX(-120%); animation: doctor-filter-shine .85s ease-out forwards; }
+@keyframes doctor-filter-shine { to { transform: translateX(120%); } }
+@media (prefers-reduced-motion: reduce) { .home-page .doctor-legend button { transition: none; } .home-page .doctor-legend button[aria-pressed='true']::after { animation: none; display: none; } }
 /* 달력 날짜 사이에 짧은 세로선만 표시합니다. */
 .home-page .schedule-calendar { --calendar-line: #e8e8e8; border-left: 0; border-right: 0; border-radius: 0; }
 .home-page .schedule-calendar th,
@@ -78,7 +85,7 @@ html[data-theme='dark'] .home-page .doctor-legend button[data-doctor-id]:not(.do
 .home-page .schedule-calendar thead th { border-bottom: 1px solid var(--calendar-line); }
 .home-page .schedule-calendar .calendar-number { font-weight: 700; }
 .home-page .schedule-calendar .calendar-day .closure-range,
-html[data-theme='dark'] .home-page .schedule-calendar .calendar-day .closure-range { border: 0; color: #111; }
+html[data-theme='dark'] .home-page .schedule-calendar .calendar-day .closure-range { border: 0; background: rgba(255, 230, 233, .82); color: #111111; }
 .home-page .schedule-calendar .calendar-day .closure-range::before,
 .home-page .schedule-calendar .calendar-day .closure-range::after {
   content: '';
@@ -100,7 +107,7 @@ html[data-theme='dark'] .home-page .schedule-calendar .calendar-day[aria-current
   background: #dcf3ff;
   border-radius: 10px;
   box-shadow: inset 0 0 0 2px #111;
-  color: #111;
+  color: #111111;
 }
 html[data-theme='dark'] .home-page .schedule-calendar { --calendar-line: #354f6b; }
 .home-page .day-panel,

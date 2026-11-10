@@ -2,7 +2,7 @@ body[data-eye-guide] .eye-guide-symbols { position: absolute; width: 0; height: 
 body[data-eye-guide] .eye-guide-nav { position: sticky; top: var(--eye-header-height, 70px); z-index: 5; width: 80%; margin: 0 auto; background: #f2f2f2; transition: width .35s ease; }
 body[data-eye-guide] .eye-guide-nav.is-stuck { width: 100%; }
 body[data-eye-guide] .eye-guide-nav-inner { display: flex; width: min(1120px, 100%); padding: 4px; }
-body[data-eye-guide] .eye-guide-nav a { display: flex; flex: 1; justify-content: center; align-items: center; min-width: 0; min-height: 56px; padding: 10px 8px; border-radius: 3px; color: #333; font-size: 15px; font-weight: 600; text-align: center; transition: background-color .2s ease, color .2s ease; }
+body[data-eye-guide] .eye-guide-nav a { display: flex; flex: 1; justify-content: center; align-items: center; min-width: 0; min-height: 56px; padding: 10px 8px; border-radius: 3px; color: #111111; font-size: 15px; font-weight: 600; text-align: center; transition: background-color .2s ease, color .2s ease; }
 body[data-eye-guide] .eye-guide-nav a[aria-current='location'],
 body[data-eye-guide] .eye-guide-nav a:hover { background: #0074ff; color: #fff; }
 body[data-eye-guide] .eye-guide-content { padding-bottom: 90px; }

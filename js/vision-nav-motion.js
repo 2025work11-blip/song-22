@@ -43,6 +43,23 @@
     svg.appendChild(path);
     heading.prepend(svg);
   });
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.filter(function (entry) { return entry.isIntersecting; })
+        .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; })
+        .forEach(function (entry, index) {
+          var item = entry.target;
+          var summary = item.querySelector(':scope > summary');
+          if (summary && !item.open) {
+            summary.style.setProperty('--vision-reveal-delay', Math.min(index, 4) * 75 + 'ms');
+            summary.classList.add('vision-summary-reveal');
+            summary.addEventListener('animationend', function () { summary.classList.remove('vision-summary-reveal'); }, { once: true });
+          }
+          revealObserver.unobserve(item);
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('body[data-category="vision"] .vision-guide, body[data-category="vision"] .vision-aftercare-chapter').forEach(function (item) { revealObserver.observe(item); });
+  }
   var frame = null;
   function update() {
     frame = null;

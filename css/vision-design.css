@@ -7,7 +7,7 @@ body[data-category='vision'] .detail-intro h1 { margin: 0; font-size: clamp(38px
 body[data-category='vision'] .section-nav { width: 80%; margin-inline: auto; padding: 0; background: #f2f2f2; border: 0; transition: width .35s ease; }
 body[data-category='vision'] .section-nav.is-stuck { width: 100%; }
 body[data-category='vision'] .section-nav-inner { width: min(1120px, 100%); gap: 0; padding: 4px; }
-body[data-category='vision'] .section-nav a { display: flex; flex: 1; align-items: center; justify-content: center; min-width: 0; min-height: 56px; padding: 10px 8px; border-radius: 3px; color: #333; background: transparent; transition: color .25s ease, background-color .25s ease; }
+body[data-category='vision'] .section-nav a { display: flex; flex: 1; align-items: center; justify-content: center; min-width: 0; min-height: 56px; padding: 10px 8px; border-radius: 3px; color: #111111; background: transparent; transition: color .25s ease, background-color .25s ease; }
 body[data-category='vision'] .section-nav a:hover,
 body[data-category='vision'] .section-nav a[aria-current='location'] { background: #0074ff; color: #fff; }
 body[data-category='vision'] .detail-content { padding-top: 0; padding-bottom: 90px; }
@@ -19,14 +19,17 @@ body[data-category='vision'] .vision-guide,
 body[data-category='vision'] .vision-aftercare-chapter { overflow: visible; border-radius: 0; }
 body[data-category='vision'] .vision-guide > summary,
 body[data-category='vision'] .vision-aftercare-chapter > summary { min-height: 76px; padding-inline: 18px; background: #202020; color: #fff; transition: width .25s ease, margin-left .25s ease, min-height .25s ease, padding .25s ease, background-color .2s ease; }
+body[data-category='vision'] .vision-summary-reveal { animation: vision-summary-enter .5s ease-out var(--vision-reveal-delay, 0ms) both; }
+@keyframes vision-summary-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { body[data-category='vision'] .vision-summary-reveal { animation: none; } }
 body[data-category='vision'] .vision-guide > summary:hover,
 body[data-category='vision'] .vision-aftercare-chapter > summary:hover { background: #343434; }
 body[data-category='vision'] .vision-guide > summary::after,
 body[data-category='vision'] .vision-aftercare-chapter > summary::after { color: #fff; transition: transform .25s ease, color .2s ease; }
 body[data-category='vision'] .vision-guide[open] > summary,
-body[data-category='vision'] .vision-aftercare-chapter[open] > summary { position: sticky; top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 64px)); z-index: 4; background: #ededed; color: #111; }
+body[data-category='vision'] .vision-aftercare-chapter[open] > summary { position: sticky; top: calc(var(--disease-header-height, 71.4px) + var(--disease-nav-height, 64px)); z-index: 4; background: #ededed; color: #111111; }
 body[data-category='vision'] .vision-guide[open] > summary::after,
-body[data-category='vision'] .vision-aftercare-chapter[open] > summary::after { color: #111; }
+body[data-category='vision'] .vision-aftercare-chapter[open] > summary::after { color: #111111; }
 body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary,
 body[data-category='vision'] .vision-aftercare-chapter[open].is-summary-stuck > summary,
 html[data-theme='dark'] body[data-category='vision'] .vision-guide[open].is-summary-stuck > summary,
@@ -115,7 +118,7 @@ html[data-theme='dark'] body[data-category='vision'] .section-nav a[aria-current
 html[data-theme='dark'] body[data-category='vision'] .vision-guide > summary,
 html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter > summary { background: #303030; color: #fff; }
 html[data-theme='dark'] body[data-category='vision'] .vision-guide[open] > summary,
-html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter[open] > summary { background: #ededed; color: #111; }
+html[data-theme='dark'] body[data-category='vision'] .vision-aftercare-chapter[open] > summary { background: #ededed; color: #111111; }
 html[data-theme='dark'] body[data-category='vision'] .vision-medicine-note { background: #202c3b; }
 html[data-theme='dark'] body[data-category='vision'] .vision-medicine-group { background: #202329; border-color: #515151; }
 html[data-theme='dark'] body[data-category='vision'] .vision-medicine-grid { border-color: #515151; }

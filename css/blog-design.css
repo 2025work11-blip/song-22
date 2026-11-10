@@ -19,7 +19,7 @@ body[data-blog-page] .blog-post .blog-source,
 body[data-blog-page] .blog-post .blog-source-text { font-size: 11px; line-height: 1.4; }
 body[data-blog-page] .blog-post .blog-source { margin-bottom: 5px; }
 html[data-theme='dark'] body[data-blog-page] .detail-intro .eyebrow { color: #b6b6b6; }
-html[data-theme='dark'] body[data-blog-page] .blog-search button { background: #eee; color: #171717; }
+html[data-theme='dark'] body[data-blog-page] .blog-search button { background: #eee; color: #111111; }
 html[data-theme='dark'] body[data-blog-page] .blog-search button:hover { background: #0074ff; color: #fff; }
 @media (max-width: 600px) {
   body[data-blog-page] .blog-content { padding-bottom: 60px; }
