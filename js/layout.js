@@ -12,6 +12,17 @@
     if (!slot) return;
     var template = document.createElement('template');
     template.innerHTML = sections[name];
+    if (name === 'drawer') {
+      var drawerNav = template.content.querySelector('.drawer-nav');
+      var accountRow = drawerNav && drawerNav.querySelector('.drawer-account-row');
+      if (accountRow) {
+        drawerNav.appendChild(accountRow);
+        Array.from(drawerNav.children).forEach(function (item, index) {
+          var number = item.querySelector('.drawer-number');
+          if (number) number.textContent = String(index + 1).padStart(2, '0') + '.';
+        });
+      }
+    }
     // Normalize shared assets for nested blog URLs, consistently on every page.
     template.content.querySelectorAll('[href],[src]').forEach(function (element) {
       ['href','src'].forEach(function (attribute) {

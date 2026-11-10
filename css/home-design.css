@@ -1,0 +1,118 @@
+/* 홈 섹션은 위아래 30px 여백과 가로 구분선으로 나눕니다. */
+.home-page .home-main { padding-bottom: 0; }
+.home-page .home-main > section.home-intro { margin: 0; padding-block: 30px; }
+.home-page .home-intro .eyebrow { color: #777; }
+.home-page .home-intro h1 { margin-bottom: 0; font-size: clamp(42px, 7vw, 72px); }
+.home-page .home-main > section:not(.home-intro) {
+  margin-top: 0;
+  padding: 30px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.home-page .home-main > .home-section { position: relative; isolation: isolate; }
+.home-page .home-main > .home-section:not(.notice-section)::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  transform: translateX(-50%);
+  background: #d9d9d9;
+  pointer-events: none;
+}
+.home-page .home-main > .home-section:not(.notice-section)::before { top: 0; }
+.home-page .home-main > section.notice-section { padding-top: 30px; padding-bottom: 30px; color: #fff; }
+.home-page .home-main > .notice-section::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: #111;
+  pointer-events: none;
+}
+.home-page .home-main > .notice-section + .home-section { margin-top: 0; }
+.home-page .notice-section .section-description,
+.home-page .notice-section .schedule-empty { color: #ddd; }
+.home-page .notice-section .notice-item,
+.home-page .notice-section .notice-item:not([open]) > summary,
+.home-page .notice-section .notice-item:not([open]) > summary:hover { background: transparent; color: #fff; }
+.home-page .notice-section .notice-item:not([open]) .notice-item-title,
+.home-page .notice-section .notice-item:not([open]) .notice-expand { color: #fff; }
+.home-page .notice-section .notice-item:not([open]) summary time { color: #ccc; }
+.home-page .notice-section .notice-content,
+html[data-theme='dark'] .home-page .notice-section .notice-content { background: #fff; color: #111; border-color: #ddd; }
+/* 달력 날짜 사이에 짧은 세로선만 표시합니다. */
+.home-page .schedule-calendar { --calendar-line: #dce9f4; border-left: 0; border-right: 0; border-radius: 0; }
+.home-page .schedule-calendar th,
+.home-page .schedule-calendar td { position: relative; border: 0; }
+.home-page .schedule-calendar tbody tr > :not(:last-child)::before {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  background: var(--calendar-line);
+  pointer-events: none;
+}
+.home-page .schedule-calendar tbody tr > :not(:last-child)::before { top: 12px; right: 0; height: 22px; width: 1px; }
+.home-page .schedule-calendar thead th { border-bottom: 1px solid var(--calendar-line); }
+.home-page .schedule-calendar .calendar-number { font-weight: 700; }
+.home-page .schedule-calendar .calendar-day[aria-current='date'],
+html[data-theme='dark'] .home-page .schedule-calendar .calendar-day[aria-current='date'] {
+  background: #dcf3ff;
+  box-shadow: inset 0 0 0 2px #111;
+  color: #111;
+}
+html[data-theme='dark'] .home-page .schedule-calendar { --calendar-line: #354f6b; }
+.home-page .day-panel,
+html[data-theme='dark'] .home-page .day-panel { margin: 10px 0 0; padding: 22px; border: 0; border-radius: 0; background: #fff; box-shadow: none; }
+html[data-theme='dark'] .home-page .day-panel { background: #292d33; }
+.home-page .day-panel [data-day-schedules] { grid-template-columns: 1fr; gap: 0; }
+.home-page .day-panel .schedule-entry + .schedule-entry { margin-top: 14px; padding-top: 14px; border-top: 1px solid #dce1e7; }
+html[data-theme='dark'] .home-page .day-panel .schedule-entry + .schedule-entry { border-color: #48515b; }
+.home-page .day-panel.day-panel-reveal { animation: home-day-panel-reveal 1s ease-out; }
+@keyframes home-day-panel-reveal { from { background-color: #e4f1ff; } to { background-color: #fff; } }
+html[data-theme='dark'] .home-page .day-panel.day-panel-reveal { animation: none; }
+.home-page .clinic-hours-section .home-section-heading { margin-bottom: 18px; }
+.home-page .schedule-hours-list { padding: 4px 0; border-top: 1px solid #333; border-bottom: 1px solid #dedede; }
+.home-page .schedule-hours-list > div { padding: 11px 24px; border-color: #e5e5e5; }
+.home-page .schedule-hours-list > div:first-child { border-top: 0; }
+.home-page .schedule-hours-list dt,
+.home-page .schedule-hours-list dd { font-size: 18px; }
+.home-page .schedule-hours-list .hours-substitute { padding-top: 0; }
+.home-page .schedule-hours-list > div:nth-child(3) { padding-bottom: 3px; }
+.home-page .schedule-hours-list .hours-substitute dt,
+.home-page .schedule-hours-list .hours-substitute dd { font-size: 15px; }
+html[data-theme='dark'] .home-page .schedule-hours-list { border-color: #888; }
+html[data-theme='dark'] .home-page .schedule-hours-list > div { border-color: #444; }
+@media (prefers-reduced-motion: reduce) {
+  .home-page .day-panel.day-panel-reveal { animation: none; }
+}
+html[data-theme='dark'] .home-page .home-main > section:not(.home-intro) { background: transparent; border-color: #425368; color: var(--ink); box-shadow: none; }
+html[data-theme='dark'] .home-page .home-main > .notice-section { color: #fff; }
+html[data-theme='dark'] .home-page .home-main > .home-section:not(.notice-section)::before { background: #425368; }
+.home-page .home-main > section.home-section.clinic-hours-section::before,
+html[data-theme='dark'] .home-page .home-main > section.home-section.clinic-hours-section::before {
+  z-index: -1;
+  height: 100%;
+  background: #f3f3f3;
+}
+html[data-theme='dark'] .home-page .home-main > section.home-section.clinic-hours-section::before { background: #292d33; }
+@media (max-width: 600px) {
+  .home-page .home-main > section:not(.home-intro) { margin-top: 0; padding: 30px 0; }
+  .home-page .day-panel,
+  html[data-theme='dark'] .home-page .day-panel { padding: 16px; }
+  .home-page .schedule-hours-list > div { padding: 10px 12px; }
+  .home-page .schedule-hours-list > div:nth-child(3) { padding-bottom: 3px; }
+  .home-page .schedule-hours-list dt,
+  .home-page .schedule-hours-list dd { font-size: clamp(14px, 3.8vw, 16px); }
+  .home-page .schedule-hours-list .hours-substitute { padding-top: 0; }
+  .home-page .schedule-hours-list .hours-substitute dt,
+  .home-page .schedule-hours-list .hours-substitute dd { font-size: clamp(13px, 3.5vw, 15px); }
+  .home-page .home-main > section.notice-section { padding-top: 30px; padding-bottom: 30px; }
+  .home-page .home-main > .notice-section + .home-section { margin-top: 0; }
+}
