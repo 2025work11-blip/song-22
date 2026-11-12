@@ -10,6 +10,7 @@ body[data-about-page] .facility-slides figure { position: relative; box-sizing: 
 body[data-about-page] .facility-slides img { display: block; width: 100%; height: 100%; border-radius: 16px; object-fit: cover; background: #f2f2f2; opacity: .45; transition: opacity .2s ease; }
 body[data-about-page] .facility-slides figure.is-active img { opacity: 1; }
 body[data-about-page] .facility-slides figure[data-portrait] img { object-position: center bottom; }
+body[data-about-page] .facility-slides figure[data-lower-position] img { object-position: center 80%; }
 body[data-about-page] .facility-slides figure[data-trim-border] img { transform: scale(1.05); }
 body[data-about-page] .facility-slides figure:not(.is-active) figcaption { opacity: 0; }
 body[data-about-page] .facility-slides figcaption { position: absolute; left: 21px; bottom: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(0, 0, 0, .72); color: #fff; font-size: 14px; }

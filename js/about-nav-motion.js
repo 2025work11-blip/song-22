@@ -10,9 +10,9 @@
       var summary = card.querySelector('summary');
       var photo = card.querySelector('.about-doctor-profile img');
       if (!summary || !photo) return;
-      var thumbnail = summary.querySelector('.about-summary-photo');
-      if (!thumbnail) {
-        var cardPhoto = document.createElement('img');
+      var cardPhoto = summary.querySelector('.about-card-photo');
+      if (!cardPhoto) {
+        cardPhoto = document.createElement('img');
         cardPhoto.className = 'about-card-photo';
         cardPhoto.alt = '';
         cardPhoto.setAttribute('aria-hidden', 'true');
@@ -20,27 +20,69 @@
         var cardName = document.createElement('span');
         cardName.className = 'about-card-name';
         cardName.textContent = card.dataset.doctorName + ' 원장';
-        thumbnail = document.createElement('img');
-        thumbnail.className = 'about-summary-photo';
-        thumbnail.alt = '';
-        thumbnail.setAttribute('aria-hidden', 'true');
-        thumbnail.addEventListener('error', function () { thumbnail.src = 'assets/icons/doctor-placeholder.svg'; }, { once: true });
-        summary.replaceChildren(thumbnail, cardPhoto, cardName);
+        summary.replaceChildren(cardPhoto, cardName);
       }
-      thumbnail.src = photo.src;
-      summary.querySelector('.about-card-photo').src = photo.src;
+      cardPhoto.src = photo.src;
     });
   }
   addDoctorPhotos();
-  if (window.aboutProfilesReady) window.aboutProfilesReady.then(addDoctorPhotos, addDoctorPhotos);
   var doctorsRoot = document.querySelector('[data-about-doctors]');
   if (doctorsRoot) {
     var selectionAnchor = null;
+    function stickDoctor(item) {
+      requestAnimationFrame(function () {
+        if (!item.open) return;
+        var stickyTop = header.getBoundingClientRect().height + nav.getBoundingClientRect().height;
+        var target = window.scrollY + item.getBoundingClientRect().top - stickyTop + 2;
+        window.scrollTo({ top: Math.max(0, target), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      });
+    }
+    var picker = document.createElement('div');
+    picker.className = 'about-doctor-picker';
+    picker.setAttribute('role', 'group');
+    picker.setAttribute('aria-label', '의료진 선택');
+    picker.hidden = true;
+    doctorsRoot.appendChild(picker);
+    function renderDoctorPicker() {
+      var cards = Array.from(doctorsRoot.querySelectorAll(':scope > details[data-doctor-name]'));
+      var selected = cards.find(function (card) { return card.open; });
+      picker.hidden = !selected;
+      picker.replaceChildren();
+      if (!selected) return;
+      cards.forEach(function (card, index) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'about-picker-card' + (card === selected ? ' is-selected' : '');
+        button.dataset.doctorIndex = String(index);
+        button.setAttribute('aria-pressed', String(card === selected));
+        var photo = document.createElement('img');
+        photo.className = 'about-picker-photo';
+        photo.alt = '';
+        photo.src = card.querySelector('.about-doctor-profile img').src;
+        photo.addEventListener('error', function () { photo.src = 'assets/icons/doctor-placeholder.svg'; }, { once: true });
+        var name = document.createElement('span');
+        name.className = 'about-picker-name';
+        name.textContent = card.dataset.doctorName + ' 원장';
+        button.append(photo, name);
+        picker.appendChild(button);
+      });
+    }
+    picker.addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-doctor-index]');
+      if (!button || !picker.contains(button)) return;
+      var cards = doctorsRoot.querySelectorAll(':scope > details[data-doctor-name]');
+      var selected = cards[Number(button.dataset.doctorIndex)];
+      if (!selected) return;
+      if (selected.open) { stickDoctor(selected); return; }
+      selectionAnchor = { item: selected };
+      selected.open = true;
+    });
+    if (window.aboutProfilesReady) window.aboutProfilesReady.then(function () { addDoctorPhotos(); renderDoctorPicker(); }, function () { addDoctorPhotos(); renderDoctorPicker(); });
     doctorsRoot.addEventListener('click', function (event) {
       var summary = event.target.closest('summary');
       var item = summary && summary.parentElement;
       if (!item || !item.matches('details[data-doctor-name]') || item.open) return;
-      selectionAnchor = { item: item, top: summary.getBoundingClientRect().top };
+      selectionAnchor = { item: item };
     }, true);
     doctorsRoot.addEventListener('toggle', function (event) {
       var item = event.target;
@@ -49,14 +91,10 @@
         doctorsRoot.querySelectorAll('details[data-doctor-name][open]').forEach(function (other) { if (other !== item) other.open = false; });
       }
       doctorsRoot.classList.toggle('has-open-doctor', !!doctorsRoot.querySelector('details[data-doctor-name][open]'));
+      renderDoctorPicker();
       if (item.open && selectionAnchor && selectionAnchor.item === item) {
-        var originalTop = selectionAnchor.top;
         selectionAnchor = null;
-        requestAnimationFrame(function () {
-          if (!item.open) return;
-          var currentTop = item.getBoundingClientRect().top;
-          window.scrollBy(0, currentTop - originalTop);
-        });
+        stickDoctor(item);
       }
     }, true);
   }

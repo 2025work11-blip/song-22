@@ -99,8 +99,6 @@ body[data-about-page] .equipment-category[open].is-summary-stuck .equipment-togg
 html[data-theme='dark'] body[data-about-page] .about-doctors details[open].is-summary-stuck > summary::after,
 html[data-theme='dark'] body[data-about-page] .equipment-category[open].is-summary-stuck .equipment-toggle { color: #fff; }
 body[data-about-page] .about-schedule-table thead th { background: #f1f1f1; color: #111111; }
-body[data-about-page] .about-summary-photo { display: none; }
-body[data-about-page] .about-doctors details[open].is-summary-stuck > summary .about-summary-photo { display: block; flex: 0 0 1.3em; width: 1.3em; height: 1.3em; margin-right: .45em; border-radius: 50%; object-fit: cover; background: #fff; }
 body[data-about-page] .about-doctor-intro { grid-template-columns: 1fr; gap: 24px; }
 body[data-about-page] .about-doctor-body { padding-top: 72px; padding-bottom: 88px; }
 body[data-about-page] .about-doctor-body .about-career-heading { color: inherit; }
