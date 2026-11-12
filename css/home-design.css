@@ -165,20 +165,28 @@ html[data-theme='dark'] .home-page .home-main > .home-section:not(.notice-sectio
 .home-page .home-main > section.home-section.parking-section::before,
 html[data-theme='dark'] .home-page .home-main > section.home-section.parking-section::before { z-index: -1; height: 100%; background: #f3f3f3; }
 html[data-theme='dark'] .home-page .home-main > section.home-section.parking-section::before { background: #292d33; }
-.home-page .home-veterans { padding-top: 16px; }
-.home-page .home-veterans-logo { display: block; width: 160px; height: auto; margin: 0 0 16px -16px; }
+.home-page .home-veterans { padding-top: 16px; border-top: 1px solid #ccc; }
+.home-page .home-veterans-logo { display: block; width: 240px; max-width: 100%; height: auto; margin: 12px auto 0; }
 html[data-theme='dark'] .home-page .home-veterans-logo { background: #fff; border-radius: 6px; }
-.home-page .home-veterans-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-.home-page .home-veterans-heading h3 { margin: 0; font-size: clamp(19px, 3vw, 25px); line-height: 1.45; }
-.home-page .home-veterans-heading h3 span { color: #0074ff; }
-.home-page .home-veterans-heading a { display: inline-flex; align-items: center; gap: 5px; min-height: 40px; padding: 7px 15px; border: 1px solid #0074ff; border-radius: 999px; background: #fff; color: #0074ff; font-size: 13px; font-weight: 600; }
+.home-page .home-veterans-heading { text-align: center; }
+.home-page .home-veterans-heading h3 { margin: 0; font-size: clamp(19px, 3vw, 25px); font-weight: 400; line-height: 1.45; }
+.home-page .home-veterans-heading h3 span { color: #0074ff; font-weight: 700; }
+.home-page .home-veterans-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
+.home-page .home-veterans-actions a { display: inline-flex; align-items: center; gap: 5px; min-height: 40px; padding: 7px 15px; border: 1px solid #0074ff; border-radius: 999px; background: #fff; color: #0074ff; font-size: 13px; font-weight: 600; }
 .home-page .home-veterans-start { margin: 10px 0 20px; color: var(--muted); font-size: 13px; }
 .home-page .home-veterans-details { margin: 20px 0 0; overflow: hidden; border: 1px solid #e5e5e5; border-radius: 12px; }
 .home-page .home-veterans-details > div { display: grid; grid-template-columns: minmax(90px, 25%) minmax(0, 1fr); font-size: 15px; line-height: 1.6; }
 .home-page .home-veterans-details > div + div { border-top: 1px solid #e5e5e5; }
-.home-page .home-veterans-details dt, .home-page .home-veterans-details dd { margin: 0; padding: 15px 18px; color: #111; }
-.home-page .home-veterans-details dt { display: flex; align-items: center; justify-content: center; text-align: center; background: #666; color: #fff; font-weight: 600; }
+.home-page .home-veterans-details dt, .home-page .home-veterans-details dd { margin: 0; padding: 9px 18px; color: #111; }
+.home-page .home-veterans-details dt { display: flex; align-items: center; justify-content: center; text-align: center; background: #fff; color: #0074ff; font-weight: 600; }
 .home-page .home-veterans-details dd { background: #fff; }
+.home-page .home-medical-support { margin-top: 0; color: #111; }
+.home-page .home-medical-support h3 { margin: 0 0 12px; color: #111; font-size: 17px; }
+.home-page .home-medical-support ul { margin: 0; padding: 0; overflow-x: auto; border: 1px solid #e5e5e5; border-radius: 12px; background: #fff; list-style: none; }
+.home-page .home-medical-support li { min-width: max-content; padding: 9px 18px; font-size: 15px; line-height: 1.6; text-align: left; white-space: nowrap; }
+.home-page .home-medical-support li::before { content: '•'; margin-right: 8px; color: #0074ff; }
+.home-page .home-medical-support li + li { border-top: 1px solid #e5e5e5; }
+.home-page .home-medical-support small { color: #666; font-size: 13px; }
 @media (max-width: 600px) {
   .home-page .home-main > section:not(.home-intro) { margin-top: 0; padding: 30px 0; }
   .home-page .day-panel,
@@ -189,7 +197,7 @@ html[data-theme='dark'] .home-page .home-veterans-logo { background: #fff; borde
   html[data-theme='dark'] .home-page .schedule-hours { padding: 24px 14px 14px; border-radius: 12px; }
   .home-page .schedule-hours h3 { margin-bottom: 18px; }
   .home-page .schedule-hours-list { padding: 8px; }
-  .home-page .home-veterans-details dt, .home-page .home-veterans-details dd { padding: 12px 10px; }
+  .home-page .home-veterans-details dt, .home-page .home-veterans-details dd { padding: 8px 10px; }
   .home-page .schedule-hours-list > div { padding: 10px 8px; }
   .home-page .schedule-hours-list > div:nth-child(3) { padding-bottom: 3px; }
   .home-page .schedule-hours-list dt,
