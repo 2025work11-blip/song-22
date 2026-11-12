@@ -14,7 +14,7 @@ body[data-blog-page] .blog-search button:hover { background: #0074ff; }
 body[data-blog-page] .blog-post > summary { min-height: 112px; padding-block: 26px; }
 html:not([data-theme='dark']) body[data-blog-page] .blog-post > summary { background: #fff; }
 html:not([data-theme='dark']) body[data-blog-page] .blog-post[open] > summary { background: #f3f3f3; }
-body[data-blog-page] .blog-post .blog-post-title { font-size: 23px; font-weight: 700; line-height: 1.4; }
+body[data-blog-page] .blog-post .blog-post-title { font-size: 21px; font-weight: 600; line-height: 1.4; }
 body[data-blog-page] .blog-post .blog-source,
 body[data-blog-page] .blog-post .blog-source-text { font-size: 11px; line-height: 1.4; }
 body[data-blog-page] .blog-post .blog-source { margin-bottom: 5px; }
@@ -25,5 +25,5 @@ html[data-theme='dark'] body[data-blog-page] .blog-search button:hover { backgro
   body[data-blog-page] .blog-content { padding-bottom: 60px; }
   body[data-blog-page] .blog-search { margin-bottom: 24px; }
   body[data-blog-page] .blog-post > summary { min-height: 100px; padding-block: 22px; }
-  body[data-blog-page] .blog-post .blog-post-title { font-size: 21px; }
+  body[data-blog-page] .blog-post .blog-post-title { font-size: 19px; }
 }
