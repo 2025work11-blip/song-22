@@ -35,14 +35,13 @@
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script defer src="js/supabase-client.js"></script>
   <script defer src="js/equipment.js?v=20261109-equipmentsections1"></script>
-  <script defer src="js/clinic-hours.js?v=20261109-clinic1"></script>
   <script defer src="js/about-profiles.js?v=20261109-preview1"></script>
   <script defer src="js/schedule-data.js?v=20261109-schedule1"></script>
   <script defer src="js/about-doctors.js?v=20261109-manualmerge2"></script>
   <script defer src="js/role-access.js?v=20261030-roles1"></script>
   <script defer src="js/auth.js?v=20261030-roles1"></script>
   <link rel="stylesheet" href="css/equipment.css?v=20261112-equipment-round1">
-  <link rel="stylesheet" href="css/about-design.css?v=20261112-cards6">
+  <link rel="stylesheet" href="css/about-design.css?v=20261112-history4">
   <script defer src="js/about-nav-motion.js?v=20261112-cards6"></script>
   <link rel="stylesheet" href="css/accordion-controls.css?v=20261110-icons1">
   <link rel="stylesheet" href="css/accordion-unified.css?v=20261110-padding1">
@@ -62,7 +61,7 @@
     <h1>병원소개</h1>
   </div>
   <nav class="section-nav" aria-label="병원소개 섹션 이동"><div class="container section-nav-inner">
-    <a href="#facility">시설</a><a href="#director">의료진</a><a href="#equipment">장비</a><a href="#hours">진료시간</a>
+    <a href="#facility">시설</a><a href="#director">의료진</a><a href="#equipment">장비</a><a href="#history">History</a>
   </div></nav>
   <div class="container detail-content">
     <section class="information-section" id="facility" aria-labelledby="heading-facility">
@@ -123,15 +122,17 @@
         <details class="equipment-category" id="equipment-treatment" data-equipment-category="treatment"><summary><span>치료 장비</span><span class="equipment-toggle" aria-hidden="true">+</span></summary><div class="equipment-grid"><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>LipiFlow</h4><p class="equipment-description">안구건조증 열구동 치료기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>Lumenis M22</h4><p class="equipment-description">안구건조증 전문 IPL 레이저</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>A.R.C. Q-Las</h4><p class="equipment-description">저에너지 정밀 야그 레이저</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>Norlase LEAF SLT</h4><p class="equipment-description">스마트 녹내장 레이저</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>Vitra PDT</h4><p class="equipment-description">황반변성 및 망막 특수 레이저</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>A.R.C. Q-las Classic (Argon Laser)</h4><p class="equipment-description">망막 질환 치료를 위한 고성능 광응고 레이저</p></article></div></details>
       </div>
     </section>
-    <section class="information-section" id="hours" aria-labelledby="heading-hours">
-      <div class="section-heading"><span class="section-number" aria-hidden="true">04</span><h2 id="heading-hours">진료시간</h2></div>
-      <div class="info-card"><dl class="schedule-hours-list" data-clinic-hours>
-        <div><dt>월 ~ 금요일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
-        <div><dt>토요일</dt><dd>오전 8:30 ~ 오후 5:00</dd></div>
-        <div><dt><span>공휴일</span> <span class="hours-morning-badge">오전진료</span></dt><dd>오전 8:30 ~ 오후 1:00</dd></div>
-        <div class="hours-substitute"><dt>대체공휴일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
-        <div><dt>점심시간</dt><dd>오후 12:30 ~ 오후 2:00</dd></div>
-      </dl></div>
+    <section class="information-section" id="history" aria-labelledby="heading-history">
+      <div class="section-heading"><span class="section-number" aria-hidden="true">04</span><h2 id="heading-history">History</h2></div>
+      <h3 class="about-history-intro">제주 안과의 '최초'를 선도해온 기록</h3>
+      <ol class="about-history-list">
+        <li class="about-history-year"><h4>2017</h4><ul><li><strong>연세제일안과 개원</strong><span>이도이동 중앙로 337</span></li><li><strong>제주도내 로컬 안과병원 최초 광각안저 촬영기 도입</strong></li></ul></li>
+        <li class="about-history-year"><h4>2019</h4><ul><li><strong>안구건조증 치료를 위한 루메니스 M22 IPL 레이저 도내 최초 도입</strong></li></ul></li>
+        <li class="about-history-year"><h4>2020</h4><ul><li><strong>안과 전문 진료 차트 선제적 도입</strong></li></ul></li>
+        <li class="about-history-year"><h4>2022</h4><ul><li><strong>제주 유일 황반변성 특수 레이저 vitra PDT 레이저 도입</strong></li></ul></li>
+        <li class="about-history-year"><h4>2025</h4><ul><li><strong>난시 및 고위수차 분석 장비 i-trace 최초 도입</strong></li></ul></li>
+        <li class="about-history-year"><h4>2026</h4><ul><li><strong>제주지역 안과 최초 <span class="history-accent">보훈위탁병원</span> 지정</strong></li><li><strong>최신 백내장·망막 수술 장비 알콘 유니티 VCS 신규 도입</strong></li><li><strong>현위치 확장이전</strong><span>도남동 연북로 449</span></li></ul></li>
+      </ol>
     </section>
   </div>
 </main>

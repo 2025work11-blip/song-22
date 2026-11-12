@@ -19,7 +19,7 @@
     if (key === 'blog') return rowId && !stopped && /^\d+$/.test(rowId) && location.protocol !== 'file:' ? '/blog/id/' + encodeURIComponent(rowId) : 'blog.html';
     if (key === 'equipment') return 'about.html#equipment';
     if (['equipment-exam', 'equipment-surgery', 'equipment-treatment'].includes(key)) return 'about.html#' + key;
-    if (key === 'hours') return 'about.html#hours';
+    if (key === 'hours') return 'index.html#schedule-hours-title';
     if (key === 'bios') return 'about.html#director';
     if (key === 'topicSummaries' || key === 'articles') return diseaseUrl('overview');
     return 'index.html';
