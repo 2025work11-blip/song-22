@@ -4,17 +4,14 @@
 .home-page .home-intro .eyebrow { color: #777; }
 .home-page .home-intro .hero-tagline { display: inline-block; color: #0074ff; }
 .home-page .home-intro h1 strong { position: relative; isolation: isolate; display: inline-block; color: #111111; font-size: clamp(37.8px, 6.3vw, 61.2px); white-space: nowrap; }
-.home-page .home-intro h1 strong::after { content: ''; position: absolute; z-index: -1; right: 0; bottom: .14em; left: 0; height: 15px; background: #dcf3ff; }
 .home-page .home-intro .hero-title-text { display: inline-block; }
 html[data-theme='dark'] .home-page .home-intro h1 strong { color: #fff; }
 @media (prefers-reduced-motion: no-preference) {
   .home-page .home-intro .hero-tagline { animation: home-tagline-blur-in .9s ease-out both; }
   .home-page .home-intro .hero-title-text { animation: home-title-fade-up 1.2s ease-out .55s both; }
-  .home-page .home-intro h1 strong::after { transform: scaleX(0); transform-origin: left; animation: home-title-highlight .5s ease-out 1.75s forwards; }
 }
 @keyframes home-tagline-blur-in { from { opacity: 0; filter: blur(8px); } to { opacity: 1; filter: blur(0); } }
 @keyframes home-title-fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes home-title-highlight { to { transform: scaleX(1); } }
 .home-page .home-main > section:not(.home-intro) {
   margin-top: 0;
   padding: 30px 0;
