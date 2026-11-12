@@ -9,11 +9,11 @@
 html[data-theme='dark'] .home-page .home-intro h1 strong { color: #fff; }
 @media (prefers-reduced-motion: no-preference) {
   .home-page .home-intro .hero-tagline { animation: home-tagline-blur-in .9s ease-out both; }
-  .home-page .home-intro .hero-title-text { animation: home-title-type 1.2s steps(6, end) .55s both; }
+  .home-page .home-intro .hero-title-text { animation: home-title-fade-up 1.2s ease-out .55s both; }
   .home-page .home-intro h1 strong::after { transform: scaleX(0); transform-origin: left; animation: home-title-highlight .5s ease-out 1.75s forwards; }
 }
 @keyframes home-tagline-blur-in { from { opacity: 0; filter: blur(8px); } to { opacity: 1; filter: blur(0); } }
-@keyframes home-title-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+@keyframes home-title-fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes home-title-highlight { to { transform: scaleX(1); } }
 .home-page .home-main > section:not(.home-intro) {
   margin-top: 0;

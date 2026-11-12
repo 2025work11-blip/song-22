@@ -41,12 +41,15 @@
   <script defer src="js/about-doctors.js?v=20261109-manualmerge2"></script>
   <script defer src="js/role-access.js?v=20261030-roles1"></script>
   <script defer src="js/auth.js?v=20261030-roles1"></script>
-  <link rel="stylesheet" href="css/equipment.css?v=20261110-no-summary-line1">
+  <link rel="stylesheet" href="css/equipment.css?v=20261112-equipment-round1">
   <link rel="stylesheet" href="css/about-design.css?v=20261110-textblack1">
-  <script defer src="js/about-nav-motion.js?v=20261110-stickyphoto1"></script>
+  <script defer src="js/about-nav-motion.js?v=20261112-cards3"></script>
   <link rel="stylesheet" href="css/accordion-controls.css?v=20261110-icons1">
   <link rel="stylesheet" href="css/accordion-unified.css?v=20261110-padding1">
   <script defer src="js/accordion-unified.js?v=20261110-unified1"></script>
+  <link rel="stylesheet" href="css/about-profile-cards.css?v=20261112-cards9">
+  <link rel="stylesheet" href="css/about-facility.css?v=20261112-facility7">
+  <script defer src="js/about-facility.js?v=20261112-facility4"></script>
 </head>
 <body data-about-page>
 <a class="skip-link" href="#main">본문으로 바로가기</a>
@@ -59,21 +62,49 @@
     <h1>병원소개</h1>
   </div>
   <nav class="section-nav" aria-label="병원소개 섹션 이동"><div class="container section-nav-inner">
-    <a href="#hours">진료시간</a><a href="#director">의료진</a><a href="#facility">시설</a><a href="#equipment">장비</a>
+    <a href="#facility">시설</a><a href="#director">의료진</a><a href="#equipment">장비</a><a href="#hours">진료시간</a>
   </div></nav>
   <div class="container detail-content">
-    <!-- 실제 운영시간을 확인한 후 아래 '확인 후 안내' 문구를 교체하세요. -->
-    <section class="information-section" id="hours" aria-labelledby="heading-hours">
-      <div class="section-heading"><span class="section-number" aria-hidden="true">01</span><h2 id="heading-hours">진료시간</h2></div>
-      <div class="info-card"><dl class="schedule-hours-list" data-clinic-hours>
-        <div><dt>월 ~ 금요일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
-        <div><dt>토요일</dt><dd>오전 8:30 ~ 오후 5:00</dd></div>
-        <div><dt><span>공휴일</span> <span class="hours-morning-badge">오전진료</span></dt><dd>오전 8:30 ~ 오후 1:00</dd></div>
-        <div class="hours-substitute"><dt>대체공휴일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
-        <div><dt>점심시간</dt><dd>오후 12:30 ~ 오후 2:00</dd></div>
-      </dl></div>
+    <section class="information-section" id="facility" aria-labelledby="heading-facility">
+      <div class="section-heading"><span class="section-number" aria-hidden="true">01</span><h2 id="heading-facility">시설 안내</h2></div>
+      <div class="facility-floors">
+        <section class="facility-floor" aria-labelledby="facility-2f">
+          <div class="facility-floor-heading"><h3 id="facility-2f">2층</h3><p>진료, 접수</p></div>
+          <div class="facility-carousel" data-facility-carousel>
+            <div class="facility-slides" tabindex="0" role="region" aria-label="2층 시설 사진. 좌우로 넘겨 보세요." data-facility-slides>
+              <figure class="is-active"><img src="assets/facility/2f-01.jpg" alt="2층 대기공간" decoding="async"><figcaption>대기공간</figcaption></figure>
+              <figure><img src="assets/facility/2f-02.jpg" alt="2층 진료실" loading="lazy" decoding="async"><figcaption>진료실</figcaption></figure>
+              <figure><img src="assets/facility/2f-03.jpg" alt="2층 검사실" loading="lazy" decoding="async"><figcaption>검사실</figcaption></figure>
+              <figure data-portrait><img src="assets/facility/2f-04.jpg" alt="2층 상담실" loading="lazy" decoding="async"><figcaption>상담실</figcaption></figure>
+              <figure><img src="assets/facility/2f-05.jpg" alt="2층 렌즈실" loading="lazy" decoding="async"><figcaption>렌즈실</figcaption></figure>
+              <figure><img src="assets/facility/2f-06.jpg" alt="2층 수술실" loading="lazy" decoding="async"><figcaption>수술실</figcaption></figure>
+              <figure><img src="assets/facility/2f-07.jpg" alt="2층 레이저실" loading="lazy" decoding="async"><figcaption>레이저실</figcaption></figure>
+              <figure><img src="assets/facility/2f-08.jpg" alt="2층 IPL실" loading="lazy" decoding="async"><figcaption>IPL실</figcaption></figure>
+              <figure data-trim-border><img src="assets/facility/2f-09.jpg" alt="2층 적외선치료실" loading="lazy" decoding="async"><figcaption>적외선치료실</figcaption></figure>
+              <figure><img src="assets/facility/2f-10.jpg" alt="2층 주사시술실" loading="lazy" decoding="async"><figcaption>주사시술실</figcaption></figure>
+              <figure><img src="assets/facility/2f-11.jpg" alt="2층 처치실" loading="lazy" decoding="async"><figcaption>처치실</figcaption></figure>
+              <figure><img src="assets/facility/2f-12.jpg" alt="2층 특수검사실" loading="lazy" decoding="async"><figcaption>특수검사실</figcaption></figure>
+              <figure><img src="assets/facility/2f-13.jpg" alt="2층 입원실" loading="lazy" decoding="async"><figcaption>입원실</figcaption></figure>
+            </div>
+            <div class="facility-controls"><button type="button" data-facility-prev aria-label="2층 이전 사진">←</button><button type="button" data-facility-next aria-label="2층 다음 사진">→</button></div>
+          </div>
+        </section>
+        <section class="facility-floor" aria-labelledby="facility-3f">
+          <div class="facility-floor-heading"><h3 id="facility-3f">3층</h3><p>시력교정수술센터</p></div>
+          <div class="facility-carousel" data-facility-carousel>
+            <div class="facility-slides" tabindex="0" role="region" aria-label="3층 시설 사진. 좌우로 넘겨 보세요." data-facility-slides>
+              <figure class="is-active"><img src="assets/facility/3f-01.jpg" alt="3층 시력교정수술센터" loading="lazy" decoding="async"><figcaption>시력교정수술센터</figcaption></figure>
+              <figure><img src="assets/facility/3f-02.jpg" alt="3층 안내 데스크" loading="lazy" decoding="async"><figcaption>안내 데스크</figcaption></figure>
+              <figure data-portrait><img src="assets/facility/3f-06.jpg" alt="3층 세안실" loading="lazy" decoding="async"><figcaption>세안실</figcaption></figure>
+              <figure><img src="assets/facility/3f-03.jpg" alt="3층 상담실" loading="lazy" decoding="async"><figcaption>상담실</figcaption></figure>
+              <figure><img src="assets/facility/3f-04.jpg" alt="3층 회복실" loading="lazy" decoding="async"><figcaption>회복실</figcaption></figure>
+              <figure><img src="assets/facility/3f-05.jpg" alt="3층 휴게공간" loading="lazy" decoding="async"><figcaption>휴게공간</figcaption></figure>
+            </div>
+            <div class="facility-controls"><button type="button" data-facility-prev aria-label="3층 이전 사진">←</button><button type="button" data-facility-next aria-label="3층 다음 사진">→</button></div>
+          </div>
+        </section>
+      </div>
     </section>
-    <!-- 원장 이름, 인사말, 약력은 확인된 내용으로 교체하세요. -->
     <section class="information-section" id="director" aria-labelledby="heading-director">
       <div class="section-heading"><span class="section-number" aria-hidden="true">02</span><h2 id="heading-director">의료진 소개</h2></div>
       <div class="about-doctors" data-about-doctors>
@@ -84,17 +115,23 @@
         <details data-doctor-name="이정진"><summary>이정진 원장</summary><div class="about-doctor-body"><div class="about-doctor-intro"><div class="about-doctor-profile"><img src="assets/icons/doctor-placeholder.svg" alt=""><p>안과전문의 <strong>이정진</strong></p><div class="about-specialties"><span>각막</span><span>백내장</span></div></div><div><h3>인사말</h3><p>인사말은 준비 중입니다.</p></div></div><section><h3>약력</h3><p>약력은 준비 중입니다.</p></section><section><h3>진료일정</h3><div data-doctor-schedule>정기 일정을 불러오는 중입니다.</div></section></div></details>
       </div>
     </section>
-    <section class="information-section" id="facility" aria-labelledby="heading-facility">
-      <div class="section-heading"><span class="section-number" aria-hidden="true">03</span><h2 id="heading-facility">시설 안내</h2></div>
-    </section>
-    <!-- 장비 카드를 복사해 추가할 수 있습니다. 실제 보유 장비만 등록하세요. -->
     <section class="information-section" id="equipment" aria-labelledby="heading-equipment">
-      <div class="section-heading"><span class="section-number" aria-hidden="true">04</span><h2 id="heading-equipment">보유장비</h2></div>
+      <div class="section-heading"><span class="section-number" aria-hidden="true">03</span><h2 id="heading-equipment">보유장비</h2></div>
       <div class="equipment-categories">
         <details class="equipment-category" id="equipment-surgery" data-equipment-category="surgery"><summary><span>수술 장비</span><span class="equipment-toggle" aria-hidden="true">+</span></summary><div class="equipment-grid"><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/visumax.png" alt="Visumax 500 장비" loading="lazy" decoding="async"></div><p class="equipment-label">수술장비</p><h4>Visumax 500</h4><p class="equipment-description">정밀한 펨토초 레이저 기술의 시력교정 수술장비</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/artevo.png" alt="Artevo 750 장비" loading="lazy" decoding="async"></div><p class="equipment-label">수술장비</p><h4>Artevo 750</h4><p class="equipment-description">디지털+광학 성능 결합 차세대 수술 현미경</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/ex500.jpg" alt="Alcon EX500 장비" loading="lazy" decoding="async"></div><p class="equipment-label">수술장비</p><h4>Alcon EX500</h4><p class="equipment-description">초고속·고정밀 시력교정수술 레이저 장비</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/unity.png" alt="Alcon Unity V.C.S 장비" loading="lazy" decoding="async"></div><p class="equipment-label">수술장비</p><h4>Alcon Unity V.C.S</h4><p class="equipment-description">백내장과 망막 수술의 경계를 허무는 가장 진보된 수술 시스템</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">수술장비</p><h4>Lumera 700</h4><p class="equipment-description">미세한 오차까지 잡아내는 프리미엄 수술 현미경</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">수술장비</p><h4>Centurion® Vision System - Gold Edition</h4><p class="equipment-description">프리미엄 지능형 백내장 수술 장비</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">수술장비</p><h4>Verion Digital marker</h4><p class="equipment-description">디지털 수술 가이드 시스템</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">수술장비</p><h4>Alcon Constellation Vision System</h4><p class="equipment-description">고난도 망막·유리체 수술을 위한 첨단 통합 시스템</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">수술장비</p><h4>Ocutron</h4><p class="equipment-description">고주파 결막이완증 치료 시스템</p></article></div></details>
         <details class="equipment-category" id="equipment-exam" data-equipment-category="exam"><summary><span>검진 장비</span><span class="equipment-toggle" aria-hidden="true">+</span></summary><div class="equipment-grid"><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/callisto.png" alt="CALLISTO eye 장비" loading="lazy" decoding="async"></div><p class="equipment-label">검진장비</p><h4>CALLISTO eye</h4><p class="equipment-description">디지털 난시 정렬 보조 장치</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/sightmap.jpg" alt="InnovEyes_sightmap 장비" loading="lazy" decoding="async"></div><p class="equipment-label">검진장비</p><h4>InnovEyes_sightmap</h4><p class="equipment-description">맞춤형 시력교정수술을 위한 3차원 정밀분석장비</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/topolyzer.jpg" alt="Topolyzer VARIO 장비" loading="lazy" decoding="async"></div><p class="equipment-label">검진장비</p><h4>Topolyzer VARIO</h4><p class="equipment-description">초정밀 분석용 각막지형도 검사 장비</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Zeiss slit lamp</h4><p class="equipment-description">고해상도 광학계 탑재 정밀 세극등 현미경</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Zeiss Cirrus OCT 6000</h4><p class="equipment-description">초정밀 3D 망막 및 녹내장 조기 진단기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>CSO PERSEUS Specular Microscope</h4><p class="equipment-description">비접촉식 각막 내피세포 정밀 분석기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>CSO Topo</h4><p class="equipment-description">3D 각막 지형 및 안구건조증 검사기</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/canon-ark.png" alt="Canon ARK 장비" loading="lazy" decoding="async"></div><p class="equipment-label">검진장비</p><h4>Canon ARK</h4><p class="equipment-description">빠르고 정확한 지능형 자동 시력 측정기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>NCT</h4><p class="equipment-description">비접촉 자동 안압 측정기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Canon CR-2</h4><p class="equipment-description">무산동 디지털 안저카메라</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/iolmaster.png" alt="IOL-m700 장비" loading="lazy" decoding="async"></div><p class="equipment-label">검진장비</p><h4>IOL-m700</h4><p class="equipment-description">레이저 안구 정밀 측정기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Quantel medical Aviso a/b scan</h4><p class="equipment-description">프리미엄 안구 초음파 진단기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Quantel Medical Pocket III</h4><p class="equipment-description">무선 네트워크 시스템을 갖춘 초정밀 각막 측정기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Quantel Medical Pocket II</h4><p class="equipment-description">초정밀 각막 두께 측정기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>ZEISS Humphrey Field Analyzer 3</h4><p class="equipment-description">녹내장 조기 발견을 위한 표준 정밀 시야 검사기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Welch Allyn Spot Vision Screener</h4><p class="equipment-description">영유아 전용 자동 시력 선별 검사기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Shin-Nippon XL-1</h4><p class="equipment-description">어디서든 정밀 검사가 가능한 휴대용 현미경</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Shin-Nippon SL-203</h4><p class="equipment-description">선명하고 정밀한 안질환 진단용 현미경</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Keeler All Pupil II</h4><p class="equipment-description">고성능 무선 정밀 검안경</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Nikon Optos Daytona</h4><p class="equipment-description">초광각 망막 정밀 검사기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>LipiView</h4><p class="equipment-description">안구건조증 원인 정밀 분석 및 기름샘 촬영기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Canon FAG CX-1</h4><p class="equipment-description">실시간 망막 혈관 흐름 정밀 조영 진단기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>iCare 안압계</h4><p class="equipment-description">휴대용 무마취 안압계</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">검진장비</p><h4>Diopsys ARGOS ERG/VEP</h4><p class="equipment-description">차세대 망막 및 시신경 전기생리 검사기</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/itrace.jpg" alt="Tracey iTrace 장비" loading="lazy" decoding="async"></div><p class="equipment-label">검진장비</p><h4>Tracey iTrace</h4><p class="equipment-description">복합 안구 광학 분석 장비</p></article><article class="equipment-card"><div class="equipment-image"><img src="assets/equipment/argos.png" alt="Alcon ARGOS 장비" loading="lazy" decoding="async"></div><p class="equipment-label">검진장비</p><h4>Alcon ARGOS</h4><p class="equipment-description">백내장 수술을 위한 초정밀 안축장 측정기</p></article></div></details>
         <details class="equipment-category" id="equipment-treatment" data-equipment-category="treatment"><summary><span>치료 장비</span><span class="equipment-toggle" aria-hidden="true">+</span></summary><div class="equipment-grid"><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>LipiFlow</h4><p class="equipment-description">안구건조증 열구동 치료기</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>Lumenis M22</h4><p class="equipment-description">안구건조증 전문 IPL 레이저</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>A.R.C. Q-Las</h4><p class="equipment-description">저에너지 정밀 야그 레이저</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>Norlase LEAF SLT</h4><p class="equipment-description">스마트 녹내장 레이저</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>Vitra PDT</h4><p class="equipment-description">황반변성 및 망막 특수 레이저</p></article><article class="equipment-card"><div class="equipment-image"><span class="equipment-image-pending">사진 준비 중</span></div><p class="equipment-label">치료장비</p><h4>A.R.C. Q-las Classic (Argon Laser)</h4><p class="equipment-description">망막 질환 치료를 위한 고성능 광응고 레이저</p></article></div></details>
       </div>
+    </section>
+    <section class="information-section" id="hours" aria-labelledby="heading-hours">
+      <div class="section-heading"><span class="section-number" aria-hidden="true">04</span><h2 id="heading-hours">진료시간</h2></div>
+      <div class="info-card"><dl class="schedule-hours-list" data-clinic-hours>
+        <div><dt>월 ~ 금요일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
+        <div><dt>토요일</dt><dd>오전 8:30 ~ 오후 5:00</dd></div>
+        <div><dt><span>공휴일</span> <span class="hours-morning-badge">오전진료</span></dt><dd>오전 8:30 ~ 오후 1:00</dd></div>
+        <div class="hours-substitute"><dt>대체공휴일</dt><dd>오전 8:30 ~ 오후 7:00</dd></div>
+        <div><dt>점심시간</dt><dd>오후 12:30 ~ 오후 2:00</dd></div>
+      </dl></div>
     </section>
   </div>
 </main>
