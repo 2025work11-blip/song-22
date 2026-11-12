@@ -1,0 +1,32 @@
+body[data-veterans-page] .veterans-page { padding-top: 24px; padding-bottom: 90px; }
+.veterans-actions { display: flex; justify-content: flex-end; }
+.veterans-actions button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px; border: 1px solid #aaa; border-radius: 999px; background: transparent; color: var(--ink); font: inherit; cursor: pointer; }
+.veterans-actions button span { font-size: 23px; line-height: 1; }
+.veterans-heading { padding: clamp(36px, 7vw, 80px) 0; text-align: center; }
+.veterans-heading > p:first-child { color: #888; font-size: 10px; letter-spacing: .1em; }
+.veterans-logo { display: block; width: 160px; height: auto; margin: 24px auto 0; }
+html[data-theme='dark'] .veterans-logo { background: #fff; border-radius: 6px; }
+.veterans-heading h1 { margin: 12px 0 16px; font-size: clamp(32px, 5vw, 52px); line-height: 1.3; }
+.veterans-heading > p:not(:first-child) { margin: 0 0 8px; font-size: clamp(17px, 2.5vw, 21px); line-height: 1.8; }
+.veterans-heading > p.veterans-intro { margin: 24px auto 8px; padding: 24px; max-width: 760px; border-radius: 16px; background: #f3f3f3; color: #111; }
+.veterans-intro strong { font-weight: 700; text-decoration: underline; text-decoration-color: #0074ff; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.veterans-heading small { color: var(--muted); font-size: 13px; }
+.veterans-notice { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.veterans-notice + .veterans-section { margin-top: 24px; }
+.veterans-section { margin-top: 64px; }
+.veterans-section h2 { margin: 0 0 20px; font-size: clamp(22px, 3vw, 30px); line-height: 1.4; }
+.veterans-section h2 span { display: block; margin-bottom: 4px; color: #0074ff; font-size: 14px; font-weight: 500; }
+.veterans-table-hint { display: none; color: var(--muted); font-size: 12px; }
+.veterans-table-wrap { overflow-x: auto; overscroll-behavior-x: contain; border-top: 1px solid #333; }
+.veterans-table-wrap table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 15px; line-height: 1.6; overflow-wrap: anywhere; word-break: keep-all; }
+.veterans-table-wrap th, .veterans-table-wrap td { padding: 14px 12px; border-bottom: 1px solid #dedede; text-align: left; vertical-align: top; }
+.veterans-table-wrap thead th { background: #f3f3f3; color: #111; font-weight: 700; white-space: nowrap; }
+.veterans-table-wrap tbody th { font-weight: 600; }
+.veterans-support-table th:first-child { width: 46%; }
+.veterans-support-table tbody th { font-size: 17px; }
+.veterans-table-wrap .veterans-conditions th:first-child { width: 35%; }
+.veterans-person { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 400; line-height: 1.5; }
+.veterans-footnote { margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.veterans-footnote a { color: #0074ff; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 600px) { body[data-veterans-page] .veterans-page { padding-bottom: 60px; } .veterans-section { margin-top: 48px; } .veterans-table-wrap table { font-size: 13px; } .veterans-table-wrap th, .veterans-table-wrap td { padding: 12px 6px; } .veterans-heading br { display: none; } }
+@media (max-width: 600px) { .veterans-support-table tbody th { font-size: 15px; } }

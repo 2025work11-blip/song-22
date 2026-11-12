@@ -22,6 +22,7 @@ html[data-theme='dark'] .home-page .home-intro h1 strong { color: #fff; }
 }
 .home-page .category-card:not(.category-card-dark),
 .home-page .category-card:not(.category-card-dark):hover { background: #f2f2f2; box-shadow: none; }
+.home-page .category-grid .category-card .card-detail { font-weight: 400; }
 .home-page .category-card.home-card-reveal { animation: home-card-enter .7s ease-out var(--home-card-delay, 0ms) both; }
 @keyframes home-card-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .home-page .category-card.home-card-reveal { animation: none; } }
@@ -41,6 +42,7 @@ html[data-theme='dark'] .home-page .category-card:not(.category-card-dark):hover
   pointer-events: none;
 }
 .home-page .home-main > .home-section:not(.notice-section)::before { top: 0; }
+.home-page .home-main > .home-section[data-calendar]::before { content: none; }
 .home-page .home-main > section.notice-section { padding-top: 30px; padding-bottom: 30px; color: #fff; }
 .home-page .home-main > .notice-section::before {
   content: '';
@@ -85,7 +87,7 @@ html[data-theme='dark'] .home-page .doctor-legend button[data-doctor-id]:not(.do
 @keyframes doctor-filter-shine { to { transform: translateX(120%); } }
 @media (prefers-reduced-motion: reduce) { .home-page .doctor-legend button { transition: none; } .home-page .doctor-legend button[aria-pressed='true']::after { animation: none; display: none; } .home-page .schedule-item-reveal { animation: none; } }
 /* 달력 날짜 사이에 짧은 세로선만 표시합니다. */
-.home-page .schedule-calendar { --calendar-line: #e8e8e8; border-left: 0; border-right: 0; border-radius: 0; }
+.home-page .schedule-calendar { --calendar-line: #e8e8e8; border: 0; border-radius: 0; }
 .home-page .schedule-calendar th,
 .home-page .schedule-calendar td { position: relative; border: 0; }
 .home-page .schedule-calendar tbody tr > :not(:last-child)::before {
@@ -125,9 +127,9 @@ html[data-theme='dark'] .home-page .schedule-calendar .calendar-day[aria-current
 }
 html[data-theme='dark'] .home-page .schedule-calendar { --calendar-line: #354f6b; }
 .home-page .day-panel,
-html[data-theme='dark'] .home-page .day-panel { margin: 10px 0 0; padding: 22px; border: 0; border-radius: 0; background: #fff; box-shadow: none; }
+html[data-theme='dark'] .home-page .day-panel { margin: 10px 0 0; padding: 22px 0; border: 0; border-radius: 0; background: #fff; box-shadow: none; }
 html[data-theme='dark'] .home-page .day-panel { background: #292d33; }
-.home-page .day-panel [data-day-schedules] { grid-template-columns: 1fr; gap: 0; }
+.home-page .day-panel [data-day-schedules] { grid-template-columns: 1fr; gap: 12px; }
 .home-page .day-panel .schedule-doctor-name { flex-wrap: wrap; gap: 6px; }
 .home-page .day-panel .schedule-doctor-name .work-period { flex: none; padding: 2px 5px; border-radius: 5px; font-size: 10px; line-height: 1.3; letter-spacing: 0; }
 .home-page .day-panel .schedule-doctor-name .work-period { background: #fff; }
@@ -135,16 +137,16 @@ html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-period
 html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-morning { color: #8b651f; }
 html[data-theme='dark'] .home-page .day-panel .schedule-doctor-name .work-closed { color: #b93240; }
 .home-page .day-panel .schedule-detail-label { color: #858b92; font-size: 11px; font-weight: 400; }
-.home-page .day-panel .schedule-entry + .schedule-entry { margin-top: 14px; padding-top: 14px; border-top: 1px solid #e1e1e1; }
-html[data-theme='dark'] .home-page .day-panel .schedule-entry + .schedule-entry { border-color: #515151; }
-.home-page .day-panel.day-panel-reveal { animation: home-day-panel-reveal 1s ease-out; }
-@keyframes home-day-panel-reveal { from { background-color: #e4f1ff; } to { background-color: #fff; } }
-html[data-theme='dark'] .home-page .day-panel.day-panel-reveal { animation: none; }
+.home-page .day-panel .schedule-entry { --ink: #111; --muted: #666; margin: 0; padding: 18px 20px; border: 0; border-radius: 16px; background: #f3f3f3; box-shadow: none; }
+.home-page .day-panel .schedule-entry + .schedule-entry { margin: 0; padding: 18px 20px; border: 0; }
+html[data-theme='dark'] .home-page .day-panel .schedule-entry .schedule-closure-dates { color: #b93240; }
+.home-page .day-panel .schedule-entry.day-card-reveal { animation: home-day-card-enter .55s ease-out var(--day-card-delay, 0ms) both; }
+@keyframes home-day-card-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 .home-page .schedule-hours,
-html[data-theme='dark'] .home-page .schedule-hours { margin-top: 24px; padding: 30px 28px; border: 1px solid #d6d6d6; border-radius: 16px; background: #f3f3f3; box-shadow: none; }
-html[data-theme='dark'] .home-page .schedule-hours { background: #292d33; border-color: #515151; }
+html[data-theme='dark'] .home-page .schedule-hours { --ink: #111; --muted: #666; margin-top: 24px; padding: 30px 16px 16px; border: 1px solid #d6d6d6; border-radius: 16px; background: #fff; color: #111; box-shadow: none; }
+html[data-theme='dark'] .home-page .schedule-hours-list dd { color: #445367; }
 .home-page .schedule-hours h3 { margin: 0 0 22px; }
-.home-page .schedule-hours-list { padding: 4px 0; border-top: 1px solid #777; border-bottom: 1px solid #777; }
+.home-page .schedule-hours-list { padding: 8px 14px; border: 0; border-radius: 12px; background: #f3f3f3; }
 .home-page .schedule-hours-list > div { padding: 11px 18px; border-color: #e5e5e5; }
 .home-page .schedule-hours-list > div:first-child { border-top: 0; }
 .home-page .schedule-hours-list dt,
@@ -153,10 +155,9 @@ html[data-theme='dark'] .home-page .schedule-hours { background: #292d33; border
 .home-page .schedule-hours-list > div:nth-child(3) { padding-bottom: 3px; }
 .home-page .schedule-hours-list .hours-substitute dt,
 .home-page .schedule-hours-list .hours-substitute dd { font-size: 15px; }
-html[data-theme='dark'] .home-page .schedule-hours-list { border-color: #888; }
-html[data-theme='dark'] .home-page .schedule-hours-list > div { border-color: #444; }
+html[data-theme='dark'] .home-page .schedule-hours-list > div { border-color: #dedede; }
 @media (prefers-reduced-motion: reduce) {
-  .home-page .day-panel.day-panel-reveal { animation: none; }
+  .home-page .day-panel .schedule-entry.day-card-reveal { animation: none; }
 }
 html[data-theme='dark'] .home-page .home-main > section:not(.home-intro) { background: transparent; border-color: #545454; color: var(--ink); box-shadow: none; }
 html[data-theme='dark'] .home-page .home-main > .notice-section { color: #fff; }
@@ -164,13 +165,31 @@ html[data-theme='dark'] .home-page .home-main > .home-section:not(.notice-sectio
 .home-page .home-main > section.home-section.parking-section::before,
 html[data-theme='dark'] .home-page .home-main > section.home-section.parking-section::before { z-index: -1; height: 100%; background: #f3f3f3; }
 html[data-theme='dark'] .home-page .home-main > section.home-section.parking-section::before { background: #292d33; }
+.home-page .home-veterans { padding-top: 16px; }
+.home-page .home-veterans-logo { display: block; width: 160px; height: auto; margin: 0 0 16px -16px; }
+html[data-theme='dark'] .home-page .home-veterans-logo { background: #fff; border-radius: 6px; }
+.home-page .home-veterans-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.home-page .home-veterans-heading h3 { margin: 0; font-size: clamp(19px, 3vw, 25px); line-height: 1.45; }
+.home-page .home-veterans-heading h3 span { color: #0074ff; }
+.home-page .home-veterans-heading a { display: inline-flex; align-items: center; gap: 5px; min-height: 40px; padding: 7px 15px; border: 1px solid #0074ff; border-radius: 999px; background: #fff; color: #0074ff; font-size: 13px; font-weight: 600; }
+.home-page .home-veterans-start { margin: 10px 0 20px; color: var(--muted); font-size: 13px; }
+.home-page .home-veterans-details { margin: 20px 0 0; overflow: hidden; border: 1px solid #e5e5e5; border-radius: 12px; }
+.home-page .home-veterans-details > div { display: grid; grid-template-columns: minmax(90px, 25%) minmax(0, 1fr); font-size: 15px; line-height: 1.6; }
+.home-page .home-veterans-details > div + div { border-top: 1px solid #e5e5e5; }
+.home-page .home-veterans-details dt, .home-page .home-veterans-details dd { margin: 0; padding: 15px 18px; color: #111; }
+.home-page .home-veterans-details dt { display: flex; align-items: center; justify-content: center; text-align: center; background: #666; color: #fff; font-weight: 600; }
+.home-page .home-veterans-details dd { background: #fff; }
 @media (max-width: 600px) {
   .home-page .home-main > section:not(.home-intro) { margin-top: 0; padding: 30px 0; }
   .home-page .day-panel,
-  html[data-theme='dark'] .home-page .day-panel { padding: 16px; }
+  html[data-theme='dark'] .home-page .day-panel { padding: 16px 0; }
+  .home-page .day-panel .schedule-entry,
+  .home-page .day-panel .schedule-entry + .schedule-entry { padding: 16px 18px; border-radius: 12px; }
   .home-page .schedule-hours,
-  html[data-theme='dark'] .home-page .schedule-hours { padding: 24px 18px; border-radius: 12px; }
+  html[data-theme='dark'] .home-page .schedule-hours { padding: 24px 14px 14px; border-radius: 12px; }
   .home-page .schedule-hours h3 { margin-bottom: 18px; }
+  .home-page .schedule-hours-list { padding: 8px; }
+  .home-page .home-veterans-details dt, .home-page .home-veterans-details dd { padding: 12px 10px; }
   .home-page .schedule-hours-list > div { padding: 10px 8px; }
   .home-page .schedule-hours-list > div:nth-child(3) { padding-bottom: 3px; }
   .home-page .schedule-hours-list dt,

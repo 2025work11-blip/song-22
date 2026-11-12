@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0074ff">
+  <script src="js/theme.js?v=20261029-theme1"></script>
+  <meta name="description" content="연세제일안과 보훈위탁병원 진료 대상과 진료비 지원 안내">
+  <title>보훈위탁병원 안내 | 연세제일안과</title>
+  <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css?v=20261110-textblack1">
+  <link rel="stylesheet" href="css/theme.css?v=20261110-navradius2">
+  <link rel="stylesheet" href="css/veterans.css?v=20261112-veterans7">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261102-yonsei1">
+  <script defer src="js/layout.js?v=20261110-filepreview1"></script>
+  <script defer src="js/config.js"></script>
+  <script defer src="js/share.js?v=20261029-share1"></script>
+  <script defer src="js/data.js?v=20261030-closures1"></script>
+  <script defer src="js/common.js?v=20261029-explicit1"></script>
+  <script defer src="js/language.js?v=20261109-equipment1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="js/supabase-client.js"></script>
+  <script defer src="js/role-access.js?v=20261030-roles1"></script>
+  <script defer src="js/auth.js?v=20261030-roles1"></script>
+  <script defer src="js/veterans.js?v=20261112-veterans1"></script>
+</head>
+<body data-veterans-page>
+<a class="skip-link" href="#main">본문으로 바로가기</a>
+<div data-site-header></div>
+<p class="container auth-global-message" data-auth-global-message role="alert" hidden></p>
+<div data-site-drawer></div>
+<main id="main" class="container veterans-page" tabindex="-1">
+  <div class="veterans-actions"><button type="button" data-close-veterans>닫기 <span aria-hidden="true">×</span></button></div>
+  <header class="veterans-heading"><p>YONSEI JEIL EYE CLINIC GUIDE</p><img class="veterans-logo" src="https://upload.wikimedia.org/wikipedia/commons/9/98/Ministry_of_Patriots_and_Veterans_Affairs_of_the_Republic_of_Korea_Logo_%28horizontal%29.svg" alt="국가보훈부" width="512" height="164"><h1>보훈위탁병원 안내</h1><p class="veterans-intro">연세제일안과는 첨단 의료 장비와 진료 서비스에서 높은 평가를 받아 2025년 1월, <strong>'제주지역 안과'로는 최초, 유일하게 보훈위탁병원으로 지정되었습니다.</strong></p></header>
+  <p class="veterans-notice">아래 표는 안내 자료를 간략히 정리한 내용입니다. 지원 대상과 본인부담은 등록 유형·등급·신청 시기·연령 및 진료 항목에 따라 달라지므로 접수 시 자격을 확인해 주세요.</p>
+  <section class="veterans-section" aria-labelledby="veterans-support">
+    <h2 id="veterans-support"><span>01</span> 보훈위탁병원 진료비 지원 기준</h2>
+    <div class="veterans-table-wrap" role="region" aria-label="진료비 지원 기준 표">
+      <table class="veterans-support-table"><thead><tr><th scope="col">대상</th><th scope="col">진료비 지원</th><th scope="col">약제비 지원</th></tr></thead><tbody>
+        <tr><th scope="row">전상군경·공상군경·공상공무원 1~7급<small class="veterans-person">본인</small></th><td>국비 진료 전액 감면</td><td>국비 진료 전액 감면</td></tr>
+        <tr><th scope="row">전몰군경 유족회·전몰군경 미망인회<small class="veterans-person">75세 이상 선순위 유가족 1위</small></th><td>급여 60% 감면</td><td>제외</td></tr>
+        <tr><th scope="row">무공수훈자<small class="veterans-person">본인</small></th><td>급여 60% 감면</td><td>연간 160,000원*</td></tr>
+        <tr><th scope="row">월남참전유공자·6.25참전유공자<small class="veterans-person">본인</small></th><td>급여 90% 감면</td><td>연간 252,000원*</td></tr>
+        <tr><th scope="row">고엽제후유의증 대상자·고엽제 후유증 2세 환자<small class="veterans-person">본인</small></th><td>국비 진료 전액 감면**</td><td>국비 진료 전액 감면**</td></tr>
+        <tr><th scope="row">재일학도의용군인<small class="veterans-person">본인</small></th><td>급여 60% 감면</td><td>연간 252,000원*</td></tr>
+        <tr><th scope="row">특수임무유공자<small class="veterans-person">본인</small></th><td>국비 진료 전액 감면</td><td>국비 진료 전액 감면</td></tr>
+        <tr><th scope="row">독립유공자(순국선열·애국지사)<small class="veterans-person">본인</small></th><td>국비 진료 전액 감면</td><td>국비 진료 전액 감면</td></tr>
+        <tr><th scope="row">독립유공자 유족<small class="veterans-person">75세 이상 선순위 유가족 1인</small></th><td>급여 60% 감면</td><td>제외</td></tr>
+        <tr><th scope="row">4.19 혁명 유공자 및 유족<small class="veterans-person">본인</small></th><td>국비 진료 전액 감면</td><td>국비 진료 전액 감면</td></tr>
+        <tr><th scope="row">4.19 혁명 유공자 유족<small class="veterans-person">75세 이상 선순위 유가족 1인</small></th><td>급여 60% 감면</td><td>제외</td></tr>
+        <tr><th scope="row">5.18 민주화운동 유공자<small class="veterans-person">본인</small></th><td>국비 진료 전액 감면</td><td>국비 진료 전액 감면</td></tr>
+      </tbody></table>
+    </div>
+    <p class="veterans-footnote">* 무공수훈자·참전유공자·재일학도의용군인의 위탁병원 약제비 지원은 75세 이상 등 해당 조건을 충족하는 경우 연간 한도 내에서 적용됩니다.</p>
+    <p class="veterans-footnote">** 고엽제후유의증 등급기준 미달자는 인정질병과 합병증에 한해 국비 진료를 받을 수 있습니다. 2016년 6월 23일 이후 등록 신청한 경도 대상자는 인정질병 외 진료 시 본인부담금의 10%를 부담합니다.</p>
+    <p class="veterans-footnote">상이등급 7급 등 일부 대상자는 등록 신청 시기와 질환에 따라 본인부담이 발생할 수 있습니다. <a href="https://sangdam.mpva.go.kr/faq/userQuestionDetail.do?selectedId=000001873" target="_blank" rel="noopener noreferrer">국가보훈부 진료비 안내 보기 ↗</a></p>
+  </section>
+  <section class="veterans-section" aria-labelledby="veterans-conditions">
+    <h2 id="veterans-conditions"><span>02</span> 공통 적용 조건 및 지원 제외 항목</h2>
+    <div class="veterans-table-wrap" tabindex="0" role="region" aria-label="공통 적용 조건 표. 좌우로 스크롤할 수 있습니다.">
+      <table class="veterans-conditions"><thead><tr><th scope="col">구분</th><th scope="col">내용</th></tr></thead><tbody>
+        <tr><th scope="row">건강보험 자격</th><td>건강보험 가입자</td></tr>
+        <tr><th scope="row">비급여 항목</th><td>원칙적으로 감면 제외</td></tr>
+        <tr><th scope="row">국비진료 대상자</th><td>건강보험 급여 부분 및 지정된 일부 비급여 항목 지원</td></tr>
+        <tr><th scope="row">약제비 연간 지원금</th><td>해당 대상자별 연간 한도 내 지원</td></tr>
+        <tr><th scope="row">약제비 신청</th><td>약제비 지급 신청서를 관할 보훈관서에 제출</td></tr>
+      </tbody></table>
+    </div>
+    <p class="veterans-footnote">세부 기준과 신청 방법은 자격별로 다를 수 있으며 변경될 수 있습니다. <a href="https://sangdam.mpva.go.kr/faq/userQuestionDetail.do?selectedId=000001831" target="_blank" rel="noopener noreferrer">국가보훈부 안내 보기 ↗</a></p>
+  </section>
+</main>
+<div data-site-footer></div>
+</body>
+</html>

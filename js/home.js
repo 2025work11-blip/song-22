@@ -57,8 +57,6 @@
           scheduleRevealObserver.unobserve(element);
         });
     }, { threshold: 0.1 });
-    var hoursCard = document.querySelector('.home-page .schedule-hours');
-    if (hoursCard) scheduleRevealObserver.observe(hoursCard);
   }
   var monthTitle = document.querySelector('[data-calendar-month]');
   var body = document.querySelector('[data-calendar-body]');
@@ -428,6 +426,13 @@
     }
     selected = button.dataset.date;
     renderCalendar();
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      dayList.querySelectorAll('.schedule-entry').forEach(function (card, index) {
+        card.style.setProperty('--day-card-delay', index * 100 + 'ms');
+        card.classList.add('day-card-reveal');
+        card.addEventListener('animationend', function () { card.classList.remove('day-card-reveal'); }, { once: true });
+      });
+    }
     body.querySelector('[data-date="' + selected + '"]').focus({ preventScroll: true });
     if (window.matchMedia('(max-width: 760px)').matches) {
       var panel = document.querySelector('.day-panel');
@@ -436,9 +441,6 @@
         var offset = Math.max(96, window.innerHeight * .28);
         window.scrollTo({ top: Math.max(0, window.scrollY + panel.getBoundingClientRect().top - offset),
           behavior: reduced ? 'instant' : 'smooth' });
-        panel.classList.remove('day-panel-reveal');
-        void panel.offsetWidth;
-        panel.classList.add('day-panel-reveal');
       });
     }
   });
